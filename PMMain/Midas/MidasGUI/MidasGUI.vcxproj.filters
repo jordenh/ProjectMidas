@@ -324,6 +324,12 @@
     <ClInclude Include="RingData.h">
       <Filter>Header Files\Midas</Filter>
     </ClInclude>
+    <ClInclude Include="GestureHoldModeAction.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ProfileManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="keyboardData.txt" />
