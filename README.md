@@ -9,10 +9,10 @@ Currently setup to work with Myo Armband -
   - SDK Win 0.8.1
   - Firmware 1.2.995
   - Myo Connect V 0.9.1
-  - 
+
   To build MidasGUI:
 
-Need Visual Studio 2013
+- Need Visual Studio 2013
 - Download and install Qt 5.4.0 2013 x86 with opengl (qt-opensource-windows-x86-msvc2013_opengl-5.4.0.exe from http://download.qt.io/archive/qt/5.4/5.4.0/)
 - Put the bin folder of the Qt SDK onto your PATH environment variable
 - Download and install the most recent Qt Visual Studio Plugin (http://www.qt.io/download-open-source/#section-2)
