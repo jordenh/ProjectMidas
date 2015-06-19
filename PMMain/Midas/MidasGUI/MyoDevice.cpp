@@ -5,16 +5,18 @@
 #include <cstdint>
 #include <iostream>
 #include <fstream>
+#include <time.h>
 
-#define MIN_RSSI_DELAY 200
+#define MIN_RSSI_DELAY 3000
+#define MIN_BATTERY_LEVEL_DELAY 30000
 
 ProfileSignaller MyoDevice::profileSignaller;
 
-MyoDevice::MyoDevice(SharedCommandData* sharedCommandData, ControlState* controlState,
+MyoDevice::MyoDevice(SharedCommandData* sharedCommandData, ControlState* controlState, MyoState* myoState,
     std::string applicationIdentifier, MainGUI *mainGuiHandle, ProfileManager *profileManagerHandle)
     : WearableDevice(sharedCommandData), appIdentifier(applicationIdentifier), myoFindTimeout(DEFAULT_FIND_MYO_TIMEOUT),
-    durationInMilliseconds(DEFAULT_MYO_DURATION_MS), state(controlState), arm(DEFAULT_MYO_ARM), 
-    xDirection(DEFAULT_MYO_XDIR), mainGui(mainGuiHandle), profileManager(profileManagerHandle)
+    durationInMilliseconds(DEFAULT_MYO_DURATION_MS), state(controlState), myoState(myoState), arm(DEFAULT_MYO_ARM), 
+	xDirection(DEFAULT_MYO_XDIR), mainGui(mainGuiHandle), profileManager(profileManagerHandle)
 {
     prevProfileName = "";
 }
@@ -37,18 +39,22 @@ void MyoDevice::runDeviceLoop()
 {
     WearableDevice::setDeviceStatus(deviceStatus::RUNNING);
 
-    GestureFilter gestureFilter(state, 0, mainGui);
+    GestureFilter gestureFilter(state, myoState, 0, mainGui);
     posePipeline.registerFilter(&gestureFilter);
     posePipeline.registerFilter(WearableDevice::sharedData);
 
     AveragingFilter averagingFilter(5);
-    MyoTranslationFilter translationFilter(state);
+    MyoTranslationFilter translationFilter(state, myoState);
     orientationPipeline.registerFilter(&averagingFilter);
     orientationPipeline.registerFilter(&translationFilter);
     orientationPipeline.registerFilter(WearableDevice::sharedData);
 
-    mainGui->connectSignallerToProfileWidgets(&profileSignaller);
-	
+	// init profileSignaller to the first profile name.
+//	profileSignaller.setProfileName(profileManager->getProfiles()->at(0).profileName);
+	profileSignaller.setControlStateHandle(state);
+	state->setProfile(profileManager->getProfiles()->at(0).profileName);
+	mainGui->connectSignallerToProfileWidgets(&profileSignaller); 
+		
     AveragingFilter rssiAveragingFilter(5);
     rssiPipeline.registerFilter(&rssiAveragingFilter);
     rssiPipeline.registerFilter(WearableDevice::sharedData);
@@ -58,11 +64,16 @@ void MyoDevice::runDeviceLoop()
     std::chrono::milliseconds rssi_start =
         std::chrono::duration_cast<std::chrono::milliseconds>(
             std::chrono::steady_clock::now().time_since_epoch()); /* Used to control when to request rssi */
-    std::chrono::milliseconds rssi_finish;
+    std::chrono::milliseconds current_time;
+
+	std::chrono::milliseconds battery_start =
+		std::chrono::duration_cast<std::chrono::milliseconds>(
+		std::chrono::steady_clock::now().time_since_epoch()); /* Used to control when to request battery levels */
 
     try
     {
         Hub hub(appIdentifier);
+        hub.setLockingPolicy(hub.lockingPolicyNone);
         Myo* myo = hub.waitForMyo(myoFindTimeout);
 
         if (!myo)
@@ -89,20 +100,27 @@ void MyoDevice::runDeviceLoop()
                 WearableDevice::sharedData->process();
             }
 
-            if (profileSignaller.getProfileName() != prevProfileName)
+			if (state->getProfile() != prevProfileName)
             {
-                prevProfileName = profileSignaller.getProfileName();
+				prevProfileName = state->getProfile();
                 updateProfiles();
             }
 
-            rssi_finish = std::chrono::duration_cast<std::chrono::milliseconds>(
+			current_time = std::chrono::duration_cast<std::chrono::milliseconds>(
                 std::chrono::steady_clock::now().time_since_epoch());
-            if ((rssi_finish - rssi_start).count() > MIN_RSSI_DELAY)
+			if ((current_time - rssi_start).count() > MIN_RSSI_DELAY)
             {
                 myo->requestRssi();
                 rssi_start = std::chrono::duration_cast<std::chrono::milliseconds>(
                     std::chrono::steady_clock::now().time_since_epoch());
             }
+
+			if ((current_time - battery_start).count() > MIN_BATTERY_LEVEL_DELAY)
+			{
+				myo->requestBatteryLevel();
+				battery_start = std::chrono::duration_cast<std::chrono::milliseconds>(
+					std::chrono::steady_clock::now().time_since_epoch());
+			}
 
             hub.run(durationInMilliseconds);
             
@@ -161,7 +179,7 @@ void MyoDevice::MyoCallbacks::onOrientationData(Myo* myo, uint64_t timestamp, co
     input[GYRO_DATA_Y] = 0.0f;
     input[GYRO_DATA_Z] = 0.0f;
     input[RSSI] = (int8_t)0;
-    
+	    
     parent.orientationPipeline.startPipeline(input);
 }
 
@@ -244,46 +262,71 @@ void MyoDevice::MyoCallbacks::onArmUnsync(Myo* myo, uint64_t timestamp) {
     std::cout << "on arm unsync." << std::endl; 
 }
 
+void MyoDevice::MyoCallbacks::onUnlock(Myo* myo, uint64_t timestamp)
+{
+	std::cout << "on unlock." << std::endl;
+}
+
+void MyoDevice::MyoCallbacks::onLock(Myo* myo, uint64_t timestamp)
+{
+	std::cout << "on lock." << std::endl;
+}
+
+void MyoDevice::MyoCallbacks::onBatteryLevelReceived(myo::Myo* myo, uint64_t timestamp, uint8_t level)
+{
+	std::cout << "onBatteryLevelReceived." << std::endl;
+}
+
+void MyoDevice::MyoCallbacks::onEmgData(myo::Myo* myo, uint64_t timestamp, const int8_t* emg)
+{
+	std::cout << "onEmgData." << std::endl;
+}
+
+void MyoDevice::MyoCallbacks::onWarmupCompleted(myo::Myo* myo, uint64_t timestamp, WarmupResult warmupResult)
+{
+	std::cout << "onWarmupCompleted." << std::endl;
+}
+
+void MyoDevice::MyoCallbacks::onRssi(Myo* myo, uint64_t timestamp, int8_t rssi) {
+	std::cout << "on rssi." << std::endl;
+	filterDataMap input;
+	input[RSSI] = rssi;
+
+	// The following is junk data. The averaging filter should be modified so
+	// that it doesn't deal with the data so specifically.
+	input[GYRO_DATA_X] = 0.0f;
+	input[GYRO_DATA_Y] = 0.0f;
+	input[GYRO_DATA_Z] = 0.0f;
+	input[QUAT_DATA_X] = 0.0f;
+	input[QUAT_DATA_Y] = 0.0f;
+	input[QUAT_DATA_Z] = 0.0f;
+	input[QUAT_DATA_W] = 0.0f;
+	input[ACCEL_DATA_X] = 0.0f;
+	input[ACCEL_DATA_Y] = 0.0f;
+	input[ACCEL_DATA_Z] = 0.0f;
+	input[INPUT_ARM] = armUnknown;
+	input[INPUT_X_DIRECTION] = xDirectionUnknown;
+	parent.rssiPipeline.startPipeline(input);
+}
+
 void MyoDevice::updateProfiles(void)
 {
     std::list<Filter*>* filters = posePipeline.getFilters();
-
+	
     int error = (int)filterError::NO_FILTER_ERROR;
     for (std::list<Filter*>::iterator it = filters->begin(); it != filters->end(); ++it)
     {
-        error |= (int)(*it)->updateBasedOnProfile(*profileManager, profileSignaller.getProfileName());
+		error |= (int)(*it)->updateBasedOnProfile(*profileManager, state->getProfile());//profileSignaller.getProfileName());
     }
-
+	
     filters = orientationPipeline.getFilters();
     for (std::list<Filter*>::iterator it = filters->begin(); it != filters->end(); ++it)
     {
-        error |= (int)(*it)->updateBasedOnProfile(*profileManager, profileSignaller.getProfileName());
+		error |= (int)(*it)->updateBasedOnProfile(*profileManager, state->getProfile());// profileSignaller.getProfileName());
     }
-
+	
     if (error != (int)filterError::NO_FILTER_ERROR)
     {
         throw new std::exception("updateProfileException");
     }
-}
-
-void MyoDevice::MyoCallbacks::onRssi(Myo* myo, uint64_t timestamp, int8_t rssi) {
-	std::cout << "on rssi." << std::endl; 
-    filterDataMap input;
-    input[RSSI] = rssi;
-
-    // The following is junk data. The averaging filter should be modified so
-    // that it doesn't deal with the data so specifically.
-    input[GYRO_DATA_X] = 0.0f;
-    input[GYRO_DATA_Y] = 0.0f;
-    input[GYRO_DATA_Z] = 0.0f;
-    input[QUAT_DATA_X] = 0.0f;
-    input[QUAT_DATA_Y] = 0.0f;
-    input[QUAT_DATA_Z] = 0.0f;
-    input[QUAT_DATA_W] = 0.0f;
-    input[ACCEL_DATA_X] = 0.0f;
-    input[ACCEL_DATA_Y] = 0.0f;
-    input[ACCEL_DATA_Z] = 0.0f;
-    input[INPUT_ARM] = armUnknown;
-    input[INPUT_X_DIRECTION] = xDirectionUnknown;
-    parent.rssiPipeline.startPipeline(input);
 }

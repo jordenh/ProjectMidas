@@ -3,6 +3,7 @@
 
 #include "Filter.h"
 #include "ControlState.h"
+#include "MyoState.h"
 #include "GestureHoldModeAction.h"
 #include "ProfileManager.h"
 #include "myo\myo.hpp"
@@ -28,7 +29,7 @@ using namespace myo;
 #define KEYBOARD_THRESH_MAG 30
 
 #define NUM_GESTURES 5
-#define GESTURE_THUMB_TO_PINKY 0 // used as indexes into gestHoldModeAction
+#define GESTURE_DOUBLE_TAP 0 // used as indexes into gestHoldModeAction
 #define GESTURE_FINGERS_SPREAD 1
 #define GESTURE_FIST 2
 #define GESTURE_WAVE_IN 3
@@ -46,7 +47,7 @@ public:
      *
      * @param controlState A handle to ControlState, to keep track of the application state.
      */
-    MyoTranslationFilter(ControlState* controlState);
+    MyoTranslationFilter(ControlState* controlState, MyoState* myoState);
     ~MyoTranslationFilter();
 
     /**
@@ -119,6 +120,8 @@ private:
     */
     point getMouseUnitVelocity(float pitch, float yaw);
 
+	vector2D getMouseDelta(float pitch, float yaw);
+
     void performHoldModeFunc(unsigned int holdNum, filterDataMap& outputToSharedCommandData);
     void performMouseModeFunc(filterDataMap& outputToSharedCommandData);
     void performeKybdModeFunc(filterDataMap& outputToSharedCommandData);
@@ -127,6 +130,7 @@ private:
     void unregisterHoldModeActions(void);
 
     ControlState* controlStateHandle;
+	MyoState* myoStateHandle;
     midasMode previousMode;
     float pitch, basePitch, prevPitch, deltaPitchDeg, 
         yaw, baseYaw, prevYaw, deltaYawDeg,

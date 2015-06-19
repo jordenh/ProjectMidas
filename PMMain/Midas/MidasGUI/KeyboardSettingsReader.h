@@ -1,3 +1,4 @@
+#ifdef BUILD_KEYBOARD
 #pragma once
 #include <vector>
 #include "ringData.h"
@@ -20,3 +21,5 @@ public:
     void readKeyboardSetupFile(std::vector<ringData> &ringDataHandle);
 };
 
+
+#endif

@@ -1,6 +1,8 @@
 #define NOMINMAX
 #include "MyoTranslationFilter.h"
 #include "ProfileManager.h"
+#include "BaseMeasurements.h"
+#include "myo\myo.hpp"
 #include <math.h>
 #include <iostream>
 
@@ -9,13 +11,17 @@ float radToDeg(float rad)
     return rad * (180.0 / M_PI);
 }
 
-MyoTranslationFilter::MyoTranslationFilter(ControlState* controlState)
-    : controlStateHandle(controlState), previousMode(LOCK_MODE), 
-    pitch(0), basePitch(0), prevPitch(0), deltaPitchDeg(0),
-    yaw(0), baseYaw(0), prevYaw(0), deltaYawDeg(0),
-    roll(0), baseRoll(0), prevRoll(0), deltaRollDeg(0)
+MyoTranslationFilter::MyoTranslationFilter(ControlState* controlState, MyoState* myoState)
+    : controlStateHandle(controlState), myoStateHandle(myoState), previousMode(LOCK_MODE), 
+    pitch(0), prevPitch(0), deltaPitchDeg(0),
+    yaw(0), prevYaw(0), deltaYawDeg(0),
+    roll(0), prevRoll(0), deltaRollDeg(0)
 {
     initGestHoldModeActionArr();
+
+	Filter::setFilterError(filterError::NO_FILTER_ERROR);
+	Filter::setFilterStatus(filterStatus::OK);
+	Filter::clearOutput();
 }
 
 MyoTranslationFilter::~MyoTranslationFilter()
@@ -43,28 +49,31 @@ void MyoTranslationFilter::process()
     int rollDeg = (int)(roll * (180 / M_PI));
     int prevRollDeg;
 
+	myoStateHandle->pushRotation(myo::Quaternion<float>(quatX, quatY, quatZ, quatW));
+	BaseMeasurements::getInstance().setCurrentAngles(roll, pitch, yaw);
+
     midasMode currMode = controlStateHandle->getMode();
 
     if (previousMode != currMode)
     {
-        baseRoll = roll;
-        basePitch = pitch;
-        baseYaw = yaw;
+		// update base angles for each new mode
+		BaseMeasurements::getInstance().setBaseAngles(roll, pitch, yaw);
+		BaseMeasurements::getInstance().updateBaseCursor();
     }
 
-    deltaRollDeg = radToDeg(calcRingDelta(roll, baseRoll) - calcRingDelta(prevRoll, baseRoll)); // normalized to avoid overflow
+	deltaRollDeg = radToDeg(calcRingDelta(roll, BaseMeasurements::getInstance().getBaseRoll()) - calcRingDelta(prevRoll, BaseMeasurements::getInstance().getBaseRoll())); // normalized to avoid overflow
     prevRoll = roll;
     prevRollDeg = (int)(prevRoll * (180 / M_PI));
-    deltaPitchDeg = radToDeg(calcRingDelta(pitch, basePitch) - calcRingDelta(prevPitch, basePitch)); // normalized to avoid overflow
+	deltaPitchDeg = radToDeg(calcRingDelta(pitch, BaseMeasurements::getInstance().getBasePitch()) - calcRingDelta(prevPitch, BaseMeasurements::getInstance().getBasePitch())); // normalized to avoid overflow
     prevPitch = pitch;
-    deltaYawDeg = radToDeg(calcRingDelta(yaw, baseYaw) - calcRingDelta(prevYaw, baseYaw)); // normalized to avoid overflow
+	deltaYawDeg = radToDeg(calcRingDelta(yaw, BaseMeasurements::getInstance().getBaseYaw()) - calcRingDelta(prevYaw, BaseMeasurements::getInstance().getBaseYaw())); // normalized to avoid overflow
     prevYaw = yaw;
 
     unsigned int gestIdx;
-    switch (controlStateHandle->getMode())
+	switch (currMode)
     {
     case MOUSE_MODE:
-        performMouseModeFunc(outputToSharedCommandData);
+		performMouseModeFunc(outputToSharedCommandData);
         break;
     case GESTURE_HOLD_ONE:
         gestIdx = 0;
@@ -91,12 +100,15 @@ void MyoTranslationFilter::process()
         break;
     }
 
-    if (controlStateHandle->getMode() != MOUSE_MODE)
+    if (currMode != MOUSE_MODE)
     {
         if (previousMode == MOUSE_MODE)
         {
             point mouseUnitVelocity = point(0, 0);
             outputToSharedCommandData[VELOCITY_INPUT] = mouseUnitVelocity;
+
+			vector2D noDelta = vector2D(0, 0);
+			outputToSharedCommandData[DELTA_INPUT] = noDelta;
         }
     }
 
@@ -107,13 +119,24 @@ void MyoTranslationFilter::process()
 
 point MyoTranslationFilter::getMouseUnitVelocity(float pitch, float yaw)
 {
-    float deltaPitch = calcRingDelta(pitch, basePitch);
-    float deltaYaw = calcRingDelta(yaw, baseYaw); 
+	float deltaPitch = calcRingDelta(pitch, BaseMeasurements::getInstance().getBasePitch());
+	float deltaYaw = calcRingDelta(yaw, BaseMeasurements::getInstance().getBaseYaw());
 
     float unitPitch = (deltaPitch >= 0) ? std::min(1.0f, deltaPitch / MAX_PITCH_ANGLE) : std::max(-1.0f, deltaPitch / MAX_PITCH_ANGLE);
     float unitYaw = (deltaYaw >= 0) ? std::min(1.0f, deltaYaw / MAX_YAW_ANGLE) : std::max(-1.0f, deltaYaw / MAX_YAW_ANGLE);
 
     return point((int) (unitYaw * 100), (int) (unitPitch * 100));
+}
+
+vector2D MyoTranslationFilter::getMouseDelta(float pitch, float yaw)
+{
+	float deltaPitch = calcRingDelta(pitch, BaseMeasurements::getInstance().getBasePitch());
+	float deltaYaw = calcRingDelta(yaw, BaseMeasurements::getInstance().getBaseYaw());
+
+	float relativePitch = (deltaPitch / MAX_PITCH_ANGLE) * 100;
+	float relativeYaw = (deltaYaw / MAX_YAW_ANGLE) * 100;
+
+	return vector2D((double)relativeYaw, (double)relativePitch);
 }
 
 float MyoTranslationFilter::getPitchFromQuaternion(float x, float y, float z, float w, Arm arm, XDirection xDirection)
@@ -193,7 +216,7 @@ float MyoTranslationFilter::calcRingDelta(float current, float base)
 
 void MyoTranslationFilter::performHoldModeFunc(unsigned int holdNum, filterDataMap& outputToSharedCommandData)
 {
-    commandData command;
+    CommandData command;
     command.type = commandType::KYBRD_CMD;
     command.name = "HoldMode Command";
     command.action.kybd = kybdCmds::NO_CMD;
@@ -201,7 +224,7 @@ void MyoTranslationFilter::performHoldModeFunc(unsigned int holdNum, filterDataM
     GestureHoldModeAction currentHoldModeAction = gestHoldModeAction[holdNum];
     float thresh = .1;
     
-    commandData cd;
+    CommandData cd;
     angleData ad;
     bool tryAction = false;
 
@@ -264,12 +287,15 @@ void MyoTranslationFilter::performMouseModeFunc(filterDataMap& outputToSharedCom
 {
     point mouseUnitVelocity = getMouseUnitVelocity(pitch, yaw);
     outputToSharedCommandData[VELOCITY_INPUT] = mouseUnitVelocity;
+
+	outputToSharedCommandData[DELTA_INPUT] = getMouseDelta(pitch, yaw);;
 }
 
 void MyoTranslationFilter::performeKybdModeFunc(filterDataMap& outputToSharedCommandData)
 {
+#ifdef BUILD_KEYBOARD
     keyboardAngle myoAngle;
-
+	
     point myoAnglePoint = getMouseUnitVelocity(pitch, yaw);
     unsigned int magnitude = sqrt(pow(myoAnglePoint.x, 2) + pow(myoAnglePoint.y, 2));
     myoAngle.ringThreshReached = false;
@@ -277,11 +303,11 @@ void MyoTranslationFilter::performeKybdModeFunc(filterDataMap& outputToSharedCom
     {
         myoAngle.ringThreshReached = true;
     }
-
+	
     // TEMP TODO for debug only
     myoAngle.x = myoAnglePoint.x;
     myoAngle.y = myoAnglePoint.y;
-
+	
     // TODO - verify/disprove this function 180 - (180.0 / M_PI) * atan2((double)myoAnglePoint.y, (double)myoAnglePoint.x);
     // using 90 instead of 180 *seems* to make it better, but then the upper left quadrant is unnaccessable.
     int myoAngleDegree = 90 - (180.0 / M_PI) * atan2((double)myoAnglePoint.y, (double)myoAnglePoint.x); // NEED to add section size/2 TODO
@@ -289,10 +315,11 @@ void MyoTranslationFilter::performeKybdModeFunc(filterDataMap& outputToSharedCom
     {
         myoAngleDegree += 360;
     }
-
+	
     myoAngle.angle = myoAngleDegree;
-
+	
     outputToSharedCommandData[ANGLE_INPUT] = myoAngle;
+#endif
 }
 
 bool MyoTranslationFilter::initGestHoldModeActionArr(void)
@@ -324,9 +351,9 @@ bool MyoTranslationFilter::initGestHoldModeActionArr(void)
 
     ad.angleType = angleData::AngleType::PITCH;
     ad.anglePositive = true;
-    initOkay &= gestHoldModeAction[GESTURE_THUMB_TO_PINKY].addToActionMap(ad, kybdCmds::ZOOM_IN);
+    initOkay &= gestHoldModeAction[GESTURE_DOUBLE_TAP].addToActionMap(ad, kybdCmds::ZOOM_IN);
     ad.anglePositive = false;
-    initOkay &= gestHoldModeAction[GESTURE_THUMB_TO_PINKY].addToActionMap(ad, kybdCmds::ZOOM_OUT);
+    initOkay &= gestHoldModeAction[GESTURE_DOUBLE_TAP].addToActionMap(ad, kybdCmds::ZOOM_OUT);
 
     ad.angleType = angleData::AngleType::YAW;
     ad.anglePositive = false;
@@ -377,9 +404,9 @@ filterError MyoTranslationFilter::updateBasedOnProfile(ProfileManager& pm, std::
         {
             gestType = GESTURE_FINGERS_SPREAD;
         }
-        else if (it->gesture == "thumbToPinky")
+        else if (it->gesture == "doubleTap")
         {
-            gestType = GESTURE_THUMB_TO_PINKY;
+            gestType = GESTURE_DOUBLE_TAP;
         }
         else if (it->gesture == "waveIn")
         {

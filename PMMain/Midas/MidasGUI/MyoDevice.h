@@ -2,6 +2,7 @@
 #include "WearableDevice.h"
 #include "FilterPipeline.h"
 #include "ControlState.h"
+#include "MyoState.h"
 #include "myo\myo.hpp"
 #include "MainGUI.h"
 #include "ProfileSignaller.h"
@@ -35,8 +36,8 @@ public:
      * changed, and so that the device can read the current state.
      * @param applicationIdentifier A myo-specific app identifier used to create the myo hub.
      */
-    MyoDevice(SharedCommandData* sharedCommandData, ControlState* controlState, std::string applicationIdentifier, 
-        MainGUI *mainGuiHandle, ProfileManager* profileManagerHandle);
+	MyoDevice(SharedCommandData* sharedCommandData, ControlState* controlState, MyoState* myoState, std::string applicationIdentifier,
+		MainGUI *mainGuiHandle, ProfileManager* profileManagerHandle);
     ~MyoDevice();
 
     /**
@@ -106,6 +107,12 @@ private:
         void onAccelerometerData(Myo* myo, uint64_t timestamp, const Vector3<float>& accel);
         void onGyroscopeData(Myo* myo, uint64_t timestamp, const Vector3<float>& gyro);
         void onRssi(Myo* myo, uint64_t timestamp, int8_t rssi);
+		// Added on upgrade to SDK Win 0.9.0
+		void onUnlock(Myo* myo, uint64_t timestamp);
+		void onLock(Myo* myo, uint64_t timestamp);
+		void onBatteryLevelReceived(myo::Myo* myo, uint64_t timestamp, uint8_t level);
+		void onEmgData(myo::Myo* myo, uint64_t timestamp, const int8_t* emg);
+		void onWarmupCompleted(myo::Myo* myo, uint64_t timestamp, WarmupResult warmupResult);
 
     private:
         MyoDevice& parent;
@@ -115,6 +122,7 @@ private:
     unsigned int durationInMilliseconds;
     std::string appIdentifier;
     ControlState* state;
+	MyoState* myoState;
     FilterPipeline posePipeline, orientationPipeline, rssiPipeline,
         connectPipeline;
     MainGUI *mainGui;
