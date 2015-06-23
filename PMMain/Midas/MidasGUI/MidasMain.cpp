@@ -99,7 +99,9 @@ int midasMain(MidasThread *threadHandle, MainGUI *mainGui, ProfileManager *pm) {
 	myoState.setPoseHistLen(5); // arbitrary for now.
 	myoState.setSpatialHistLen(5);
 	BaseMeasurements::getInstance().setMyoStateHandle(&myoState);
+	BaseMeasurements::getInstance().setControlStateHandle(&controlState);
 	MyoDevice* myoDevice = new MyoDevice(&sharedData, &controlState, &myoState, "com.midas.midas-test", mainGui, pm);
+    myoState.setMyo(myoDevice);
     MouseCtrl* mouseCtrl = new MouseCtrl();
     KybrdCtrl* kybrdCtrl = new KybrdCtrl();
 	KeyboardController* keyboardController = new KeyboardController();

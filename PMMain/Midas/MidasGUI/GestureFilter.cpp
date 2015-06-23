@@ -4,6 +4,7 @@
 #include "ProfileManager.h"
 #include "BaseMeasurements.h"
 #include "FilterPipeline.h"
+#include "MyoDevice.h"
 #include <time.h>
 #include <thread>
 #include <qtranslator.h>
@@ -63,8 +64,14 @@ void GestureFilter::process()
 
 	if (gesture != lastPoseType)
 	{
-		// Update BaseCursor Position <-- fiddling for now still June 16
-		//BaseMeasurements::getInstance().setCurrentAnglesAsBase();
+        /* HACK - Myo API used to enforce that gestures ALWAYS had a 'rest' gesture inbetween other poses.
+         * Going to manually insert a rest inbetween sequences without a rest.
+         */
+        if (lastPoseType != Pose::rest && gesture != Pose::rest)
+        {
+            gesture = Pose::rest;
+        }
+
 		BaseMeasurements::getInstance().setCurrentPose(gesture);
 		
 		BaseMeasurements::getInstance().setScreenSize(0,0); // dont actually need to do. TODO - remove
@@ -116,9 +123,11 @@ void GestureFilter::process()
 void GestureFilter::emitPoseData(int poseInt)
 {
     std::vector<int> ids;
+    std::vector<PoseLength> lengths;
     ids.push_back(poseInt);
+    lengths.push_back(PoseLength::TAP); // use Tap since pose data shouldnt have an overlay
 
-    std::vector<sequenceImageSet> images = imageManager.formSequenceSetFromIds(ids);
+    std::vector<sequenceImageSet> images = imageManager.formSequenceSetFromIds(ids, lengths);
 
     if (images.size() == 1)
     {
@@ -130,7 +139,7 @@ void GestureFilter::registerMouseSequences(void)
 {
     // Register sequence to left click in mouse mode and gesture mode
     sequence clickSeq;
-    clickSeq.push_back(SeqElement(MYO_GESTURE_LEFT_MOUSE, SeqElement::PoseLength::IMMEDIATE));
+    clickSeq.push_back(SeqElement(MYO_GESTURE_LEFT_MOUSE, PoseLength::IMMEDIATE));
     CommandData clickResp;
     clickResp.name = "Left Click";
     clickResp.type = commandType::MOUSE_CMD;
@@ -138,26 +147,26 @@ void GestureFilter::registerMouseSequences(void)
     int ss = (int)gestSeqRecorder->registerSequence(midasMode::MOUSE_MODE, clickSeq, clickResp, "Left Click");
     // setup clicking in gesture Mode
     clickResp.action.mouse = mouseCmds::LEFT_CLICK;
-    clickSeq.at(0).poseLen = SeqElement::PoseLength::TAP; 
+    clickSeq.at(0).poseLen = PoseLength::TAP; 
     ss |= (int)gestSeqRecorder->registerSequence(midasMode::GESTURE_MODE, clickSeq, clickResp, "Left Click");
 
     // Register sequence to right click in mouse mode and gesture mode
     clickSeq.clear();
-    clickSeq.push_back(SeqElement(MYO_GESTURE_RIGHT_MOUSE, SeqElement::PoseLength::IMMEDIATE));
+    clickSeq.push_back(SeqElement(MYO_GESTURE_RIGHT_MOUSE, PoseLength::IMMEDIATE));
     clickResp.name = "Right Click";
     clickResp.type = commandType::MOUSE_CMD;
     clickResp.action.mouse = mouseCmds::RIGHT_HOLD;
     ss |= (int)gestSeqRecorder->registerSequence(midasMode::MOUSE_MODE, clickSeq, clickResp, "Right Click");
     // setup clicking in gesture Mode
     clickResp.action.mouse = mouseCmds::RIGHT_CLICK;
-    clickSeq.at(0).poseLen = SeqElement::PoseLength::TAP;
+    clickSeq.at(0).poseLen = PoseLength::TAP;
     ss |= (int)gestSeqRecorder->registerSequence(midasMode::GESTURE_MODE, clickSeq, clickResp, "Right Click");
 
     // allow clicking and dragging of any button by releasing mouse buttons on rest (immediate still).
     clickResp.action.mouse = mouseCmds::RELEASE_LRM_BUTS;
     clickResp.name = "Release Mouse";
 	clickSeq.clear();
-    clickSeq.push_back(SeqElement(Pose::rest, SeqElement::PoseLength::IMMEDIATE));
+    clickSeq.push_back(SeqElement(Pose::rest, PoseLength::IMMEDIATE));
     ss |= (int)gestSeqRecorder->registerSequence(midasMode::MOUSE_MODE, clickSeq, clickResp, "Release Mouse");
 
     if (ss != (int)SequenceStatus::SUCCESS)
@@ -207,7 +216,7 @@ void GestureFilter::registerKeyboardSequences(void)
     kybrdGUIResponse.name = "Hold Select";
     kybrdGUIResponse.type = commandType::KYBRD_GUI_CMD;
     kybrdGUIResponse.action.kybdGUI = kybdGUICmds::HOLD_SELECT;
-    kybrdGUISequence[0] = (SeqElement(Pose::Type::fist, SeqElement::PoseLength::HOLD));
+    kybrdGUISequence[0] = (SeqElement(Pose::Type::fist, PoseLength::HOLD));
     ss |= (int)gestSeqRecorder->registerSequence(midasMode::KEYBOARD_MODE, kybrdGUISequence, kybrdGUIResponse, "Hold Select");
 
     kybrdGUIResponse.name = "Change Wheels";
@@ -299,7 +308,7 @@ void GestureFilter::registerStateSequences(void)
 
     // Register sequence from Gesture Mode to Gesture Hold Modes
     sequence toHoldGestSeq;
-    toHoldGestSeq.push_back(SeqElement(Pose::Type::doubleTap, SeqElement::PoseLength::HOLD));
+    toHoldGestSeq.push_back(SeqElement(Pose::Type::doubleTap, PoseLength::HOLD));
     CommandData toHoldGestResponse;
     toHoldGestResponse.name = "Gesture to Hold Gesture X";
     toHoldGestResponse.type = commandType::STATE_CHANGE;
@@ -326,7 +335,7 @@ void GestureFilter::registerStateSequences(void)
     // Register sequences back to Gesture Mode from Gesture Hold Modes
 
     sequence fromHoldGestSeq;
-    fromHoldGestSeq.push_back(SeqElement(Pose::Type::rest, SeqElement::PoseLength::IMMEDIATE));
+    fromHoldGestSeq.push_back(SeqElement(Pose::Type::rest, PoseLength::IMMEDIATE));
     CommandData fromHoldGestResponse;
     fromHoldGestResponse.name = "Gesture from Hold Gesture X";
     fromHoldGestResponse.type = commandType::STATE_CHANGE;
@@ -346,6 +355,11 @@ void GestureFilter::registerStateSequences(void)
 
 void GestureFilter::handleStateChange(CommandData response, GestureFilter *gf)
 {
+    if (gf->controlStateHandle->getMode() == LOCK_MODE || response.action.mode == LOCK_MODE)
+    {
+        gf->myoStateHandle->peakMyo()->vibrateMyo(myo::Myo::VibrationType::vibrationShort);
+    }
+
     if (response.type != commandType::STATE_CHANGE)
     {
         // Should NOT have made it here
@@ -517,7 +531,7 @@ filterError GestureFilter::updateBasedOnProfile(ProfileManager& pm, std::string 
         sequence seq;
         for (std::vector<gesture>::iterator gestureIt = it->gestures.begin(); gestureIt != it->gestures.end(); ++gestureIt)
         {
-            SeqElement::PoseLength len = profileGestureTypeToPoseLength[gestureIt->type];
+            PoseLength len = profileGestureTypeToPoseLength[gestureIt->type];
             Pose::Type type = profileGestureNameToType[gestureIt->name];
             seq.push_back(SeqElement(type, len));
         }
@@ -599,13 +613,13 @@ filterError GestureFilter::updateBasedOnProfile(ProfileManager& pm, std::string 
 //    clickResp.action.mouse = mouseCmds::RELEASE_LRM_BUTS;
 //    clickResp.name = "Release Mouse";
 //    clickResp.type = commandType::MOUSE_CMD;
-//    clickSeq.push_back(SeqElement(Pose::rest, SeqElement::PoseLength::IMMEDIATE));
+//    clickSeq.push_back(SeqElement(Pose::rest, PoseLength::IMMEDIATE));
 //    ss |= (int)gestSeqRecorder->registerSequence(midasMode::MOUSE_MODE, clickSeq, clickResp, "Release Mouse");
 
 #ifdef BUILD_KEYBOARD
     // Register sequence from Gesture Mode to Gesture Hold Modes
     sequence toHoldGestSeq;
-    toHoldGestSeq.push_back(SeqElement(Pose::Type::doubleTap, SeqElement::PoseLength::HOLD));
+    toHoldGestSeq.push_back(SeqElement(Pose::Type::doubleTap, PoseLength::HOLD));
     CommandData toHoldGestResponse;
     toHoldGestResponse.name = "Gesture to Hold Gesture X";
     toHoldGestResponse.type = commandType::STATE_CHANGE;
@@ -630,7 +644,7 @@ filterError GestureFilter::updateBasedOnProfile(ProfileManager& pm, std::string 
     ss |= (int)gestSeqRecorder->registerSequence(midasMode::GESTURE_MODE, toHoldGestSeq, toHoldGestResponse, "Gesture to Hold Wave Out");
 
     sequence fromHoldGestSeq;
-    fromHoldGestSeq.push_back(SeqElement(Pose::Type::rest, SeqElement::PoseLength::IMMEDIATE));
+    fromHoldGestSeq.push_back(SeqElement(Pose::Type::rest, PoseLength::IMMEDIATE));
     CommandData fromHoldGestResponse;
     fromHoldGestResponse.name = "Gesture from Hold Gesture X";
     fromHoldGestResponse.type = commandType::STATE_CHANGE;

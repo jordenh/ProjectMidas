@@ -15,8 +15,8 @@
 #define GUI_HEIGHT_OFFSET_FROM_BOTTOM (MOUSE_INDICATOR_SIZE + INFO_INDICATOR_HEIGHT + 3*WIDGET_BUFFER)
 
 #define SPECIFIC_PROFILE_ICON_SIZE 60
-#define PROFILE_ICON0_ACTIVE	"Resources\\icons\\Ring_Post.png"	
-#define PROFILE_ICON0_INACTIVE	"Resources\\icons\\RingBW.png"		
+#define PROFILE_ICON0_ACTIVE	"Resources\\icons\\Ring_Post2.png"	
+#define PROFILE_ICON0_INACTIVE	"Resources\\icons\\RingBW2.png"		
 #define PROFILE_ICON1_ACTIVE	"Resources\\icons\\Pencil_Post.png"
 #define PROFILE_ICON1_INACTIVE	"Resources\\icons\\PencilBW.png"
 
@@ -143,13 +143,25 @@ static std::string modeToString(midasMode mm)
     switch (mm)
     {
     case LOCK_MODE:   
+#ifdef BUILD_FOR_KARDIUM
+        return "Basic Mode";
+#else
         return "Locked";
+#endif
     case MOUSE_MODE:  
-        return "Mouse Mode";
+#ifdef BUILD_FOR_KARDIUM
+        return "Advanced Mode";
+#else
+        return "Unlocked - Mouse";
+#endif
     case KEYBOARD_MODE:  
-        return "Keyboard Mode";
+        return "Unlocked - Keyboard";
     case GESTURE_MODE:  
-        return "Gesture Mode";
+#ifdef BUILD_FOR_KARDIUM
+        return "Advanced Mode";
+#else
+        return "Unlocked";
+#endif
     case GESTURE_HOLD_ONE:
         return "Hold1 Mode";
     case GESTURE_HOLD_TWO:
@@ -193,7 +205,7 @@ struct point {
 
 struct vector2D {
 	double x, y;
-	vector2D(int xVal = 0, int yVal = 0) : x(xVal), y(yVal) { }
+    vector2D(double xVal = 0, double yVal = 0) : x(xVal), y(yVal) { }
 };
 
 struct vector3D {
