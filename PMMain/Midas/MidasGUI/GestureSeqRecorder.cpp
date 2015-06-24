@@ -281,13 +281,6 @@ SequenceStatus GestureSeqRecorder::checkLegalRegister(midasMode mode, sequenceIn
                 
                 if (gestInQuestion.poseLen == PoseLength::IMMEDIATE || baseGest.poseLen == PoseLength::IMMEDIATE)
                 {
-                    // Jun 23 2015 TODO - verify if removing this works or not. Not sure what "not fully supported" meant.
-                    //if (gestureIdx > 1)
-                    //{
-                    //    // can ONLY have length one IMMEDIATE types. This allows for very quick actions, such as clicking of a cursor,
-                    //    // but is not fully supported.
-                    //    return SequenceStatus::INVALID_SEQUENCE;
-                    //}
                     if (gestInQuestion.type == baseGest.type)
                     {
                         conflict = true;
@@ -573,7 +566,7 @@ void GestureSeqRecorder::printStatus(bool verbose)
             if (progress < progressGoal)
             {
                 // more gestures to perform before completion - called RIGHT after progress is incremented, so print it's
-                // current value as the index... maybe change. TODO.
+                // current value as the index... maybe change.
                 std::cout << ", Next Gesture: " << PoseTypeToString((*it)->seq.at(progress).type);
                 emitString += ", Next Gesture: " + PoseTypeToString((*it)->seq.at(progress).type);
             }

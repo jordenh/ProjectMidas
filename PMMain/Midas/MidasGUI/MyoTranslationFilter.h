@@ -23,7 +23,7 @@ using namespace myo;
 #define INPUT_X_DIRECTION "xDirection"
 
 #define MAX_PITCH_ANGLE 25.0f /* Maximum delta angle in degrees */
-#define MAX_YAW_ANGLE 35.0f /* Maximum delta angle in degrees */
+#define MAX_YAW_ANGLE 30.0f /* Maximum delta angle in degrees */
 
 #define KEYBOARD_THRESH_MAG 30
 

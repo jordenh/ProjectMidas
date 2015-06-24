@@ -27,58 +27,10 @@
 					</command>
 				</commands>
             </sequence>
-			<sequence state="gestureMode" name="Lock">
-                <gestures>
-					<gesture type="immediate">doubleTap</gesture>
-                </gestures>
-                <commands>
-					<command type="stateChange">
-						<actions>
-							<action>lockMode</action>
-						</actions>
-					</command>
-				</commands>
-            </sequence>
-			<sequence state="mouseMode" name="Stop Mouse">
-                <gestures>
-					<gesture type="immediate">fingersSpread</gesture>
-                </gestures>
-                <commands>
-					<command type="stateChange">
-						<actions>
-							<action>gestureMode</action>
-						</actions>
-					</command>
-				</commands>
-            </sequence>
-			<sequence state="gestureMode" name="Start Mouse">
-                <gestures>
-					<gesture type="immediate">fingersSpread</gesture>
-                </gestures>
-                <commands>
-					<command type="stateChange">
-						<actions>
-							<action>mouseMode</action>
-						</actions>
-					</command>
-				</commands>
-            </sequence>
 			
-			<sequence state="mouseMode" name="Middle Button">
-                <gestures>
-					<gesture type="immediate">fist</gesture>
-                </gestures>
-                <commands>
-					<command type="mouse">
-						<actions>
-							<action>middleHold</action>
-						</actions>
-					</command>
-				</commands>
-            </sequence>
 			<sequence state="mouseMode" name="Left Button">
                 <gestures>
-					<gesture type="immediate">waveOut</gesture>
+					<gesture type="immediate">fist</gesture>
                 </gestures>
                 <commands>
 					<command type="mouse">
@@ -88,14 +40,26 @@
 					</command>
 				</commands>
             </sequence>
-			<sequence state="mouseMode" name="Right Button">
+			<sequence state="mouseMode" name="Middle Button">
                 <gestures>
-					<gesture type="immediate">waveIn</gesture>
+					<gesture type="immediate">fingersSpread</gesture>
                 </gestures>
                 <commands>
 					<command type="mouse">
 						<actions>
-							<action>rightHold</action>
+							<action>middleHold</action>
+						</actions>
+					</command>
+				</commands>
+            </sequence>
+			<sequence state="mouseMode" name="Right Click">
+                <gestures>
+					<gesture type="immediate">waveOut</gesture>
+                </gestures>
+                <commands>
+					<command type="mouse">
+						<actions>
+							<action>rightClick</action>
 						</actions>
 					</command>
 				</commands>
@@ -112,54 +76,9 @@
 					</command>
 				</commands>
             </sequence>
-			
-			<sequence state="gestureMode" name="Left Button">
-                <gestures>
-					<gesture type="immediate">fist</gesture>
-                </gestures>
-                <commands>
-					<command type="mouse">
-						<actions>
-							<action>leftClick</action>
-						</actions>
-					</command>
-				</commands>
-            </sequence>
-			<sequence state="gestureMode" name="Middle Button">
-                <gestures>
-					<gesture type="immediate">waveOut</gesture>
-                </gestures>
-                <commands>
-					<command type="mouse">
-						<actions>
-							<action>middleClick</action>
-						</actions>
-					</command>
-				</commands>
-            </sequence>
-			<sequence state="gestureMode" name="Right Button">
-                <gestures>
-					<gesture type="immediate">waveIn</gesture>
-                </gestures>
-                <commands>
-					<command type="mouse">
-						<actions>
-							<action>rightClick</action>
-						</actions>
-					</command>
-				</commands>
-            </sequence>
-        </sequences>
-		
-		
-        <holds>
-            <hold gesture="fist">
-                <angle type="roll">
-                    <anglePositive>volumeUp</anglePositive>
-                    <angleNegative>volumeDown</angleNegative>
-                </angle>
-            </hold>
-        </holds>
+		</sequences>
+		<holds>
+		</holds>
 	</profile>
 	
 	

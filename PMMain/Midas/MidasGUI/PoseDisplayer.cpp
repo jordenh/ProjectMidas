@@ -56,7 +56,6 @@ PoseDisplayer::~PoseDisplayer()
 
 void PoseDisplayer::resizeEvent(QResizeEvent *event)
 {
-    // todo - could handle resize.
 }
 
 QSize PoseDisplayer::sizeHint() const

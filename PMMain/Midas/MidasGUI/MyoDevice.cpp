@@ -236,7 +236,6 @@ void MyoDevice::MyoCallbacks::onGyroscopeData(Myo* myo, uint64_t timestamp, cons
     //parent.orientationPipeline.startPipeline(input); //TODO - solve race condition and enable this
 }
 
-// TODO: Implement
 void MyoDevice::MyoCallbacks::onPair(Myo* myo, uint64_t timestamp, FirmwareVersion firmwareVersion) { 
     std::cout << "on pair." << std::endl; 
     parent.currentMyo = myo;

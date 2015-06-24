@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
 	std::vector<ringData> kybrdRingData;
 	KeyboardSettingsReader readFile;
     std::string fileName = "keyboardData.txt";
-    readFile.readKeyboardSetupFile(kybrdRingData,fileName); // TODO - might fail here.
+    readFile.readKeyboardSetupFile(kybrdRingData,fileName);
 	
 	MidasThread midasThread(&kybrdRingData);
 #else
