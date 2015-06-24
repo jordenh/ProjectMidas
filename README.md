@@ -5,12 +5,12 @@ A wearable interface for the Windows OS, replacing various peripherals.
 
 Please refer to PMMain/doc/Project Midas.docx for a full system overview.
 
-Currently setup to work with Myo Armband - 
-  - SDK Win 0.9.0
-  - Firmware 1.4.1670
-  - Myo Connect V 0.14.0
+Currently setup to work with Myo Armband:
+- SDK Win 0.9.0
+- Firmware 1.4.1670
+- Myo Connect V 0.14.0
 
-  To build MidasGUI:
+<b>To build MidasGUI:</b>
 
 - Need Visual Studio 2013
 - Download and install Qt 5.4.0 2013 x86 with opengl (qt-opensource-windows-x86-msvc2013_opengl-5.4.0.exe from http://download.qt.io/archive/qt/5.4/5.4.0/)
