@@ -33,6 +33,19 @@ MainGUI::MainGUI(MidasThread *mainThread, ProfileManager *pm, int deadZoneRad)
     layout = new QVBoxLayout;
 	layout->addWidget(sequenceDisplayer);
 
+#ifdef SHOW_PROFILE_BUTTONS
+    std::vector<profile>* profiles = pm->getProfiles();
+    std::vector<profile>::iterator it;
+    int profileHeights = 0;
+    for (it = profiles->begin(); it != profiles->end(); it++)
+    {
+        ProfileDisplayer* displayer = new ProfileDisplayer(it->profileName, PROF_INDICATOR_WIDTH, PROF_INDICATOR_HEIGHT, this);
+        profileHeights += displayer->height();
+        profileWidgets.push_back(displayer);
+        layout->addWidget(displayer, 0, Qt::AlignRight);
+    }
+#endif
+
 	// create HBox for specific profile icons: Change this icon to be specific to your app
 	QHBoxLayout *profileIconLayout = new QHBoxLayout;
 	profileIconLayout->addWidget(icon0);
