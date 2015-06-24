@@ -397,13 +397,12 @@ SequenceStatus GestureSeqRecorder::progressActiveSequences(Pose::Type gesture, C
         if ((seqProg < (*it)->seq.size()) &&
             (PoseLength::IMMEDIATE == (*it)->seq.at(seqProg).poseLen))
         {
-            // Handle IMMEDIATE uniquely, by not dealing with holdGestureTimer at all.
-
-            // June 23 2015 trying to deal with this.
+            // June 23 2015 trying to deal with Immediates properly.
             if (gesture == (*it)->seq.at(seqProg).type)
             {
                 // match! Progress forward :)
                 (*it)->progress++;
+                holdGestTimer = REQ_HOLD_TIME; // reset count on any progression
                 if ((*it)->progress == (*it)->seq.size())
                 {
                     // found a complete sequence!
