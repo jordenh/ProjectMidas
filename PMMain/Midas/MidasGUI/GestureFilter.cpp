@@ -49,7 +49,7 @@ GestureFilter::GestureFilter(ControlState* controlState, MyoState* myoState, clo
 
 GestureFilter::~GestureFilter()
 {
-    delete gestSeqRecorder; gestSeqRecorder = NULL;
+    //delete gestSeqRecorder; gestSeqRecorder = NULL;
 }
 
 void GestureFilter::process()
