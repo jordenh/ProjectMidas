@@ -2,9 +2,12 @@
 #define PROFILE_ICON_H
 
 #include "DraggableWidget.h"
+
 #include "MidasCommon.h"
-#include <qlayout.h>
 #include <qpixmap.h>
+
+class QLabel;
+class QHBoxLayout;
 
 class ProfileIcon : public QWidget
 {

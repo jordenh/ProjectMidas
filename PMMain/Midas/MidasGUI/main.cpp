@@ -3,6 +3,7 @@
 #include "MainGUI.h"
 
 #include <QtWidgets/QApplication>
+#include <qicon.h>
 
 #include "ProfileManager.h"
 

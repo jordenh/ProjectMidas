@@ -1,5 +1,8 @@
 #include "ProfileIcon.h"
 
+#include <qlabel.h>
+#include <qlayout.h>
+
 ProfileIcon::ProfileIcon(int widgetWidth, int widgetHeight, bool active, QPixmap imgActive, QPixmap imgInactive, QWidget *parent)
 	: QWidget(parent), indWidth(widgetWidth), indHeight(widgetHeight), imgActive(imgActive), imgInactive(imgInactive)
 {

@@ -1,22 +1,24 @@
 #ifndef MAIN_GUI_H
 #define MAIN_GUI_H
 
-#include <QDialog>
-#include "MouseIndicator.h"
-#include "SequenceDisplayer.h"
-#include "InfoIndicator.h"
-#include "GestureSignaller.h"
-#include "PoseDisplayer.h"
-#include "ProfileIcon.h"
-#include "ProfileDisplayer.h"
-#include "ProfileSignaller.h"
-#include "ProfileManager.h"
-#include "SettingsDisplayer.h"
-#include "SettingsSignaller.h"
+#include "DraggableWidget.h"
 
+class QVBoxLayout;
+class MidasThread;
+class MouseIndicator;
+class SequenceDisplayer;
+class InfoIndicator;
+class GestureSignaller;
+class PoseDisplayer;
+class ProfileIcon;
+class ProfileDisplayer;
+class ProfileSignaller;
+class ProfileManager;
+class SettingsDisplayer;
+class SettingsSignaller;
 #ifdef BUILD_KEYBOARD
-#include "KeyboardWidget.h"
-#include "DistanceWidget.h"
+class KeyboardWidget;
+class DistanceWidget;
 #endif
 
 /**

@@ -227,21 +227,6 @@
     <ClCompile Include="GeneratedFiles\Release\moc_ProfileIcon.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
-    <ClCompile Include="DistanceBar.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="DistanceWidget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="KeyboardSettingsReader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="KeyboardWidget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="RingData.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="GeneratedFiles\Debug\moc_DistanceBar.cpp">
       <Filter>Generated Files\Debug</Filter>
     </ClCompile>
@@ -284,6 +269,21 @@
     <ClCompile Include="SettingsSignaller.cpp">
       <Filter>Source Files\Midas\Signallers</Filter>
     </ClCompile>
+    <ClCompile Include="RingData.cpp">
+      <Filter>Source Files\Midas</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyboardWidget.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="DistanceBar.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="DistanceWidget.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyboardSettingsReader.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="MidasThread.h">
@@ -313,15 +313,6 @@
     <CustomBuild Include="PoseDisplayer.h">
       <Filter>Header Files\GUI</Filter>
     </CustomBuild>
-    <CustomBuild Include="DistanceBar.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="DistanceWidget.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="KeyboardWidget.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
     <CustomBuild Include="SettingsDisplayer.h">
       <Filter>Header Files\GUI</Filter>
     </CustomBuild>
@@ -333,6 +324,15 @@
     </CustomBuild>
     <CustomBuild Include="SettingsSignaller.h">
       <Filter>Header Files\Midas\Signallers</Filter>
+    </CustomBuild>
+    <CustomBuild Include="DistanceBar.h">
+      <Filter>Header Files\GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="DistanceWidget.h">
+      <Filter>Header Files\GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="KeyboardWidget.h">
+      <Filter>Header Files\GUI</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
@@ -408,11 +408,11 @@
     <ClInclude Include="MyoTranslationFilter.h">
       <Filter>Header Files\Midas\Filters</Filter>
     </ClInclude>
-    <ClInclude Include="KeyboardSettingsReader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="RingData.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Midas</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyboardSettingsReader.h">
+      <Filter>Header Files\GUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

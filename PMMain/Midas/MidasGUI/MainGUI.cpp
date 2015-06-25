@@ -1,11 +1,29 @@
 #define NOMINMAX
 
 #include "MainGUI.h"
+
 #include "ProfileDisplayer.h"
 #include <QApplication.h>
 #include <QDesktopWidget.h>
 #include <algorithm>
 #include <QEvent.h>
+#include <QDialog>
+#include "MouseIndicator.h"
+#include "SequenceDisplayer.h"
+#include "InfoIndicator.h"
+#include "GestureSignaller.h"
+#include "PoseDisplayer.h"
+#include "ProfileIcon.h"
+#include "ProfileDisplayer.h"
+#include "ProfileSignaller.h"
+#include "ProfileManager.h"
+#include "SettingsDisplayer.h"
+#include "SettingsSignaller.h"
+
+#ifdef BUILD_KEYBOARD
+#include "KeyboardWidget.h"
+#include "DistanceWidget.h"
+#endif
 
 #define SCREEN_RIGHT_BUFFER    20 
 #define SCREEN_BOTTOM_BUFFER   30
