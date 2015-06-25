@@ -1,11 +1,10 @@
 #ifndef _GESTURE_FILTER_H
 #define _GESTURE_FILTER_H
 
-#include "ControlState.h"
-#include "MyoState.h"
 #include "Filter.h"
-#include "GestureSeqRecorder.h"
-#include "MainGUI.h"
+#include "GestureSignaller.h"
+#include "SequenceImageManager.h"
+#include <ctime>
 
 #ifdef USE_SIMULATOR
 #include "MyoSimIncludes.hpp"
@@ -14,6 +13,12 @@ using namespace myoSim;
 #include "myo\myo.hpp"
 using namespace myo;
 #endif
+
+class CommandData;
+class ControlState;
+class MyoState;
+class GestureSeqRecorder;
+class MainGUI;
 
 #define GESTURE_INPUT "gesture"
 #define MYO_GESTURE_RIGHT_MOUSE Pose::fingersSpread

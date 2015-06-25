@@ -1,4 +1,6 @@
-#pragma once
+#ifndef FILTER_PIPELINE_H
+#define FILTER_PIPELINE_H
+
 #include <list>
 #include "Filter.h"
 
@@ -41,3 +43,4 @@ private:
     std::list<Filter*> filters;
 };
 
+#endif FILTER_PIPELINE_H

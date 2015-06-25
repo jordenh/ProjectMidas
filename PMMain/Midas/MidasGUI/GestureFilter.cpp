@@ -6,6 +6,10 @@
 #include "FilterPipeline.h"
 #include "MyoDevice.h"
 #include "SharedCommandData.h"
+#include "ControlState.h"
+#include "GestureSeqRecorder.h"
+#include "MyoState.h"
+#include "MainGUI.h"
 #include <time.h>
 #include <thread>
 #include <qtranslator.h>
