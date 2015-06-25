@@ -68,7 +68,8 @@ void SCDDigester::digest()
     }
 
 	vector2D mouseDelta = scdHandle->getDelta();
-	if (cntrlStateHandle->getMode() == midasMode::MOUSE_MODE)
+	if (cntrlStateHandle->getMode() == midasMode::MOUSE_MODE ||
+        cntrlStateHandle->getMode() == midasMode::MOUSE_MODE2)
 	{
 		mouseCtrl->sendCommand(mouseCmds::MOVE_ABSOLUTE, mouseDelta.x, -mouseDelta.y);
 	}

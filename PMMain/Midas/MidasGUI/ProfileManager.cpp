@@ -84,6 +84,7 @@ std::map<std::string, midasMode> profileActionToStateChange =
 {
     { "lockMode", LOCK_MODE },
     { "mouseMode", MOUSE_MODE },
+    { "mouseMode2", MOUSE_MODE2 },
     { "keyboardMode", KEYBOARD_MODE },
     { "gestureMode", GESTURE_MODE },
     { "gestureHoldOne", GESTURE_HOLD_ONE },

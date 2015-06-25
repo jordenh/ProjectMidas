@@ -402,6 +402,7 @@ filterDataMap GestureFilter::handleMouseCommand(CommandData response)
 {
 	filterDataMap outputToSharedCommandData;
     if (controlStateHandle->getMode() == midasMode::MOUSE_MODE ||
+        controlStateHandle->getMode() == midasMode::MOUSE_MODE2 ||
         controlStateHandle->getMode() == midasMode::GESTURE_MODE)
     {
         CommandData command;

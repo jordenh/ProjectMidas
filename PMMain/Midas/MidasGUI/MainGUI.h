@@ -11,6 +11,8 @@
 #include "ProfileDisplayer.h"
 #include "ProfileSignaller.h"
 #include "ProfileManager.h"
+#include "SettingsDisplayer.h"
+#include "SettingsSignaller.h"
 
 #ifdef BUILD_KEYBOARD
 #include "KeyboardWidget.h"
@@ -44,6 +46,8 @@ public:
     void connectSignallerToPoseDisplayer(GestureSignaller *signaller);
 	void connectSignallerToProfileIcons(GestureSignaller *signaller);
 
+    void connectSignallerToSettingsDisplayer(SettingsSignaller *signaller);
+
 #ifdef BUILD_KEYBOARD
 public:
 	void connectSignallerToKeyboardToggle(GestureSignaller *signaller);
@@ -63,6 +67,7 @@ private:
     InfoIndicator *infoIndicator;
     SequenceDisplayer *sequenceDisplayer;
     PoseDisplayer *poseDisplayer;
+    SettingsDisplayer *settingsDisplayer;
 	ProfileIcon *icon0;
 	ProfileIcon *icon1;
 	bool icon0IsActive;
