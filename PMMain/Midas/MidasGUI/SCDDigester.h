@@ -1,19 +1,6 @@
 #ifndef _SCD_DIGESTER_H
 #define _SCD_DIGESTER_H
 
-#include "SharedCommandData.h"
-#include "MidasThread.h"
-#include "ControlState.h"
-#include "MyoState.h"
-#include "MouseCtrl.h"
-#include "kybrdCtrl.h"
-#include "MyoCommon.h"
-#include "KeyboardContoller.h"
-#include "CommandData.h"
-#include "ProfileManager.h"
-#include "ProfileSignaller.h"
-#include <iostream>
-
 #ifdef BUILD_KEYBOARD
 #include "RingData.h"
 #endif
@@ -25,6 +12,16 @@ using namespace myoSim;
 #include "myo\myo.hpp"
 using namespace myo;
 #endif
+
+class CommandData;
+class KeyboardController;
+class SharedCommandData;
+class MidasThread;
+class ControlState;
+class MyoState;
+class MouseCtrl;
+class KybrdCtrl;
+class ProfileManager;
 
 class SCDDigester
 {

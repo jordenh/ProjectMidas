@@ -1,9 +1,9 @@
 #ifndef SEQUENCE_IMAGE_MANAGER_H
 #define SEQUENCE_IMAGE_MANAGER_H
 
+#include "MyoCommon.h"
 #include <map>
 #include <vector>
-#include "SequenceDisplayer.h"
 
 /* Rel. Image Paths */
 #define FINGER_SPREAD_LATER_PATH  "Resources\\BW200PxImgs\\fingerSpread.jpg"
