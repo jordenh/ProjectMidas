@@ -2,16 +2,15 @@
 #define MIDASTHREAD_H
 
 #include <QThread>
-#include <string>
-#include "MyoCommon.h"
-#include "ProfileManager.h"
 
 #ifdef BUILD_KEYBOARD
-#include "RingData.h"
+#include <vector>
+class ringData;
 class KeyboardWidget;
 #endif
 
 class MainGUI;
+class ProfileManager;
 
 class MidasThread : public QThread
 {

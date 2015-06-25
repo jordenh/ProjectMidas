@@ -1,5 +1,6 @@
 #include "ControlState.h"
 
+#include "SharedCommandData.h"
 
 ControlState::ControlState(SharedCommandData* SCDHandle)
 {

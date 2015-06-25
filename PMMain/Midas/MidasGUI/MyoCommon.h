@@ -2,9 +2,7 @@
 #define _MYO_COMMON_H
 
 #include "myo\myo.hpp"
-#include <string>
-#include <iostream>
-#include <QLabel.h>
+#include <qpixmap.h>
 
 #define CENTER_MAIN "Space"
 #define CENTER_HOLD "Enter"
@@ -17,6 +15,9 @@ using namespace myoSim;
 #else
 using namespace myo;
 #endif
+
+class String;
+class QLabel;
 
 // Enumeration to distinguish between:
 // TAP: 'short hold' ie, this is a pose that occurs for less time than REQ_HOLD_TIME,

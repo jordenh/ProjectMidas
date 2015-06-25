@@ -4,6 +4,7 @@
 
 #include <QtWidgets/QApplication>
 #include <qicon.h>
+#include <qlabel.h>
 
 #include "ProfileManager.h"
 

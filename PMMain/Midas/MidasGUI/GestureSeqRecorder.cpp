@@ -1,5 +1,7 @@
 #include "GestureSeqRecorder.h"
 #include "MidasMain.h"
+#include "ControlState.h"
+#include "MainGUI.h"
 
 unsigned int sequenceInfo::counter = 0;
 

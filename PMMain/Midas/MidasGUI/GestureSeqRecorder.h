@@ -1,19 +1,17 @@
 #ifndef _GESTURE_SEQ_RECORDER_H
 #define _GESTURE_SEQ_RECORDER_H
 
-#include "MidasCommon.h"
+
 #include "CommandData.h"
 #include "myo\myo.hpp"
-#include "MyoCommon.h"
-#include "ControlState.h"
-#include "MainGUI.h"
-#include "SequenceImageManager.h"
 #include "GestureSignaller.h"
+#include "SequenceImageManager.h"
+#include <ctime>
 #include <map>
 #include <vector>
 #include <list>
 #include <string>
-#include <iostream>
+#include <mutex>
 
 #ifdef USE_SIMULATOR
 #include "MyoSimIncludes.hpp"
@@ -22,8 +20,10 @@ using namespace myoSim;
 using namespace myo;
 #endif
 
-#define DEFAULT_PROG_MAX_DELTA 3000 // ms
+class ControlState;
+class MainGUI;
 
+#define DEFAULT_PROG_MAX_DELTA 3000 // ms
 #define REQ_HOLD_TIME 500 // ms
 
 enum class SequenceStatus {

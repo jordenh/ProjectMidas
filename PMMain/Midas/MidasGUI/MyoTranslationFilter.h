@@ -2,12 +2,9 @@
 #define _MYO_TRANSLATION_FILTER_H
 
 #include "Filter.h"
-#include "ControlState.h"
-#include "MyoState.h"
 #include "GestureHoldModeAction.h"
 #include "ProfileManager.h"
 #include "SettingsSignaller.h"
-#include "MainGUI.h"
 #include "myo\myo.hpp"
 
 #ifdef USE_SIMULATOR
@@ -16,6 +13,10 @@ using namespace myoSim;
 #else
 using namespace myo;
 #endif
+
+class MyoState;
+class ControlState;
+class MainGUI;
 
 #define INPUT_QUATERNION_X "quatDataX"
 #define INPUT_QUATERNION_Y "quatDataY"

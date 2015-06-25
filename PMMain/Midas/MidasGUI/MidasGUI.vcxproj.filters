@@ -63,6 +63,12 @@
     <Filter Include="Source Files\Midas\Signallers">
       <UniqueIdentifier>{faf7ae4d-6135-45af-85a8-83c07cdfc235}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Midas\KeyAndMouse">
+      <UniqueIdentifier>{6152ea76-2269-4398-9f3e-28aaadcfc3b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Midas\KeyAndMouse">
+      <UniqueIdentifier>{f4563729-022c-4bf1-8f70-b5582a439832}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -83,13 +89,7 @@
     <ClCompile Include="GestureSeqRecorder.cpp">
       <Filter>Source Files\Midas</Filter>
     </ClCompile>
-    <ClCompile Include="kybrdCtrl.cpp">
-      <Filter>Source Files\Midas</Filter>
-    </ClCompile>
     <ClCompile Include="MidasMain.cpp">
-      <Filter>Source Files\Midas</Filter>
-    </ClCompile>
-    <ClCompile Include="MouseCtrl.cpp">
       <Filter>Source Files\Midas</Filter>
     </ClCompile>
     <ClCompile Include="MyoCommon.cpp">
@@ -188,12 +188,6 @@
     <ClCompile Include="MyoState.cpp">
       <Filter>Source Files\Midas</Filter>
     </ClCompile>
-    <ClCompile Include="KeyboardVector.cpp">
-      <Filter>Source Files\Midas</Filter>
-    </ClCompile>
-    <ClCompile Include="KeyboardController.cpp">
-      <Filter>Source Files\Midas</Filter>
-    </ClCompile>
     <ClCompile Include="CommandData.cpp">
       <Filter>Source Files\Midas</Filter>
     </ClCompile>
@@ -284,6 +278,18 @@
     <ClCompile Include="KeyboardSettingsReader.cpp">
       <Filter>Source Files\GUI</Filter>
     </ClCompile>
+    <ClCompile Include="KeyboardController.cpp">
+      <Filter>Source Files\Midas\KeyAndMouse</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyboardVector.cpp">
+      <Filter>Source Files\Midas\KeyAndMouse</Filter>
+    </ClCompile>
+    <ClCompile Include="kybrdCtrl.cpp">
+      <Filter>Source Files\Midas\KeyAndMouse</Filter>
+    </ClCompile>
+    <ClCompile Include="MouseCtrl.cpp">
+      <Filter>Source Files\Midas\KeyAndMouse</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="MidasThread.h">
@@ -342,13 +348,7 @@
     <ClInclude Include="GestureSeqRecorder.h">
       <Filter>Header Files\Midas</Filter>
     </ClInclude>
-    <ClInclude Include="kybrdCtrl.h">
-      <Filter>Header Files\Midas</Filter>
-    </ClInclude>
     <ClInclude Include="MidasCommon.h">
-      <Filter>Header Files\Midas</Filter>
-    </ClInclude>
-    <ClInclude Include="MouseCtrl.h">
       <Filter>Header Files\Midas</Filter>
     </ClInclude>
     <ClInclude Include="MyoCommon.h">
@@ -373,12 +373,6 @@
       <Filter>Header Files\Midas</Filter>
     </ClInclude>
     <ClInclude Include="MyoState.h">
-      <Filter>Header Files\Midas</Filter>
-    </ClInclude>
-    <ClInclude Include="KeyboardVector.h">
-      <Filter>Header Files\Midas</Filter>
-    </ClInclude>
-    <ClInclude Include="KeyboardContoller.h">
       <Filter>Header Files\Midas</Filter>
     </ClInclude>
     <ClInclude Include="CommandData.h">
@@ -413,6 +407,18 @@
     </ClInclude>
     <ClInclude Include="KeyboardSettingsReader.h">
       <Filter>Header Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="kybrdCtrl.h">
+      <Filter>Header Files\Midas\KeyAndMouse</Filter>
+    </ClInclude>
+    <ClInclude Include="MouseCtrl.h">
+      <Filter>Header Files\Midas\KeyAndMouse</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyboardVector.h">
+      <Filter>Header Files\Midas\KeyAndMouse</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyboardContoller.h">
+      <Filter>Header Files\Midas\KeyAndMouse</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

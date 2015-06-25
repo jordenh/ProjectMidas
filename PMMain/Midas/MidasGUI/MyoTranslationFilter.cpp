@@ -1,5 +1,10 @@
 #define NOMINMAX
 #include "MyoTranslationFilter.h"
+
+#include "SharedCommandData.h"
+#include "ControlState.h"
+#include "MyoState.h"
+#include "MainGUI.h"
 #include "ProfileManager.h"
 #include "BaseMeasurements.h"
 #include "myo\myo.hpp"

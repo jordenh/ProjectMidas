@@ -1,5 +1,6 @@
 #ifdef BUILD_KEYBOARD
-#include <vector>
+
+class vector;
 
 #pragma once
 class ringData

@@ -1,8 +1,11 @@
 #ifndef MIDAS_MAIN_H
 #define MIDAS_MAIN_H
 
-#include "MidasThread.h"
-#include "ProfileManager.h"
+class MidasThread;
+class MainGUI;
+class ProfileManager;
+class ringData;
+#include <vector>
 
 #ifdef BUILD_KEYBOARD
 int midasMain(MidasThread *threadHandle, MainGUI *mainGui, ProfileManager *pm, std::vector<ringData> *kybrdRingData);

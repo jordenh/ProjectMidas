@@ -2,6 +2,11 @@
 #include "GestureFilter.h"
 #include "MyoTranslationFilter.h"
 #include "AveragingFilter.h"
+#include "SharedCommandData.h"
+#include "ControlState.h"
+#include "MyoState.h"
+#include "MainGUI.h"
+#include "ProfileManager.h"
 #include <cstdint>
 #include <iostream>
 #include <fstream>

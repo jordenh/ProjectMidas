@@ -5,6 +5,7 @@
 #include "BaseMeasurements.h"
 #include "FilterPipeline.h"
 #include "MyoDevice.h"
+#include "SharedCommandData.h"
 #include <time.h>
 #include <thread>
 #include <qtranslator.h>
