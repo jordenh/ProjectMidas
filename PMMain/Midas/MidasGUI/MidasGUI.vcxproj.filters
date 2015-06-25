@@ -57,6 +57,12 @@
     <Filter Include="Source Files\Midas\Filters">
       <UniqueIdentifier>{a7c29fee-1036-4ebf-9c00-110cf3750604}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Midas\Signallers">
+      <UniqueIdentifier>{c434ba93-7e85-4a67-b3dd-953b78680d71}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Midas\Signallers">
+      <UniqueIdentifier>{faf7ae4d-6135-45af-85a8-83c07cdfc235}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -149,9 +155,6 @@
     <ClCompile Include="MainGUI.cpp">
       <Filter>Source Files\GUI</Filter>
     </ClCompile>
-    <ClCompile Include="GestureSignaller.cpp">
-      <Filter>Source Files\Midas</Filter>
-    </ClCompile>
     <ClCompile Include="SequenceImageManager.cpp">
       <Filter>Source Files\Midas</Filter>
     </ClCompile>
@@ -195,9 +198,6 @@
       <Filter>Source Files\Midas</Filter>
     </ClCompile>
     <ClCompile Include="ProfileManager.cpp">
-      <Filter>Source Files\Midas\Profiles</Filter>
-    </ClCompile>
-    <ClCompile Include="ProfileSignaller.cpp">
       <Filter>Source Files\Midas\Profiles</Filter>
     </ClCompile>
     <ClCompile Include="BaseMeasurements.cpp">
@@ -260,6 +260,30 @@
     <ClCompile Include="GeneratedFiles\Release\moc_KeyboardWidget.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
+    <ClCompile Include="SettingsDisplayer.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_SettingsDisplayer.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_SettingsDisplayer.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="ProfileSignaller.cpp">
+      <Filter>Source Files\Midas\Signallers</Filter>
+    </ClCompile>
+    <ClCompile Include="GestureSignaller.cpp">
+      <Filter>Source Files\Midas\Signallers</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_SettingsSignaller.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_SettingsSignaller.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="SettingsSignaller.cpp">
+      <Filter>Source Files\Midas\Signallers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="MidasThread.h">
@@ -280,14 +304,8 @@
     <CustomBuild Include="MainGUI.h">
       <Filter>Header Files\GUI</Filter>
     </CustomBuild>
-    <CustomBuild Include="GestureSignaller.h">
-      <Filter>Header Files\Midas</Filter>
-    </CustomBuild>
     <CustomBuild Include="ProfileDisplayer.h">
       <Filter>Header Files\GUI</Filter>
-    </CustomBuild>
-    <CustomBuild Include="ProfileSignaller.h">
-      <Filter>Header Files\Midas\Profiles</Filter>
     </CustomBuild>
     <CustomBuild Include="ProfileIcon.h">
       <Filter>Header Files\GUI</Filter>
@@ -303,6 +321,18 @@
     </CustomBuild>
     <CustomBuild Include="KeyboardWidget.h">
       <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="SettingsDisplayer.h">
+      <Filter>Header Files\GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="GestureSignaller.h">
+      <Filter>Header Files\Midas\Signallers</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ProfileSignaller.h">
+      <Filter>Header Files\Midas\Signallers</Filter>
+    </CustomBuild>
+    <CustomBuild Include="SettingsSignaller.h">
+      <Filter>Header Files\Midas\Signallers</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>

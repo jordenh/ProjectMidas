@@ -46,6 +46,9 @@ MainGUI::MainGUI(MidasThread *mainThread, ProfileManager *pm, int deadZoneRad)
     }
 #endif
 
+    settingsDisplayer = new SettingsDisplayer(PROF_INDICATOR_WIDTH, INFO_INDICATOR_HEIGHT, this);
+    layout->addWidget(settingsDisplayer, 0, Qt::AlignRight);
+
 	// create HBox for specific profile icons: Change this icon to be specific to your app
 	QHBoxLayout *profileIconLayout = new QHBoxLayout;
 	profileIconLayout->addWidget(icon0);
@@ -118,6 +121,12 @@ void MainGUI::connectSignallerToKeyboardToggle(GestureSignaller *signaller)
 			this, SLOT(toggleKeyboard()));
 }
 #endif
+
+void MainGUI::connectSignallerToSettingsDisplayer(SettingsSignaller *signaller)
+{
+    QObject::connect(settingsDisplayer, SIGNAL(emitSliderValues(unsigned int, unsigned int)),
+        signaller, SLOT(handleSliderValues(unsigned int, unsigned int)));
+}
 
 void MainGUI::connectSignallerToProfileWidgets(ProfileSignaller* signaller)
 {

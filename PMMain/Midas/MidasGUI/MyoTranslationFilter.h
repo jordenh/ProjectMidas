@@ -6,6 +6,8 @@
 #include "MyoState.h"
 #include "GestureHoldModeAction.h"
 #include "ProfileManager.h"
+#include "SettingsSignaller.h"
+#include "MainGUI.h"
 #include "myo\myo.hpp"
 
 #ifdef USE_SIMULATOR
@@ -46,7 +48,7 @@ public:
      *
      * @param controlState A handle to ControlState, to keep track of the application state.
      */
-    MyoTranslationFilter(ControlState* controlState, MyoState* myoState);
+    MyoTranslationFilter(ControlState* controlState, MyoState* myoState, MainGUI *mainGuiHandle);
     ~MyoTranslationFilter();
 
     /**
@@ -136,6 +138,9 @@ private:
         roll, baseRoll, prevRoll, deltaRollDeg;
 
     GestureHoldModeAction gestHoldModeAction[5];
+
+    MainGUI *mainGui;
+    static SettingsSignaller settingsSignaller;
 };
 
 #endif

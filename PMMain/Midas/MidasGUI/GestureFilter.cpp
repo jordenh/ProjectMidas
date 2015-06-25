@@ -402,6 +402,7 @@ filterDataMap GestureFilter::handleMouseCommand(CommandData response)
 {
 	filterDataMap outputToSharedCommandData;
     if (controlStateHandle->getMode() == midasMode::MOUSE_MODE ||
+        controlStateHandle->getMode() == midasMode::MOUSE_MODE2 ||
         controlStateHandle->getMode() == midasMode::GESTURE_MODE)
     {
         CommandData command;
@@ -477,6 +478,10 @@ void callbackThreadWrapper(GestureFilter *gf)
     std::chrono::milliseconds period(SLEEP_LEN);
     do {
         std::this_thread::sleep_for(period);
+        if (gf->getGestureSeqRecorder() == NULL)
+        {
+            continue;// 
+        }
         gf->getGestureSeqRecorder()->checkProgressBaseTime();
 
         CommandData response;

@@ -110,7 +110,9 @@ float AveragingFilter::calcAvg(std::deque<float>& dq)
     {
         sum += *it++;
     }
-    return (float)sum / denom;
+    return (float)sum / denom; 
+    // JORDEN HACK TODO REMOVE - Changing from AVERAGING filter to DELAY filter
+    // return dq.front();
 }
 
 void AveragingFilter::replaceLastElement(float elem, std::deque<float>&dq)
