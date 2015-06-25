@@ -1,6 +1,7 @@
 #include "ProfileDisplayer.h"
 #include <QLabel.h>
 #include <QEvent.h>
+#include <QGridLayout.h>
 
 ProfileDisplayer::ProfileDisplayer(std::string name, int widgetWidth, int widgetHeight, QWidget *parent)
     : QFrame(parent), indWidth(widgetWidth), indHeight(widgetHeight), profileName(name)

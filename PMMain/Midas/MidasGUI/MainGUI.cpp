@@ -8,6 +8,7 @@
 #include <algorithm>
 #include <QEvent.h>
 #include <QDialog>
+#include <qlayout.h>
 #include "MouseIndicator.h"
 #include "SequenceDisplayer.h"
 #include "InfoIndicator.h"
@@ -19,6 +20,7 @@
 #include "ProfileManager.h"
 #include "SettingsDisplayer.h"
 #include "SettingsSignaller.h"
+
 
 #ifdef BUILD_KEYBOARD
 #include "KeyboardWidget.h"

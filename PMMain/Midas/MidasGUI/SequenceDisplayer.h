@@ -1,14 +1,15 @@
 #ifndef SEQUENCE_DISPLAYER_H
 #define SEQUENCE_DISPLAYER_H
 
-#include "DraggableWidget.h"
+#include <qwidget.h>
+
 #include "MyoCommon.h"
-#include "MidasCommon.h"
-#include <QGridLayout.h>
-#include <string>
+
 #include <map>
 #include <vector>
-#include <string>
+
+class QGridLayout;
+class QLabel;
 
 #define NUM_COLUMNS 5
 
