@@ -49,7 +49,7 @@ GestureFilter::GestureFilter(ControlState* controlState, MyoState* myoState, clo
 
 GestureFilter::~GestureFilter()
 {
-    //delete gestSeqRecorder; gestSeqRecorder = NULL;
+    delete gestSeqRecorder; gestSeqRecorder = NULL;
 }
 
 void GestureFilter::process()
@@ -478,6 +478,10 @@ void callbackThreadWrapper(GestureFilter *gf)
     std::chrono::milliseconds period(SLEEP_LEN);
     do {
         std::this_thread::sleep_for(period);
+        if (gf->getGestureSeqRecorder() == NULL)
+        {
+            continue;// 
+        }
         gf->getGestureSeqRecorder()->checkProgressBaseTime();
 
         CommandData response;
