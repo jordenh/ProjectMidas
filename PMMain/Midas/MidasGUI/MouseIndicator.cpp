@@ -1,4 +1,6 @@
 #include "MouseIndicator.h"
+
+#include "MidasThread.h"
 #include <QTimer.h>
 #include <QAction.h>
 #include <QApplication.h>

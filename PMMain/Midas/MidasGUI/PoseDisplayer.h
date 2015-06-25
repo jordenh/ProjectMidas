@@ -1,11 +1,12 @@
 #ifndef POSE_DISPLAYER_H
 #define POSE_DISPLAYER_H
 
-#include "DraggableWidget.h"
-#include "MidasCommon.h"
+#include <qwidget.h>
+
 #include "MyoCommon.h"
-#include <QGridLayout.h>
-#include <qpushbutton.h>
+
+class QGridLayout;
+class QLabel;
 
 class PoseDisplayer : public QWidget
 {

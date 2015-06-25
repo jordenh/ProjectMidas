@@ -1,6 +1,9 @@
 #ifdef BUILD_KEYBOARD_ANDDISTANCE
 #include "DistanceBar.h"
 
+#include <qlabel.h>
+#include <qrect.h>
+
 distanceBar::distanceBar(qreal x, qreal y, QWidget *parent, qreal width,
     qreal height) : parent(parent)
 {

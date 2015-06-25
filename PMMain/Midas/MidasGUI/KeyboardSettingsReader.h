@@ -1,11 +1,8 @@
 #ifdef BUILD_KEYBOARD
 #pragma once
 #include <vector>
-#include "ringData.h"
-#include <fstream>
-#include <string>
-#include <iostream>
-#include <boost/algorithm/string.hpp>
+
+class ringData;
 
 class KeyboardSettingsReader
 {
