@@ -167,11 +167,11 @@ void MyoDevice::MyoCallbacks::onPose(Myo* myo, uint64_t timestamp, Pose pose)
 {
     filterDataMap input;
 
-    if (pose != Pose::rest && !parent.myoState->lastPoseNonRest())
+    if (pose != Pose::rest && parent.myoState->lastPoseNonRest())
     {
-        // force a rest to be processed between two non-rest poses as Midas 
-        // was designed for initial Myo requirements (beta) which ensured
-        // rest was inbetween all poses.
+        /* HACK - Myo API used to enforce that gestures ALWAYS had a 'rest' gesture inbetween other poses.
+        * Going to manually insert a rest inbetween sequences without a rest.
+        */
         input[GESTURE_INPUT] = Pose::rest;
         parent.posePipeline.startPipeline(input);
     }

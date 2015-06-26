@@ -158,7 +158,7 @@ const MyoDevice* MyoState::peakMyo()
 bool MyoState::lastPoseNonRest()
 {
     if (poseHistory.size() >= 1 &&
-        Pose::rest != poseHistory.at(poseHistory.size() - 1))
+        Pose::rest != poseHistory.back())
     {
         return true;
     }

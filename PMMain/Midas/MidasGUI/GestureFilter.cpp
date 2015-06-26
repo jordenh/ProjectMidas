@@ -69,11 +69,11 @@ void GestureFilter::process()
 
 	if (gesture != lastPoseType)
 	{
-        /* HACK - Myo API used to enforce that gestures ALWAYS had a 'rest' gesture inbetween other poses.
-         * Going to manually insert a rest inbetween sequences without a rest.
-         */
+        
         if (lastPoseType != Pose::rest && gesture != Pose::rest)
         {
+            // Should not ever happen! (taken care of in MyoDevice)
+            // But for now, inject a rest pose since Midas expects a rest inbetween all other poses
             gesture = Pose::rest;
         }
 
