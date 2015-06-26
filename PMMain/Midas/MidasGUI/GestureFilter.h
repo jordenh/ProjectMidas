@@ -77,9 +77,6 @@ public:
     friend void callbackThreadWrapper(GestureFilter *gf);
 
 private:
-
-    filterDataMap extraDataForSCD;
-
     /**
      * Translates gestures into corresponding mouse and keyboard commands.
      *
@@ -87,15 +84,65 @@ private:
      */
     CommandData translateGesture(Pose::Type pose);
 
-    // registration functions. to be commented after integration success.
+    /**
+    * Performs initial registration of Mouse Sequences as a default incase profile manager
+    * has no profiles to populate with.
+    */
     void registerMouseSequences(void);
+
+    /**
+    * Performs initial registration of Keyboard Sequences as a default incase profile manager
+    * has no profiles to populate with.
+    */
     void registerKeyboardSequences(void);
+
+    /**
+    * Performs initial registration of State Sequences as a default incase profile manager
+    * has no profiles to populate with.
+    */
     void registerStateSequences(void);
+
+    /**
+    * Given a completed sequence, returning a CommandData response, this handles the response
+    * as a Mouse command, populating a filterDataMap which is passed down the filter chain and
+    * returned.
+    *
+    * @param response The CommandData retrieved from a completed sequence to be handled
+    * @return the populated filterDataMap from the CommandData 
+    */
 	filterDataMap handleMouseCommand(CommandData response);
+
+    /**
+    * Given a completed sequence, returning a CommandData response, this handles the response
+    * as a Keyboard command, populating a filterDataMap which is passed down the filter chain and
+    * returned.
+    *
+    * @param response The CommandData retrieved from a completed sequence to be handled
+    * @parfam addToExtra If true, the generated filterDataMap will be set as extra data
+    * that the SCD will consume on it's next iteration
+    * @return the populated filterDataMap from the CommandData
+    */
 	filterDataMap handleKybrdCommand(CommandData response, bool addToExtra = false);
+
+    /**
+    * Given a completed sequence, returning a CommandData response, this handles the response
+    * as a Profile Change command, populating a filterDataMap which is passed down the filter chain and
+    * returned.
+    *
+    * @param response The CommandData retrieved from a completed sequence to be handled
+    * @return the populated filterDataMap from the CommandData
+    */
 	filterDataMap handleProfileChangeCommand(CommandData response);
 
+    /**
+    * Emit a pose value from an owned signaller, to relay to the GUI thread
+    *
+    * @param poseInt The int corresponding to the desired Pose ID to be reflected
+    * on the GUI
+    */
     void emitPoseData(int poseInt);
+
+    filterDataMap extraDataForSCD;
 
     Pose::Type lastPoseType;
     
