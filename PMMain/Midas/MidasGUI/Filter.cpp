@@ -56,3 +56,11 @@ filterError Filter::updateBasedOnProfile(ProfileManager& pm, std::string name)
 {
     return filterError::NO_FILTER_ERROR;
 }
+
+filterDataMap Filter::joinFilterDataMaps(filterDataMap map0, filterDataMap map1)
+{
+    filterDataMap result = map0;
+    result.insert(map1.begin(), map1.end());
+
+    return result;
+}

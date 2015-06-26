@@ -358,7 +358,7 @@ void GestureFilter::registerStateSequences(void)
     }
 }
 
-void GestureFilter::handleStateChange(CommandData response, GestureFilter *gf)
+void GestureFilter::handleStateChange(CommandData response, GestureFilter *gf, bool addToExtra)
 {
     if (gf->controlStateHandle->getMode() == LOCK_MODE || response.action.mode == LOCK_MODE)
     {
@@ -381,24 +381,56 @@ void GestureFilter::handleStateChange(CommandData response, GestureFilter *gf)
     std::cout << "Transitioning to state: " << response.action.mode << std::endl;
     controlStateHandle->setMode(response.action.mode);
 
-	// If there are subsequent commands to execute, do so on a seperate pipeline! -- Note this assumes no further 
-	// filtering is desired on this data, and it can go straight to the SCD
-	std::vector<CommandData> changeStateCommands = response.getChangeStateActions();
-	FilterPipeline fp;
-	fp.registerFilter(gf->controlStateHandle->getSCD());
-	for (int i = 0; i < changeStateCommands.size(); i++)
-	{
-		filterDataMap dataMap;
-		if (changeStateCommands[i].type == commandType::MOUSE_CMD)
-		{
-			dataMap = gf->handleMouseCommand(changeStateCommands[i]);
-		}
-		else if (changeStateCommands[i].type == commandType::KYBRD_CMD || changeStateCommands[i].type == commandType::KYBRD_GUI_CMD)
-		{
-			dataMap = gf->handleKybrdCommand(changeStateCommands[i]);
-		}
-		fp.startPipeline(dataMap);
-	}
+    // Handle any commands that may be associated with a stateChange as that is allowed in the specs
+
+    // New trial method
+    std::vector<CommandData> changeStateCommands = response.getChangeStateActions();
+    filterDataMap commandMap;
+    for (int i = 0; i < changeStateCommands.size(); i++)
+    {
+        filterDataMap dataMap;
+        if (changeStateCommands[i].type == commandType::MOUSE_CMD)
+        {
+            dataMap = gf->handleMouseCommand(changeStateCommands[i]);
+        }
+        else if (changeStateCommands[i].type == commandType::KYBRD_CMD || changeStateCommands[i].type == commandType::KYBRD_GUI_CMD)
+        {
+            dataMap = gf->handleKybrdCommand(changeStateCommands[i]);
+        }
+        Filter::joinFilterDataMaps(commandMap, dataMap);
+    }
+    if (addToExtra)
+    {
+        // If this is called asynchronously (from a hold), then output via the SCD extraData
+        // So that the pipeline will complete
+        gf->extraDataForSCD = commandMap;
+    }
+    else
+    {
+        // this would be called if invocation of this function was synchronous 
+//        gf->setOutput(commandMap);
+    }
+
+
+    // Old method that 'worked' but was hackey.
+//	// If there are subsequent commands to execute, do so on a seperate pipeline! -- Note this assumes no further 
+//	// filtering is desired on this data, and it can go straight to the SCD
+//	std::vector<CommandData> changeStateCommands = response.getChangeStateActions();
+//	FilterPipeline fp;
+//	fp.registerFilter(gf->controlStateHandle->getSCD());
+//	for (int i = 0; i < changeStateCommands.size(); i++)
+//	{
+//		filterDataMap dataMap;
+//		if (changeStateCommands[i].type == commandType::MOUSE_CMD)
+//		{
+//			dataMap = gf->handleMouseCommand(changeStateCommands[i]);
+//		}
+//		else if (changeStateCommands[i].type == commandType::KYBRD_CMD || changeStateCommands[i].type == commandType::KYBRD_GUI_CMD)
+//		{
+//			dataMap = gf->handleKybrdCommand(changeStateCommands[i]);
+//		}
+//		fp.startPipeline(dataMap);
+//	}
 	    
     return;
 }
@@ -493,7 +525,7 @@ void callbackThreadWrapper(GestureFilter *gf)
         gf->getGestureSeqRecorder()->progressSequenceTime(SLEEP_LEN, response);
         if (response.type == commandType::STATE_CHANGE)
         {
-            GestureFilter::handleStateChange(response, gf);
+            GestureFilter::handleStateChange(response, gf, true);
         }
         else if (response.type == commandType::MOUSE_CMD)
         {

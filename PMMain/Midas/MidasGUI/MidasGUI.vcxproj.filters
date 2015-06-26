@@ -69,6 +69,12 @@
     <Filter Include="Source Files\Midas\KeyAndMouse">
       <UniqueIdentifier>{f4563729-022c-4bf1-8f70-b5582a439832}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Midas\Myo">
+      <UniqueIdentifier>{33eed064-6f03-480e-a59a-1d26122c2246}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Midas\Myo">
+      <UniqueIdentifier>{30969444-a2a3-404f-a834-d2ed8ac6bd3e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -90,15 +96,6 @@
       <Filter>Source Files\Midas</Filter>
     </ClCompile>
     <ClCompile Include="MidasMain.cpp">
-      <Filter>Source Files\Midas</Filter>
-    </ClCompile>
-    <ClCompile Include="MyoCommon.cpp">
-      <Filter>Source Files\Midas</Filter>
-    </ClCompile>
-    <ClCompile Include="MyoDevice.cpp">
-      <Filter>Source Files\Midas</Filter>
-    </ClCompile>
-    <ClCompile Include="SharedCommandData.cpp">
       <Filter>Source Files\Midas</Filter>
     </ClCompile>
     <ClCompile Include="WearableDevice.cpp">
@@ -185,9 +182,6 @@
     <ClCompile Include="GeneratedFiles\Release\moc_ProfileSignaller.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
-    <ClCompile Include="MyoState.cpp">
-      <Filter>Source Files\Midas</Filter>
-    </ClCompile>
     <ClCompile Include="CommandData.cpp">
       <Filter>Source Files\Midas</Filter>
     </ClCompile>
@@ -263,9 +257,6 @@
     <ClCompile Include="SettingsSignaller.cpp">
       <Filter>Source Files\Midas\Signallers</Filter>
     </ClCompile>
-    <ClCompile Include="RingData.cpp">
-      <Filter>Source Files\Midas</Filter>
-    </ClCompile>
     <ClCompile Include="KeyboardWidget.cpp">
       <Filter>Source Files\GUI</Filter>
     </ClCompile>
@@ -288,6 +279,21 @@
       <Filter>Source Files\Midas\KeyAndMouse</Filter>
     </ClCompile>
     <ClCompile Include="MouseCtrl.cpp">
+      <Filter>Source Files\Midas\KeyAndMouse</Filter>
+    </ClCompile>
+    <ClCompile Include="SharedCommandData.cpp">
+      <Filter>Source Files\Midas\Filters</Filter>
+    </ClCompile>
+    <ClCompile Include="MyoCommon.cpp">
+      <Filter>Source Files\Midas\Myo</Filter>
+    </ClCompile>
+    <ClCompile Include="MyoDevice.cpp">
+      <Filter>Source Files\Midas\Myo</Filter>
+    </ClCompile>
+    <ClCompile Include="MyoState.cpp">
+      <Filter>Source Files\Midas\Myo</Filter>
+    </ClCompile>
+    <ClCompile Include="RingData.cpp">
       <Filter>Source Files\Midas\KeyAndMouse</Filter>
     </ClCompile>
   </ItemGroup>
@@ -351,15 +357,6 @@
     <ClInclude Include="MidasCommon.h">
       <Filter>Header Files\Midas</Filter>
     </ClInclude>
-    <ClInclude Include="MyoCommon.h">
-      <Filter>Header Files\Midas</Filter>
-    </ClInclude>
-    <ClInclude Include="MyoDevice.h">
-      <Filter>Header Files\Midas</Filter>
-    </ClInclude>
-    <ClInclude Include="SharedCommandData.h">
-      <Filter>Header Files\Midas</Filter>
-    </ClInclude>
     <ClInclude Include="WearableDevice.h">
       <Filter>Header Files\Midas</Filter>
     </ClInclude>
@@ -370,9 +367,6 @@
       <Filter>Header Files\Midas</Filter>
     </ClInclude>
     <ClInclude Include="SequenceImageManager.h">
-      <Filter>Header Files\Midas</Filter>
-    </ClInclude>
-    <ClInclude Include="MyoState.h">
       <Filter>Header Files\Midas</Filter>
     </ClInclude>
     <ClInclude Include="CommandData.h">
@@ -402,9 +396,6 @@
     <ClInclude Include="MyoTranslationFilter.h">
       <Filter>Header Files\Midas\Filters</Filter>
     </ClInclude>
-    <ClInclude Include="RingData.h">
-      <Filter>Header Files\Midas</Filter>
-    </ClInclude>
     <ClInclude Include="KeyboardSettingsReader.h">
       <Filter>Header Files\GUI</Filter>
     </ClInclude>
@@ -418,6 +409,21 @@
       <Filter>Header Files\Midas\KeyAndMouse</Filter>
     </ClInclude>
     <ClInclude Include="KeyboardContoller.h">
+      <Filter>Header Files\Midas\KeyAndMouse</Filter>
+    </ClInclude>
+    <ClInclude Include="SharedCommandData.h">
+      <Filter>Header Files\Midas\Filters</Filter>
+    </ClInclude>
+    <ClInclude Include="MyoCommon.h">
+      <Filter>Header Files\Midas\Myo</Filter>
+    </ClInclude>
+    <ClInclude Include="MyoDevice.h">
+      <Filter>Header Files\Midas\Myo</Filter>
+    </ClInclude>
+    <ClInclude Include="MyoState.h">
+      <Filter>Header Files\Midas\Myo</Filter>
+    </ClInclude>
+    <ClInclude Include="RingData.h">
       <Filter>Header Files\Midas\KeyAndMouse</Filter>
     </ClInclude>
   </ItemGroup>

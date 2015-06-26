@@ -97,6 +97,17 @@ public:
      */
     virtual filterError updateBasedOnProfile(ProfileManager& pm, std::string name);
 
+    /**
+     * Concatenate two filterDataMaps so that more data can be sent down a given filter
+     * pipeline.
+     *
+     * @param map0 first filterDataMap to join. If conflicts in key/value pairs exist, THIS
+     * map keeps it's values.
+     * @param map1 sencond map to join.
+     * @return the concatenated result.
+     */
+    static filterDataMap joinFilterDataMaps(filterDataMap map0, filterDataMap map1);
+
 protected:
     /**
      * Retrieve the input to the filter. Only a subclass of Filter can access
