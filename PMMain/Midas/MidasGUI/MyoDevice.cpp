@@ -166,8 +166,17 @@ MyoDevice::MyoCallbacks::~MyoCallbacks() { }
 void MyoDevice::MyoCallbacks::onPose(Myo* myo, uint64_t timestamp, Pose pose) 
 {
     filterDataMap input;
-    input[GESTURE_INPUT] = pose.type();
 
+    if (pose != Pose::rest && !parent.myoState->lastPoseNonRest())
+    {
+        // force a rest to be processed between two non-rest poses as Midas 
+        // was designed for initial Myo requirements (beta) which ensured
+        // rest was inbetween all poses.
+        input[GESTURE_INPUT] = Pose::rest;
+        parent.posePipeline.startPipeline(input);
+    }
+
+    input[GESTURE_INPUT] = pose.type();
     parent.posePipeline.startPipeline(input);
 }
 

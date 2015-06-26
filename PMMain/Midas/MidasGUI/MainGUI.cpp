@@ -94,7 +94,8 @@ MainGUI::MainGUI(MidasThread *mainThread, ProfileManager *pm, int deadZoneRad)
 
     totalWidth = std::max(sequenceDisplayer->width(), 
                         (infoIndicator->width() + poseDisplayer->width()));
-    totalHeight = sequenceDisplayer->height() + poseDisplayer->height();
+    totalHeight = sequenceDisplayer->height() + poseDisplayer->height() 
+        + profileHeights + settingsDisplayer->height();
 
     QRect screen = QApplication::desktop()->availableGeometry(this);
     setGeometry(screen.right() - totalWidth - SCREEN_RIGHT_BUFFER,

@@ -1,7 +1,7 @@
 #ifndef MYO_STATE_H
 #define MYO_STATE_H
 
-#include <queue>
+#include <deque>
 #include <mutex>
 #include "myo\cxx\Vector3.hpp"
 #include "myo\cxx\Quaternion.hpp"
@@ -18,33 +18,37 @@ public:
 
 	void pushRotation(myo::Quaternion<float> rotation);
 	myo::Quaternion<float> popRotation();
-	std::queue<myo::Quaternion<float>> getRotationHistory();
+	std::deque<myo::Quaternion<float>> getRotationHistory();
 
 	void pushAccel(myo::Vector3<float> accel);
 	myo::Vector3<float> popAccel();
-	std::queue<myo::Vector3<float>> getAccelHistory();
+	std::deque<myo::Vector3<float>> getAccelHistory();
 
 	void pushGyro(myo::Vector3<float> gyro);
 	myo::Vector3<float> popGryo();
-	std::queue<myo::Vector3<float>> getGyroHistory();
+	std::deque<myo::Vector3<float>> getGyroHistory();
 
 	void pushPose(myo::Pose pose);
 	myo::Pose popPose();
-	std::queue<myo::Pose> getPoseHistory();
+	std::deque<myo::Pose> getPoseHistory();
 
     void setMyo(MyoDevice *myo);
     const MyoDevice* peakMyo();
+
+    // returns true if the most recent pose is non-rest poses.
+    // returns false if size < 1, or last pose is rest.
+    bool lastPoseNonRest();
 
 private:
 	std::mutex myoStateMutex;
 
 	int spatialHistLen;
-	std::queue<myo::Quaternion<float>> rotationHistory;
-	std::queue<myo::Vector3<float>> accelHistory;
-	std::queue<myo::Vector3<float>> gyroHistory;
+	std::deque<myo::Quaternion<float>> rotationHistory;
+	std::deque<myo::Vector3<float>> accelHistory;
+	std::deque<myo::Vector3<float>> gyroHistory;
 
 	int poseHistLen;
-	std::queue<myo::Pose> poseHistory;
+	std::deque<myo::Pose> poseHistory;
 
     MyoDevice* myoHandle;
 };

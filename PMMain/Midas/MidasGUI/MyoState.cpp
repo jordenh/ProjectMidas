@@ -24,11 +24,11 @@ void MyoState::setPoseHistLen(int poseHistLen)
 void MyoState::pushRotation(myo::Quaternion<float> rotation)
 {
 	myoStateMutex.lock();
-	rotationHistory.push(rotation);
+	rotationHistory.push_back(rotation);
 
 	if (rotationHistory.size() > this->spatialHistLen)
 	{
-		rotationHistory.pop();
+		rotationHistory.pop_front();
 	}
 	myoStateMutex.unlock();
 }
@@ -43,10 +43,10 @@ myo::Quaternion<float> MyoState::popRotation()
 	return front;
 }
 
-std::queue<myo::Quaternion<float>> MyoState::getRotationHistory()
+std::deque<myo::Quaternion<float>> MyoState::getRotationHistory()
 {
 	myoStateMutex.lock();
-	std::queue<myo::Quaternion<float>> copy = std::queue<myo::Quaternion<float>>(rotationHistory);
+	std::deque<myo::Quaternion<float>> copy = std::deque<myo::Quaternion<float>>(rotationHistory);
 
 	myoStateMutex.unlock();
 
@@ -56,11 +56,11 @@ std::queue<myo::Quaternion<float>> MyoState::getRotationHistory()
 void MyoState::pushAccel(myo::Vector3<float> accel)
 {
 	myoStateMutex.lock();
-	accelHistory.push(accel);
+	accelHistory.push_back(accel);
 
 	if (accelHistory.size() > this->spatialHistLen)
 	{
-		accelHistory.pop();
+		accelHistory.pop_front();
 	}
 	myoStateMutex.unlock();
 }
@@ -75,10 +75,10 @@ myo::Vector3<float> MyoState::popAccel()
 	return front;
 }
 
-std::queue<myo::Vector3<float>> MyoState::getAccelHistory()
+std::deque<myo::Vector3<float>> MyoState::getAccelHistory()
 {
 	myoStateMutex.lock();
-	std::queue<myo::Vector3<float>> copy = std::queue<myo::Vector3<float>>(accelHistory);
+	std::deque<myo::Vector3<float>> copy = std::deque<myo::Vector3<float>>(accelHistory);
 
 	myoStateMutex.unlock();
 
@@ -88,11 +88,11 @@ std::queue<myo::Vector3<float>> MyoState::getAccelHistory()
 void MyoState::pushGyro(myo::Vector3<float> gyro)
 {
 	myoStateMutex.lock();
-	gyroHistory.push(gyro);
+	gyroHistory.push_back(gyro);
 
 	if (gyroHistory.size() > this->spatialHistLen)
 	{
-		gyroHistory.pop();
+		gyroHistory.pop_front();
 	}
 	myoStateMutex.unlock();
 }
@@ -107,10 +107,10 @@ myo::Vector3<float> MyoState::popGryo()
 	return front;
 }
 
-std::queue<myo::Vector3<float>> MyoState::getGyroHistory()
+std::deque<myo::Vector3<float>> MyoState::getGyroHistory()
 {
 	myoStateMutex.lock();
-	std::queue<myo::Vector3<float>> copy = std::queue<myo::Vector3<float>>(gyroHistory);
+	std::deque<myo::Vector3<float>> copy = std::deque<myo::Vector3<float>>(gyroHistory);
 
 	myoStateMutex.unlock();
 
@@ -120,11 +120,11 @@ std::queue<myo::Vector3<float>> MyoState::getGyroHistory()
 void MyoState::pushPose(myo::Pose pose)
 {
 	myoStateMutex.lock();
-	poseHistory.push(pose);
+	poseHistory.push_back(pose);
 
 	if (poseHistory.size() > this->poseHistLen)
 	{
-		poseHistory.pop();
+		poseHistory.pop_front();
 	}
 	myoStateMutex.unlock();
 }
@@ -139,10 +139,10 @@ myo::Pose MyoState::popPose()
 	return front;
 }
 
-std::queue<myo::Pose> MyoState::getPoseHistory()
+std::deque<myo::Pose> MyoState::getPoseHistory()
 {
 	myoStateMutex.lock();
-	std::queue<myo::Pose> copy = std::queue<myo::Pose>(poseHistory);
+	std::deque<myo::Pose> copy = std::deque<myo::Pose>(poseHistory);
 
 	myoStateMutex.unlock();
 
@@ -154,3 +154,16 @@ void MyoState::setMyo(MyoDevice *myo)
 
 const MyoDevice* MyoState::peakMyo()
 { return myoHandle; }
+
+bool MyoState::lastPoseNonRest()
+{
+    if (poseHistory.size() >= 1 &&
+        Pose::rest != poseHistory.at(poseHistory.size() - 1))
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
