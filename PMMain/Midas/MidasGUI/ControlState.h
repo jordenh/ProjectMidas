@@ -3,7 +3,8 @@
 
 #include <mutex>
 #include "MidasCommon.h"
-#include "SharedCommandData.h"
+
+class SharedCommandData;
 
 /**
  * This class keeps track of the current state (or mode) of the Midas application. This

@@ -1,12 +1,8 @@
 #pragma once
 #include "WearableDevice.h"
 #include "FilterPipeline.h"
-#include "ControlState.h"
-#include "MyoState.h"
 #include "myo\myo.hpp"
-#include "MainGUI.h"
 #include "ProfileSignaller.h"
-#include "ProfileManager.h"
 
 #ifdef USE_SIMULATOR
 #include "MyoSimIncludes.hpp"
@@ -20,6 +16,10 @@ using namespace myo;
 #define DEFAULT_MYO_ARM Arm::armUnknown
 #define DEFAULT_MYO_XDIR XDirection::xDirectionUnknown
 
+class ControlState;
+class MyoState;
+class MainGUI;
+class ProfileManager;
 
 /**
  * Handles the Myo device, collecting the data using the Myo API, and converting the data
@@ -82,11 +82,11 @@ public:
     void updateProfiles(void);
 
     /**
-     * Send a vibration command to the myo.
+     * Send a vibration command to the connected myos.
      *
-     * @param 
+     * @param vibType - indicates Myo vibration type (currently short, medium, or long)
      */
-    void vibrateMyo(myo::Myo::VibrationType vibType) const;
+    void vibrateMyos(myo::Myo::VibrationType vibType) const;
 
 private:
     /**
@@ -126,9 +126,8 @@ private:
         MyoDevice& parent;
     };
 
-    myo::Myo* currentMyo;
-
-    unsigned int myoFindTimeout;
+    std::vector<myo::Myo*> connectedMyos;
+        unsigned int myoFindTimeout;
     unsigned int durationInMilliseconds;
     std::string appIdentifier;
     ControlState* state;

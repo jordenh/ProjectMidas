@@ -1,4 +1,5 @@
-#pragma once
+#ifndef COMMAND_DATA_H
+#define COMMAND_DATA_H
 
 #include "MidasCommon.h"
 #include "KeyboardVector.h"
@@ -46,3 +47,4 @@ private:
 	std::vector<CommandData> changeStateActions;
 };
 
+#endif COMMAND_DATA_H

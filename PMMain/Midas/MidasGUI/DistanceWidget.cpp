@@ -1,11 +1,15 @@
 #ifdef BUILD_KEYBOARD_ANDDISTANCE
+#include "DistanceWidget.h"
+
 #include <cmath>
 #include <cstdlib>
 #include <cstring>
-#include "DistanceWidget.h"
 #include "qaction.h"
 #include "qapplication.h"
 #include "qboxlayout.h"
+#include "DistanceBar.h"
+#include "MidasThread.h"
+#include "qlabel.h"
 
 
 DistanceWidget::DistanceWidget(MidasThread* mainThread, int width, int height, QWidget *parent)

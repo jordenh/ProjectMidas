@@ -1,6 +1,6 @@
 #ifdef BUILD_KEYBOARD
 #include "RingData.h"
-
+#include <vector>
 
 ringData::ringData()
 {

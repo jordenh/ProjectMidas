@@ -1,10 +1,17 @@
 #define NOMINMAX
 #include "MyoTranslationFilter.h"
+
+#include "SharedCommandData.h"
+#include "ControlState.h"
+#include "MyoState.h"
+#include "MainGUI.h"
 #include "ProfileManager.h"
 #include "BaseMeasurements.h"
 #include "myo\myo.hpp"
 #include <math.h>
 #include <iostream>
+
+SettingsSignaller MyoTranslationFilter::settingsSignaller;
 
 float radToDeg(float rad)
 {
@@ -16,17 +23,23 @@ float degToRad(float deg)
     return (deg / 180.0) * M_PI;
 }
 
-MyoTranslationFilter::MyoTranslationFilter(ControlState* controlState, MyoState* myoState)
-    : controlStateHandle(controlState), myoStateHandle(myoState), previousMode(LOCK_MODE), 
+MyoTranslationFilter::MyoTranslationFilter(ControlState* controlState, MyoState* myoState, MainGUI *mainGuiHandle)
+    : controlStateHandle(controlState), myoStateHandle(myoState), previousMode(LOCK_MODE),
     pitch(0), prevPitch(0), deltaPitchDeg(0),
     yaw(0), prevYaw(0), deltaYawDeg(0),
-    roll(0), prevRoll(0), deltaRollDeg(0)
+    roll(0), prevRoll(0), deltaRollDeg(0),
+    mainGui(mainGuiHandle)
 {
     initGestHoldModeActionArr();
 
 	Filter::setFilterError(filterError::NO_FILTER_ERROR);
 	Filter::setFilterStatus(filterStatus::OK);
 	Filter::clearOutput();
+
+    if (mainGui)
+    {
+        mainGui->connectSignallerToSettingsDisplayer(&settingsSignaller);
+    }
 }
 
 MyoTranslationFilter::~MyoTranslationFilter()
@@ -81,6 +94,9 @@ void MyoTranslationFilter::process()
     case MOUSE_MODE:
 		performMouseModeFunc(outputToSharedCommandData);
         break;
+    case MOUSE_MODE2:
+        performMouseModeFunc(outputToSharedCommandData);
+        break;
     case GESTURE_HOLD_ONE:
         gestIdx = 0;
         goto execute;
@@ -106,9 +122,9 @@ void MyoTranslationFilter::process()
         break;
     }
 
-    if (currMode != MOUSE_MODE)
+    if (currMode != MOUSE_MODE && currMode != MOUSE_MODE2)
     {
-        if (previousMode == MOUSE_MODE)
+        if (previousMode == MOUSE_MODE || previousMode == MOUSE_MODE2)
         {
             point mouseUnitVelocity = point(0, 0);
             outputToSharedCommandData[VELOCITY_INPUT] = mouseUnitVelocity;
@@ -128,8 +144,10 @@ point MyoTranslationFilter::getMouseUnitVelocity(float pitch, float yaw)
 	float deltaPitch = calcRingDelta(pitch, BaseMeasurements::getInstance().getBasePitch());
 	float deltaYaw = calcRingDelta(yaw, BaseMeasurements::getInstance().getBaseYaw());
 
-    float unitPitch = (deltaPitch >= 0) ? std::min(1.0f, deltaPitch / degToRad(MAX_PITCH_ANGLE)) : std::max(-1.0f, deltaPitch / degToRad(MAX_PITCH_ANGLE));
-    float unitYaw = (deltaYaw >= 0) ? std::min(1.0f, deltaYaw / degToRad(MAX_YAW_ANGLE)) : std::max(-1.0f, deltaYaw / degToRad(MAX_YAW_ANGLE));
+    int maxYawAngle = settingsSignaller.getYawMaxAngle();
+    int maxPitchAngle = settingsSignaller.getPitchMaxAngle();
+    float unitPitch = (deltaPitch >= 0) ? std::min(1.0f, deltaPitch / degToRad(maxPitchAngle)) : std::max(-1.0f, deltaPitch / degToRad(maxPitchAngle));
+    float unitYaw = (deltaYaw >= 0) ? std::min(1.0f, deltaYaw / degToRad(maxYawAngle)) : std::max(-1.0f, deltaYaw / degToRad(maxYawAngle));
 
     return point((int) (unitYaw * 100), (int) (unitPitch * 100));
 }
@@ -139,8 +157,10 @@ vector2D MyoTranslationFilter::getMouseDelta(float pitch, float yaw)
 	float deltaPitch = calcRingDelta(pitch, BaseMeasurements::getInstance().getBasePitch());
 	float deltaYaw = calcRingDelta(yaw, BaseMeasurements::getInstance().getBaseYaw());
 
-    float relativePitch = (deltaPitch / degToRad(MAX_PITCH_ANGLE)) * 100;
-    float relativeYaw = (deltaYaw / degToRad(MAX_YAW_ANGLE)) * 100;
+    int maxYawAngle = settingsSignaller.getYawMaxAngle();
+    int maxPitchAngle = settingsSignaller.getPitchMaxAngle();
+    float relativePitch = (deltaPitch / degToRad(maxPitchAngle)) * 100;
+    float relativeYaw = (deltaYaw / degToRad(maxYawAngle)) * 100;
 
 	return vector2D((double)relativeYaw, (double)relativePitch);
 }

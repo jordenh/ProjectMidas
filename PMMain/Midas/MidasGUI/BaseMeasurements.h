@@ -1,10 +1,9 @@
 #ifndef BASE_MEASUREMENTS_H
 #define BASE_MEASUREMENTS_H
 
+#include "myo\myo.hpp"
 #include "MyoState.h"
 #include "ControlState.h"
-#include "MidasCommon.h"
-#include "myo\myo.hpp"
 
 /* Singleton */
 

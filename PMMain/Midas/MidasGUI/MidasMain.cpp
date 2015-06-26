@@ -3,17 +3,19 @@
 #include <iostream>
 #include <string>
 #include <Windows.h>
+#include <vector>
+#include <thread>
+
+#include "MidasThread.h"
+#include "ProfileManager.h"
 #include "SCDDigester.h"
 #include "kybrdCtrl.h"
 #include "MouseCtrl.h"
 #include "WearableDevice.h"
-#include <vector>
-#include <thread>
 #include "SharedCommandData.h"
 #include "MyoDevice.h"
 #include "KeyboardContoller.h"
 #include "BaseMeasurements.h"
-
 #include "MidasThread.h"
 #include "SharedCommandDataTest.h"
 #include "KybrdCtrlTest.h"

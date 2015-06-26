@@ -1,11 +1,31 @@
 #define NOMINMAX
 
 #include "MainGUI.h"
+
 #include "ProfileDisplayer.h"
 #include <QApplication.h>
 #include <QDesktopWidget.h>
 #include <algorithm>
 #include <QEvent.h>
+#include <QDialog>
+#include <qlayout.h>
+#include "MouseIndicator.h"
+#include "SequenceDisplayer.h"
+#include "InfoIndicator.h"
+#include "GestureSignaller.h"
+#include "PoseDisplayer.h"
+#include "ProfileIcon.h"
+#include "ProfileDisplayer.h"
+#include "ProfileSignaller.h"
+#include "ProfileManager.h"
+#include "SettingsDisplayer.h"
+#include "SettingsSignaller.h"
+
+
+#ifdef BUILD_KEYBOARD
+#include "KeyboardWidget.h"
+#include "DistanceWidget.h"
+#endif
 
 #define SCREEN_RIGHT_BUFFER    20 
 #define SCREEN_BOTTOM_BUFFER   30
@@ -33,6 +53,22 @@ MainGUI::MainGUI(MidasThread *mainThread, ProfileManager *pm, int deadZoneRad)
     layout = new QVBoxLayout;
 	layout->addWidget(sequenceDisplayer);
 
+#ifdef SHOW_PROFILE_BUTTONS
+    std::vector<profile>* profiles = pm->getProfiles();
+    std::vector<profile>::iterator it;
+    int profileHeights = 0;
+    for (it = profiles->begin(); it != profiles->end(); it++)
+    {
+        ProfileDisplayer* displayer = new ProfileDisplayer(it->profileName, PROF_INDICATOR_WIDTH, PROF_INDICATOR_HEIGHT, this);
+        profileHeights += displayer->height();
+        profileWidgets.push_back(displayer);
+        layout->addWidget(displayer, 0, Qt::AlignRight);
+    }
+#endif
+
+    settingsDisplayer = new SettingsDisplayer(PROF_INDICATOR_WIDTH, INFO_INDICATOR_HEIGHT, this);
+    layout->addWidget(settingsDisplayer, 0, Qt::AlignRight);
+
 	// create HBox for specific profile icons: Change this icon to be specific to your app
 	QHBoxLayout *profileIconLayout = new QHBoxLayout;
 	profileIconLayout->addWidget(icon0);
@@ -58,7 +94,8 @@ MainGUI::MainGUI(MidasThread *mainThread, ProfileManager *pm, int deadZoneRad)
 
     totalWidth = std::max(sequenceDisplayer->width(), 
                         (infoIndicator->width() + poseDisplayer->width()));
-    totalHeight = sequenceDisplayer->height() + poseDisplayer->height();
+    totalHeight = sequenceDisplayer->height() + poseDisplayer->height() 
+        + profileHeights + settingsDisplayer->height();
 
     QRect screen = QApplication::desktop()->availableGeometry(this);
     setGeometry(screen.right() - totalWidth - SCREEN_RIGHT_BUFFER,
@@ -105,6 +142,12 @@ void MainGUI::connectSignallerToKeyboardToggle(GestureSignaller *signaller)
 			this, SLOT(toggleKeyboard()));
 }
 #endif
+
+void MainGUI::connectSignallerToSettingsDisplayer(SettingsSignaller *signaller)
+{
+    QObject::connect(settingsDisplayer, SIGNAL(emitSliderValues(unsigned int, unsigned int)),
+        signaller, SLOT(handleSliderValues(unsigned int, unsigned int)));
+}
 
 void MainGUI::connectSignallerToProfileWidgets(ProfileSignaller* signaller)
 {

@@ -1,5 +1,7 @@
 #include "Filter.h"
 
+#include "ProfileManager.h"
+
 void Filter::addDataAsInput(std::string name, boost::any value)
 {
     inputData[name] = value;

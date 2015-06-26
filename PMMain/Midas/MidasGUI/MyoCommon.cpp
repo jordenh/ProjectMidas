@@ -1,6 +1,7 @@
-
 #include "MyoCommon.h"
 
+#include <string>
+#include <QLabel.h>
 
 std::string PoseTypeToString(Pose::Type gesture)
 {

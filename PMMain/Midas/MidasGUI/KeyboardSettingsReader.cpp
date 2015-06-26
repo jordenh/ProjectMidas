@@ -1,6 +1,12 @@
 #ifdef BUILD_KEYBOARD
 #include "KeyboardSettingsReader.h"
 #include <boost/algorithm/string.hpp>
+#include "ringData.h"
+#include <fstream>
+#include <string>
+#include <iostream>
+#include <boost/algorithm/string.hpp>
+
 using namespace std;
 using namespace boost;
 

@@ -2,10 +2,9 @@
 #define _MYO_TRANSLATION_FILTER_H
 
 #include "Filter.h"
-#include "ControlState.h"
-#include "MyoState.h"
 #include "GestureHoldModeAction.h"
 #include "ProfileManager.h"
+#include "SettingsSignaller.h"
 #include "myo\myo.hpp"
 
 #ifdef USE_SIMULATOR
@@ -15,6 +14,10 @@ using namespace myoSim;
 using namespace myo;
 #endif
 
+class MyoState;
+class ControlState;
+class MainGUI;
+
 #define INPUT_QUATERNION_X "quatDataX"
 #define INPUT_QUATERNION_Y "quatDataY"
 #define INPUT_QUATERNION_Z "quatDataZ"
@@ -23,7 +26,7 @@ using namespace myo;
 #define INPUT_X_DIRECTION "xDirection"
 
 #define MAX_PITCH_ANGLE 25.0f /* Maximum delta angle in degrees */
-#define MAX_YAW_ANGLE 35.0f /* Maximum delta angle in degrees */
+#define MAX_YAW_ANGLE 30.0f /* Maximum delta angle in degrees */
 
 #define KEYBOARD_THRESH_MAG 30
 
@@ -46,7 +49,7 @@ public:
      *
      * @param controlState A handle to ControlState, to keep track of the application state.
      */
-    MyoTranslationFilter(ControlState* controlState, MyoState* myoState);
+    MyoTranslationFilter(ControlState* controlState, MyoState* myoState, MainGUI *mainGuiHandle);
     ~MyoTranslationFilter();
 
     /**
@@ -136,6 +139,9 @@ private:
         roll, baseRoll, prevRoll, deltaRollDeg;
 
     GestureHoldModeAction gestHoldModeAction[5];
+
+    MainGUI *mainGui;
+    static SettingsSignaller settingsSignaller;
 };
 
 #endif

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef GESTURE_SIGNALLER_H
+#define GESTURE_SIGNALLER_H
 
 #include "QObject.h"
 #include "MyoCommon.h"
@@ -41,3 +42,4 @@ private:
     static bool showAll;
 };
 
+#endif GESTURE_SIGNALLER_H

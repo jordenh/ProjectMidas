@@ -1,10 +1,11 @@
 #ifndef PROFILEDISPLAYER_H
 #define PROFILEDISPLAYER_H
 
-#include <QWidget>
 #include <QFrame.h>
 #include "MidasCommon.h"
-#include <QGridLayout.h>
+
+class QGridLayout;
+
 
 class ProfileDisplayer : public QFrame
 {

@@ -1,8 +1,13 @@
 #include "SequenceDisplayer.h"
+
+#include "MidasCommon.h"
+#include "DraggableWidget.h"
 #include <QImage.h>
 #include <qevent.h>
 #include <qapplication.h>
 #include <qdesktopwidget.h>
+#include <QGridLayout.h>
+#include <qlabel.h>
 
 #define LABEL_NUM_COLS      3
 #define LABEL_NUM_ROWS      1

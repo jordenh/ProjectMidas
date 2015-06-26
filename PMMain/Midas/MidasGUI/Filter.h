@@ -1,8 +1,11 @@
-#pragma once
+#ifndef FILTER_H
+#define FILTER_H
+
 #include <string>
 #include <map>
 #include <boost/any.hpp>
-#include "ProfileManager.h"
+
+class ProfileManager;
 
 /**
  * An enumeration of the possible states of error for a filter. It includes
@@ -136,3 +139,4 @@ private:
     filterError error;
 };
 
+#endif FILTER_H

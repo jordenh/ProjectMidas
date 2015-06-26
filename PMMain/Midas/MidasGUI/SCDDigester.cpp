@@ -1,6 +1,15 @@
 #include "SCDDigester.h"
-#include "BaseMeasurements.h"
 
+#include "BaseMeasurements.h"
+#include "CommandData.h"
+#include "KeyboardContoller.h"
+#include "SharedCommandData.h"
+#include "MidasThread.h"
+#include "ControlState.h"
+#include "MyoState.h"
+#include "MouseCtrl.h"
+#include "kybrdCtrl.h"
+#include "ProfileManager.h"
 
 #ifdef BUILD_KEYBOARD
 SCDDigester::SCDDigester(SharedCommandData* scd, MidasThread *thread, ControlState *cntrlStateHandle, MyoState* myoStateHandle,
@@ -68,7 +77,8 @@ void SCDDigester::digest()
     }
 
 	vector2D mouseDelta = scdHandle->getDelta();
-	if (cntrlStateHandle->getMode() == midasMode::MOUSE_MODE)
+	if (cntrlStateHandle->getMode() == midasMode::MOUSE_MODE ||
+        cntrlStateHandle->getMode() == midasMode::MOUSE_MODE2)
 	{
 		mouseCtrl->sendCommand(mouseCmds::MOVE_ABSOLUTE, mouseDelta.x, -mouseDelta.y);
 	}

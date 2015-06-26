@@ -1,4 +1,8 @@
 #include "InfoIndicator.h"
+
+#include <QGridLayout.h>
+#include <qpushbutton.h>
+#include <qlabel.h>
 #include <QTimer.h>
 #include <QAction.h>
 #include <QApplication.h>

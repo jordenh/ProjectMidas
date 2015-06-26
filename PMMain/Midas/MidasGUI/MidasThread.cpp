@@ -1,10 +1,12 @@
 #include "MidasThread.h"
 #include "MidasMain.h"
 #include "MainGUI.h"
+#include "ProfileManager.h"
 #include <qdebug.h>
 #include <Windows.h>
 #ifdef BUILD_KEYBOARD
 #include "KeyboardWidget.h"
+#include "RingData.h"
 #endif
 
 #ifdef BUILD_KEYBOARD

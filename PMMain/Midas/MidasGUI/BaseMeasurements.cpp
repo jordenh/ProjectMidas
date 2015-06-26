@@ -1,4 +1,5 @@
 #include "BaseMeasurements.h"
+
 #include <Windows.h>
 
 void BaseMeasurements::setBaseAngles(float roll, float pitch, float yaw)

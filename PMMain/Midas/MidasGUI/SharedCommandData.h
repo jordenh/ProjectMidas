@@ -1,11 +1,12 @@
 #ifndef _SHARED_COMMAND_DATA_H
 #define _SHARED_COMMAND_DATA_H
 
+#include "Filter.h"
+
 #include <mutex>
 #include <queue>
 #include "MidasCommon.h"
 #include "CommandData.h"
-#include "Filter.h"
 
 #define COMMAND_INPUT "command"
 #define VELOCITY_INPUT "velocity"

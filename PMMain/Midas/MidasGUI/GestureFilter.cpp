@@ -5,6 +5,11 @@
 #include "BaseMeasurements.h"
 #include "FilterPipeline.h"
 #include "MyoDevice.h"
+#include "SharedCommandData.h"
+#include "ControlState.h"
+#include "GestureSeqRecorder.h"
+#include "MyoState.h"
+#include "MainGUI.h"
 #include <time.h>
 #include <thread>
 #include <qtranslator.h>
@@ -64,11 +69,11 @@ void GestureFilter::process()
 
 	if (gesture != lastPoseType)
 	{
-        /* HACK - Myo API used to enforce that gestures ALWAYS had a 'rest' gesture inbetween other poses.
-         * Going to manually insert a rest inbetween sequences without a rest.
-         */
+        
         if (lastPoseType != Pose::rest && gesture != Pose::rest)
         {
+            // Should not ever happen! (taken care of in MyoDevice)
+            // But for now, inject a rest pose since Midas expects a rest inbetween all other poses
             gesture = Pose::rest;
         }
 
@@ -81,13 +86,13 @@ void GestureFilter::process()
     Filter::setFilterStatus(filterStatus::OK);
 	Filter::clearOutput();
 	
-	// First, filter based on "hold time" in a specific gesture.
-    timeFromLastPose = clock() - lastTime;
-    if (timeFromLastPose < timeDelta)
-    {
-        // early exit due to too frequent fluctuation
-        return;
-    }
+//	// First, filter based on "hold time" in a specific gesture.
+//    timeFromLastPose = clock() - lastTime;
+//    if (timeFromLastPose < timeDelta)
+//    {
+//        // early exit due to too frequent fluctuation
+//        return;
+//    }
 
     CommandData response;
     SequenceStatus ss;
@@ -357,7 +362,7 @@ void GestureFilter::handleStateChange(CommandData response, GestureFilter *gf)
 {
     if (gf->controlStateHandle->getMode() == LOCK_MODE || response.action.mode == LOCK_MODE)
     {
-        gf->myoStateHandle->peakMyo()->vibrateMyo(myo::Myo::VibrationType::vibrationShort);
+        gf->myoStateHandle->peakMyo()->vibrateMyos(myo::Myo::VibrationType::vibrationShort);
     }
 
     if (response.type != commandType::STATE_CHANGE)
@@ -402,6 +407,7 @@ filterDataMap GestureFilter::handleMouseCommand(CommandData response)
 {
 	filterDataMap outputToSharedCommandData;
     if (controlStateHandle->getMode() == midasMode::MOUSE_MODE ||
+        controlStateHandle->getMode() == midasMode::MOUSE_MODE2 ||
         controlStateHandle->getMode() == midasMode::GESTURE_MODE)
     {
         CommandData command;
@@ -477,6 +483,10 @@ void callbackThreadWrapper(GestureFilter *gf)
     std::chrono::milliseconds period(SLEEP_LEN);
     do {
         std::this_thread::sleep_for(period);
+        if (gf->getGestureSeqRecorder() == NULL)
+        {
+            continue;// 
+        }
         gf->getGestureSeqRecorder()->checkProgressBaseTime();
 
         CommandData response;

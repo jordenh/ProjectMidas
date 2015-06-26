@@ -213,18 +213,6 @@ Sequence ProfileWriter::extractSequenceInformation(const boost::property_tree::p
 		}
 	}
 
-	// OLD with single command. todo - delete once functionality tested
-    //Command cmd;
-    //const ptree & pt = parentSequence.second.get_child("command");
-    //cmd.type = pt.get<std::string>("<xmlattr>.type");
-	//
-    //BOOST_FOREACH(const ptree::value_type & vt, pt.get_child("actions")) {
-    //    if (vt.first == "action")
-    //    {
-    //        cmd.actions.push_back(vt.second.get_value<std::string>());
-    //    }
-    //}
-
     seq.cmds = cmds;
     seq.gestures = gestures;
     seq.state = sequenceState;

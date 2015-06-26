@@ -4,6 +4,9 @@
 #include <string>
 #include <map>
 
+#define INIT_PITCH_ANGLE 20.0f /* Maximum delta angle in degrees */
+#define INIT_YAW_ANGLE 25.0f /* Maximum delta angle in degrees */
+
 #define MOUSE_INDICATOR_SIZE 130
 #define INFO_INDICATOR_WIDTH   150
 #define INFO_INDICATOR_HEIGHT  35
@@ -129,13 +132,14 @@ enum mouseCmds {
 enum midasMode {
     LOCK_MODE,      /**< The mouse is locked from movement. */
     MOUSE_MODE,     /**< The mouse is free to move around. */
+    MOUSE_MODE2, /**< The mouse is free to move around, but with different configurations */
     KEYBOARD_MODE,  /**< The user has opened the virtual keyboard. */
     GESTURE_MODE,    /**< Gesture sequences should result in specific keyboard commands. */
     GESTURE_HOLD_ONE, /**< In Gesture mode, specific gesture has been held */
     GESTURE_HOLD_TWO,
     GESTURE_HOLD_THREE,
     GESTURE_HOLD_FOUR,
-    GESTURE_HOLD_FIVE
+    GESTURE_HOLD_FIVE    
 };
 
 static std::string modeToString(midasMode mm)
@@ -152,15 +156,17 @@ static std::string modeToString(midasMode mm)
 #ifdef BUILD_FOR_KARDIUM
         return "Advanced Mode";
 #else
-        return "Unlocked - Mouse";
+        return "Mouse Mouse";
 #endif
+    case MOUSE_MODE2:
+        return "Mouse Mode2";
     case KEYBOARD_MODE:  
-        return "Unlocked - Keyboard";
+        return "Keyboard Mode";
     case GESTURE_MODE:  
 #ifdef BUILD_FOR_KARDIUM
         return "Advanced Mode";
 #else
-        return "Unlocked";
+        return "Gesture Mode";
 #endif
     case GESTURE_HOLD_ONE:
         return "Hold1 Mode";

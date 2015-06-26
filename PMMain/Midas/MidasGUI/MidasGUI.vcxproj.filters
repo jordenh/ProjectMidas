@@ -57,6 +57,18 @@
     <Filter Include="Source Files\Midas\Filters">
       <UniqueIdentifier>{a7c29fee-1036-4ebf-9c00-110cf3750604}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Midas\Signallers">
+      <UniqueIdentifier>{c434ba93-7e85-4a67-b3dd-953b78680d71}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Midas\Signallers">
+      <UniqueIdentifier>{faf7ae4d-6135-45af-85a8-83c07cdfc235}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Midas\KeyAndMouse">
+      <UniqueIdentifier>{6152ea76-2269-4398-9f3e-28aaadcfc3b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Midas\KeyAndMouse">
+      <UniqueIdentifier>{f4563729-022c-4bf1-8f70-b5582a439832}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -77,13 +89,7 @@
     <ClCompile Include="GestureSeqRecorder.cpp">
       <Filter>Source Files\Midas</Filter>
     </ClCompile>
-    <ClCompile Include="kybrdCtrl.cpp">
-      <Filter>Source Files\Midas</Filter>
-    </ClCompile>
     <ClCompile Include="MidasMain.cpp">
-      <Filter>Source Files\Midas</Filter>
-    </ClCompile>
-    <ClCompile Include="MouseCtrl.cpp">
       <Filter>Source Files\Midas</Filter>
     </ClCompile>
     <ClCompile Include="MyoCommon.cpp">
@@ -149,9 +155,6 @@
     <ClCompile Include="MainGUI.cpp">
       <Filter>Source Files\GUI</Filter>
     </ClCompile>
-    <ClCompile Include="GestureSignaller.cpp">
-      <Filter>Source Files\Midas</Filter>
-    </ClCompile>
     <ClCompile Include="SequenceImageManager.cpp">
       <Filter>Source Files\Midas</Filter>
     </ClCompile>
@@ -185,19 +188,10 @@
     <ClCompile Include="MyoState.cpp">
       <Filter>Source Files\Midas</Filter>
     </ClCompile>
-    <ClCompile Include="KeyboardVector.cpp">
-      <Filter>Source Files\Midas</Filter>
-    </ClCompile>
-    <ClCompile Include="KeyboardController.cpp">
-      <Filter>Source Files\Midas</Filter>
-    </ClCompile>
     <ClCompile Include="CommandData.cpp">
       <Filter>Source Files\Midas</Filter>
     </ClCompile>
     <ClCompile Include="ProfileManager.cpp">
-      <Filter>Source Files\Midas\Profiles</Filter>
-    </ClCompile>
-    <ClCompile Include="ProfileSignaller.cpp">
       <Filter>Source Files\Midas\Profiles</Filter>
     </ClCompile>
     <ClCompile Include="BaseMeasurements.cpp">
@@ -227,21 +221,6 @@
     <ClCompile Include="GeneratedFiles\Release\moc_ProfileIcon.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
-    <ClCompile Include="DistanceBar.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="DistanceWidget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="KeyboardSettingsReader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="KeyboardWidget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="RingData.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="GeneratedFiles\Debug\moc_DistanceBar.cpp">
       <Filter>Generated Files\Debug</Filter>
     </ClCompile>
@@ -259,6 +238,57 @@
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Release\moc_KeyboardWidget.cpp">
       <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="SettingsDisplayer.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_SettingsDisplayer.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_SettingsDisplayer.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="ProfileSignaller.cpp">
+      <Filter>Source Files\Midas\Signallers</Filter>
+    </ClCompile>
+    <ClCompile Include="GestureSignaller.cpp">
+      <Filter>Source Files\Midas\Signallers</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_SettingsSignaller.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_SettingsSignaller.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="SettingsSignaller.cpp">
+      <Filter>Source Files\Midas\Signallers</Filter>
+    </ClCompile>
+    <ClCompile Include="RingData.cpp">
+      <Filter>Source Files\Midas</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyboardWidget.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="DistanceBar.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="DistanceWidget.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyboardSettingsReader.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyboardController.cpp">
+      <Filter>Source Files\Midas\KeyAndMouse</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyboardVector.cpp">
+      <Filter>Source Files\Midas\KeyAndMouse</Filter>
+    </ClCompile>
+    <ClCompile Include="kybrdCtrl.cpp">
+      <Filter>Source Files\Midas\KeyAndMouse</Filter>
+    </ClCompile>
+    <ClCompile Include="MouseCtrl.cpp">
+      <Filter>Source Files\Midas\KeyAndMouse</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -280,14 +310,8 @@
     <CustomBuild Include="MainGUI.h">
       <Filter>Header Files\GUI</Filter>
     </CustomBuild>
-    <CustomBuild Include="GestureSignaller.h">
-      <Filter>Header Files\Midas</Filter>
-    </CustomBuild>
     <CustomBuild Include="ProfileDisplayer.h">
       <Filter>Header Files\GUI</Filter>
-    </CustomBuild>
-    <CustomBuild Include="ProfileSignaller.h">
-      <Filter>Header Files\Midas\Profiles</Filter>
     </CustomBuild>
     <CustomBuild Include="ProfileIcon.h">
       <Filter>Header Files\GUI</Filter>
@@ -295,14 +319,26 @@
     <CustomBuild Include="PoseDisplayer.h">
       <Filter>Header Files\GUI</Filter>
     </CustomBuild>
+    <CustomBuild Include="SettingsDisplayer.h">
+      <Filter>Header Files\GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="GestureSignaller.h">
+      <Filter>Header Files\Midas\Signallers</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ProfileSignaller.h">
+      <Filter>Header Files\Midas\Signallers</Filter>
+    </CustomBuild>
+    <CustomBuild Include="SettingsSignaller.h">
+      <Filter>Header Files\Midas\Signallers</Filter>
+    </CustomBuild>
     <CustomBuild Include="DistanceBar.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\GUI</Filter>
     </CustomBuild>
     <CustomBuild Include="DistanceWidget.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\GUI</Filter>
     </CustomBuild>
     <CustomBuild Include="KeyboardWidget.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\GUI</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
@@ -312,13 +348,7 @@
     <ClInclude Include="GestureSeqRecorder.h">
       <Filter>Header Files\Midas</Filter>
     </ClInclude>
-    <ClInclude Include="kybrdCtrl.h">
-      <Filter>Header Files\Midas</Filter>
-    </ClInclude>
     <ClInclude Include="MidasCommon.h">
-      <Filter>Header Files\Midas</Filter>
-    </ClInclude>
-    <ClInclude Include="MouseCtrl.h">
       <Filter>Header Files\Midas</Filter>
     </ClInclude>
     <ClInclude Include="MyoCommon.h">
@@ -343,12 +373,6 @@
       <Filter>Header Files\Midas</Filter>
     </ClInclude>
     <ClInclude Include="MyoState.h">
-      <Filter>Header Files\Midas</Filter>
-    </ClInclude>
-    <ClInclude Include="KeyboardVector.h">
-      <Filter>Header Files\Midas</Filter>
-    </ClInclude>
-    <ClInclude Include="KeyboardContoller.h">
       <Filter>Header Files\Midas</Filter>
     </ClInclude>
     <ClInclude Include="CommandData.h">
@@ -378,11 +402,23 @@
     <ClInclude Include="MyoTranslationFilter.h">
       <Filter>Header Files\Midas\Filters</Filter>
     </ClInclude>
-    <ClInclude Include="KeyboardSettingsReader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="RingData.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Midas</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyboardSettingsReader.h">
+      <Filter>Header Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="kybrdCtrl.h">
+      <Filter>Header Files\Midas\KeyAndMouse</Filter>
+    </ClInclude>
+    <ClInclude Include="MouseCtrl.h">
+      <Filter>Header Files\Midas\KeyAndMouse</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyboardVector.h">
+      <Filter>Header Files\Midas\KeyAndMouse</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyboardContoller.h">
+      <Filter>Header Files\Midas\KeyAndMouse</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

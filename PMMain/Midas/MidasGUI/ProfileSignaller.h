@@ -1,8 +1,9 @@
 #ifndef PROFILESIGNALLER_H
 #define PROFILESIGNALLER_H
 
-#include "ControlState.h"
 #include <QObject>
+
+class ControlState;
 
 class ProfileSignaller : public QObject
 {

@@ -1,15 +1,15 @@
 #include "PoseDisplayer.h"
 #include "SequenceImageManager.h"
-#include <QTimer.h>
 #include <QAction.h>
 #include <QApplication.h>
-#include <QEvent.h>
 #include <QPainter.h>
 #include <qstyle.h>
 #include <qdesktopwidget.h>
 #include <math.h>
 #include <qmessagebox.h>
-
+#include <QGridLayout.h>
+#include <qpushbutton.h>
+#include <qlabel.h>
 #include <qimage.h>
 #include <qpixmap.h>
 
@@ -56,7 +56,6 @@ PoseDisplayer::~PoseDisplayer()
 
 void PoseDisplayer::resizeEvent(QResizeEvent *event)
 {
-    // todo - could handle resize.
 }
 
 QSize PoseDisplayer::sizeHint() const
