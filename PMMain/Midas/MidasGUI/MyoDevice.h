@@ -82,11 +82,11 @@ public:
     void updateProfiles(void);
 
     /**
-     * Send a vibration command to the myo.
+     * Send a vibration command to the connected myos.
      *
-     * @param 
+     * @param vibType - indicates Myo vibration type (currently short, medium, or long)
      */
-    void vibrateMyo(myo::Myo::VibrationType vibType) const;
+    void vibrateMyos(myo::Myo::VibrationType vibType) const;
 
 private:
     /**
@@ -126,9 +126,8 @@ private:
         MyoDevice& parent;
     };
 
-    myo::Myo* currentMyo;
-
-    unsigned int myoFindTimeout;
+    std::vector<myo::Myo*> connectedMyos;
+        unsigned int myoFindTimeout;
     unsigned int durationInMilliseconds;
     std::string appIdentifier;
     ControlState* state;

@@ -362,7 +362,7 @@ void GestureFilter::handleStateChange(CommandData response, GestureFilter *gf)
 {
     if (gf->controlStateHandle->getMode() == LOCK_MODE || response.action.mode == LOCK_MODE)
     {
-        gf->myoStateHandle->peakMyo()->vibrateMyo(myo::Myo::VibrationType::vibrationShort);
+        gf->myoStateHandle->peakMyo()->vibrateMyos(myo::Myo::VibrationType::vibrationShort);
     }
 
     if (response.type != commandType::STATE_CHANGE)

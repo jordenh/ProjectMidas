@@ -147,10 +147,14 @@ int MyoDevice::getDeviceError()
     return 0;
 }
 
-void MyoDevice::vibrateMyo(myo::Myo::VibrationType vibType) const
+void MyoDevice::vibrateMyos(myo::Myo::VibrationType vibType) const
 {
-    if (currentMyo != NULL) {
-        currentMyo->vibrate(vibType);
+    for (int i = 0; i < connectedMyos.size(); i++)
+    {
+        Myo* myo = connectedMyos[i];
+        if (myo != NULL) {
+            myo->vibrate(vibType);
+        }
     }
 }
 
@@ -252,11 +256,11 @@ void MyoDevice::MyoCallbacks::onGyroscopeData(Myo* myo, uint64_t timestamp, cons
 
 void MyoDevice::MyoCallbacks::onPair(Myo* myo, uint64_t timestamp, FirmwareVersion firmwareVersion) { 
     std::cout << "on pair." << std::endl; 
-    parent.currentMyo = myo;
+    // don't set myo from this callback - onPair executes even when no Myo's are connected
+    // to Myo-connect for some reason
 }
 void MyoDevice::MyoCallbacks::onUnpair(Myo* myo, uint64_t timestamp) { 
     std::cout << "on unpair." << std::endl; 
-    parent.currentMyo = NULL;
 }
 void MyoDevice::MyoCallbacks::onConnect(Myo* myo, uint64_t timestamp, FirmwareVersion firmwareVersion) { 
     std::cout << "on connect." << std::endl; 
@@ -265,7 +269,8 @@ void MyoDevice::MyoCallbacks::onConnect(Myo* myo, uint64_t timestamp, FirmwareVe
 
     parent.connectPipeline.startPipeline(input);
 
-    parent.currentMyo = myo;
+    parent.connectedMyos.push_back(myo);
+    //parent.currentMyo = myo;
 }
 void MyoDevice::MyoCallbacks::onDisconnect(Myo* myo, uint64_t timestamp) { 
     std::cout << "on disconnect." << std::endl; 
@@ -274,7 +279,15 @@ void MyoDevice::MyoCallbacks::onDisconnect(Myo* myo, uint64_t timestamp) {
 
     parent.connectPipeline.startPipeline(input);
 
-    parent.currentMyo = NULL;
+    for (std::vector<Myo*>::iterator it = parent.connectedMyos.begin(); it != parent.connectedMyos.end(); it++)
+    {
+        if (myo == *it)
+        {
+            parent.connectedMyos.erase(it);
+            break;
+        }
+    }
+    //parent.currentMyo = NULL;
 }
 
 void MyoDevice::MyoCallbacks::onArmSync(Myo *myo, uint64_t timestamp, Arm arm, XDirection xDirection, float rotation, WarmupState warmupState)
@@ -282,13 +295,11 @@ void MyoDevice::MyoCallbacks::onArmSync(Myo *myo, uint64_t timestamp, Arm arm, X
     parent.arm = arm;
     parent.xDirection = xDirection;
     std::cout << "on arm sync." << std::endl;
-    parent.currentMyo = myo;
 }
 void MyoDevice::MyoCallbacks::onArmSync(Myo* myo, uint64_t timestamp, Arm arm, XDirection xDirection) { 
     parent.arm = arm;
     parent.xDirection = xDirection;
     std::cout << "on arm sync." << std::endl; 
-    parent.currentMyo = NULL;
 }
 void MyoDevice::MyoCallbacks::onArmUnsync(Myo* myo, uint64_t timestamp) { 
     parent.arm = Arm::armUnknown;
