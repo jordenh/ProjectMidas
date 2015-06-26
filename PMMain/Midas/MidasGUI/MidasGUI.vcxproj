@@ -411,9 +411,6 @@
   <ItemGroup>
     <Text Include="keyboardData.txt" />
   </ItemGroup>
-  <ItemGroup>
-    <Image Include="MidasGUI.ico" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

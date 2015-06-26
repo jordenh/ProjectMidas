@@ -424,7 +424,4 @@
   <ItemGroup>
     <Text Include="keyboardData.txt" />
   </ItemGroup>
-  <ItemGroup>
-    <Image Include="MidasGUI.ico" />
-  </ItemGroup>
 </Project>
