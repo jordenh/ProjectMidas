@@ -197,7 +197,7 @@
             </sequence>
             <sequence state="gestureMode" name="Click+Drag Cursor">
                 <gestures>
-                    <gesture type="hold">fist</gesture>
+                    <gesture type="immediate">fist</gesture>
                 </gestures>
                 <commands>
 				<command type="stateChange">
