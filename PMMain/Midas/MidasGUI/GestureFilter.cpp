@@ -362,7 +362,7 @@ void GestureFilter::handleStateChange(CommandData response, GestureFilter *gf)
 {
     if (gf->controlStateHandle->getMode() == LOCK_MODE || response.action.mode == LOCK_MODE)
     {
-        gf->myoStateHandle->peakMyo()->vibrateMyos(myo::Myo::VibrationType::vibrationShort);
+        gf->myoStateHandle->peakMyo()->vibrateMyos(myo::Myo::VibrationType::vibrationMedium);
     }
 
     if (response.type != commandType::STATE_CHANGE)
@@ -447,7 +447,16 @@ filterDataMap GestureFilter::handleProfileChangeCommand(CommandData response)
 	CommandData command;
 	command = response;
 
-	signaller.emitToggleActiveIcon();
+    myoStateHandle->peakMyo()->vibrateMyos(myo::Myo::VibrationType::vibrationShort, 2);
+
+    if (response.action.profile == MOVE_PROFILE_FORWARD)
+    {
+        signaller.emitProfileChange(true);
+    }
+    else if (response.action.profile == MOVE_PROFILE_BACKWARD)
+    {
+        signaller.emitProfileChange(false);
+    }
 
 	outputToSharedCommandData[COMMAND_INPUT] = command;
 	setOutput(outputToSharedCommandData);

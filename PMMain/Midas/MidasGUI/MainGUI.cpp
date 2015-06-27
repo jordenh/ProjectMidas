@@ -41,6 +41,7 @@ MainGUI::MainGUI(MidasThread *mainThread, ProfileManager *pm, int deadZoneRad)
 		DISTANCE_DISPLAY_HEIGHT, this);
 #endif
 
+    numProfiles = pm->getProfiles()->size();
 	setupProfileIcons();
 
     // Ensure Midas stays on top even when other applications have popups, etc
@@ -94,8 +95,11 @@ MainGUI::MainGUI(MidasThread *mainThread, ProfileManager *pm, int deadZoneRad)
 
     totalWidth = std::max(sequenceDisplayer->width(), 
                         (infoIndicator->width() + poseDisplayer->width()));
-    totalHeight = sequenceDisplayer->height() + poseDisplayer->height() 
-        + profileHeights + settingsDisplayer->height();
+    totalHeight = sequenceDisplayer->height() + poseDisplayer->height() +
+#ifdef SHOW_PROFILE_BUTTONS
+        profileHeights + 
+#endif
+        settingsDisplayer->height();
 
     QRect screen = QApplication::desktop()->availableGeometry(this);
     setGeometry(screen.right() - totalWidth - SCREEN_RIGHT_BUFFER,
@@ -183,8 +187,8 @@ void MainGUI::connectSignallerToPoseDisplayer(GestureSignaller *signaller)
 
 void MainGUI::connectSignallerToProfileIcons(GestureSignaller *signaller)
 {
-	QObject::connect(signaller, SIGNAL(emitToggleActiveIcon()),
-		this, SLOT(handleUpdateProfile()));
+    QObject::connect(signaller, SIGNAL(emitProfileChange(bool)),
+        this, SLOT(handleChangeProfile(bool)));
 }
 
 void MainGUI::setupProfileIcons()
@@ -195,25 +199,42 @@ void MainGUI::setupProfileIcons()
 	QImage icon1Inactive(QString(PROFILE_ICON1_INACTIVE));
 
 	icon0IsActive = true;
+    activeProfile = 0;
 	icon0 = new ProfileIcon(SPECIFIC_PROFILE_ICON_SIZE, SPECIFIC_PROFILE_ICON_SIZE, true, QPixmap::fromImage(icon0Active), QPixmap::fromImage(icon0Inactive), this);
 	icon1 = new ProfileIcon(SPECIFIC_PROFILE_ICON_SIZE, SPECIFIC_PROFILE_ICON_SIZE, false, QPixmap::fromImage(icon1Active), QPixmap::fromImage(icon1Inactive), this);
 }
 
-void MainGUI::handleUpdateProfile()
+void MainGUI::handleChangeProfile(bool progressForward)
 {
-	// Currently just toggling active display between 2 choices... quite hard coded, but will remain this way for now.
-	if (icon0IsActive)
-	{
-		icon0->setImgActiveSel(false);
-		icon1->setImgActiveSel(true);
-		icon0IsActive = false;
-	}
-	else
-	{
-		icon0->setImgActiveSel(true);
-		icon1->setImgActiveSel(false);
-		icon0IsActive = true;
-	}
+    if (progressForward)
+    {
+        activeProfile++;
+        activeProfile %= numProfiles;
+    }
+    else if (!progressForward && activeProfile > 0)
+    {
+        activeProfile--;
+    }
+    else if (!progressForward && activeProfile <= 0)
+    {
+        activeProfile = numProfiles - 1;
+    }
+
+    if (activeProfile == 0)
+    {
+        icon0->setImgActiveSel(true);
+        icon1->setImgActiveSel(false);
+    }
+    else if (activeProfile == 1)
+    {
+        icon0->setImgActiveSel(false);
+        icon1->setImgActiveSel(true);
+    }
+    else if (activeProfile > 1)
+    {
+        icon0->setImgActiveSel(false);
+        icon1->setImgActiveSel(false);
+    }
 }
 
 void MainGUI::handleFocusMidas()

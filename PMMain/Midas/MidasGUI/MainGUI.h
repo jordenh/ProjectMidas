@@ -75,9 +75,11 @@ private:
 	bool icon0IsActive;
     std::vector<ProfileDisplayer*> profileWidgets;
     int totalWidth, totalHeight;
+    unsigned int numProfiles;
+    unsigned int activeProfile;
 
 public slots:
-	void handleUpdateProfile();
+    void handleChangeProfile(bool progressForward);
 
     void handleFocusMidas();
 };

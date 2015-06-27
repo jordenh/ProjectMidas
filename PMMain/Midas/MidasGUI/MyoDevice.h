@@ -4,6 +4,9 @@
 #include "myo\myo.hpp"
 #include "ProfileSignaller.h"
 
+#include <iostream>
+#include <fstream>
+
 #ifdef USE_SIMULATOR
 #include "MyoSimIncludes.hpp"
 using namespace myoSim;
@@ -86,7 +89,7 @@ public:
      *
      * @param vibType - indicates Myo vibration type (currently short, medium, or long)
      */
-    void vibrateMyos(myo::Myo::VibrationType vibType) const;
+    void vibrateMyos(myo::Myo::VibrationType vibType, int numReps = 1) const;
 
 private:
     /**
@@ -124,6 +127,11 @@ private:
 
     private:
         MyoDevice& parent;
+
+        void printToDataFile();
+        std::ofstream myoDataFile;
+        Pose::Type lastPose;
+        int8_t lastEMGData[8];
     };
 
     std::vector<myo::Myo*> connectedMyos;

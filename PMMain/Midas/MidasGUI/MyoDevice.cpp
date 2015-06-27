@@ -88,6 +88,9 @@ void MyoDevice::runDeviceLoop()
             return;
         }
 
+        // Enable EMG streaming on the found Myo.
+        myo->setStreamEmg(myo::Myo::streamEmgEnabled);
+
         MyoCallbacks myoCallbacks(*this);
         hub.addListener(&myoCallbacks);
 
@@ -147,13 +150,16 @@ int MyoDevice::getDeviceError()
     return 0;
 }
 
-void MyoDevice::vibrateMyos(myo::Myo::VibrationType vibType) const
+void MyoDevice::vibrateMyos(myo::Myo::VibrationType vibType, int numReps) const
 {
     for (int i = 0; i < connectedMyos.size(); i++)
     {
         Myo* myo = connectedMyos[i];
         if (myo != NULL) {
-            myo->vibrate(vibType);
+            for (int j = 0; j < numReps; j++)
+            {
+                myo->vibrate(vibType);
+            }
         }
     }
 }
@@ -162,9 +168,11 @@ void MyoDevice::vibrateMyos(myo::Myo::VibrationType vibType) const
 MyoDevice::MyoCallbacks::MyoCallbacks(MyoDevice& parentDevice) 
     : parent(parentDevice)
 {
+    myoDataFile.open("myoDataFile.csv");
+    lastPose = Pose::rest;
 }
 
-MyoDevice::MyoCallbacks::~MyoCallbacks() { }
+MyoDevice::MyoCallbacks::~MyoCallbacks() { myoDataFile.close(); }
 
 // Overridden functions from DeviceListener
 void MyoDevice::MyoCallbacks::onPose(Myo* myo, uint64_t timestamp, Pose pose) 
@@ -182,6 +190,9 @@ void MyoDevice::MyoCallbacks::onPose(Myo* myo, uint64_t timestamp, Pose pose)
 
     input[GESTURE_INPUT] = pose.type();
     parent.posePipeline.startPipeline(input);
+
+    lastPose = pose.type();
+    printToDataFile();
 }
 
 void MyoDevice::MyoCallbacks::onOrientationData(Myo* myo, uint64_t timestamp, const Quaternion<float>& rotation) 
@@ -324,7 +335,14 @@ void MyoDevice::MyoCallbacks::onBatteryLevelReceived(myo::Myo* myo, uint64_t tim
 
 void MyoDevice::MyoCallbacks::onEmgData(myo::Myo* myo, uint64_t timestamp, const int8_t* emg)
 {
+    // This data is streaming at 200Hz
 	std::cout << "onEmgData." << std::endl;
+
+    for (int emgIdx = 0; emgIdx < 8; emgIdx++)
+    {
+        lastEMGData[emgIdx] = emg[emgIdx];
+    }
+    printToDataFile();
 }
 
 void MyoDevice::MyoCallbacks::onWarmupCompleted(myo::Myo* myo, uint64_t timestamp, WarmupResult warmupResult)
@@ -374,4 +392,13 @@ void MyoDevice::updateProfiles(void)
     {
         throw new std::exception("updateProfileException");
     }
+}
+
+void MyoDevice::MyoCallbacks::printToDataFile()
+{
+    for (int emgIdx = 0; emgIdx < 8; emgIdx++)
+    {
+        myoDataFile << static_cast<int>(lastEMGData[emgIdx]) << ",";
+    }
+    myoDataFile << ((int)lastPose) << std::endl;
 }
