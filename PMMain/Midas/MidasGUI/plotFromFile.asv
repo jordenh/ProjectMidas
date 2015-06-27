@@ -1,0 +1,38 @@
+function plotFromFile()
+
+%1-8 are EMG signals from 0 to 255
+
+POSE_IDX = 9;
+
+myoDataVector = importdata('C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\myoDataFile.csv');
+
+x = [1:size(myoDataVector(:,1))];
+
+avgEMGData = mean(myoDataVector(:,1:8)');
+
+figure
+%hold on
+
+for i=1:4
+   %normalize EMG data from 0-1
+   subplot(2,2,i)
+   hold on
+   plot(x, (myoDataVector(:,i)/255));
+   plot(x, myoDataVector(:,POSE_IDX));
+   plot(x, avgEMGData);
+   hold off
+end
+figure
+for i=5:8
+   %normalize EMG data from 0-1
+   subplot(2,2,i-4)
+   hold on
+   plot(x, (myoDataVector(:,i)/255));
+   plot(x, myoDataVector(:,POSE_IDX));
+   plot(x, myoDataVector(:,POSE_IDX));
+   hold off
+end
+
+%plot(x, myoDataVector(:,POSE_IDX));
+
+%hold off
