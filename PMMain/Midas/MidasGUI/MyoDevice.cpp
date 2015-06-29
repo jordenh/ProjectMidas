@@ -347,7 +347,7 @@ void MyoDevice::MyoCallbacks::onEmgData(myo::Myo* myo, uint64_t timestamp, const
     {
         lastEMGData[emgIdx] = emg[emgIdx];
     }
-//    printToDataFile(); // uncomment to printout data for post mortem analysis
+    printToDataFile(); // uncomment to printout data for post mortem analysis
 
     // Actual processing
     std::array<int8_t, 8> emgSamples;

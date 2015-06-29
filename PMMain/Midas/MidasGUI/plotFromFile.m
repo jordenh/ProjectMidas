@@ -80,37 +80,43 @@ plot (x, impulseVec, 'r');
 hold off
 % END HANDLING IMPULSE FINDING
 
-% HANDLING RISING_EDGE FALLING_EDGE IMPULSE FINDING
-MAX_EMG_IMPULSE_THRESHOLD = 0.01;
-FALL_DETECTION_COUNT = 10;
-fallDetection = FALL_DETECTION_COUNT;
-IMPULSE_SIZE = 40; % attempt to place a notch around IMPULSE_SIZE samples when there is an impulse
+% HANDLING FALLING_EDGE IMPULSE FINDING
+FALLING_EMG_IMPULSE_THRESHOLD_LOW = 0.1;
+FALLING_EMG_IMPULSE_THRESHOLD_HIGH = 0.20;
+DETECTION_COUNT = 5;
+fallDetection = DETECTION_COUNT;
+riseDetection = DETECTION_COUNT;
+musclesActive = false;
 impulseCount = 0;
-currImpulse = false;
-impulseVec = [];
+fallImpulseVec = [];
 for i=1:size(maxEMGFiltered(:,1))
-    currentlyPosing = (myoPoseValues(i) ~= 0);
-    
-    if (maxEMGFiltered(i,1) <= MAX_EMG_IMPULSE_THRESHOLD)
-       fallDetection = fallDetection - 1; 
+    if (maxEMGFiltered(i,1) >= FALLING_EMG_IMPULSE_THRESHOLD_HIGH)
+        riseDetection = riseDetection - 1;
     else
-        fallDetection = FALL_DETECTION_COUNT;
+        riseDetection = DETECTION_COUNT;
+    end
+    if (riseDetection <= 0)
+       musclesActive = true; 
     end
     
-    if (currentlyPosing && fallDetection <= 0)
-        currImpulse = true;
+    if (maxEMGFiltered(i,1) <= FALLING_EMG_IMPULSE_THRESHOLD_LOW)
+       fallDetection = fallDetection - 1; 
+    else
+        fallDetection = DETECTION_COUNT;
+    end
+    
+    if (musclesActive == true && fallDetection <= 0)
+        musclesActive = false;
         impulseCount = IMPULSE_SIZE;
     end
     
-    if (currImpulse && impulseCount > 0)
-        impulseVec = [impulseVec, 1];
+    if (musclesActive == false && impulseCount > 0)
+        % impulse when muscles are inactive but there is more 'count' left
+        % to output
+        fallImpulseVec = [fallImpulseVec, 1];
         impulseCount = impulseCount - 1;
     else
-        impulseVec = [impulseVec, 0]; 
-    end
-    
-    if (impulseCount <= 0)
-        currImpulse = false;
+        fallImpulseVec = [fallImpulseVec, 0]; 
     end
 end
 
@@ -119,7 +125,51 @@ hold on
 plot(x, myoPoseValues);
 plot (x, maxEMGFiltered, 'gx','LineWidth',1,'MarkerSize',10);
 plot (x, impulseVec, 'r');
+plot (x, fallImpulseVec, 'k');
 hold off
+% END HANDLING FALLING_EDGE IMPULSE FINDING
+
+% DOESNT REALLY WORK...
+% HANDLING RISING_EDGE FALLING_EDGE IMPULSE FINDING
+%MAX_EMG_IMPULSE_THRESHOLD = 0.01;
+%FALL_DETECTION_COUNT = 10;
+%fallDetection = FALL_DETECTION_COUNT;
+%IMPULSE_SIZE = 40; % attempt to place a notch around IMPULSE_SIZE samples when there is an impulse
+%impulseCount = 0;
+%currImpulse = false;
+%impulseVec = [];
+%for i=1:size(maxEMGFiltered(:,1))
+%    currentlyPosing = (myoPoseValues(i) ~= 0);
+%    
+%    if (maxEMGFiltered(i,1) <= MAX_EMG_IMPULSE_THRESHOLD)
+%       fallDetection = fallDetection - 1; 
+%    else
+%        fallDetection = FALL_DETECTION_COUNT;
+%    end
+%    
+%    if (currentlyPosing && fallDetection <= 0)
+%        currImpulse = true;
+%        impulseCount = IMPULSE_SIZE;
+%    end
+%    
+%    if (currImpulse && impulseCount > 0)
+%        impulseVec = [impulseVec, 1];
+%        impulseCount = impulseCount - 1;
+%    else
+%        impulseVec = [impulseVec, 0]; 
+%    end
+%    
+%    if (impulseCount <= 0)
+%        currImpulse = false;
+%    end
+%end
+%
+%figure
+%hold on
+%plot(x, myoPoseValues);
+%plot (x, maxEMGFiltered, 'gx','LineWidth',1,'MarkerSize',10);
+%plot (x, impulseVec, 'r');
+%hold off
 % END HANDLING FALLING_EDGE IMPULSE FINDING
 
 %plot(x, myoDataVector(:,POSE_IDX));

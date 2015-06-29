@@ -7,10 +7,10 @@
 EMGImpulseFilter::EMGImpulseFilter(MyoState* myoState) : myoStateHandle(myoState) {
     maxAvg = 0;
     impulseStatus = false;
-    impulseCount = 0;
-    bool currMuscleActive = false;
-
-    MyoState *myoStateHandle;
+    risingLogicImpulseCount = 0;
+    risingLogicMuscleActive = false;
+    fallingLogicFallDetection = FALLING_DETECTION_COUNT;
+    fallingLogicRiseDetection = FALLING_DETECTION_COUNT;
 }
 EMGImpulseFilter::~EMGImpulseFilter() {}
 
@@ -65,37 +65,81 @@ void EMGImpulseFilter::updateImpulseStatus()
     
     // Step 3 - perform logic with various counters to determine if the 
     // system is viewing an impulse
-    impulseStatus = performImpulseLogic();
+    impulseStatus = risingEdgeImpulseLogic();
+    impulseStatus |= fallingEdgeImpulseLogic();
 }
 
-bool EMGImpulseFilter::performImpulseLogic()
+bool EMGImpulseFilter::risingEdgeImpulseLogic()
 {
     bool retVal = false;
     bool currentlyPosing = (myoStateHandle->getPoseHistory().size() > 0) ? (myoStateHandle->getPoseHistory().back().type() != myo::Pose::rest) : false;
 
-    if (currMuscleActive == false && maxAvg > MAX_EMG_IMPULSE_THRESHOLD_HIGH && currentlyPosing == false)
+    if (risingLogicMuscleActive == false && maxAvg > RISING_EMG_IMPULSE_THRESHOLD_HIGH && currentlyPosing == false)
     {
         // impulse detected in muscle activity when Myo not sending a pose signal yet.
         // Deem this an impulse
-        currMuscleActive = true;
-        impulseCount = IMPULSE_SIZE;
+        risingLogicMuscleActive = true;
+        risingLogicImpulseCount = IMPULSE_SIZE;
     }
 
-    if (currMuscleActive && impulseCount > 0)
+    if (risingLogicMuscleActive && risingLogicImpulseCount > 0)
     {
         retVal = true;
-        impulseCount--;
+        risingLogicImpulseCount--;
     }
     else
     {
         retVal = false;
     }
 
-    if (impulseCount <= 0 && maxAvg <= MAX_EMG_IMPULSE_THRESHOLD_LOW)
+    if (risingLogicImpulseCount <= 0 && maxAvg <= RISING_EMG_IMPULSE_THRESHOLD_LOW)
     {
-        // reset the currMuscleActive flag when the pose has been let go after IMPULSE_SIZE steps
+        // reset the risingLogicMuscleActive flag when the pose has been let go after IMPULSE_SIZE steps
         // so that it is searching for the next impulse in the system.
-        currMuscleActive = false;
+        risingLogicMuscleActive = false;
+    }
+
+    return retVal;
+}
+
+bool EMGImpulseFilter::fallingEdgeImpulseLogic()
+{
+    bool retVal = false;
+
+    // Count down to find 'rises'
+    if (maxAvg >= FALLING_EMG_IMPULSE_THRESHOLD_HIGH)
+    {
+        fallingLogicRiseDetection--;
+    }
+    else
+    {
+        fallingLogicRiseDetection = FALLING_DETECTION_COUNT;
+    }
+    if (fallingLogicRiseDetection <= 0)
+    {
+        fallingLogicMuscleActive = true;
+    }
+
+    // Count down to find 'falls'
+    if (maxAvg <= FALLING_EMG_IMPULSE_THRESHOLD_LOW)
+    {
+        fallingLogicFallDetection--;
+    }
+    else
+    {
+        fallingLogicFallDetection = FALLING_DETECTION_COUNT;
+    }
+    if (fallingLogicMuscleActive == true && fallingLogicFallDetection <= 0)
+    {
+        fallingLogicMuscleActive = false;
+        fallingLogicImpulseCount = IMPULSE_SIZE;
+    }
+
+    // found impulse signal if impulseCount > 0 when the muscles are inactive
+    if (fallingLogicMuscleActive == false && fallingLogicImpulseCount > 0)
+    {
+        retVal = true;
+        fallingLogicImpulseCount--;
     }
 
     return retVal;

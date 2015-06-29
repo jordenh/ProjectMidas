@@ -11,8 +11,12 @@
 #define ABS_MAX 128.0 // EMG data ranges from -128 to +127. 
 #define IMPULSE_SIZE 40 // Length of impulse once detected (should be 200ms at 200Hz)
 #define EMG_POWER 3.0
-#define MAX_EMG_IMPULSE_THRESHOLD_HIGH 0.2
-#define MAX_EMG_IMPULSE_THRESHOLD_LOW 0.01
+#define RISING_EMG_IMPULSE_THRESHOLD_HIGH 0.2
+#define RISING_EMG_IMPULSE_THRESHOLD_LOW 0.01
+
+#define FALLING_EMG_IMPULSE_THRESHOLD_HIGH 0.2
+#define FALLING_EMG_IMPULSE_THRESHOLD_LOW 0.1
+#define FALLING_DETECTION_COUNT 5
 
 #define NOMINMAX
 
@@ -34,7 +38,8 @@ private:
 
     void updateImpulseStatus();
 
-    bool performImpulseLogic();
+    bool risingEdgeImpulseLogic();
+    bool fallingEdgeImpulseLogic();
 
     /**
     * Calculate the average of the contents in the deque.
@@ -54,8 +59,13 @@ private:
     std::deque<std::array<int8_t, 8>> emgSamplesDeque;
     std::deque<std::array<float, 8>> absEmgSamplesNormDeque;
 
-    int impulseCount;
-    bool currMuscleActive;
+    int risingLogicImpulseCount;
+    bool risingLogicMuscleActive;
+
+    int fallingLogicFallDetection;
+    int fallingLogicRiseDetection;
+    bool fallingLogicMuscleActive;
+    int fallingLogicImpulseCount;
 
     MyoState *myoStateHandle;
 };
