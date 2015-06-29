@@ -9,9 +9,9 @@
 
 #define FILTER_LEN 5 // Averaging EMG data with weighted filter.
 #define ABS_MAX 128.0 // EMG data ranges from -128 to +127. 
-#define IMPULSE_SIZE 40 // Length of impulse once detected (should be 200ms at 200Hz)
+#define IMPULSE_SIZE 30 // Length of impulse once detected (cycles at 200Hz)
 #define EMG_POWER 3.0
-#define RISING_EMG_IMPULSE_THRESHOLD_HIGH 0.2
+#define RISING_EMG_IMPULSE_THRESHOLD_HIGH 0.125
 #define RISING_EMG_IMPULSE_THRESHOLD_LOW 0.01
 
 #define FALLING_EMG_IMPULSE_THRESHOLD_HIGH 0.2
@@ -34,6 +34,8 @@ public:
     */
     void process();
 
+    static bool getImpulseStatus() { return impulseStatus; }
+
 private:
 
     void updateImpulseStatus();
@@ -53,7 +55,7 @@ private:
     float maxAvg;
 
     // the impulse status of the system
-    bool impulseStatus;
+    static bool impulseStatus;
 
     // store FILTER_LEN EMG samples at a time
     std::deque<std::array<int8_t, 8>> emgSamplesDeque;

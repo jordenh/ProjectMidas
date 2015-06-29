@@ -4,6 +4,8 @@
 
 #include "SharedCommandData.h"
 
+bool EMGImpulseFilter::impulseStatus = false;
+
 EMGImpulseFilter::EMGImpulseFilter(MyoState* myoState) : myoStateHandle(myoState) {
     maxAvg = 0;
     impulseStatus = false;

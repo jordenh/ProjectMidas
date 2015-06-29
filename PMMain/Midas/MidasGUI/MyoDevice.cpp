@@ -416,5 +416,5 @@ void MyoDevice::MyoCallbacks::printToDataFile()
     {
         myoDataFile << static_cast<int>(lastEMGData[emgIdx]) << ",";
     }
-    myoDataFile << ((int)lastPose) << std::endl;
+    myoDataFile << ((int)lastPose) << "," << (int)(EMGImpulseFilter::getImpulseStatus()) << std::endl;
 }

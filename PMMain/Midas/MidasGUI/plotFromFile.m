@@ -5,9 +5,13 @@ delete(findall(0,'Type','figure'))
 
 %1-8 are EMG signals ranging from 0 to 255
 POSE_IDX = 9;
+RECORDED_IMPULSE_IDX = 10;
 
 myoDataVector = importdata(strcat('C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\', fileName));
 myoPoseValues = myoDataVector(:,POSE_IDX);
+if (size(myoDataVector, 2) >= 10)
+    midasImpulseValues = myoDataVector(:,RECORDED_IMPULSE_IDX);
+end
 
 %filter each individual channel as a running average to smooth it a bit
 FILTER_LEN = 5;
@@ -47,9 +51,9 @@ hold off
 
 
 % HANDLING RISING_EDGE IMPULSE FINDING
-MAX_EMG_IMPULSE_THRESHOLD_HIGH = 0.2;
+MAX_EMG_IMPULSE_THRESHOLD_HIGH = 0.125; % Midas currently at 0.2
 MAX_EMG_IMPULSE_THRESHOLD_LOW = 0.01;
-IMPULSE_SIZE = 40; % attempt to place a notch around IMPULSE_SIZE samples when there is an impulse
+IMPULSE_SIZE = 30; % attempt to place a notch around IMPULSE_SIZE samples when there is an impulse
 impulseCount = 0;
 currImpulse = false;
 impulseVec = [];
@@ -82,7 +86,7 @@ hold off
 
 % HANDLING FALLING_EDGE IMPULSE FINDING
 FALLING_EMG_IMPULSE_THRESHOLD_LOW = 0.1;
-FALLING_EMG_IMPULSE_THRESHOLD_HIGH = 0.20;
+FALLING_EMG_IMPULSE_THRESHOLD_HIGH = 0.20; 
 DETECTION_COUNT = 5;
 fallDetection = DETECTION_COUNT;
 riseDetection = DETECTION_COUNT;
@@ -128,6 +132,29 @@ plot (x, impulseVec, 'r');
 plot (x, fallImpulseVec, 'k');
 hold off
 % END HANDLING FALLING_EDGE IMPULSE FINDING
+
+if (size(myoDataVector, 2) >= 10)
+figure
+hold on
+title('Midas Impulse Values - red');
+plot(x, myoPoseValues);
+plot (x, maxEMGFiltered, 'g');
+plot (x, midasImpulseValues, 'r');
+hold off
+end
+
+if (size(myoDataVector, 2) >= 10)
+figure
+hold on
+title('Midas Impulse Values - red');
+plot(x, myoPoseValues);
+plot (x, maxEMGFiltered, 'g');
+plot (x, midasImpulseValues, 'r');
+
+plot (x, impulseVec, 'y');
+plot (x, fallImpulseVec, 'y');
+hold off
+end
 
 % DOESNT REALLY WORK...
 % HANDLING RISING_EDGE FALLING_EDGE IMPULSE FINDING
