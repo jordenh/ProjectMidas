@@ -4,7 +4,14 @@
 
 #include "SharedCommandData.h"
 
-EMGImpulseFilter::EMGImpulseFilter(MyoState* myoState) : myoStateHandle(myoState) {}
+EMGImpulseFilter::EMGImpulseFilter(MyoState* myoState) : myoStateHandle(myoState) {
+    maxAvg = 0;
+    impulseStatus = false;
+    impulseCount = 0;
+    bool currMuscleActive = false;
+
+    MyoState *myoStateHandle;
+}
 EMGImpulseFilter::~EMGImpulseFilter() {}
 
 void EMGImpulseFilter::process()
@@ -13,17 +20,23 @@ void EMGImpulseFilter::process()
 
     std::array<int8_t, 8> emgSamples = boost::any_cast<std::array<int8_t, 8>>(input[EMG_VECTOR]);
 
+    // keep track of raw emg samples, but dont use them for now.
     emgSamplesDeque.push_back(emgSamples);
-    std::array<int8_t, 8> absEmgSamples;
+    // store normalized absolute values of emg data
+    std::array<float, 8> absEmgSamplesNorm;
     for (int i = 0; i < 8; i++)
     {
-        absEmgSamples[i] = abs(emgSamples[i]);
+        absEmgSamplesNorm[i] = (float)abs(emgSamples[i]) / ABS_MAX;
     }
-    absEmgSamplesDeque.push_back(absEmgSamples);
+    absEmgSamplesNormDeque.push_back(absEmgSamplesNorm);
 
     if (emgSamplesDeque.size() > FILTER_LEN)
     {
         emgSamplesDeque.pop_front();
+    }
+    if (absEmgSamplesNormDeque.size() > FILTER_LEN)
+    {
+        absEmgSamplesNormDeque.pop_front();
     }
 
     updateImpulseStatus();
@@ -40,7 +53,7 @@ void EMGImpulseFilter::updateImpulseStatus()
     // Step 1 - Take average of absolute value of EMG data as we 
     // want to determine if muscle activity is present (dont care about sign)
     // and want to counteract discrepencies
-    std::array<float, 8> absAvg = calcAvg(absEmgSamplesDeque);
+    std::array<float, 8> absAvg = calcAvg(absEmgSamplesNormDeque);
 
     // Step 2 - take the max acrrocess the average and raise it to EMG_POWER power
     maxAvg = 0;
@@ -88,7 +101,7 @@ bool EMGImpulseFilter::performImpulseLogic()
     return retVal;
 }
 
-std::array<float, 8> EMGImpulseFilter::calcAvg(std::deque<std::array<int8_t, 8>>& dq)
+std::array<float, 8> EMGImpulseFilter::calcAvg(std::deque<std::array<float, 8>>& dq)
 {
     std::array<float, 8> avgs = { 0 };
     std::array<float, 8> sum = { 0 };
@@ -98,10 +111,10 @@ std::array<float, 8> EMGImpulseFilter::calcAvg(std::deque<std::array<int8_t, 8>>
         return avgs;
     }
 
-    std::deque<std::array<int8_t, 8>>::iterator it = dq.begin();
+    std::deque<std::array<float, 8>>::iterator it = dq.begin();
     while (it != dq.end())
     {
-        std::array<int8_t, 8> currArr = *it;
+        std::array<float, 8> currArr = *it;
         for (int i = 0; i < 8; i++)
         {
             sum[i] += currArr[i];
