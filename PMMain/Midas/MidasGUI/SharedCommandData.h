@@ -12,6 +12,8 @@
 #define VELOCITY_INPUT "velocity"
 #define ISCONNECTED_INPUT "isConnected"
 #define DELTA_INPUT "deltaInput"
+#define EMG_VECTOR "emgVector"
+#define IMPULSE_STATUS "impStatus"
 #ifdef BUILD_KEYBOARD
 #define ANGLE_INPUT "angle"
 #define RSSI_INPUT "rssi"
@@ -26,9 +28,9 @@ class SharedCommandData : public Filter
 {
 public:
 #ifdef BUILD_KEYBOARD
-	SharedCommandData(unsigned int maxKybdGuiSel) : Filter(), mouseVelocity(), kybdGuiSel(0) { this->maxKybdGuiSel = maxKybdGuiSel; }
+    SharedCommandData(unsigned int maxKybdGuiSel) : Filter(), mouseVelocity(), impulseStatus(false), kybdGuiSel(0) { this->maxKybdGuiSel = maxKybdGuiSel; }
 #else
-    SharedCommandData() : Filter(), mouseVelocity() { }
+    SharedCommandData() : Filter(), mouseVelocity(), impulseStatus(false) {}
 #endif
 
     /**
@@ -137,13 +139,13 @@ public:
 	void setRssi(float rssi);
 #endif
 
-	void SharedCommandData::setDelta(vector2D delta);
+	void setDelta(vector2D delta);
 
-	bool SharedCommandData::trySetDelta(vector2D delta);
+	bool trySetDelta(vector2D delta);
 
-	vector2D SharedCommandData::getDelta();
+	vector2D getDelta();
 
-	bool SharedCommandData::tryGetDelta(vector2D& outDelta);
+	bool tryGetDelta(vector2D& outDelta);
 
     /**
      * Returns whether the device is connected or not
@@ -158,6 +160,15 @@ public:
      * @param bool isConnected
      */
     void setIsConnected(bool connected);
+
+    // Impulse Status thread safe accesors/mutators
+    void setImpulseStatus(bool impulseStatus);
+
+    bool trySetImpulseStatus(bool impulseStatus);
+
+    bool getImpulseStatus();
+
+    bool tryGetImpulseStatus(bool& impulseStatus);
 
     /**
      * Returns true if the command queue is empty, otherwise false.
@@ -195,6 +206,8 @@ private:
 	// point to indicate offset from current mouse position, while a pose is being held 
 	vector2D mouseDelta;
 	std::mutex mouseDeltaMutex;
+
+    bool impulseStatus;
    
     // together, these 2 vars define which wheel/RingData the keyboard should show on the GUI
     std::queue<CommandData> commandQueue;
@@ -205,11 +218,13 @@ private:
     std::mutex keySelectAngleMutex;
     std::mutex rssiMutex;
     std::mutex isConnectedMutex;
+    std::mutex impulseStatusMutex;
 
     void extractCommand(boost::any value);
     void extractPoint(boost::any value);
     void extractIsConnected(boost::any value);
 	void extractVector2D(boost::any value);
+    void extractImpulseStatus(boost::any value);
 
 #ifdef BUILD_KEYBOARD
 	unsigned int maxKybdGuiSel;

@@ -141,7 +141,7 @@ private:
     ControlState* state;
 	MyoState* myoState;
     FilterPipeline posePipeline, orientationPipeline, rssiPipeline,
-        connectPipeline;
+        connectPipeline, emgImpulsePipeline;
     MainGUI *mainGui;
     std::string prevProfileName;
 

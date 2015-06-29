@@ -3,6 +3,7 @@
 #include "MyoTranslationFilter.h"
 #include "AveragingFilter.h"
 #include "SharedCommandData.h"
+#include "EMGImpulseFilter.h"
 #include "ControlState.h"
 #include "MyoState.h"
 #include "MainGUI.h"
@@ -65,6 +66,10 @@ void MyoDevice::runDeviceLoop()
     rssiPipeline.registerFilter(WearableDevice::sharedData);
 
     connectPipeline.registerFilter(WearableDevice::sharedData);
+
+    EMGImpulseFilter emgImpulseFilter(myoState);
+    emgImpulsePipeline.registerFilter(&emgImpulseFilter);
+    emgImpulsePipeline.registerFilter(WearableDevice::sharedData);
 
     std::chrono::milliseconds rssi_start =
         std::chrono::duration_cast<std::chrono::milliseconds>(
@@ -335,14 +340,25 @@ void MyoDevice::MyoCallbacks::onBatteryLevelReceived(myo::Myo* myo, uint64_t tim
 
 void MyoDevice::MyoCallbacks::onEmgData(myo::Myo* myo, uint64_t timestamp, const int8_t* emg)
 {
-    // This data is streaming at 200Hz
+    // This data is streaming at 200Hz - print data for post mortem analysis
 	std::cout << "onEmgData." << std::endl;
 
     for (int emgIdx = 0; emgIdx < 8; emgIdx++)
     {
         lastEMGData[emgIdx] = emg[emgIdx];
     }
-    printToDataFile();
+//    printToDataFile(); // uncomment to printout data for post mortem analysis
+
+    // Actual processing
+    std::array<int8_t, 8> emgSamples;
+    for (int i = 0; i < 8; i++) {
+        emgSamples[i] = emg[i];
+    }
+
+    filterDataMap input;
+    input[EMG_VECTOR] = emgSamples;
+
+    parent.emgImpulsePipeline.startPipeline(input);
 }
 
 void MyoDevice::MyoCallbacks::onWarmupCompleted(myo::Myo* myo, uint64_t timestamp, WarmupResult warmupResult)

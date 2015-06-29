@@ -296,6 +296,9 @@
     <ClCompile Include="RingData.cpp">
       <Filter>Source Files\Midas\KeyAndMouse</Filter>
     </ClCompile>
+    <ClCompile Include="EMGImpulseFilter.cpp">
+      <Filter>Source Files\Midas\Filters</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="MidasThread.h">
@@ -425,6 +428,9 @@
     </ClInclude>
     <ClInclude Include="RingData.h">
       <Filter>Header Files\Midas\KeyAndMouse</Filter>
+    </ClInclude>
+    <ClInclude Include="EMGImpulseFilter.h">
+      <Filter>Header Files\Midas\Filters</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

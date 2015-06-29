@@ -15,8 +15,8 @@ absEMG = abs(myoDataVector(:,1:8));
 ABS_MAX = 128;
 emgFiltered = filter(ones(1,FILTER_LEN), FILTER_LEN, absEMG/ABS_MAX);
 
-maxEMGFiltered = max(emgFiltered(:,:)')';
-
+EMG_POWER = 3;
+maxEMGFiltered = power(max(emgFiltered(:,:)')', EMG_POWER);
 
 %avgEMGData = mean(abs(myoDataVector(:,1:8)' / 255)); // not bad, but too
 %course.
@@ -48,13 +48,14 @@ hold off
 
 % HANDLING RISING_EDGE IMPULSE FINDING
 MAX_EMG_IMPULSE_THRESHOLD_HIGH = 0.2;
-MAX_EMG_IMPULSE_THRESHOLD_LOW = 0.05;
+MAX_EMG_IMPULSE_THRESHOLD_LOW = 0.01;
 IMPULSE_SIZE = 40; % attempt to place a notch around IMPULSE_SIZE samples when there is an impulse
 impulseCount = 0;
 currImpulse = false;
 impulseVec = [];
 for i=1:size(maxEMGFiltered(:,1))
-    if (currImpulse == false && maxEMGFiltered(i,1) > MAX_EMG_IMPULSE_THRESHOLD_HIGH)
+    currentlyPosing = (myoPoseValues(i) ~= 0);
+    if (currImpulse == false && maxEMGFiltered(i,1) > MAX_EMG_IMPULSE_THRESHOLD_HIGH && currentlyPosing == 0)
         currImpulse = true;
         impulseCount = IMPULSE_SIZE;
     end 
@@ -80,7 +81,7 @@ hold off
 % END HANDLING IMPULSE FINDING
 
 % HANDLING RISING_EDGE FALLING_EDGE IMPULSE FINDING
-MAX_EMG_IMPULSE_THRESHOLD = 0.18;
+MAX_EMG_IMPULSE_THRESHOLD = 0.01;
 FALL_DETECTION_COUNT = 10;
 fallDetection = FALL_DETECTION_COUNT;
 IMPULSE_SIZE = 40; % attempt to place a notch around IMPULSE_SIZE samples when there is an impulse
@@ -116,7 +117,7 @@ end
 figure
 hold on
 plot(x, myoPoseValues);
-plot (x, maxEMGFiltered, 'gs','LineWidth',1,'MarkerSize',10);
+plot (x, maxEMGFiltered, 'gx','LineWidth',1,'MarkerSize',10);
 plot (x, impulseVec, 'r');
 hold off
 % END HANDLING FALLING_EDGE IMPULSE FINDING

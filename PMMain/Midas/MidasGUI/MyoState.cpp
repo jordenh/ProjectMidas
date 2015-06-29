@@ -33,7 +33,7 @@ void MyoState::pushRotation(myo::Quaternion<float> rotation)
 	myoStateMutex.unlock();
 }
 
-myo::Quaternion<float> MyoState::popRotation()
+myo::Quaternion<float> MyoState::peakFrontRotation()
 {
 	myoStateMutex.lock();
 	myo::Quaternion<float> front = rotationHistory.front();
@@ -65,7 +65,7 @@ void MyoState::pushAccel(myo::Vector3<float> accel)
 	myoStateMutex.unlock();
 }
 
-myo::Vector3<float> MyoState::popAccel()
+myo::Vector3<float> MyoState::peakFrontAccel()
 {
 	myoStateMutex.lock();
 	myo::Vector3<float> front = accelHistory.front();
@@ -97,7 +97,7 @@ void MyoState::pushGyro(myo::Vector3<float> gyro)
 	myoStateMutex.unlock();
 }
 
-myo::Vector3<float> MyoState::popGryo()
+myo::Vector3<float> MyoState::peakFrontGryo()
 {
 	myoStateMutex.lock();
 	myo::Vector3<float> front = gyroHistory.front();
@@ -129,7 +129,7 @@ void MyoState::pushPose(myo::Pose pose)
 	myoStateMutex.unlock();
 }
 
-myo::Pose MyoState::popPose()
+myo::Pose MyoState::peakFrontPose()
 {
 	myoStateMutex.lock();
 	myo::Pose front = poseHistory.front();

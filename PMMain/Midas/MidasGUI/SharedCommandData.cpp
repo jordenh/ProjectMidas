@@ -250,6 +250,12 @@ void SharedCommandData::process()
         extractIsConnected(value);
     }
 
+    if (input.find(IMPULSE_STATUS) != input.end())
+    {
+        boost::any value = input[IMPULSE_STATUS];
+        extractImpulseStatus(value);
+    }
+
 #ifdef BUILD_KEYBOARD
 if (input.find(ANGLE_INPUT) != input.end())
 {
@@ -407,4 +413,56 @@ bool SharedCommandData::tryGetDelta(vector2D& outDelta)
 	}
 
 	return locked;
+}
+
+void SharedCommandData::extractImpulseStatus(boost::any value)
+{
+    if (value.type() != typeid(bool))
+    {
+        Filter::setFilterError(filterError::INVALID_INPUT);
+        Filter::setFilterStatus(filterStatus::FILTER_ERROR);
+    }
+    else
+    {
+        bool impulseStatus = boost::any_cast<bool> (value);
+        setImpulseStatus(impulseStatus);
+    }
+}
+
+void SharedCommandData::setImpulseStatus(bool impulseStatus)
+{
+    impulseStatusMutex.lock();
+    this->impulseStatus = impulseStatus;
+    impulseStatusMutex.unlock();
+}
+
+bool SharedCommandData::trySetImpulseStatus(bool impulseStatus)
+{
+    bool locked = impulseStatusMutex.try_lock();
+    if (locked) {
+        this->impulseStatus = impulseStatus;
+        impulseStatusMutex.unlock();
+    }
+
+    return locked;
+}
+
+bool SharedCommandData::getImpulseStatus()
+{
+    impulseStatusMutex.lock();
+    bool status = impulseStatus;
+    impulseStatusMutex.unlock();
+
+    return status;
+}
+
+bool SharedCommandData::tryGetImpulseStatus(bool& impulseStatus)
+{
+    bool locked = impulseStatusMutex.try_lock();
+    if (locked) {
+        impulseStatus = this->impulseStatus;
+        impulseStatusMutex.unlock();
+    }
+
+    return locked;
 }
