@@ -29,11 +29,11 @@ public:
     void run();
 
 private:
-    MainGUI *mainGui;
-    ProfileManager *profileManager;
+    MainGUI *mainGui; // not owned
+    ProfileManager *profileManager; // not owned
 
 #ifdef BUILD_KEYBOARD
-	std::vector<ringData> *kybrdRingData;
+	std::vector<ringData> *kybrdRingData; // not owned
 signals:
 	void emitUpdateKeyboard(int, double, bool, bool);  // kybdGUISel, angle, center, held
 	void emitRssi(float);
