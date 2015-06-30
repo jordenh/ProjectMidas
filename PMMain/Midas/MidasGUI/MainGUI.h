@@ -2,6 +2,7 @@
 #define MAIN_GUI_H
 
 #include "DraggableWidget.h"
+#include <qpropertyanimation.h>
 
 class QVBoxLayout;
 class MidasThread;
@@ -63,6 +64,7 @@ private:
     void testAnimation();
 
 private:
+    QPropertyAnimation *anim;
 
 	void setupProfileIcons();
 

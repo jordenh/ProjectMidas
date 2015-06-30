@@ -59,6 +59,13 @@ public slots:
      * @param sequenceIdProgressPairs A vector containing the pairs of sequence IDs and sequence positions.
      */
     void showSequences(std::vector<sequenceProgressData>);
+
+    /** 
+     * Display a completed sequence with an animated effect.
+     * 
+     * @param completedSequence ID of the completed sequence.
+     */
+    void showCompletedSequence(std::vector<sequenceProgressData>);
  
 private:
     /**
@@ -89,6 +96,12 @@ private:
      */
 
     void updateSequences();
+
+    /**
+    * Updates the GUI with the completed sequence information.
+    */
+
+    void showCompletedSequenceGUI();
 
     /**
      * Cleans up the memory allocated by the sequence displayer.

@@ -26,6 +26,8 @@ class MainGUI;
 #define DEFAULT_PROG_MAX_DELTA 3000 // ms
 #define REQ_HOLD_TIME 1000 // ms
 
+#define COMPLETE_DISPLAY_LOCK_TIME 750 
+
 enum class SequenceStatus {
     SUCCESS,
     CONFLICTING_SEQUENCE,
@@ -156,6 +158,8 @@ public:
     */
     void updateGuiSequences();
 
+    void updateGuiCompleted(sequenceInfo *completeSeq);
+
 private:
     SequenceStatus checkLegalRegister(midasMode mode, sequenceInfo seqInfo) const;
 
@@ -194,6 +198,9 @@ private:
      */
     void connectGuiSignals();
 
+
+
+
     // Holds all registered CommandDatas in a layered organization.
     sequenceMapPerMode *seqMapPerMode; // owned and memory handled
 
@@ -230,6 +237,12 @@ private:
     SequenceImageManager imageManager;
     MainGUI* mainGui; // not owned
     GestureSignaller signaller;
+
+    // if > 0, a completion signal was just sent, so other 
+    // update signals should be temporarily ignored. if 0, 
+    // lock is done
+    clock_t completeSeqSignalLockTimer;
+    bool completeSeqSignalLocked;
 };
 
 #endif /* _GESTURE_SEQ_RECORDER_H */

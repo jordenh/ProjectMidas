@@ -9,7 +9,6 @@
 #include <QEvent.h>
 #include <QDialog>
 #include <qlayout.h>
-#include <qpropertyanimation.h>
 #include "MouseIndicator.h"
 #include "SequenceDisplayer.h"
 #include "InfoIndicator.h"
@@ -186,7 +185,7 @@ void MainGUI::connectSignallerToInfoIndicator(GestureSignaller *signaller)
 void MainGUI::testAnimation()
 {
     // TODO TEMP - TEST - REMOVE
-    QPropertyAnimation *anim = new QPropertyAnimation(infoIndicator, "geometry", this);
+    anim = new QPropertyAnimation(infoIndicator, "geometry", this);
     QRect infoIndicatorGeom = infoIndicator->geometry();
     QRect endInfoIndicatorGeom(infoIndicatorGeom.x() - 100, infoIndicatorGeom.y(), infoIndicatorGeom.width(), infoIndicatorGeom.height());
     anim->setStartValue(infoIndicatorGeom);
@@ -202,6 +201,9 @@ void MainGUI::connectSignallerToSequenceDisplayer(GestureSignaller *signaller)
 
     QObject::connect(signaller, SIGNAL(emitShowSequences(std::vector<sequenceProgressData>)),
         sequenceDisplayer, SLOT(showSequences(std::vector<sequenceProgressData>)));
+
+    QObject::connect(signaller, SIGNAL(emitCompletedSequence(std::vector<sequenceProgressData>)),
+        sequenceDisplayer, SLOT(showCompletedSequence(std::vector<sequenceProgressData>)));
 }
 
 void MainGUI::connectSignallerToPoseDisplayer(GestureSignaller *signaller)

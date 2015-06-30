@@ -8,7 +8,7 @@ unsigned int sequenceInfo::counter = 0;
 GestureSeqRecorder::GestureSeqRecorder(ControlState* controlStateHandle, MainGUI* mainGuiHandle, SequenceImageManager imageManager)
     : prevState(midasMode::LOCK_MODE), progressMaxDeltaTime(DEFAULT_PROG_MAX_DELTA), progressBaseTime(clock()),
     holdGestTimer(REQ_HOLD_TIME), mainGui(mainGuiHandle),
-    controlStateHandle(controlStateHandle), prevPose(Pose::rest), imageManager(imageManager)
+    controlStateHandle(controlStateHandle), prevPose(Pose::rest), imageManager(imageManager), completeSeqSignalLockTimer(0), completeSeqSignalLocked(false)
 {
     seqMapPerMode = new sequenceMapPerMode();
 
@@ -157,6 +157,7 @@ void GestureSeqRecorder::progressSequenceTime(int delta, CommandData& response)
                     if ((*it)->progress == (*it)->seq.size())
                     {
                         // found a complete sequence!
+                        updateGuiCompleted(*it);
                         response = (*it)->sequenceResponse;
                         break;
                     }
@@ -206,6 +207,21 @@ void GestureSeqRecorder::progressSequenceTime(int delta, CommandData& response)
     else
     {
         holdGestTimer -= delta;
+    }
+
+    if (completeSeqSignalLockTimer - delta <= 0)
+    {
+        // ensure value doesn't loop and cause we're results if decremented too much.
+        completeSeqSignalLockTimer = 0;
+        if (completeSeqSignalLocked)
+        {
+            completeSeqSignalLocked = false;
+            updateGuiSequences();
+        }
+    }
+    else
+    {
+        completeSeqSignalLockTimer -= delta;
     }
 }
 
@@ -401,6 +417,7 @@ SequenceStatus GestureSeqRecorder::progressActiveSequences(Pose::Type gesture, C
                 if ((*it)->progress == (*it)->seq.size())
                 {
                     // found a complete sequence!
+                    updateGuiCompleted(*it);
                     response = (*it)->sequenceResponse;
                     break;
                 }
@@ -421,6 +438,7 @@ SequenceStatus GestureSeqRecorder::progressActiveSequences(Pose::Type gesture, C
                     if ((*it)->progress == (*it)->seq.size())
                     {
                         // found a complete sequence!
+                        updateGuiCompleted(*it);
                         response = (*it)->sequenceResponse;
                         break;
                     }
@@ -482,18 +500,20 @@ SequenceStatus GestureSeqRecorder::findActivation(Pose::Type gesture, ControlSta
         {
             clock_t now = clock();
             progressBaseTime = now;
-            if (it->seq.at(0).poseLen == PoseLength::IMMEDIATE)
-            {
-                // Special case. Immediate isn't 'held'
-                response = it->sequenceResponse;
-                break;
-            }
-
             // found sequence to activate!
             activeSequencesMutex.lock();
             activeSequences.push_back(&(*it));
             activeSequencesMutex.unlock();
             printStatus(true);
+
+            if (it->seq.at(0).poseLen == PoseLength::IMMEDIATE)
+            {
+                // Special case. Immediate isn't 'held'
+                it->progress++; // increment progress so that it can be shown as 1/1 in completion GUI
+                updateGuiCompleted(&(*it));
+                response = it->sequenceResponse;
+                break;
+            }
 
             holdGestTimer = REQ_HOLD_TIME; // set count on any progression
         }
@@ -546,7 +566,25 @@ void GestureSeqRecorder::updateGuiSequences()
             progressDataVec.push_back(progressData);
         }
     }
-    signaller.emitShowSequences(progressDataVec);
+    if (completeSeqSignalLockTimer <= 0)
+    {
+        signaller.emitShowSequences(progressDataVec);
+    }
+}
+
+void GestureSeqRecorder::updateGuiCompleted(sequenceInfo *completeSeq)
+{
+    completeSeqSignalLockTimer = COMPLETE_DISPLAY_LOCK_TIME;
+    completeSeqSignalLocked = true;
+    sequenceProgressData progressData;
+
+    progressData.seqId = completeSeq->id;
+    progressData.progress = completeSeq->progress;
+
+    // Wrap up so that it can be sent in a signal.
+    std::vector<sequenceProgressData> vec;
+    vec.push_back(progressData);
+    signaller.emitCompletedSequence(vec);
 }
 
 void GestureSeqRecorder::printStatus(bool verbose)

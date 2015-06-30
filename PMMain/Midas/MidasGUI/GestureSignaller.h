@@ -30,6 +30,7 @@ public slots:
 signals:
     void emitRegisterSequence(int, QString, std::vector<sequenceImageSet>);
     void emitShowSequences(std::vector<sequenceProgressData>);
+    void emitCompletedSequence(std::vector<sequenceProgressData>);
 
     void emitStateString(QString);
 

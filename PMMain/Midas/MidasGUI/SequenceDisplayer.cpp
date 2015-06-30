@@ -9,8 +9,8 @@
 #include <QGridLayout.h>
 #include <qlabel.h>
 
-#define LABEL_NUM_COLS      3
-#define LABEL_NUM_ROWS      1
+#define LABEL_NUM_COLS      3 // 3 columns to display the NAME of a sequence "ex: control mouse"
+#define LABEL_NUM_ROWS      1 // 1 column to display 'X / Y' completed
 #define SEQ_NUMBER_NUM_COLS 1
 #define SEQ_NUMBER_NUM_ROWS 1
 #define NUM_SEQUENCE_STEPS  3
@@ -122,6 +122,21 @@ void SequenceDisplayer::showSequences(std::vector<sequenceProgressData> progress
     updateSequences();
 }
 
+void SequenceDisplayer::showCompletedSequence(std::vector<sequenceProgressData> completedSequenceVec)
+{
+    // Clear the current active widgets.
+    clearWidgets();
+    activeSequencesIdToDataMap.clear();
+
+    sequenceData seqData = sequenceIdToDataMap[completedSequenceVec.front().seqId];
+    seqData.seqPosLabel->setText(tr("%1 / %2").arg(QString::number(completedSequenceVec.front().progress),
+        QString::number(seqData.sequenceImages.size())));
+    seqData.imageOffset = completedSequenceVec.front().progress;
+    activeSequencesIdToDataMap[completedSequenceVec.front().seqId] = seqData;
+
+    showCompletedSequenceGUI();
+}
+
 void SequenceDisplayer::clearRow(sequenceData seq, bool deleteLabels)
 {
     seq.seqLabel->setHidden(true);
@@ -180,7 +195,46 @@ void SequenceDisplayer::updateSequences()
         for (sequenceIt = seq.sequenceImages.begin() + seq.imageOffset;
             sequenceIt != seq.sequenceImages.end() && currCol < NUM_COLS; sequenceIt++)
         {
+            // Default to 'laterImage' - ie black/white image
             QPixmap pixmap = sequenceIt->laterImage;
+            // If this pose is the next up, use the 'nextImage'
+            if (currCol == LABEL_NUM_COLS + SEQ_NUMBER_NUM_COLS) pixmap = sequenceIt->nextImage;
+
+            sequenceIt->currentImgLabel->setPixmap(pixmap);
+            sequenceIt->currentImgLabel->setEnabled(!pixmap.isNull());
+            sequenceIt->currentImgLabel->setHidden(false);
+            gridLayout->addWidget(sequenceIt->currentImgLabel, currRow, currCol);
+            currCol++;
+        }
+
+        currRow++;
+    }
+}
+
+// TODO - modify to animate - highlight, change colour, something...
+void SequenceDisplayer::showCompletedSequenceGUI()
+{
+    std::map<int, sequenceData>::iterator it;
+
+    int currRow = 0;
+    // will only iterate once
+    for (it = activeSequencesIdToDataMap.begin(); it != activeSequencesIdToDataMap.end(); it++)
+    {
+        sequenceData seq = it->second;
+        int currCol = 0;
+        seq.seqLabel->setHidden(false);
+        seq.seqPosLabel->setHidden(false);
+        gridLayout->addWidget(seq.seqLabel, currRow, currCol, LABEL_NUM_ROWS, LABEL_NUM_COLS);
+        currCol += LABEL_NUM_COLS;
+        gridLayout->addWidget(seq.seqPosLabel, currRow, currCol, SEQ_NUMBER_NUM_ROWS, SEQ_NUMBER_NUM_COLS);
+        currCol += SEQ_NUMBER_NUM_COLS;
+        std::vector<sequenceImageSet>::iterator sequenceIt;
+        for (sequenceIt = seq.sequenceImages.begin() + seq.imageOffset;
+            sequenceIt != seq.sequenceImages.end() && currCol < NUM_COLS; sequenceIt++)
+        {
+            // Default to 'laterImage' - ie black/white image
+            QPixmap pixmap = sequenceIt->laterImage;
+            // If this pose is the next up, use the 'nextImage'
             if (currCol == LABEL_NUM_COLS + SEQ_NUMBER_NUM_COLS) pixmap = sequenceIt->nextImage;
 
             sequenceIt->currentImgLabel->setPixmap(pixmap);
