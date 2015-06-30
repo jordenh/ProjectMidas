@@ -67,7 +67,7 @@ MainGUI::MainGUI(MidasThread *mainThread, ProfileManager *pm, int deadZoneRad)
     }
 #endif
 
-    settingsDisplayer = new SettingsDisplayer(PROF_INDICATOR_WIDTH, INFO_INDICATOR_HEIGHT, this);
+    settingsDisplayer = new SettingsDisplayer(PROF_INDICATOR_WIDTH, 2*INFO_INDICATOR_HEIGHT, this);
     layout->addWidget(settingsDisplayer, 0, Qt::AlignRight);
 
 	// create HBox for specific profile icons: Change this icon to be specific to your app
@@ -151,6 +151,8 @@ void MainGUI::connectSignallerToSettingsDisplayer(SettingsSignaller *signaller)
 {
     QObject::connect(settingsDisplayer, SIGNAL(emitSliderValues(unsigned int, unsigned int)),
         signaller, SLOT(handleSliderValues(unsigned int, unsigned int)));
+    QObject::connect(settingsDisplayer, SIGNAL(emitBuzzFeedbackChange(unsigned int)),
+        signaller, SLOT(handleBuzzFeedbackChange(unsigned int)));
 }
 
 void MainGUI::connectSignallerToProfileWidgets(ProfileSignaller* signaller)

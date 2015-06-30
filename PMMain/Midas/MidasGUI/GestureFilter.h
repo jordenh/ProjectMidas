@@ -3,6 +3,7 @@
 
 #include "Filter.h"
 #include "GestureSignaller.h"
+#include "SettingsSignaller.h"
 #include "SequenceImageManager.h"
 #include <ctime>
 
@@ -154,7 +155,8 @@ private:
     GestureSeqRecorder* gestSeqRecorder;
 
     MainGUI *mainGui;
-    static GestureSignaller signaller;
+    static GestureSignaller gestureSignaller;
+    static SettingsSignaller settingsSignaller;
 
     SequenceImageManager imageManager;
 };

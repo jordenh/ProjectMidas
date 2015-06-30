@@ -16,7 +16,8 @@
 
 
 ControlState* GestureFilter::controlStateHandle;
-GestureSignaller GestureFilter::signaller;
+GestureSignaller GestureFilter::gestureSignaller;
+SettingsSignaller GestureFilter::settingsSignaller;
 
 GestureFilter::GestureFilter(ControlState* controlState, MyoState* myoState, clock_t timeDel, MainGUI *mainGuiHandle)
     : timeDelta(timeDel), lastPoseType(Pose::rest),
@@ -36,15 +37,16 @@ GestureFilter::GestureFilter(ControlState* controlState, MyoState* myoState, clo
 
     if (mainGui)
     {
-        mainGui->connectSignallerToInfoIndicator(&signaller);
-        mainGui->connectSignallerToPoseDisplayer(&signaller);
+        mainGui->connectSignallerToInfoIndicator(&gestureSignaller);
+        mainGui->connectSignallerToPoseDisplayer(&gestureSignaller);
 #ifdef BUILD_KEYBOARD
-		mainGui->connectSignallerToKeyboardToggle(&signaller);
+		mainGui->connectSignallerToKeyboardToggle(&gestureSignaller);
 #endif
-		mainGui->connectSignallerToProfileIcons(&signaller);
+		mainGui->connectSignallerToProfileIcons(&gestureSignaller);
+        mainGui->connectSignallerToSettingsDisplayer(&settingsSignaller);
     }
 
-    signaller.emitStateString(QTranslator::tr((modeToString(controlState->getMode())).c_str()));
+    gestureSignaller.emitStateString(QTranslator::tr((modeToString(controlState->getMode())).c_str()));
     emitPoseData(Pose::rest);
 
 	Filter::setFilterError(filterError::NO_FILTER_ERROR);
@@ -136,7 +138,7 @@ void GestureFilter::emitPoseData(int poseInt)
 
     if (images.size() == 1)
     {
-        signaller.emitPoseImages(images);
+        gestureSignaller.emitPoseImages(images);
     }
 }
 
@@ -360,9 +362,17 @@ void GestureFilter::registerStateSequences(void)
 
 void GestureFilter::handleStateChange(CommandData response, GestureFilter *gf)
 {
-    if (gf->controlStateHandle->getMode() == LOCK_MODE || response.action.mode == LOCK_MODE)
+    buzzFeedbackMode bfm = settingsSignaller.getBuzzFeedbackMode();
+    if (bfm >= buzzFeedbackMode::MINIMAL)
     {
-        gf->myoStateHandle->peakMyo()->vibrateMyos(myo::Myo::VibrationType::vibrationMedium);
+        if (gf->controlStateHandle->getMode() == LOCK_MODE || response.action.mode == LOCK_MODE)
+        {
+            gf->myoStateHandle->peakMyo()->vibrateMyos(myo::Myo::VibrationType::vibrationMedium);
+        }
+        else if (bfm >= buzzFeedbackMode::ALLSTATECHANGES)
+        {
+            gf->myoStateHandle->peakMyo()->vibrateMyos(myo::Myo::VibrationType::vibrationShort);
+        }
     }
 
     if (response.type != commandType::STATE_CHANGE)
@@ -373,10 +383,10 @@ void GestureFilter::handleStateChange(CommandData response, GestureFilter *gf)
 
     if (response.action.mode == midasMode::KEYBOARD_MODE || controlStateHandle->getMode() == midasMode::KEYBOARD_MODE)
     {
-        signaller.emitToggleKeyboard();
+        gestureSignaller.emitToggleKeyboard();
     }
 
-    signaller.emitStateString(QTranslator::tr((modeToString(response.action.mode)).c_str()));
+    gestureSignaller.emitStateString(QTranslator::tr((modeToString(response.action.mode)).c_str()));
 
     std::cout << "Transitioning to state: " << response.action.mode << std::endl;
     controlStateHandle->setMode(response.action.mode);
@@ -417,6 +427,12 @@ filterDataMap GestureFilter::handleMouseCommand(CommandData response)
 
         outputToSharedCommandData[COMMAND_INPUT] = command;
         Filter::setOutput(outputToSharedCommandData);
+
+        buzzFeedbackMode bfm = settingsSignaller.getBuzzFeedbackMode();
+        if (bfm >= buzzFeedbackMode::ALLACTIONS)
+        {
+            myoStateHandle->peakMyo()->vibrateMyos(myo::Myo::VibrationType::vibrationShort);
+        }
     }
 	return outputToSharedCommandData;
 }
@@ -436,6 +452,12 @@ filterDataMap GestureFilter::handleKybrdCommand(CommandData response, bool addTo
     else
     {
         Filter::setOutput(outputToSharedCommandData);
+
+        buzzFeedbackMode bfm = settingsSignaller.getBuzzFeedbackMode();
+        if (bfm >= buzzFeedbackMode::ALLACTIONS)
+        {
+            myoStateHandle->peakMyo()->vibrateMyos(myo::Myo::VibrationType::vibrationShort);
+        }
     }
 
 	return outputToSharedCommandData;
@@ -447,15 +469,19 @@ filterDataMap GestureFilter::handleProfileChangeCommand(CommandData response)
 	CommandData command;
 	command = response;
 
-    myoStateHandle->peakMyo()->vibrateMyos(myo::Myo::VibrationType::vibrationShort, 2);
+    buzzFeedbackMode bfm = settingsSignaller.getBuzzFeedbackMode();
+    if (bfm >= buzzFeedbackMode::MINIMAL)
+    {
+        myoStateHandle->peakMyo()->vibrateMyos(myo::Myo::VibrationType::vibrationShort, 2);
+    }
 
     if (response.action.profile == MOVE_PROFILE_FORWARD)
     {
-        signaller.emitProfileChange(true);
+        gestureSignaller.emitProfileChange(true);
     }
     else if (response.action.profile == MOVE_PROFILE_BACKWARD)
     {
-        signaller.emitProfileChange(false);
+        gestureSignaller.emitProfileChange(false);
     }
 
 	outputToSharedCommandData[COMMAND_INPUT] = command;

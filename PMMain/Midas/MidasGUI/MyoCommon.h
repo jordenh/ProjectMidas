@@ -108,5 +108,29 @@ struct SeqElement {
     }
 };
 
+// If the number of buzz modes change, all buzzMode logic will need to change, so must find all usages and re-verify.
+#define NUM_BUZZ_MODES 4
+enum buzzFeedbackMode {
+    NO_BUZZ,
+    MINIMAL, // only on unlock/lock and profile changes.
+    ALLSTATECHANGES,
+    ALLACTIONS
+};
+static std::string buzzFeedbackModeToString(buzzFeedbackMode bfm)
+{
+    switch (bfm)
+    {
+    case NO_BUZZ:
+        return "No Buzz";
+    case MINIMAL:
+        return "Minimal Buzz";
+    case ALLSTATECHANGES:
+        return "State-Change Buzz";
+    case ALLACTIONS:
+        return "All-Action Buzz";
+    default:
+        return "default";
+    }
+}
 
 #endif /* _MYO_COMMON_H */
