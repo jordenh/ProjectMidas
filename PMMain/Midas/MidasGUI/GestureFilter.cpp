@@ -433,6 +433,8 @@ filterDataMap GestureFilter::handleMouseCommand(CommandData response)
         {
             myoStateHandle->peakMyo()->vibrateMyos(myo::Myo::VibrationType::vibrationShort);
         }
+        // TODO TEMP - TEST - REMOVE
+        mainGui->testAnimation();
     }
 	return outputToSharedCommandData;
 }

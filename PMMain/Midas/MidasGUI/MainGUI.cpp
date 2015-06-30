@@ -9,6 +9,7 @@
 #include <QEvent.h>
 #include <QDialog>
 #include <qlayout.h>
+#include <qpropertyanimation.h>
 #include "MouseIndicator.h"
 #include "SequenceDisplayer.h"
 #include "InfoIndicator.h"
@@ -180,6 +181,18 @@ void MainGUI::connectSignallerToInfoIndicator(GestureSignaller *signaller)
         infoIndicator, SLOT(handleUpdateState(QString)));
     QObject::connect(infoIndicator, SIGNAL(emitShowAllToggle(bool)),
         signaller, SLOT(handleShowAllToggle(bool)));
+}
+
+void MainGUI::testAnimation()
+{
+    // TODO TEMP - TEST - REMOVE
+    QPropertyAnimation *anim = new QPropertyAnimation(infoIndicator, "geometry", this);
+    QRect infoIndicatorGeom = infoIndicator->geometry();
+    QRect endInfoIndicatorGeom(infoIndicatorGeom.x() - 100, infoIndicatorGeom.y(), infoIndicatorGeom.width(), infoIndicatorGeom.height());
+    anim->setStartValue(infoIndicatorGeom);
+    anim->setEndValue(endInfoIndicatorGeom);
+    anim->setDuration(1000);
+    anim->start();
 }
 
 void MainGUI::connectSignallerToSequenceDisplayer(GestureSignaller *signaller)

@@ -60,6 +60,8 @@ private:
 //	DistanceWidget* distanceDisplayer;
 #endif
 
+    void testAnimation();
+
 private:
 
 	void setupProfileIcons();
