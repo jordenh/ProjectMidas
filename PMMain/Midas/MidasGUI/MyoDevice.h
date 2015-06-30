@@ -134,20 +134,20 @@ private:
         int8_t lastEMGData[8];
     };
 
-    std::vector<myo::Myo*> connectedMyos;
+    std::vector<myo::Myo*> connectedMyos; // not owned
         unsigned int myoFindTimeout;
     unsigned int durationInMilliseconds;
     std::string appIdentifier;
-    ControlState* state;
-	MyoState* myoState;
+    ControlState* state; // not owned
+    MyoState* myoState; // not owned
     FilterPipeline posePipeline, orientationPipeline, rssiPipeline,
         connectPipeline;
-    MainGUI *mainGui;
+    MainGUI *mainGui; // not owned
     std::string prevProfileName;
 
     Arm arm;
     XDirection xDirection;
     static ProfileSignaller profileSignaller;
-    ProfileManager *profileManager;
+    ProfileManager *profileManager; // not owned
 };
 

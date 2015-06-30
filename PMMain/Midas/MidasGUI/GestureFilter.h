@@ -147,14 +147,14 @@ private:
 
     Pose::Type lastPoseType;
     
-    static ControlState* controlStateHandle;
-	MyoState* myoStateHandle;
+    static ControlState* controlStateHandle; // not owned
+    MyoState* myoStateHandle; // not owned
     clock_t timeDelta;
     clock_t lastTime;
 
     GestureSeqRecorder* gestSeqRecorder;
 
-    MainGUI *mainGui;
+    MainGUI *mainGui; // not owned
     static GestureSignaller gestureSignaller;
     static SettingsSignaller settingsSignaller;
 

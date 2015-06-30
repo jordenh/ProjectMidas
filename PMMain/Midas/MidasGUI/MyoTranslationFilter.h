@@ -131,8 +131,8 @@ private:
     bool initGestHoldModeActionArr(void);
     void unregisterHoldModeActions(void);
 
-    ControlState* controlStateHandle;
-	MyoState* myoStateHandle;
+    ControlState* controlStateHandle; // not owned
+    MyoState* myoStateHandle; // not owned
     midasMode previousMode;
     float pitch, basePitch, prevPitch, deltaPitchDeg, 
         yaw, baseYaw, prevYaw, deltaYawDeg,
@@ -140,7 +140,7 @@ private:
 
     GestureHoldModeAction gestHoldModeAction[5];
 
-    MainGUI *mainGui;
+    MainGUI *mainGui; // not owned
     static SettingsSignaller settingsSignaller;
 };
 

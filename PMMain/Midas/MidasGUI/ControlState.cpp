@@ -44,9 +44,7 @@ midasMode ControlState::getMode()
 
 void ControlState::setProfile(std::string profile)
 {
-	//profileMutex.lock();
 	currentProfile = profile;
-	//profileMutex.unlock();
 }
 
 std::string ControlState::getProfile()

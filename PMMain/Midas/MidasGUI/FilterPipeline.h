@@ -14,7 +14,7 @@ class FilterPipeline
 public:
     /* Basic Construction/Destruction */
     FilterPipeline() { }
-    ~FilterPipeline() { }
+    ~FilterPipeline() { } //nothing owned
     
     /**
      * Registers a new filter with the pipeline. Adds it to the end of the pipeline.
@@ -40,7 +40,7 @@ public:
     std::list<Filter*>* getFilters(void);
 
 private:
-    std::list<Filter*> filters;
+    std::list<Filter*> filters; // not owned
 };
 
 #endif FILTER_PIPELINE_H

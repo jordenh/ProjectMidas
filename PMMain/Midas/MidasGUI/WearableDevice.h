@@ -74,7 +74,7 @@ protected:
      */
     bool stopDeviceRequested();
 
-    SharedCommandData* sharedData;
+    SharedCommandData* sharedData; // not owned
 
 private:
     std::mutex statusLock;

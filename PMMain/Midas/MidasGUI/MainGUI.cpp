@@ -131,12 +131,22 @@ MainGUI::~MainGUI()
     sequenceDisplayer = NULL;
     delete poseDisplayer;
     poseDisplayer = NULL;
+    delete settingsDisplayer;
+    settingsDisplayer = NULL;
     delete layout;
     layout = NULL;
 	delete icon0;
 	icon0 = NULL;
 	delete icon1;
 	icon1 = NULL;
+
+#ifdef SHOW_PROFILE_BUTTONS
+    for (int i = 0; i < profileWidgets.size(); i++)
+    {
+        delete profileWidgets.at(i); profileWidgets.at(i) = NULL;
+    }
+    profileWidgets.clear();
+#endif
 }
 
 #ifdef BUILD_KEYBOARD

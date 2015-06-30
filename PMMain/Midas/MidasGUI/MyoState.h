@@ -50,7 +50,7 @@ private:
 	int poseHistLen;
 	std::deque<myo::Pose> poseHistory;
 
-    MyoDevice* myoHandle;
+    MyoDevice* myoHandle; // not owned
 };
 
 #endif /* MYO_STATE_H */
