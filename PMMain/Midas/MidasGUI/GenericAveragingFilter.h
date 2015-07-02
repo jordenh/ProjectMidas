@@ -4,12 +4,10 @@
 #include "Filter.h"
 #include <deque>
 
-#define DEFAULT_AVG_COUNT 5
-
 /**
 *
 * This filter registers an input key and averages it's values
-* as a double
+* as a float
 *
 */
 class GenericAveragingFilter : public Filter
@@ -50,7 +48,7 @@ private:
     /*
     * Helper for process()
     */
-    void processDouble(double datum);
+    void processFloat(float datum);
 
     /**
     * Inject elem into dq and if necessary, pop
@@ -59,7 +57,7 @@ private:
     * @param elem - a float to be added to deque
     * @param dq -  a deque containing <= avgCount floats
     */
-    void insertAvgElement(double elem, std::deque<double>& dq);
+    void insertAvgElement(float elem, std::deque<float>& dq);
 
     /**
     * Calculate the average of the contents in the deque.
@@ -67,14 +65,14 @@ private:
     * @param dq - a deque containing <= avgCount floats
     * @return float - the average of the contents of the deque
     */
-    double calcAvg(std::deque<double>& dq);
+    float calcAvg(std::deque<float>& dq);
 
     // Number of floats to average. This value dictates max size of deques.
     unsigned int avgCount;
 
     std::string inputMapKey;
 
-    std::deque<double> dataDeque;
+    std::deque<float> dataDeque;
 };
 
 #endif /* _AVERAGING_FILTER_H */

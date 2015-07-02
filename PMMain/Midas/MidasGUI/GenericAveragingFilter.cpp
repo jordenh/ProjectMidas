@@ -10,19 +10,19 @@ void GenericAveragingFilter::process()
     if (input.find(inputMapKey) != input.end())
     {
         boost::any value = input[inputMapKey];
-        if (value.type() != typeid(double))
+        if (value.type() != typeid(float))
         {
             Filter::setFilterError(filterError::INVALID_INPUT);
             Filter::setFilterStatus(filterStatus::FILTER_ERROR);
         }
         else
         {
-            processDouble(boost::any_cast<double>(value));
+            processFloat(boost::any_cast<float>(value));
         }
     }
 }
 
-void GenericAveragingFilter::processDouble(double datum)
+void GenericAveragingFilter::processFloat(float datum)
 {
     insertAvgElement(datum, dataDeque);
 
@@ -33,7 +33,7 @@ void GenericAveragingFilter::processDouble(double datum)
     Filter::setOutput(output);
 }
 
-void GenericAveragingFilter::insertAvgElement(double elem, std::deque<double>& dq)
+void GenericAveragingFilter::insertAvgElement(float elem, std::deque<float>& dq)
 {
     dq.push_back(elem);
     while (dq.size() > avgCount) {
@@ -43,21 +43,21 @@ void GenericAveragingFilter::insertAvgElement(double elem, std::deque<double>& d
     }
 }
 
-double GenericAveragingFilter::calcAvg(std::deque<double>& dq)
+float GenericAveragingFilter::calcAvg(std::deque<float>& dq)
 {
-    double sum = 0;
-    double denom = dq.size();
+    float sum = 0;
+    float denom = dq.size();
     if (denom == 0)
     {
         return 0;
     }
 
-    std::deque<double>::iterator it = dq.begin();
+    std::deque<float>::iterator it = dq.begin();
     while (it != dq.end())
     {
         sum += *it++;
     }
-    return (double)sum / denom;
+    return (float)sum / denom;
 }
 
 

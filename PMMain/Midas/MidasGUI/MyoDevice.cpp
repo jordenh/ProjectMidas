@@ -193,6 +193,8 @@ void MyoDevice::setupOrientationPipeline()
     advancedOrientationPipeline.registerFilterAtDeepestLevel(genBypassFilterXDir);
 
     advancedOrientationPipeline.registerFilterAtNewLevel(translationFilter);
+
+    advancedOrientationPipeline.registerFilterAtNewLevel(WearableDevice::sharedData);
 }
 
 int MyoDevice::getDeviceError()
