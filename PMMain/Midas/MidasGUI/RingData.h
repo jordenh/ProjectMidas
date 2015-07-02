@@ -1,4 +1,3 @@
-#ifdef BUILD_KEYBOARD
 #ifndef RING_DATA_H
 #define RING_DATA_H
 
@@ -36,5 +35,3 @@ private:
 };
 
 #endif RING_DATA_H
-
-#endif
