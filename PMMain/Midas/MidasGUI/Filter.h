@@ -134,6 +134,13 @@ protected:
     void setOutput(filterDataMap output);
 
     /**
+    * Add to the output of the filter. Current values persist if conflict.
+    *
+    * @param output The map of name-value pairs.
+    */
+    void addToOutput(filterDataMap output);
+
+    /**
     * Clear the output of the filter.
     */
     void clearOutput(void);

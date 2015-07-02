@@ -80,7 +80,7 @@ void AveragingFilter::process()
     output[GYRO_DATA_Y]  = calcAvg(gyroYDeque);
     output[GYRO_DATA_Z]  = calcAvg(gyroZDeque);
     output[RSSI] = calcAvg(rssiDeque);
-    output[INPUT_ARM] = arm;
+    output[INPUT_ARM] = arm; // bypass averaging....
     output[INPUT_X_DIRECTION] = xDirection;
 
     Filter::setOutput(output);

@@ -1,5 +1,5 @@
-#ifndef _AVERAGING_FILTER_H
-#define _AVERAGING_FILTER_H
+#ifndef _GENERIC_AVERAGING_FILTER_H
+#define _GENERIC_AVERAGING_FILTER_H
 
 #include "Filter.h"
 #include <deque>
@@ -14,8 +14,8 @@ class GenericAveragingFilter : public Filter
 {
 public:
     /* Basic Construction/Destruction */
-    GenericAveragingFilter(unsigned int avgCount, std::string inputMapKey) : avgCount(avgCount), inputMapKey(inputMapKey) {};
-    ~GenericAveragingFilter() {};
+    GenericAveragingFilter(unsigned int avgCount, std::string inputMapKey) : avgCount(avgCount), inputMapKey(inputMapKey) {}
+    ~GenericAveragingFilter() {}
 
     /**
     * Access data from Inputs, average the data

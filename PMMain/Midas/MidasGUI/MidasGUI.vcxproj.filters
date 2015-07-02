@@ -302,6 +302,9 @@
     <ClCompile Include="LinearFilterPipeline.cpp">
       <Filter>Source Files\Midas\Filters</Filter>
     </ClCompile>
+    <ClCompile Include="GenericBypassFilter.cpp">
+      <Filter>Source Files\Midas\Filters</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="MidasThread.h">
@@ -436,6 +439,12 @@
       <Filter>Header Files\Midas\Filters</Filter>
     </ClInclude>
     <ClInclude Include="LinearFilterPipeline.h">
+      <Filter>Header Files\Midas\Filters</Filter>
+    </ClInclude>
+    <ClInclude Include="FilterKeys.h">
+      <Filter>Header Files\Midas\Filters</Filter>
+    </ClInclude>
+    <ClInclude Include="GenericBypassFilter.h">
       <Filter>Header Files\Midas\Filters</Filter>
     </ClInclude>
   </ItemGroup>

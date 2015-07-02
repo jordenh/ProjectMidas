@@ -1,0 +1,6 @@
+#define INPUT_QUATERNION_X "quatDataX"
+#define INPUT_QUATERNION_Y "quatDataY"
+#define INPUT_QUATERNION_Z "quatDataZ"
+#define INPUT_QUATERNION_W "quatDataW"
+#define INPUT_ARM "arm"
+#define INPUT_X_DIRECTION "xDirection"

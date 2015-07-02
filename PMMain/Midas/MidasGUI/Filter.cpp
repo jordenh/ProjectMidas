@@ -47,6 +47,11 @@ void Filter::setOutput(filterDataMap output)
     outputData = output;
 }
 
+void Filter::addToOutput(filterDataMap output)
+{
+    outputData = joinFilterDataMaps(outputData, output);
+}
+
 void Filter::clearOutput(void)
 {
     outputData = filterDataMap();
