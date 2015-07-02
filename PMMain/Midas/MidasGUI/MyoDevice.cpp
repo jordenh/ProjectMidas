@@ -239,7 +239,8 @@ void MyoDevice::MyoCallbacks::onAccelerometerData(Myo* myo, uint64_t timestamp, 
     input[INPUT_ARM] = parent.arm;
     input[INPUT_X_DIRECTION] = parent.xDirection;
 
-    //parent.orientationPipeline.startPipeline(input); //TODO - solve race condition and enable this
+    //parent.orientationPipeline.startPipeline(input); //TODO - solve race condition and enable this // NOTE (july2,2015) This is acutally building uncommented
+    // but sends 0's to translation filter for quat data which is obviously wrong... Need advancedFilterPipeline.
 }
 
 void MyoDevice::MyoCallbacks::onGyroscopeData(Myo* myo, uint64_t timestamp, const Vector3<float>& gyro) 

@@ -64,3 +64,19 @@ filterDataMap Filter::joinFilterDataMaps(filterDataMap map0, filterDataMap map1)
 
     return result;
 }
+
+bool Filter::mapCollision(filterDataMap map0, filterDataMap map1)
+{
+    for (std::map<std::string, boost::any>::iterator map0It = map0.begin(); map0It != map0.end(); map0It++)
+    {
+        if (map1.find((*map0It).first) != map1.end())
+        {
+            return true;
+        }
+    }
+
+    filterDataMap result = map0;
+    result.insert(map1.begin(), map1.end());
+
+    return false;
+}

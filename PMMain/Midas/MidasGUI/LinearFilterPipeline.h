@@ -5,16 +5,16 @@
 #include "Filter.h"
 
 /**
- * The FilterPipeline class represents a linear sequence of filters through which
+ * The LinearFilterPipeline class represents a linear sequence of filters through which
  * data can flow. The data enters the pipeline and is passed into the first filter. The
  * output of the first filter is piped into the second, and so on.
  */
-class FilterPipeline
+class LinearFilterPipeline
 {
 public:
     /* Basic Construction/Destruction */
-    FilterPipeline() { }
-    ~FilterPipeline() { } //nothing owned
+    LinearFilterPipeline() { }
+    ~LinearFilterPipeline() { } //nothing owned
     
     /**
      * Registers a new filter with the pipeline. Adds it to the end of the pipeline.
@@ -40,7 +40,7 @@ public:
     std::list<Filter*>* getFilters(void);
 
 private:
-    std::list<Filter*> filters; // not owned
+    std::list<Filter*> filters; // filters not owned
 };
 
 #endif FILTER_PIPELINE_H

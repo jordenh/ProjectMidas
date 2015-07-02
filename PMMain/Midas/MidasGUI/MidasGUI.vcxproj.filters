@@ -197,9 +197,6 @@
     <ClCompile Include="Filter.cpp">
       <Filter>Source Files\Midas\Filters</Filter>
     </ClCompile>
-    <ClCompile Include="FilterPipeline.cpp">
-      <Filter>Source Files\Midas\Filters</Filter>
-    </ClCompile>
     <ClCompile Include="GestureFilter.cpp">
       <Filter>Source Files\Midas\Filters</Filter>
     </ClCompile>
@@ -296,6 +293,15 @@
     <ClCompile Include="RingData.cpp">
       <Filter>Source Files\Midas\KeyAndMouse</Filter>
     </ClCompile>
+    <ClCompile Include="AdvancedFilterPipeline.cpp">
+      <Filter>Source Files\Midas\Filters</Filter>
+    </ClCompile>
+    <ClCompile Include="GenericAveragingFilter.cpp">
+      <Filter>Source Files\Midas\Filters</Filter>
+    </ClCompile>
+    <ClCompile Include="LinearFilterPipeline.cpp">
+      <Filter>Source Files\Midas\Filters</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="MidasThread.h">
@@ -387,9 +393,6 @@
     <ClInclude Include="Filter.h">
       <Filter>Header Files\Midas\Filters</Filter>
     </ClInclude>
-    <ClInclude Include="FilterPipeline.h">
-      <Filter>Header Files\Midas\Filters</Filter>
-    </ClInclude>
     <ClInclude Include="GestureFilter.h">
       <Filter>Header Files\Midas\Filters</Filter>
     </ClInclude>
@@ -425,6 +428,15 @@
     </ClInclude>
     <ClInclude Include="RingData.h">
       <Filter>Header Files\Midas\KeyAndMouse</Filter>
+    </ClInclude>
+    <ClInclude Include="AdvancedFilterPipeline.h">
+      <Filter>Header Files\Midas\Filters</Filter>
+    </ClInclude>
+    <ClInclude Include="GenericAveragingFilter.h">
+      <Filter>Header Files\Midas\Filters</Filter>
+    </ClInclude>
+    <ClInclude Include="LinearFilterPipeline.h">
+      <Filter>Header Files\Midas\Filters</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

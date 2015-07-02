@@ -1,11 +1,11 @@
-#include "FilterPipeline.h"
+#include "LinearFilterPipeline.h"
 
-void FilterPipeline::registerFilter(Filter* filter)
+void LinearFilterPipeline::registerFilter(Filter* filter)
 {
     filters.push_back(filter);
 }
 
-void FilterPipeline::startPipeline(filterDataMap input)
+void LinearFilterPipeline::startPipeline(filterDataMap input)
 {
     std::list<Filter*>::iterator filterIt;
     filterDataMap nextInput = input;
@@ -29,7 +29,7 @@ void FilterPipeline::startPipeline(filterDataMap input)
     }
 }
 
-std::list<Filter*>* FilterPipeline::getFilters(void)
+std::list<Filter*>* LinearFilterPipeline::getFilters(void)
 {
     return &filters;
 }

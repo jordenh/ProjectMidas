@@ -3,7 +3,7 @@
 #include "CommandData.h"
 #include "ProfileManager.h"
 #include "BaseMeasurements.h"
-#include "FilterPipeline.h"
+#include "LinearFilterPipeline.h"
 #include "MyoDevice.h"
 #include "SharedCommandData.h"
 #include "ControlState.h"
@@ -396,7 +396,7 @@ void GestureFilter::handleStateChange(CommandData response, GestureFilter *gf)
 	// If there are subsequent commands to execute, do so on a seperate pipeline! -- Note this assumes no further 
 	// filtering is desired on this data, and it can go straight to the SCD
 	std::vector<CommandData> changeStateCommands = response.getChangeStateActions();
-	FilterPipeline fp;
+	LinearFilterPipeline fp;
 	fp.registerFilter(gf->controlStateHandle->getSCD());
 	for (int i = 0; i < changeStateCommands.size(); i++)
 	{
@@ -495,7 +495,7 @@ void GestureFilter::handleProfileChangeCommand(CommandData response, GestureFilt
 {
 	// If there are subsequent commands to execute, do so on a seperate pipeline! -- Note this assumes no further 
 	// filtering is desired on this data, and it can go straight to the SCD
-	FilterPipeline fp;
+	LinearFilterPipeline fp;
 	fp.registerFilter(gf->controlStateHandle->getSCD());
 	filterDataMap dataMap;
 	dataMap = gf->handleProfileChangeCommand(response);

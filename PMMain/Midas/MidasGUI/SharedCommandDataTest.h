@@ -57,7 +57,7 @@ public:
 
     void runDeviceLoop()
     {
-        FilterPipeline commandPipeline, coordPipeline;
+        LinearFilterPipeline commandPipeline, coordPipeline;
         vector<int>::iterator it;
 
         commandPipeline.registerFilter(commandFilter);

@@ -1,4 +1,4 @@
-#include "FilterPipeline.h"
+#include "LinearFilterPipeline.h"
 #include <gtest\gtest.h>
 
 #define TEST_KEY_1 "test_key_1"
@@ -80,7 +80,7 @@ TEST(FilterPipelineTest1, testBasicPipeline)
     filterInput[TEST_KEY_1] = inValue1;
 
     TestFilter testFilter(filterStatus::OK, filterError::NO_FILTER_ERROR);
-    FilterPipeline filterPipeline;
+    LinearFilterPipeline filterPipeline;
 
     filterPipeline.registerFilter(&testFilter);
 
@@ -99,7 +99,7 @@ TEST(FilterPipelineTest2, testErrorInFilter)
 
     TestFilter testFilter(filterStatus::FILTER_ERROR, filterError::PROCESSING_ERROR);
     UnreachableFilter secondFilter;
-    FilterPipeline filterPipeline;
+    LinearFilterPipeline filterPipeline;
 
     filterPipeline.registerFilter(&testFilter);
     filterPipeline.registerFilter(&secondFilter);
@@ -119,7 +119,7 @@ TEST(FilterPipelineTest3, testEndChain)
 
     TestFilter testFilter(filterStatus::END_CHAIN, filterError::NO_FILTER_ERROR);
     UnreachableFilter secondFilter;
-    FilterPipeline filterPipeline;
+    LinearFilterPipeline filterPipeline;
 
     filterPipeline.registerFilter(&testFilter);
     filterPipeline.registerFilter(&secondFilter);
@@ -140,7 +140,7 @@ TEST(FilterPipelineTest4, testFilterChain)
 
     TestFilter testFilter(filterStatus::OK, filterError::NO_FILTER_ERROR);
     TestFilter2 secondFilter;
-    FilterPipeline filterPipeline;
+    LinearFilterPipeline filterPipeline;
 
     filterPipeline.registerFilter(&testFilter);
     filterPipeline.registerFilter(&secondFilter);

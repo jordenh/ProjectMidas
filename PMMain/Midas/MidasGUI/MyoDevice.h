@@ -1,6 +1,6 @@
 #pragma once
 #include "WearableDevice.h"
-#include "FilterPipeline.h"
+#include "LinearFilterPipeline.h"
 #include "myo\myo.hpp"
 #include "ProfileSignaller.h"
 
@@ -140,7 +140,7 @@ private:
     std::string appIdentifier;
     ControlState* state; // not owned
     MyoState* myoState; // not owned
-    FilterPipeline posePipeline, orientationPipeline, rssiPipeline,
+    LinearFilterPipeline posePipeline, orientationPipeline, rssiPipeline,
         connectPipeline;
     MainGUI *mainGui; // not owned
     std::string prevProfileName;
