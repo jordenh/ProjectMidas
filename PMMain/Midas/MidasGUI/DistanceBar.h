@@ -1,4 +1,4 @@
-#ifdef BUILD_KEYBOARD_ANDDISTANCE
+//#ifdef BUILD_KEYBOARD
 #ifndef DISTANCE_BAR_H
 #define DISTANCE_BAR_H
 
@@ -61,4 +61,4 @@ private:
 #endif /* DISTANCE_BAR_H */
 
 
-#endif
+//#endif

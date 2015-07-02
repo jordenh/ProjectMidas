@@ -663,7 +663,7 @@ filterError GestureFilter::updateBasedOnProfile(ProfileManager& pm, std::string 
 //    clickSeq.push_back(SeqElement(Pose::rest, PoseLength::IMMEDIATE));
 //    ss |= (int)gestSeqRecorder->registerSequence(midasMode::MOUSE_MODE, clickSeq, clickResp, "Release Mouse");
 
-#ifdef BUILD_KEYBOARD
+#ifdef BUILD_WITH_HOLD_MODES
     // Register sequence from Gesture Mode to Gesture Hold Modes
     sequence toHoldGestSeq;
     toHoldGestSeq.push_back(SeqElement(Pose::Type::doubleTap, PoseLength::HOLD));

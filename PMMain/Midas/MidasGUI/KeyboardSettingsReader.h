@@ -1,4 +1,4 @@
-#ifdef BUILD_KEYBOARD
+//#ifdef BUILD_KEYBOARD
 #pragma once
 #include <vector>
 
@@ -19,4 +19,4 @@ public:
 };
 
 
-#endif
+//#endif

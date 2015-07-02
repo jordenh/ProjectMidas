@@ -38,9 +38,9 @@ MainGUI::MainGUI(MidasThread *mainThread, ProfileManager *pm, int deadZoneRad)
 	infoIndicator = new InfoIndicator(INFO_INDICATOR_WIDTH, INFO_INDICATOR_HEIGHT, this);
     sequenceDisplayer = new SequenceDisplayer(this);
 	poseDisplayer = new PoseDisplayer(MOUSE_INDICATOR_SIZE, MOUSE_INDICATOR_SIZE, this);
-#ifdef BUILD_KEYBOARD_ANDDISTANCE
-	distanceDisplayer = new DistanceWidget(mainThread, INFO_INDICATOR_WIDTH,
-		DISTANCE_DISPLAY_HEIGHT, this);
+#ifdef BUILD_KEYBOARD
+//	distanceDisplayer = new DistanceWidget(mainThread, INFO_INDICATOR_WIDTH,
+//		DISTANCE_DISPLAY_HEIGHT, this);
 #endif
 
     numProfiles = pm->getProfiles()->size();

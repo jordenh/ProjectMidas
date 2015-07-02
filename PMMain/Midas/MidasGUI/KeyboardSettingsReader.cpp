@@ -1,4 +1,4 @@
-#ifdef BUILD_KEYBOARD
+//#ifdef BUILD_KEYBOARD
 #include "KeyboardSettingsReader.h"
 #include <boost/algorithm/string.hpp>
 #include "ringData.h"
@@ -105,4 +105,4 @@ void KeyboardSettingsReader::readKeyboardSetupFile(std::vector<ringData>& ringDa
 }
 
 
-#endif
+//#endif

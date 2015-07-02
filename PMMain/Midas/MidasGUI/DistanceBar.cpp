@@ -1,5 +1,5 @@
-#ifdef BUILD_KEYBOARD_ANDDISTANCE
-#include "DistanceBar.h"
+//#ifdef BUILD_KEYBOARD
+#include "distanceBar.h"
 
 #include <qlabel.h>
 #include <qrect.h>
@@ -56,4 +56,4 @@ void distanceBar::paintEvent(QPaintEvent *e)
 }
 
 
-#endif
+//#endif

@@ -1,4 +1,4 @@
-#ifdef BUILD_KEYBOARD
+//#ifdef BUILD_KEYBOARD
 #include "KeyboardWidget.h"
 
 #include <QEvent.h>
@@ -310,4 +310,4 @@ QSize KeyboardWidget::sizeHint() const
 }
 
 
-#endif
+//#endif

@@ -1,4 +1,4 @@
-#ifdef BUILD_KEYBOARD_ANDDISTANCE
+//#ifdef BUILD_KEYBOARD
 #include "DistanceWidget.h"
 
 #include <cmath>
@@ -7,7 +7,7 @@
 #include "qaction.h"
 #include "qapplication.h"
 #include "qboxlayout.h"
-#include "DistanceBar.h"
+#include "distanceBar.h"
 #include "MidasThread.h"
 #include "qlabel.h"
 
@@ -81,4 +81,4 @@ inline float DistanceWidget::dbToDist(float db)
 }
 
 
-#endif
+//#endif
