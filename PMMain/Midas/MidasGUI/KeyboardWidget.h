@@ -5,6 +5,7 @@
 #include "DraggableWidget.h"
 
 #include "MyoCommon.h"
+#include "RingData.h"
 
 class MidasThread;
 class ringData;

@@ -2,7 +2,7 @@
 
 #include "MainGUI.h"
 
-#include "ProfileDisplayer.h"
+
 #include <QApplication.h>
 #include <QDesktopWidget.h>
 #include <algorithm>
@@ -14,12 +14,14 @@
 #include "InfoIndicator.h"
 #include "GestureSignaller.h"
 #include "PoseDisplayer.h"
+#include "ProfileDisplayer.h"
 #include "ProfileIcon.h"
 #include "ProfileDisplayer.h"
 #include "ProfileSignaller.h"
 #include "ProfileManager.h"
 #include "SettingsDisplayer.h"
 #include "SettingsSignaller.h"
+#include "MidasThread.h"
 
 
 #ifdef BUILD_KEYBOARD
@@ -99,7 +101,7 @@ MainGUI::MainGUI(MidasThread *mainThread, ProfileManager *pm, int deadZoneRad)
 #ifdef SHOW_PROFILE_BUTTONS
         profileHeights + 
 #endif
-        settingsDisplayer->height();
+        settingsDisplayer->height(); 
 
     QRect screen = QApplication::desktop()->availableGeometry(this);
     setGeometry(screen.right() - totalWidth - SCREEN_RIGHT_BUFFER,

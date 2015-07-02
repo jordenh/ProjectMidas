@@ -127,7 +127,7 @@ void SCDDigester::digest()
         if (count % 1000 == 0)
         {
             double angleAsDouble = (double)currKeyAngle.angle;
-            threadHandle->emitUpdateKeyboard(kybdGUISel, angleAsDouble, currKeyAngle.ringThreshReached, false);
+            threadHandle->emitUpdateKeyboard(kybdGUISel, angleAsDouble, currKeyAngle.ringThreshReached, false); // todo kybrd fix test.
 		
             // // TEMP TODO for debug only
             // int x = currKeyAngle.x;
