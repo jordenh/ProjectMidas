@@ -14,9 +14,40 @@ void AdvancedFilterPipeline::registerFilterAtLevel(Filter* filter, unsigned int 
     }
 }
 
+AdvancedFilterPipeline::~AdvancedFilterPipeline()
+{
+    if (this->filtersOwned)
+    {
+        // traverses the vector of filters at each level
+        std::vector<std::vector<Filter*>>::iterator levelIt;
+        // traverses the given filters in each level
+        std::vector<Filter*>::iterator filterIt;
+
+        for (levelIt = filters.begin(); levelIt != filters.end(); levelIt++)
+        {
+            std::vector<Filter*> levelFilters = *levelIt;
+
+            for (filterIt = levelFilters.begin(); filterIt != levelFilters.end(); filterIt++)
+            {
+                Filter* currentFilter = *filterIt;
+                delete *filterIt; *filterIt = NULL;
+            }
+            levelFilters.clear();
+        }
+        filters.clear();
+    }
+}
+
 void AdvancedFilterPipeline::registerFilterAtDeepestLevel(Filter* filter)
 {
     int deepestIdx = filters.size() - 1;
+
+    if (deepestIdx < 0)
+    {
+        std::vector<Filter*> firstLevel;
+        filters.push_back(firstLevel);
+        deepestIdx = 0;
+    }
 
     filters.at(deepestIdx).push_back(filter);
 }

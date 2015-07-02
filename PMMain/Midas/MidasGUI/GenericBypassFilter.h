@@ -18,6 +18,8 @@ class GenericBypassFilter : public Filter
 public:
     /* Basic Construction/Destruction */
     GenericBypassFilter() {}
+    GenericBypassFilter(std::string passThroughKey);
+    GenericBypassFilter(std::vector<std::string> passThroughKeys);
     ~GenericBypassFilter() {}
 
     /**

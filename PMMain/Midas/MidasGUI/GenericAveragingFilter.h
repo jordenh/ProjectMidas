@@ -4,6 +4,8 @@
 #include "Filter.h"
 #include <deque>
 
+#define DEFAULT_AVG_COUNT 5
+
 /**
 *
 * This filter registers an input key and averages it's values

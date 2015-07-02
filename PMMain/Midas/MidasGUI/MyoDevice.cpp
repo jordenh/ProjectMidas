@@ -1,6 +1,9 @@
 #include "MyoDevice.h"
 #include "GestureFilter.h"
+#include "FilterKeys.h"
 #include "MyoTranslationFilter.h"
+#include "GenericAveragingFilter.h"
+#include "GenericBypassFilter.h"
 #include "AveragingFilter.h"
 #include "SharedCommandData.h"
 #include "ControlState.h"
@@ -53,6 +56,10 @@ void MyoDevice::runDeviceLoop()
     orientationPipeline.registerFilter(&averagingFilter);
     orientationPipeline.registerFilter(&translationFilter);
     orientationPipeline.registerFilter(WearableDevice::sharedData);
+
+    // Test code for advanced filter pipeline
+    setupOrientationPipeline();
+    // end test code
 
 	// init profileSignaller to the first profile name.
 //	profileSignaller.setProfileName(profileManager->getProfiles()->at(0).profileName);
@@ -144,6 +151,50 @@ void MyoDevice::runDeviceLoop()
     WearableDevice::setDeviceStatus(deviceStatus::DONE);
 }
 
+void MyoDevice::setupOrientationPipeline()
+{
+    GenericAveragingFilter *genAvgFilterQX = new GenericAveragingFilter(5, QUAT_DATA_X);
+    GenericAveragingFilter *genAvgFilterQY = new GenericAveragingFilter(5, QUAT_DATA_Y);
+    GenericAveragingFilter *genAvgFilterQZ = new GenericAveragingFilter(5, QUAT_DATA_Z);
+    GenericAveragingFilter *genAvgFilterQW = new GenericAveragingFilter(5, QUAT_DATA_W);
+
+    GenericAveragingFilter *genAvgFilterAY = new GenericAveragingFilter(5, ACCEL_DATA_X);
+    GenericAveragingFilter *genAvgFilterAZ = new GenericAveragingFilter(5, ACCEL_DATA_Y);
+    GenericAveragingFilter *genAvgFilterAW = new GenericAveragingFilter(5, ACCEL_DATA_Z);
+
+    GenericAveragingFilter *genAvgFilterGY = new GenericAveragingFilter(5, GYRO_DATA_X);
+    GenericAveragingFilter *genAvgFilterGZ = new GenericAveragingFilter(5, GYRO_DATA_Y);
+    GenericAveragingFilter *genAvgFilterGW = new GenericAveragingFilter(5, GYRO_DATA_Z);
+
+    GenericAveragingFilter *genAvgFilterRSSI = new GenericAveragingFilter(5, RSSI);
+
+    GenericBypassFilter *genBypassFilterArm = new GenericBypassFilter(INPUT_ARM);
+    GenericBypassFilter *genBypassFilterXDir = new GenericBypassFilter(INPUT_X_DIRECTION);
+
+    MyoTranslationFilter *translationFilter = new MyoTranslationFilter(state, myoState, mainGui);
+
+    advancedOrientationPipeline.setFiltersOwned(true);
+    advancedOrientationPipeline.registerFilterAtDeepestLevel(genAvgFilterQX);
+    advancedOrientationPipeline.registerFilterAtDeepestLevel(genAvgFilterQY);
+    advancedOrientationPipeline.registerFilterAtDeepestLevel(genAvgFilterQZ);
+    advancedOrientationPipeline.registerFilterAtDeepestLevel(genAvgFilterQW);
+
+    advancedOrientationPipeline.registerFilterAtDeepestLevel(genAvgFilterAY);
+    advancedOrientationPipeline.registerFilterAtDeepestLevel(genAvgFilterAZ);
+    advancedOrientationPipeline.registerFilterAtDeepestLevel(genAvgFilterAW);
+
+    advancedOrientationPipeline.registerFilterAtDeepestLevel(genAvgFilterGY);
+    advancedOrientationPipeline.registerFilterAtDeepestLevel(genAvgFilterGZ);
+    advancedOrientationPipeline.registerFilterAtDeepestLevel(genAvgFilterGW);
+
+    advancedOrientationPipeline.registerFilterAtDeepestLevel(genAvgFilterRSSI);
+
+    advancedOrientationPipeline.registerFilterAtDeepestLevel(genBypassFilterArm);
+    advancedOrientationPipeline.registerFilterAtDeepestLevel(genBypassFilterXDir);
+
+    advancedOrientationPipeline.registerFilterAtNewLevel(translationFilter);
+}
+
 int MyoDevice::getDeviceError()
 {
     // TODO: Add error codes.
@@ -198,13 +249,19 @@ void MyoDevice::MyoCallbacks::onPose(Myo* myo, uint64_t timestamp, Pose pose)
 void MyoDevice::MyoCallbacks::onOrientationData(Myo* myo, uint64_t timestamp, const Quaternion<float>& rotation) 
 { 
     filterDataMap input;
+    filterDataMap rotationInput;
+    filterDataMap armMap; // TODO - put these in proper callback. just testing async behaviour here.
+    filterDataMap xDirMap;
+
     input[QUAT_DATA_X] = rotation.x();
     input[QUAT_DATA_Y] = rotation.y();
     input[QUAT_DATA_Z] = rotation.z();
     input[QUAT_DATA_W] = rotation.w();
+    rotationInput = input;
 
-    input[INPUT_ARM] = parent.arm;
-    input[INPUT_X_DIRECTION] = parent.xDirection;
+    input[INPUT_ARM] = parent.arm; armMap[INPUT_ARM] = parent.arm;
+    input[INPUT_X_DIRECTION] = parent.xDirection; xDirMap[INPUT_X_DIRECTION] = parent.xDirection;
+
 
     // The following is junk data. The averaging filter should be modified so
     // that it doesn't deal with the data so specifically.
@@ -216,7 +273,12 @@ void MyoDevice::MyoCallbacks::onOrientationData(Myo* myo, uint64_t timestamp, co
     input[GYRO_DATA_Z] = 0.0f;
     input[RSSI] = (int8_t)0;
 	    
-    parent.orientationPipeline.startPipeline(input);
+//    parent.orientationPipeline.startPipeline(input); // TODO - uncomment if everything fails
+
+    // TODO - move to only this if it works! TEST
+    parent.advancedOrientationPipeline.startPipeline(rotationInput);
+    parent.advancedOrientationPipeline.startPipeline(armMap);
+    parent.advancedOrientationPipeline.startPipeline(xDirMap); 
 }
 
 void MyoDevice::MyoCallbacks::onAccelerometerData(Myo* myo, uint64_t timestamp, const Vector3<float>& accel)

@@ -16,8 +16,8 @@ class AdvancedFilterPipeline
 {
 public:
     /* Basic Construction/Destruction */
-    AdvancedFilterPipeline() { }
-    ~AdvancedFilterPipeline() { } 
+    AdvancedFilterPipeline() { filtersOwned = false; }
+    ~AdvancedFilterPipeline();
 
     /**
     * Registers a new filter with the pipeline at a specified level. 
@@ -67,8 +67,12 @@ public:
     */
     std::vector<std::vector<Filter*>>* getFiltersHandle(void);
 
+    void setFiltersOwned(bool owned) { this->filtersOwned = owned; }
+
 private:
-    std::vector<std::vector<Filter*>> filters; // filters not owned
+    std::vector<std::vector<Filter*>> filters;
+
+    bool filtersOwned;
 };
 
 #endif ADVANCED_FILTER_PIPELINE_H

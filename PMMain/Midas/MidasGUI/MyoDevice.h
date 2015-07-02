@@ -1,6 +1,7 @@
 #pragma once
 #include "WearableDevice.h"
 #include "LinearFilterPipeline.h"
+#include "AdvancedFilterPipeline.h"
 #include "myo\myo.hpp"
 #include "ProfileSignaller.h"
 
@@ -92,6 +93,8 @@ public:
     void vibrateMyos(myo::Myo::VibrationType vibType, int numReps = 1) const;
 
 private:
+    void MyoDevice::setupOrientationPipeline();
+
     /**
      * This class implements all of the callback functions from the Myo DeviceListener
      * class. The methods in this class are called when Myo events occur.
@@ -142,6 +145,7 @@ private:
     MyoState* myoState; // not owned
     LinearFilterPipeline posePipeline, orientationPipeline, rssiPipeline,
         connectPipeline;
+    AdvancedFilterPipeline advancedOrientationPipeline;
     MainGUI *mainGui; // not owned
     std::string prevProfileName;
 

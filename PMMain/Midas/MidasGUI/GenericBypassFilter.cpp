@@ -1,5 +1,17 @@
 #include "GenericBypassFilter.h"
 
+GenericBypassFilter::GenericBypassFilter(std::string passThroughKey)
+{
+    std::vector<std::string> keyVec; 
+    keyVec.push_back(passThroughKey);
+    this->passThroughKeys = keyVec;
+}
+
+GenericBypassFilter::GenericBypassFilter(std::vector<std::string> passThroughKeys)
+{
+    this->passThroughKeys = passThroughKeys;
+}
+
 void GenericBypassFilter::process()
 {
     filterDataMap output;

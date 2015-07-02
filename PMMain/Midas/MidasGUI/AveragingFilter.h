@@ -2,25 +2,11 @@
 #define _AVERAGING_FILTER_H
 
 #include "Filter.h"
+#include "FilterKeys.h"
 #include <deque>
 #include <cstdint>
 
 #define DEFAULT_AVG_COUNT 20
-#define QUAT_DATA_X "quatDataX"
-#define QUAT_DATA_Y "quatDataY"
-#define QUAT_DATA_Z "quatDataZ"
-#define QUAT_DATA_W "quatDataW"
-#define ACCEL_DATA_X "accelDataX"
-#define ACCEL_DATA_Y "accelDataY"
-#define ACCEL_DATA_Z "accelDataZ"
-#define GYRO_DATA_X "gyroDataX"
-#define GYRO_DATA_Y "gyroDataY"
-#define GYRO_DATA_Z "gyroDataZ"
-#define RSSI        "rssi"
-// TODO - These should not actually be here. Once Many to one filters are implemented,
-// Remove from this filter, as they are simply being passed through....
-#define INPUT_ARM "arm"
-#define INPUT_X_DIRECTION "xDirection"
 
 /**
  * Consult Filter.h for concepts regarding Filters.
