@@ -16,10 +16,8 @@ class ProfileSignaller;
 class ProfileManager;
 class SettingsDisplayer;
 class SettingsSignaller;
-#ifdef BUILD_KEYBOARD
 class KeyboardWidget;
 class DistanceWidget;
-#endif
 
 /**
  * The MainGUI class is the parent GUI of all the widgets used in Midas. It contains the mouse
@@ -50,7 +48,6 @@ public:
 
     void connectSignallerToSettingsDisplayer(SettingsSignaller *signaller);
 
-#ifdef BUILD_KEYBOARD
 public:
 	void connectSignallerToKeyboardToggle(GestureSignaller *signaller);
 public slots:
@@ -58,7 +55,6 @@ public slots:
 private:
 	KeyboardWidget* keyboard;
 	DistanceWidget* distanceDisplayer;
-#endif
 
 private:
 

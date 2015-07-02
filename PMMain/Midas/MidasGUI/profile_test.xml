@@ -2,6 +2,21 @@
 <profiles>
 	<profile name="Rotate Model">
         <sequences>
+			<sequence state="lockMode" name="KEYBOARD">
+                <gestures>
+					<gesture type="tap">waveIn</gesture>
+					<gesture type="tap">waveOut</gesture>
+					<gesture type="immediate">doubleTap</gesture>
+                </gestures>
+                <commands>
+				<command type="stateChange">
+                    <actions>
+                        <action>keyboardMode</action>
+                    </actions>
+                </command>
+				</commands>
+            </sequence>
+		
 			<sequence state="lockMode" name="Control Mouse">
                 <gestures>
 					<gesture type="tap">fingersSpread</gesture>

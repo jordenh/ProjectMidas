@@ -1,4 +1,3 @@
-//#ifdef BUILD_KEYBOARD
 #ifndef KEYBOARD_WIDGET_H
 #define KEYBOARD_WIDGET_H
 
@@ -68,6 +67,3 @@ private:
 };
 
 #endif
-
-
-//#endif

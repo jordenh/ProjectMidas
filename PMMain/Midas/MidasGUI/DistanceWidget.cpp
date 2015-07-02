@@ -1,4 +1,3 @@
-//#ifdef BUILD_KEYBOARD
 #include "DistanceWidget.h"
 
 #include <cmath>
@@ -79,6 +78,3 @@ inline float DistanceWidget::dbToDist(float db)
         1.5151387757*db +
         13.8505553761;
 }
-
-
-//#endif

@@ -1,4 +1,3 @@
-//#ifdef BUILD_KEYBOARD
 #include "distanceBar.h"
 
 #include <qlabel.h>
@@ -54,6 +53,3 @@ void distanceBar::paintEvent(QPaintEvent *e)
     painter.drawRect(rect);
     painter.drawText(rect, Qt::AlignCenter, current_bin_text);
 }
-
-
-//#endif

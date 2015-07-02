@@ -1,4 +1,3 @@
-//#ifdef BUILD_KEYBOARD
 #ifndef DISTANCE_WIDGET_H
 #define DISTANCE_WIDGET_H
 
@@ -40,6 +39,3 @@ private:
 };
 
 #endif /* DISTANCE_WIDGET_H */
-
-
-//#endif

@@ -32,7 +32,6 @@ SCDDigester::SCDDigester(SharedCommandData* scd, MidasThread *thread, ControlSta
 
 #ifdef BUILD_KEYBOARD
 	this->kybrdRingData = kybrdRingData;
-	//this->keyboardWidget = keyboardWidget;
 #endif
 }
 
