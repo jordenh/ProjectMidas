@@ -111,6 +111,7 @@ MainGUI::MainGUI(MidasThread *mainThread, ProfileManager *pm, int deadZoneRad)
 
 void MainGUI::toggleKeyboard()
 {
+#ifdef BUILD_KEYBOARD
 	if (keyboard->isVisible())
 	{
 		keyboard->setVisible(false);
@@ -119,6 +120,7 @@ void MainGUI::toggleKeyboard()
 	{
 		keyboard->setVisible(true);
 	}
+#endif
 }
 
 MainGUI::~MainGUI()
