@@ -95,7 +95,6 @@
     <ClCompile Include="DraggableWidget.cpp" />
     <ClCompile Include="Filter.cpp" />
     <ClCompile Include="GenericBypassFilter.cpp" />
-    <ClCompile Include="LinearFilterPipeline.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_distanceBar.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClCompile>
@@ -264,7 +263,6 @@
     <ClInclude Include="Filter.h" />
     <ClInclude Include="FilterKeys.h" />
     <ClInclude Include="GenericBypassFilter.h" />
-    <ClInclude Include="LinearFilterPipeline.h" />
     <ClInclude Include="GenericAveragingFilter.h" />
     <ClInclude Include="GestureFilter.h" />
     <ClInclude Include="GestureHoldModeAction.h" />

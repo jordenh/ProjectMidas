@@ -296,9 +296,6 @@
     <ClCompile Include="GenericAveragingFilter.cpp">
       <Filter>Source Files\Midas\Filters</Filter>
     </ClCompile>
-    <ClCompile Include="LinearFilterPipeline.cpp">
-      <Filter>Source Files\Midas\Filters</Filter>
-    </ClCompile>
     <ClCompile Include="GenericBypassFilter.cpp">
       <Filter>Source Files\Midas\Filters</Filter>
     </ClCompile>
@@ -430,9 +427,6 @@
       <Filter>Header Files\Midas\Filters</Filter>
     </ClInclude>
     <ClInclude Include="GenericAveragingFilter.h">
-      <Filter>Header Files\Midas\Filters</Filter>
-    </ClInclude>
-    <ClInclude Include="LinearFilterPipeline.h">
       <Filter>Header Files\Midas\Filters</Filter>
     </ClInclude>
     <ClInclude Include="FilterKeys.h">
