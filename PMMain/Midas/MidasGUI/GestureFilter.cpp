@@ -3,7 +3,6 @@
 #include "CommandData.h"
 #include "ProfileManager.h"
 #include "BaseMeasurements.h"
-#include "LinearFilterPipeline.h"
 #include "MyoDevice.h"
 #include "SharedCommandData.h"
 #include "ControlState.h"
