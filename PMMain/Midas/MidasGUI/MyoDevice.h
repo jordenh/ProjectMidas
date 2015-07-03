@@ -1,6 +1,5 @@
 #pragma once
 #include "WearableDevice.h"
-#include "LinearFilterPipeline.h"
 #include "AdvancedFilterPipeline.h"
 #include "myo\myo.hpp"
 #include "ProfileSignaller.h"

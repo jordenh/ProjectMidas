@@ -14,7 +14,6 @@
 #include <thread>
 #include <qtranslator.h>
 
-
 ControlState* GestureFilter::controlStateHandle;
 GestureSignaller GestureFilter::gestureSignaller;
 SettingsSignaller GestureFilter::settingsSignaller;
@@ -405,10 +404,10 @@ void GestureFilter::handleStateChange(CommandData response, GestureFilter *gf)
 	// If there are subsequent commands to execute, do so on a seperate pipeline! -- Note this assumes no further 
 	// filtering is desired on this data, and it can go straight to the SCD
 	std::vector<CommandData> changeStateCommands = response.getChangeStateActions();
-	LinearFilterPipeline fp;
+	AdvancedFilterPipeline fp;
     // store and replace filterDataMap incase it's used.
     filterDataMap init_fdm = gf->getOutput();
-	fp.registerFilter(gf->controlStateHandle->getSCD());
+	fp.registerFilterAtDeepestLevel(gf->controlStateHandle->getSCD());
 	for (int i = 0; i < changeStateCommands.size(); i++)
 	{
 		filterDataMap dataMap;
@@ -508,11 +507,15 @@ void GestureFilter::handleProfileChangeCommand(CommandData response, GestureFilt
 {
 	// If there are subsequent commands to execute, do so on a seperate pipeline! -- Note this assumes no further 
 	// filtering is desired on this data, and it can go straight to the SCD
-	LinearFilterPipeline fp;
-	fp.registerFilter(gf->controlStateHandle->getSCD());
+	AdvancedFilterPipeline fp;
+    filterDataMap init_fdm = gf->getOutput();
+	fp.registerFilterAtDeepestLevel(gf->controlStateHandle->getSCD());
 	filterDataMap dataMap;
 	dataMap = gf->handleProfileChangeCommand(response);
 	fp.startPipeline(dataMap);
+
+    // revert output to init status.
+    gf->setOutput(init_fdm);
 }
 
 filterDataMap GestureFilter::getExtraDataForSCD()

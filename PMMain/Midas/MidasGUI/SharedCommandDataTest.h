@@ -5,6 +5,7 @@
 #include <string>
 #include "WearableDevice.h"
 #include "FilterPipeline.h"
+#include "AdvancedFilterPipeline.h"
 #include <vector>
 #include <thread>
 using namespace std;
@@ -57,13 +58,13 @@ public:
 
     void runDeviceLoop()
     {
-        LinearFilterPipeline commandPipeline, coordPipeline;
+        AdvancedFilterPipeline commandPipeline, coordPipeline;
         vector<int>::iterator it;
 
-        commandPipeline.registerFilter(commandFilter);
-        commandPipeline.registerFilter(WearableDevice::sharedData);
+        commandPipeline.registerFilterAtDeepestLevel(commandFilter);
+        commandPipeline.registerFilterAtNewLevel(WearableDevice::sharedData);
 
-        coordPipeline.registerFilter(WearableDevice::sharedData);
+        coordPipeline.registerFilterAtDeepestLevel(WearableDevice::sharedData);
 
         filterDataMap coordInput, commandInput;
         coordInput[VELOCITY_INPUT] = point(100, 50);
