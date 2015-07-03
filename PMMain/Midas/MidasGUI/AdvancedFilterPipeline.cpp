@@ -1,7 +1,5 @@
 #include "AdvancedFilterPipeline.h"
 
-#include <exception>
-
 void AdvancedFilterPipeline::registerFilterAtLevel(Filter* filter, unsigned int level)
 {
     if (level < filters.size())
@@ -89,12 +87,14 @@ void AdvancedFilterPipeline::startPipeline(filterDataMap input)
             }
             else if (currentFilter->getFilterStatus() == filterStatus::FILTER_ERROR)
             {
-                throw("AdvancedFilterPipeline Filter Error.");
+                // TODO - handle error
+                //throw("AdvancedFilterPipeline Filter Error.");
             }
 
             if (Filter::mapCollision(levelOutput, currentFilter->getOutput()))
             {
-                throw("AdvancedFilterPipeline Map Output Error. Collision Detected");
+                // TODO - handle error
+                //throw("AdvancedFilterPipeline Map Output Error. Collision Detected");
             }
 
             levelOutput = Filter::joinFilterDataMaps(levelOutput, currentFilter->getOutput());
