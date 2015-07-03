@@ -1,8 +1,8 @@
-#ifdef BUILD_KEYBOARD
+#ifndef RING_DATA_H
+#define RING_DATA_H
 
-class vector;
+#include <vector>
 
-#pragma once
 class ringData
 {
 public:
@@ -34,4 +34,4 @@ private:
 
 };
 
-#endif
+#endif RING_DATA_H

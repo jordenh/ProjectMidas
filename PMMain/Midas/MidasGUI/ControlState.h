@@ -62,8 +62,7 @@ public:
 private:
     midasMode currentMode;
 	std::string currentProfile;
-	//std::mutex profileMutex;
-    SharedCommandData *SCDHandle;
+    SharedCommandData *SCDHandle; // not owned
 };
 
 #endif /* _CONTROL_STATE_H */

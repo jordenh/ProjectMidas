@@ -1,7 +1,7 @@
 #include "SettingsSignaller.h"
 
-SettingsSignaller::SettingsSignaller(QObject *parent, unsigned int yawMaxAngle, unsigned int pitchMaxAngle)
-    : QObject(parent), yawMaxAngle(yawMaxAngle), pitchMaxAngle(pitchMaxAngle)
+SettingsSignaller::SettingsSignaller(QObject *parent, unsigned int yawMaxAngle, unsigned int pitchMaxAngle, buzzFeedbackMode buzzFeedback)
+    : QObject(parent), yawMaxAngle(yawMaxAngle), pitchMaxAngle(pitchMaxAngle), buzzFeedback(buzzFeedback)
 {
 }
 
@@ -14,4 +14,9 @@ void SettingsSignaller::handleSliderValues(unsigned int yawMaxAngle, unsigned in
 {
     this->yawMaxAngle = yawMaxAngle;
     this->pitchMaxAngle = pitchMaxAngle;
+}
+
+void SettingsSignaller::handleBuzzFeedbackChange(unsigned int buzzMode)
+{
+    this->buzzFeedback = (buzzFeedbackMode)buzzMode;
 }

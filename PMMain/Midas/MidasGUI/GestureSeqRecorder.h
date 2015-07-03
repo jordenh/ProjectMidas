@@ -24,7 +24,7 @@ class ControlState;
 class MainGUI;
 
 #define DEFAULT_PROG_MAX_DELTA 3000 // ms
-#define REQ_HOLD_TIME 500 // ms
+#define REQ_HOLD_TIME 1000 // ms
 
 enum class SequenceStatus {
     SUCCESS,
@@ -195,12 +195,12 @@ private:
     void connectGuiSignals();
 
     // Holds all registered CommandDatas in a layered organization.
-    sequenceMapPerMode *seqMapPerMode;
+    sequenceMapPerMode *seqMapPerMode; // owned and memory handled
 
     // Stores pointers to active sequenceInfos, so that progress can be tracked more efficiently.
     // Once ANY sequences are active, ONLY those sequences can potentially progress, until they 
     // are timed out.
-    std::list<sequenceInfo*> activeSequences;
+    std::list<sequenceInfo*> activeSequences; // not owned
 
     std::mutex activeSequencesMutex;
 
@@ -225,10 +225,10 @@ private:
     // will determine if a user tapped a pose, or held it.
     clock_t holdGestTimer;
 
-    ControlState* controlStateHandle;
+    ControlState* controlStateHandle; // not owned
 
     SequenceImageManager imageManager;
-    MainGUI* mainGui;
+    MainGUI* mainGui; // not owned
     GestureSignaller signaller;
 };
 

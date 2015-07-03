@@ -3,9 +3,7 @@
 
 #include <deque>
 #include <mutex>
-#include "myo\cxx\Vector3.hpp"
-#include "myo\cxx\Quaternion.hpp"
-#include "myo\cxx\Pose.hpp"
+#include "myo\myo.hpp"
 
 class MyoDevice;
 
@@ -35,6 +33,15 @@ public:
     void setMyo(MyoDevice *myo);
     const MyoDevice* peakMyo();
 
+    void setArm(myo::Arm arm);
+    myo::Arm getArm();
+
+    void setWarmupState(myo::WarmupState warmupState);
+    myo::WarmupState getWarmupState();
+
+    void setXDirection(myo::XDirection xDirection);
+    myo::XDirection getXDirection();
+
     // returns true if the most recent pose is non-rest poses.
     // returns false if size < 1, or last pose is rest.
     bool lastPoseNonRest();
@@ -50,7 +57,12 @@ private:
 	int poseHistLen;
 	std::deque<myo::Pose> poseHistory;
 
-    MyoDevice* myoHandle;
+    // Misc Myo state values
+    myo::Arm currentArm;
+    myo::WarmupState currentWarmupState;
+    myo::XDirection currentXDirection;
+
+    MyoDevice* myoHandle; // not owned
 };
 
 #endif /* MYO_STATE_H */

@@ -21,23 +21,24 @@ public:
 #ifdef BUILD_KEYBOARD
 	MidasThread(std::vector<ringData> *kybrdRingData);
 	std::vector<ringData>* getKybrdRingData();
-#endif
+#else
 	MidasThread();
+#endif
 
     void setMainGuiHandle(MainGUI *mainGui);
     void setProfileManagerHandle(ProfileManager *profileManager);
     void run();
 
 private:
-    MainGUI *mainGui;
-    ProfileManager *profileManager;
+    MainGUI *mainGui; // not owned
+    ProfileManager *profileManager; // not owned
 
 #ifdef BUILD_KEYBOARD
-	std::vector<ringData> *kybrdRingData;
+	std::vector<ringData> *kybrdRingData; // not owned
+#endif
 signals:
 	void emitUpdateKeyboard(int, double, bool, bool);  // kybdGUISel, angle, center, held
 	void emitRssi(float);
-#endif
 
 signals:
     void emitVeloc(int, int);

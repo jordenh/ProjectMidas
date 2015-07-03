@@ -1,10 +1,10 @@
-#ifdef BUILD_KEYBOARD
 #ifndef KEYBOARD_WIDGET_H
 #define KEYBOARD_WIDGET_H
 
 #include "DraggableWidget.h"
 
 #include "MyoCommon.h"
+#include "RingData.h"
 
 class MidasThread;
 class ringData;
@@ -65,8 +65,5 @@ private:
     QString tempDebugText3;
     QString tempDebugText4;
 };
-
-#endif
-
 
 #endif

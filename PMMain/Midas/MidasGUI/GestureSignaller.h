@@ -37,7 +37,8 @@ signals:
 
     void emitToggleKeyboard();
 
-	void emitToggleActiveIcon();
+    // true if change forwared, false if backwards
+    void emitProfileChange(bool);
 private:
     static bool showAll;
 };

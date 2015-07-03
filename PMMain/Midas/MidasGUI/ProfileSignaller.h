@@ -19,7 +19,7 @@ public slots:
     void handleProfilePress(QString);
 
 private:
-	ControlState* controlStateHandle;
+	ControlState* controlStateHandle; // not owned
 };
 
 #endif // PROFILESIGNALLER_H

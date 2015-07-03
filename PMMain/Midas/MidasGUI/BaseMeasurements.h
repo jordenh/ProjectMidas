@@ -75,8 +75,8 @@ private:
 	midasMode currentState;
 	myo::Pose currentPose;
 
-	MyoState* myoStateHandle;
-	ControlState* controlStateHandle;
+	MyoState* myoStateHandle; // not owned
+    ControlState* controlStateHandle; // not owned
 };
 
 #endif /* BASE_MEASUREMENTS_H */

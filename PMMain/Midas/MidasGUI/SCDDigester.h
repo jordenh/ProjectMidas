@@ -47,20 +47,19 @@ private:
 
 	int getSelectedKeyFromAngle(double angle, std::vector<ringData::keyboardValue> *ring);
 
-	//KeyboardWidget *keyboardWidget;
 	std::vector<ringData> *kybrdRingData;
 #endif
 
-	KeyboardController *keyboardController;
-    SharedCommandData *scdHandle;
-    MidasThread *threadHandle;
-    ControlState *cntrlStateHandle;
-	MyoState *myoStateHandle;
-    MouseCtrl *mouseCtrl;
-    KybrdCtrl *kybrdCtrl;
+	KeyboardController *keyboardController; // not owned
+    SharedCommandData *scdHandle; // not owned
+    MidasThread *threadHandle; // not owned
+    ControlState *cntrlStateHandle; // not owned
+    MyoState *myoStateHandle; // not owned
+    MouseCtrl *mouseCtrl; // not owned
+    KybrdCtrl *kybrdCtrl; // not owned
     int count;
 
-	ProfileManager *pm;
+    ProfileManager *pm; // not owned
 };
 
 #endif /* _SCD_DIGESTER_H */

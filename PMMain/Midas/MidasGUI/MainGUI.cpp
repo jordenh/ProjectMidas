@@ -2,7 +2,7 @@
 
 #include "MainGUI.h"
 
-#include "ProfileDisplayer.h"
+
 #include <QApplication.h>
 #include <QDesktopWidget.h>
 #include <algorithm>
@@ -14,12 +14,14 @@
 #include "InfoIndicator.h"
 #include "GestureSignaller.h"
 #include "PoseDisplayer.h"
+#include "ProfileDisplayer.h"
 #include "ProfileIcon.h"
 #include "ProfileDisplayer.h"
 #include "ProfileSignaller.h"
 #include "ProfileManager.h"
 #include "SettingsDisplayer.h"
 #include "SettingsSignaller.h"
+#include "MidasThread.h"
 
 
 #ifdef BUILD_KEYBOARD
@@ -36,11 +38,12 @@ MainGUI::MainGUI(MidasThread *mainThread, ProfileManager *pm, int deadZoneRad)
 	infoIndicator = new InfoIndicator(INFO_INDICATOR_WIDTH, INFO_INDICATOR_HEIGHT, this);
     sequenceDisplayer = new SequenceDisplayer(this);
 	poseDisplayer = new PoseDisplayer(MOUSE_INDICATOR_SIZE, MOUSE_INDICATOR_SIZE, this);
-#ifdef BUILD_KEYBOARD_ANDDISTANCE
-	distanceDisplayer = new DistanceWidget(mainThread, INFO_INDICATOR_WIDTH,
-		DISTANCE_DISPLAY_HEIGHT, this);
+#ifdef BUILD_KEYBOARD
+//	distanceDisplayer = new DistanceWidget(mainThread, INFO_INDICATOR_WIDTH,
+//		DISTANCE_DISPLAY_HEIGHT, this);
 #endif
 
+    numProfiles = pm->getProfiles()->size();
 	setupProfileIcons();
 
     // Ensure Midas stays on top even when other applications have popups, etc
@@ -66,7 +69,7 @@ MainGUI::MainGUI(MidasThread *mainThread, ProfileManager *pm, int deadZoneRad)
     }
 #endif
 
-    settingsDisplayer = new SettingsDisplayer(PROF_INDICATOR_WIDTH, INFO_INDICATOR_HEIGHT, this);
+    settingsDisplayer = new SettingsDisplayer(PROF_INDICATOR_WIDTH, 2*INFO_INDICATOR_HEIGHT, this);
     layout->addWidget(settingsDisplayer, 0, Qt::AlignRight);
 
 	// create HBox for specific profile icons: Change this icon to be specific to your app
@@ -94,8 +97,11 @@ MainGUI::MainGUI(MidasThread *mainThread, ProfileManager *pm, int deadZoneRad)
 
     totalWidth = std::max(sequenceDisplayer->width(), 
                         (infoIndicator->width() + poseDisplayer->width()));
-    totalHeight = sequenceDisplayer->height() + poseDisplayer->height() 
-        + profileHeights + settingsDisplayer->height();
+    totalHeight = sequenceDisplayer->height() + poseDisplayer->height() +
+#ifdef SHOW_PROFILE_BUTTONS
+        profileHeights + 
+#endif
+        settingsDisplayer->height(); 
 
     QRect screen = QApplication::desktop()->availableGeometry(this);
     setGeometry(screen.right() - totalWidth - SCREEN_RIGHT_BUFFER,
@@ -103,9 +109,9 @@ MainGUI::MainGUI(MidasThread *mainThread, ProfileManager *pm, int deadZoneRad)
         totalWidth, totalHeight);
 }
 
-#ifdef BUILD_KEYBOARD
 void MainGUI::toggleKeyboard()
 {
+#ifdef BUILD_KEYBOARD
 	if (keyboard->isVisible())
 	{
 		keyboard->setVisible(false);
@@ -114,8 +120,8 @@ void MainGUI::toggleKeyboard()
 	{
 		keyboard->setVisible(true);
 	}
-}
 #endif
+}
 
 MainGUI::~MainGUI()
 {
@@ -127,12 +133,22 @@ MainGUI::~MainGUI()
     sequenceDisplayer = NULL;
     delete poseDisplayer;
     poseDisplayer = NULL;
+    delete settingsDisplayer;
+    settingsDisplayer = NULL;
     delete layout;
     layout = NULL;
 	delete icon0;
 	icon0 = NULL;
 	delete icon1;
 	icon1 = NULL;
+
+#ifdef SHOW_PROFILE_BUTTONS
+    for (int i = 0; i < profileWidgets.size(); i++)
+    {
+        delete profileWidgets.at(i); profileWidgets.at(i) = NULL;
+    }
+    profileWidgets.clear();
+#endif
 }
 
 #ifdef BUILD_KEYBOARD
@@ -147,6 +163,8 @@ void MainGUI::connectSignallerToSettingsDisplayer(SettingsSignaller *signaller)
 {
     QObject::connect(settingsDisplayer, SIGNAL(emitSliderValues(unsigned int, unsigned int)),
         signaller, SLOT(handleSliderValues(unsigned int, unsigned int)));
+    QObject::connect(settingsDisplayer, SIGNAL(emitBuzzFeedbackChange(unsigned int)),
+        signaller, SLOT(handleBuzzFeedbackChange(unsigned int)));
 }
 
 void MainGUI::connectSignallerToProfileWidgets(ProfileSignaller* signaller)
@@ -183,8 +201,8 @@ void MainGUI::connectSignallerToPoseDisplayer(GestureSignaller *signaller)
 
 void MainGUI::connectSignallerToProfileIcons(GestureSignaller *signaller)
 {
-	QObject::connect(signaller, SIGNAL(emitToggleActiveIcon()),
-		this, SLOT(handleUpdateProfile()));
+    QObject::connect(signaller, SIGNAL(emitProfileChange(bool)),
+        this, SLOT(handleChangeProfile(bool)));
 }
 
 void MainGUI::setupProfileIcons()
@@ -195,25 +213,42 @@ void MainGUI::setupProfileIcons()
 	QImage icon1Inactive(QString(PROFILE_ICON1_INACTIVE));
 
 	icon0IsActive = true;
+    activeProfile = 0;
 	icon0 = new ProfileIcon(SPECIFIC_PROFILE_ICON_SIZE, SPECIFIC_PROFILE_ICON_SIZE, true, QPixmap::fromImage(icon0Active), QPixmap::fromImage(icon0Inactive), this);
 	icon1 = new ProfileIcon(SPECIFIC_PROFILE_ICON_SIZE, SPECIFIC_PROFILE_ICON_SIZE, false, QPixmap::fromImage(icon1Active), QPixmap::fromImage(icon1Inactive), this);
 }
 
-void MainGUI::handleUpdateProfile()
+void MainGUI::handleChangeProfile(bool progressForward)
 {
-	// Currently just toggling active display between 2 choices... quite hard coded, but will remain this way for now.
-	if (icon0IsActive)
-	{
-		icon0->setImgActiveSel(false);
-		icon1->setImgActiveSel(true);
-		icon0IsActive = false;
-	}
-	else
-	{
-		icon0->setImgActiveSel(true);
-		icon1->setImgActiveSel(false);
-		icon0IsActive = true;
-	}
+    if (progressForward)
+    {
+        activeProfile++;
+        activeProfile %= numProfiles;
+    }
+    else if (!progressForward && activeProfile > 0)
+    {
+        activeProfile--;
+    }
+    else if (!progressForward && activeProfile <= 0)
+    {
+        activeProfile = numProfiles - 1;
+    }
+
+    if (activeProfile == 0)
+    {
+        icon0->setImgActiveSel(true);
+        icon1->setImgActiveSel(false);
+    }
+    else if (activeProfile == 1)
+    {
+        icon0->setImgActiveSel(false);
+        icon1->setImgActiveSel(true);
+    }
+    else if (activeProfile > 1)
+    {
+        icon0->setImgActiveSel(false);
+        icon1->setImgActiveSel(false);
+    }
 }
 
 void MainGUI::handleFocusMidas()

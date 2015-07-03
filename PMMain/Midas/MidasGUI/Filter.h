@@ -97,6 +97,26 @@ public:
      */
     virtual filterError updateBasedOnProfile(ProfileManager& pm, std::string name);
 
+    /**
+     * Concatenate two filterDataMaps so that more data can be sent down a given filter
+     * pipeline.
+     *
+     * @param map0 first filterDataMap to join. If conflicts in key/value pairs exist, THIS
+     * map keeps it's values.
+     * @param map1 sencond map to join.
+     * @return the concatenated result.
+     */
+    static filterDataMap joinFilterDataMaps(filterDataMap map0, filterDataMap map1);
+
+    /**
+     * Find if two maps have a collision of keys. True if collision exists.
+     *
+     * @param map0 first filterDataMap. 
+     * @param map1 sencond map.
+     * @return True if collision exists. False otherwise.
+     */
+    static bool mapCollision(filterDataMap map0, filterDataMap map1);
+
 protected:
     /**
      * Retrieve the input to the filter. Only a subclass of Filter can access
@@ -112,6 +132,13 @@ protected:
      * @param output The map of name-value pairs.
      */
     void setOutput(filterDataMap output);
+
+    /**
+    * Add to the output of the filter. Current values persist if conflict.
+    *
+    * @param output The map of name-value pairs.
+    */
+    void addToOutput(filterDataMap output);
 
     /**
     * Clear the output of the filter.

@@ -1,4 +1,3 @@
-#ifdef BUILD_KEYBOARD
 #include "RingData.h"
 #include <vector>
 
@@ -41,4 +40,3 @@ void ringData::setRingOutVector(std::vector<keyboardValue> ringOutVal)
     *ringOutVector = ringOutVal;
 }
 
-#endif

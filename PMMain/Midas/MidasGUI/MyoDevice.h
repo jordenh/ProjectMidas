@@ -1,8 +1,11 @@
 #pragma once
 #include "WearableDevice.h"
-#include "FilterPipeline.h"
+#include "AdvancedFilterPipeline.h"
 #include "myo\myo.hpp"
 #include "ProfileSignaller.h"
+
+#include <iostream>
+#include <fstream>
 
 #ifdef USE_SIMULATOR
 #include "MyoSimIncludes.hpp"
@@ -20,6 +23,7 @@ class ControlState;
 class MyoState;
 class MainGUI;
 class ProfileManager;
+class GestureFilter;
 
 /**
  * Handles the Myo device, collecting the data using the Myo API, and converting the data
@@ -86,9 +90,13 @@ public:
      *
      * @param vibType - indicates Myo vibration type (currently short, medium, or long)
      */
-    void vibrateMyos(myo::Myo::VibrationType vibType) const;
+    void vibrateMyos(myo::Myo::VibrationType vibType, int numReps = 1) const;
 
 private:
+    void setupPosePipeline(GestureFilter *gf);
+    void setupOrientationPipeline();
+    void setupRSSIPipeline();
+
     /**
      * This class implements all of the callback functions from the Myo DeviceListener
      * class. The methods in this class are called when Myo events occur.
@@ -124,22 +132,27 @@ private:
 
     private:
         MyoDevice& parent;
+
+        void printToDataFile();
+        std::ofstream myoDataFile;
+        Pose::Type lastPose;
+        int8_t lastEMGData[8];
     };
 
-    std::vector<myo::Myo*> connectedMyos;
+    std::vector<myo::Myo*> connectedMyos; // not owned
         unsigned int myoFindTimeout;
     unsigned int durationInMilliseconds;
     std::string appIdentifier;
-    ControlState* state;
-	MyoState* myoState;
-    FilterPipeline posePipeline, orientationPipeline, rssiPipeline,
-        connectPipeline;
-    MainGUI *mainGui;
+    ControlState* state; // not owned
+    MyoState* myoState; // not owned
+    AdvancedFilterPipeline advancedPosePipeline, advancedOrientationPipeline,
+        advancedRssiPipeline, advancedConnectPipeline;
+    MainGUI *mainGui; // not owned
     std::string prevProfileName;
 
     Arm arm;
     XDirection xDirection;
     static ProfileSignaller profileSignaller;
-    ProfileManager *profileManager;
+    ProfileManager *profileManager; // not owned
 };
 

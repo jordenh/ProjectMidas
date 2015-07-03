@@ -5,6 +5,9 @@ MyoState::MyoState()
 {
 	spatialHistLen = 1;
 	poseHistLen = 1;
+    currentArm = myo::Arm::armRight;
+    currentWarmupState = myo::WarmupState::warmupStateWarm;
+    currentXDirection = myo::XDirection::xDirectionTowardElbow;
 }
 
 void MyoState::setSpatialHistLen(int spatialHistLen)
@@ -150,10 +153,52 @@ std::deque<myo::Pose> MyoState::getPoseHistory()
 }
 
 void MyoState::setMyo(MyoDevice *myo)
-{ myoHandle = myo; }
+{ 
+    myoStateMutex.lock();
+    myoHandle = myo; 
+    myoStateMutex.unlock();
+}
 
 const MyoDevice* MyoState::peakMyo()
-{ return myoHandle; }
+{ 
+    return myoHandle; 
+}
+
+void MyoState::setArm(myo::Arm arm)
+{
+    myoStateMutex.lock();
+    this->currentArm = arm;
+    myoStateMutex.unlock();
+}
+
+myo::Arm MyoState::getArm()
+{
+    return this->currentArm;
+}
+
+void MyoState::setWarmupState(myo::WarmupState warmupState)
+{
+    myoStateMutex.lock();
+    this->currentWarmupState = warmupState;
+    myoStateMutex.unlock();
+}
+
+myo::WarmupState MyoState::getWarmupState()
+{
+    return this->currentWarmupState;
+}
+
+void MyoState::setXDirection(myo::XDirection xDirection)
+{
+    myoStateMutex.lock();
+    this->currentXDirection = xDirection;
+    myoStateMutex.unlock();
+}
+
+myo::XDirection MyoState::getXDirection()
+{
+    return this->currentXDirection;
+}
 
 bool MyoState::lastPoseNonRest()
 {
