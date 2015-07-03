@@ -4,7 +4,6 @@
 #include "MyoTranslationFilter.h"
 #include "GenericAveragingFilter.h"
 #include "GenericBypassFilter.h"
-#include "AveragingFilter.h"
 #include "SharedCommandData.h"
 #include "ControlState.h"
 #include "MyoState.h"
@@ -54,11 +53,11 @@ void MyoDevice::runDeviceLoop()
 
     setupRSSIPipeline();
 
+    advancedConnectPipeline.registerFilterAtDeepestLevel(WearableDevice::sharedData);
+
 	profileSignaller.setControlStateHandle(state);
 	state->setProfile(profileManager->getProfiles()->at(0).profileName);
 	mainGui->connectSignallerToProfileWidgets(&profileSignaller); 
-
-    connectPipeline.registerFilter(WearableDevice::sharedData);
 
     std::chrono::milliseconds rssi_start =
         std::chrono::duration_cast<std::chrono::milliseconds>(
@@ -300,7 +299,7 @@ void MyoDevice::MyoCallbacks::onConnect(Myo* myo, uint64_t timestamp, FirmwareVe
     filterDataMap input;
     input[ISCONNECTED_INPUT] = true;
 
-    parent.connectPipeline.startPipeline(input);
+    parent.advancedConnectPipeline.startPipeline(input);
 
     parent.connectedMyos.push_back(myo);
 }
@@ -309,7 +308,7 @@ void MyoDevice::MyoCallbacks::onDisconnect(Myo* myo, uint64_t timestamp) {
     filterDataMap input;
     input[ISCONNECTED_INPUT] = false;
 
-    parent.connectPipeline.startPipeline(input);
+    parent.advancedConnectPipeline.startPipeline(input);
 
     for (std::vector<Myo*>::iterator it = parent.connectedMyos.begin(); it != parent.connectedMyos.end(); it++)
     {

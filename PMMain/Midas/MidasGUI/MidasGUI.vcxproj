@@ -87,7 +87,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AdvancedFilterPipeline.cpp" />
-    <ClCompile Include="AveragingFilter.cpp" />
     <ClCompile Include="BaseMeasurements.cpp" />
     <ClCompile Include="CommandData.cpp" />
     <ClCompile Include="ControlState.cpp" />
@@ -229,7 +228,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AdvancedFilterPipeline.h" />
-    <ClInclude Include="AveragingFilter.h" />
     <ClInclude Include="BaseMeasurements.h" />
     <ClInclude Include="CommandData.h" />
     <ClInclude Include="ControlState.h" />

@@ -1,3 +1,11 @@
+// SCD Keys
+#define COMMAND_INPUT "command"
+#define VELOCITY_INPUT "velocity"
+#define ISCONNECTED_INPUT "isConnected"
+#define DELTA_INPUT "deltaInput"
+#define ANGLE_INPUT "angle"
+#define RSSI_INPUT "rssi"
+
 // Myo Translation Keys
 #define INPUT_QUATERNION_X "quatDataX"
 #define INPUT_QUATERNION_Y "quatDataY"

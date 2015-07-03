@@ -191,9 +191,6 @@
     <ClCompile Include="BaseMeasurements.cpp">
       <Filter>Source Files\Midas</Filter>
     </ClCompile>
-    <ClCompile Include="AveragingFilter.cpp">
-      <Filter>Source Files\Midas\Filters</Filter>
-    </ClCompile>
     <ClCompile Include="Filter.cpp">
       <Filter>Source Files\Midas\Filters</Filter>
     </ClCompile>
@@ -389,9 +386,6 @@
     </ClInclude>
     <ClInclude Include="BaseMeasurements.h">
       <Filter>Header Files\Midas</Filter>
-    </ClInclude>
-    <ClInclude Include="AveragingFilter.h">
-      <Filter>Header Files\Midas\Filters</Filter>
     </ClInclude>
     <ClInclude Include="Filter.h">
       <Filter>Header Files\Midas\Filters</Filter>

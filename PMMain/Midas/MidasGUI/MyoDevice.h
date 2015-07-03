@@ -146,9 +146,8 @@ private:
     std::string appIdentifier;
     ControlState* state; // not owned
     MyoState* myoState; // not owned
-    LinearFilterPipeline connectPipeline;
     AdvancedFilterPipeline advancedPosePipeline, advancedOrientationPipeline,
-        advancedRssiPipeline;
+        advancedRssiPipeline, advancedConnectPipeline;
     MainGUI *mainGui; // not owned
     std::string prevProfileName;
 
