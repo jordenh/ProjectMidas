@@ -406,6 +406,8 @@ void GestureFilter::handleStateChange(CommandData response, GestureFilter *gf)
 	// filtering is desired on this data, and it can go straight to the SCD
 	std::vector<CommandData> changeStateCommands = response.getChangeStateActions();
 	LinearFilterPipeline fp;
+    // store and replace filterDataMap incase it's used.
+    filterDataMap init_fdm = gf->getOutput();
 	fp.registerFilter(gf->controlStateHandle->getSCD());
 	for (int i = 0; i < changeStateCommands.size(); i++)
 	{
@@ -418,8 +420,10 @@ void GestureFilter::handleStateChange(CommandData response, GestureFilter *gf)
 		{
 			dataMap = gf->handleKybrdCommand(changeStateCommands[i]);
 		}
+        gf->clearOutput();
 		fp.startPipeline(dataMap);
 	}
+    gf->setOutput(init_fdm);
 	    
     return;
 }
