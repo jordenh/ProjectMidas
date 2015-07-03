@@ -117,3 +117,25 @@ std::vector<std::vector<Filter*>>* AdvancedFilterPipeline::getFiltersHandle(void
 {
     return &filters;
 }
+
+filterError AdvancedFilterPipeline::updateFiltersBasedOnProfile(ProfileManager& pm, std::string name)
+{
+    int error = (int)filterError::NO_FILTER_ERROR;
+
+    // traverses the vector of filters at each level
+    std::vector<std::vector<Filter*>>::iterator levelIt;
+    // traverses the given filters in each level
+    std::vector<Filter*>::iterator filterIt;
+
+    for (levelIt = filters.begin(); levelIt != filters.end(); levelIt++)
+    {
+        std::vector<Filter*> levelFilters = *levelIt;
+
+        for (filterIt = levelFilters.begin(); filterIt != levelFilters.end(); filterIt++)
+        {
+            Filter* currentFilter = *filterIt;
+            error |= (int)currentFilter->updateBasedOnProfile(pm, name);
+        }
+    }
+    return (filterError)error;
+}

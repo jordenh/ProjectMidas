@@ -69,6 +69,13 @@ public:
 
     void setFiltersOwned(bool owned) { this->filtersOwned = owned; }
 
+    /**
+    * Update all filters internal mechanisms if the profile changes.
+    *
+    * @return The error code of the filter after completion.
+    */
+    filterError updateFiltersBasedOnProfile(ProfileManager& pm, std::string name);
+
 private:
     std::vector<std::vector<Filter*>> filters;
 

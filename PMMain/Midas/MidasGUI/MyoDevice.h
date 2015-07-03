@@ -93,7 +93,8 @@ public:
     void vibrateMyos(myo::Myo::VibrationType vibType, int numReps = 1) const;
 
 private:
-    void MyoDevice::setupOrientationPipeline();
+    void setupOrientationPipeline();
+    void setupRSSIPipeline();
 
     /**
      * This class implements all of the callback functions from the Myo DeviceListener
@@ -143,9 +144,8 @@ private:
     std::string appIdentifier;
     ControlState* state; // not owned
     MyoState* myoState; // not owned
-    LinearFilterPipeline posePipeline, orientationPipeline, rssiPipeline,
-        connectPipeline;
-    AdvancedFilterPipeline advancedOrientationPipeline;
+    LinearFilterPipeline posePipeline, connectPipeline;
+    AdvancedFilterPipeline advancedOrientationPipeline, advancedRssiPipeline;
     MainGUI *mainGui; // not owned
     std::string prevProfileName;
 
