@@ -30,6 +30,25 @@ MyoDevice::MyoDevice(SharedCommandData* sharedCommandData, ControlState* control
 
 MyoDevice::~MyoDevice()
 {
+    delete genAvgFilterRSSI; genAvgFilterRSSI = NULL;
+
+    delete genAvgFilterQX; genAvgFilterQX = NULL;
+    delete genAvgFilterQY; genAvgFilterQY = NULL;
+    delete genAvgFilterQZ; genAvgFilterQZ = NULL;
+    delete genAvgFilterQW; genAvgFilterQW = NULL;
+    
+    delete genAvgFilterAY; genAvgFilterAY = NULL;
+    delete genAvgFilterAZ; genAvgFilterAZ = NULL;
+    delete genAvgFilterAW; genAvgFilterAW = NULL;
+    
+    delete genAvgFilterGY; genAvgFilterGY = NULL;
+    delete genAvgFilterGZ; genAvgFilterGZ = NULL;
+    delete genAvgFilterGW; genAvgFilterGW = NULL;
+
+    delete genBypassFilterArm; genBypassFilterArm = NULL;
+    delete genBypassFilterXDir; genBypassFilterXDir = NULL;
+
+    delete translationFilter; translationFilter = NULL;
 }
 
 void MyoDevice::setFindMyoTimeout(unsigned int milliseconds)
@@ -146,25 +165,24 @@ void MyoDevice::setupPosePipeline(GestureFilter *gf)
 
 void MyoDevice::setupOrientationPipeline()
 {
-    GenericAveragingFilter *genAvgFilterQX = new GenericAveragingFilter(5, QUAT_DATA_X);
-    GenericAveragingFilter *genAvgFilterQY = new GenericAveragingFilter(5, QUAT_DATA_Y);
-    GenericAveragingFilter *genAvgFilterQZ = new GenericAveragingFilter(5, QUAT_DATA_Z);
-    GenericAveragingFilter *genAvgFilterQW = new GenericAveragingFilter(5, QUAT_DATA_W);
+    genAvgFilterQX = new GenericAveragingFilter(5, QUAT_DATA_X);
+    genAvgFilterQY = new GenericAveragingFilter(5, QUAT_DATA_Y);
+    genAvgFilterQZ = new GenericAveragingFilter(5, QUAT_DATA_Z);
+    genAvgFilterQW = new GenericAveragingFilter(5, QUAT_DATA_W);
 
-    GenericAveragingFilter *genAvgFilterAY = new GenericAveragingFilter(5, ACCEL_DATA_X);
-    GenericAveragingFilter *genAvgFilterAZ = new GenericAveragingFilter(5, ACCEL_DATA_Y);
-    GenericAveragingFilter *genAvgFilterAW = new GenericAveragingFilter(5, ACCEL_DATA_Z);
+    genAvgFilterAY = new GenericAveragingFilter(5, ACCEL_DATA_X);
+    genAvgFilterAZ = new GenericAveragingFilter(5, ACCEL_DATA_Y);
+    genAvgFilterAW = new GenericAveragingFilter(5, ACCEL_DATA_Z);
 
-    GenericAveragingFilter *genAvgFilterGY = new GenericAveragingFilter(5, GYRO_DATA_X);
-    GenericAveragingFilter *genAvgFilterGZ = new GenericAveragingFilter(5, GYRO_DATA_Y);
-    GenericAveragingFilter *genAvgFilterGW = new GenericAveragingFilter(5, GYRO_DATA_Z);
+    genAvgFilterGY = new GenericAveragingFilter(5, GYRO_DATA_X);
+    genAvgFilterGZ = new GenericAveragingFilter(5, GYRO_DATA_Y);
+    genAvgFilterGW = new GenericAveragingFilter(5, GYRO_DATA_Z);
 
-    GenericBypassFilter *genBypassFilterArm = new GenericBypassFilter(INPUT_ARM);
-    GenericBypassFilter *genBypassFilterXDir = new GenericBypassFilter(INPUT_X_DIRECTION);
+    genBypassFilterArm = new GenericBypassFilter(INPUT_ARM);
+    genBypassFilterXDir = new GenericBypassFilter(INPUT_X_DIRECTION);
 
-    MyoTranslationFilter *translationFilter = new MyoTranslationFilter(state, myoState, mainGui);
+    translationFilter = new MyoTranslationFilter(state, myoState, mainGui);
 
-    advancedOrientationPipeline.setFiltersOwned(true);
     advancedOrientationPipeline.registerFilterAtDeepestLevel(genAvgFilterQX);
     advancedOrientationPipeline.registerFilterAtDeepestLevel(genAvgFilterQY);
     advancedOrientationPipeline.registerFilterAtDeepestLevel(genAvgFilterQZ);
@@ -188,13 +206,11 @@ void MyoDevice::setupOrientationPipeline()
 
 void MyoDevice::setupRSSIPipeline()
 {
-    GenericAveragingFilter *genAvgFilterRSSI = new GenericAveragingFilter(5, RSSI);
-
-    advancedRssiPipeline.setFiltersOwned(true);
+    genAvgFilterRSSI = new GenericAveragingFilter(5, RSSI);
 
     advancedRssiPipeline.registerFilterAtDeepestLevel(genAvgFilterRSSI);
 
-    advancedRssiPipeline.registerFilterAtNewLevel(WearableDevice::sharedData); // JORDEN TODO - this is giving ownership to pipeline, but technically shouldnt. rething/rework later.
+    advancedRssiPipeline.registerFilterAtNewLevel(WearableDevice::sharedData);
 }
 
 int MyoDevice::getDeviceError()
