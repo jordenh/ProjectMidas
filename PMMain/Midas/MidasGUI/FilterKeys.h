@@ -18,3 +18,6 @@
 #define GYRO_DATA_Y "gyroDataY"
 #define GYRO_DATA_Z "gyroDataZ"
 #define RSSI        "rssi"
+
+// Gesture Recognition Keys
+#define GESTURE_INPUT "gesture"

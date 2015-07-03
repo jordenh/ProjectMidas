@@ -55,8 +55,6 @@ void MyoDevice::runDeviceLoop()
 
     setupRSSIPipeline();
 
-	// init profileSignaller to the first profile name.
-//	profileSignaller.setProfileName(profileManager->getProfiles()->at(0).profileName);
 	profileSignaller.setControlStateHandle(state);
 	state->setProfile(profileManager->getProfiles()->at(0).profileName);
 	mainGui->connectSignallerToProfileWidgets(&profileSignaller); 
@@ -396,7 +394,7 @@ void MyoDevice::updateProfiles(void)
     int error = (int)filterError::NO_FILTER_ERROR;
     for (std::list<Filter*>::iterator it = filters->begin(); it != filters->end(); ++it)
     {
-		error |= (int)(*it)->updateBasedOnProfile(*profileManager, state->getProfile());//profileSignaller.getProfileName());
+		error |= (int)(*it)->updateBasedOnProfile(*profileManager, state->getProfile());
     }
 	
     error |= (int)advancedOrientationPipeline.updateFiltersBasedOnProfile(*profileManager, state->getProfile());

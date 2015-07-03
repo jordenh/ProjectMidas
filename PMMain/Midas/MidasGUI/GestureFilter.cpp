@@ -87,14 +87,6 @@ void GestureFilter::process()
     Filter::setFilterError(filterError::NO_FILTER_ERROR);
     Filter::setFilterStatus(filterStatus::OK);
 	Filter::clearOutput();
-	
-//	// First, filter based on "hold time" in a specific gesture.
-//    timeFromLastPose = clock() - lastTime;
-//    if (timeFromLastPose < timeDelta)
-//    {
-//        // early exit due to too frequent fluctuation
-//        return;
-//    }
 
     CommandData response;
     SequenceStatus ss;
