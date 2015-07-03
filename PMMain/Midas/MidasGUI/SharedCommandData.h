@@ -2,18 +2,12 @@
 #define _SHARED_COMMAND_DATA_H
 
 #include "Filter.h"
+#include "FilterKeys.h"
 
 #include <mutex>
 #include <queue>
 #include "MidasCommon.h"
 #include "CommandData.h"
-
-#define COMMAND_INPUT "command"
-#define VELOCITY_INPUT "velocity"
-#define ISCONNECTED_INPUT "isConnected"
-#define DELTA_INPUT "deltaInput"
-#define ANGLE_INPUT "angle"
-#define RSSI_INPUT "rssi"
 
 /**
  * Acts as the shared data between the main thread and the device threads. Contains the 

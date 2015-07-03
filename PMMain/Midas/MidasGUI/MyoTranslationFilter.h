@@ -2,6 +2,7 @@
 #define _MYO_TRANSLATION_FILTER_H
 
 #include "Filter.h"
+#include "FilterKeys.h"
 #include "GestureHoldModeAction.h"
 #include "ProfileManager.h"
 #include "SettingsSignaller.h"
@@ -17,13 +18,6 @@ using namespace myo;
 class MyoState;
 class ControlState;
 class MainGUI;
-
-#define INPUT_QUATERNION_X "quatDataX"
-#define INPUT_QUATERNION_Y "quatDataY"
-#define INPUT_QUATERNION_Z "quatDataZ"
-#define INPUT_QUATERNION_W "quatDataW"
-#define INPUT_ARM "arm"
-#define INPUT_X_DIRECTION "xDirection"
 
 #define MAX_PITCH_ANGLE 25.0f /* Maximum delta angle in degrees */
 #define MAX_YAW_ANGLE 30.0f /* Maximum delta angle in degrees */
@@ -73,6 +67,12 @@ public:
     filterError updateBasedOnProfile(ProfileManager& pm, std::string name);
 
 private:
+    void handleQuatData(filterDataMap input, filterDataMap output);
+
+    void handleArmData(filterDataMap input, filterDataMap output);
+
+    void handleXDirectionData(filterDataMap input, filterDataMap output);
+
     /**
      * Calculate the 'pitch' angle from the supplied quaternion, consisting of x, y, z and w,
      * and infer sign based on arm and xDirection.

@@ -2,6 +2,7 @@
 #define _GESTURE_FILTER_H
 
 #include "Filter.h"
+#include "FilterKeys.h"
 #include "GestureSignaller.h"
 #include "SettingsSignaller.h"
 #include "SequenceImageManager.h"
@@ -21,15 +22,12 @@ class MyoState;
 class GestureSeqRecorder;
 class MainGUI;
 
-#define GESTURE_INPUT "gesture"
 #define MYO_GESTURE_RIGHT_MOUSE Pose::fingersSpread
 #define MYO_GESTURE_LEFT_MOUSE Pose::fist
 
 // GestureFilter spawns a thread to execute callback functions at this
 // period.
 #define SLEEP_LEN 20 // ms
-
-
 
 /**
  * Consult Filter.h for concepts regarding Filters.

@@ -1,7 +1,9 @@
 #include "MyoDevice.h"
 #include "GestureFilter.h"
+#include "FilterKeys.h"
 #include "MyoTranslationFilter.h"
-#include "AveragingFilter.h"
+#include "GenericAveragingFilter.h"
+#include "GenericBypassFilter.h"
 #include "SharedCommandData.h"
 #include "ControlState.h"
 #include "MyoState.h"
@@ -45,26 +47,17 @@ void MyoDevice::runDeviceLoop()
     WearableDevice::setDeviceStatus(deviceStatus::RUNNING);
 
     GestureFilter gestureFilter(state, myoState, 0, mainGui);
-    posePipeline.registerFilter(&gestureFilter);
-    posePipeline.registerFilter(WearableDevice::sharedData);
+    setupPosePipeline(&gestureFilter);
 
-    AveragingFilter averagingFilter(5);
-    MyoTranslationFilter translationFilter(state, myoState, mainGui);
-    orientationPipeline.registerFilter(&averagingFilter);
-    orientationPipeline.registerFilter(&translationFilter);
-    orientationPipeline.registerFilter(WearableDevice::sharedData);
+    setupOrientationPipeline();
 
-	// init profileSignaller to the first profile name.
-//	profileSignaller.setProfileName(profileManager->getProfiles()->at(0).profileName);
+    setupRSSIPipeline();
+
+    advancedConnectPipeline.registerFilterAtDeepestLevel(WearableDevice::sharedData);
+
 	profileSignaller.setControlStateHandle(state);
 	state->setProfile(profileManager->getProfiles()->at(0).profileName);
 	mainGui->connectSignallerToProfileWidgets(&profileSignaller); 
-		
-    AveragingFilter rssiAveragingFilter(5);
-    rssiPipeline.registerFilter(&rssiAveragingFilter);
-    rssiPipeline.registerFilter(WearableDevice::sharedData);
-
-    connectPipeline.registerFilter(WearableDevice::sharedData);
 
     std::chrono::milliseconds rssi_start =
         std::chrono::duration_cast<std::chrono::milliseconds>(
@@ -144,6 +137,66 @@ void MyoDevice::runDeviceLoop()
     WearableDevice::setDeviceStatus(deviceStatus::DONE);
 }
 
+void MyoDevice::setupPosePipeline(GestureFilter *gf)
+{
+    advancedPosePipeline.registerFilterAtDeepestLevel(gf);
+
+    advancedPosePipeline.registerFilterAtNewLevel(WearableDevice::sharedData);
+}
+
+void MyoDevice::setupOrientationPipeline()
+{
+    GenericAveragingFilter *genAvgFilterQX = new GenericAveragingFilter(5, QUAT_DATA_X);
+    GenericAveragingFilter *genAvgFilterQY = new GenericAveragingFilter(5, QUAT_DATA_Y);
+    GenericAveragingFilter *genAvgFilterQZ = new GenericAveragingFilter(5, QUAT_DATA_Z);
+    GenericAveragingFilter *genAvgFilterQW = new GenericAveragingFilter(5, QUAT_DATA_W);
+
+    GenericAveragingFilter *genAvgFilterAY = new GenericAveragingFilter(5, ACCEL_DATA_X);
+    GenericAveragingFilter *genAvgFilterAZ = new GenericAveragingFilter(5, ACCEL_DATA_Y);
+    GenericAveragingFilter *genAvgFilterAW = new GenericAveragingFilter(5, ACCEL_DATA_Z);
+
+    GenericAveragingFilter *genAvgFilterGY = new GenericAveragingFilter(5, GYRO_DATA_X);
+    GenericAveragingFilter *genAvgFilterGZ = new GenericAveragingFilter(5, GYRO_DATA_Y);
+    GenericAveragingFilter *genAvgFilterGW = new GenericAveragingFilter(5, GYRO_DATA_Z);
+
+    GenericBypassFilter *genBypassFilterArm = new GenericBypassFilter(INPUT_ARM);
+    GenericBypassFilter *genBypassFilterXDir = new GenericBypassFilter(INPUT_X_DIRECTION);
+
+    MyoTranslationFilter *translationFilter = new MyoTranslationFilter(state, myoState, mainGui);
+
+    advancedOrientationPipeline.setFiltersOwned(true);
+    advancedOrientationPipeline.registerFilterAtDeepestLevel(genAvgFilterQX);
+    advancedOrientationPipeline.registerFilterAtDeepestLevel(genAvgFilterQY);
+    advancedOrientationPipeline.registerFilterAtDeepestLevel(genAvgFilterQZ);
+    advancedOrientationPipeline.registerFilterAtDeepestLevel(genAvgFilterQW);
+
+    advancedOrientationPipeline.registerFilterAtDeepestLevel(genAvgFilterAY);
+    advancedOrientationPipeline.registerFilterAtDeepestLevel(genAvgFilterAZ);
+    advancedOrientationPipeline.registerFilterAtDeepestLevel(genAvgFilterAW);
+
+    advancedOrientationPipeline.registerFilterAtDeepestLevel(genAvgFilterGY);
+    advancedOrientationPipeline.registerFilterAtDeepestLevel(genAvgFilterGZ);
+    advancedOrientationPipeline.registerFilterAtDeepestLevel(genAvgFilterGW);
+
+    advancedOrientationPipeline.registerFilterAtDeepestLevel(genBypassFilterArm);
+    advancedOrientationPipeline.registerFilterAtDeepestLevel(genBypassFilterXDir);
+
+    advancedOrientationPipeline.registerFilterAtNewLevel(translationFilter);
+
+    advancedOrientationPipeline.registerFilterAtNewLevel(WearableDevice::sharedData);
+}
+
+void MyoDevice::setupRSSIPipeline()
+{
+    GenericAveragingFilter *genAvgFilterRSSI = new GenericAveragingFilter(5, RSSI);
+
+    advancedRssiPipeline.setFiltersOwned(true);
+
+    advancedRssiPipeline.registerFilterAtDeepestLevel(genAvgFilterRSSI);
+
+    advancedRssiPipeline.registerFilterAtNewLevel(WearableDevice::sharedData); // JORDEN TODO - this is giving ownership to pipeline, but technically shouldnt. rething/rework later.
+}
+
 int MyoDevice::getDeviceError()
 {
     // TODO: Add error codes.
@@ -185,11 +238,11 @@ void MyoDevice::MyoCallbacks::onPose(Myo* myo, uint64_t timestamp, Pose pose)
         * Going to manually insert a rest inbetween sequences without a rest.
         */
         input[GESTURE_INPUT] = Pose::rest;
-        parent.posePipeline.startPipeline(input);
+        parent.advancedPosePipeline.startPipeline(input);
     }
 
     input[GESTURE_INPUT] = pose.type();
-    parent.posePipeline.startPipeline(input);
+    parent.advancedPosePipeline.startPipeline(input);
 
     lastPose = pose.type();
     printToDataFile();
@@ -198,25 +251,13 @@ void MyoDevice::MyoCallbacks::onPose(Myo* myo, uint64_t timestamp, Pose pose)
 void MyoDevice::MyoCallbacks::onOrientationData(Myo* myo, uint64_t timestamp, const Quaternion<float>& rotation) 
 { 
     filterDataMap input;
+
     input[QUAT_DATA_X] = rotation.x();
     input[QUAT_DATA_Y] = rotation.y();
     input[QUAT_DATA_Z] = rotation.z();
     input[QUAT_DATA_W] = rotation.w();
-
-    input[INPUT_ARM] = parent.arm;
-    input[INPUT_X_DIRECTION] = parent.xDirection;
-
-    // The following is junk data. The averaging filter should be modified so
-    // that it doesn't deal with the data so specifically.
-    input[ACCEL_DATA_X] = 0.0f;
-    input[ACCEL_DATA_Y] = 0.0f;
-    input[ACCEL_DATA_Z] = 0.0f;
-    input[GYRO_DATA_X] = 0.0f;
-    input[GYRO_DATA_Y] = 0.0f;
-    input[GYRO_DATA_Z] = 0.0f;
-    input[RSSI] = (int8_t)0;
 	    
-    parent.orientationPipeline.startPipeline(input);
+    parent.advancedOrientationPipeline.startPipeline(input);
 }
 
 void MyoDevice::MyoCallbacks::onAccelerometerData(Myo* myo, uint64_t timestamp, const Vector3<float>& accel)
@@ -226,20 +267,10 @@ void MyoDevice::MyoCallbacks::onAccelerometerData(Myo* myo, uint64_t timestamp, 
     input[ACCEL_DATA_Y] = accel.y();
     input[ACCEL_DATA_Z] = accel.z();
 
-    // The following is junk data. The averaging filter should be modified so
-    // that it doesn't deal with the data so specifically.
-    input[QUAT_DATA_X] = 0.0f;
-    input[QUAT_DATA_Y] = 0.0f;
-    input[QUAT_DATA_Z] = 0.0f;
-    input[QUAT_DATA_W] = 0.0f;
-    input[GYRO_DATA_X] = 0.0f;
-    input[GYRO_DATA_Y] = 0.0f;
-    input[GYRO_DATA_Z] = 0.0f;
-    input[RSSI] = (int8_t)0;
-    input[INPUT_ARM] = parent.arm;
-    input[INPUT_X_DIRECTION] = parent.xDirection;
-
-    //parent.orientationPipeline.startPipeline(input); //TODO - solve race condition and enable this
+    // For now, advancedOrientationPipeline doesnt use this data, so not going
+    // to bother starting pipeline. Uncomment (and it will work fine) if data
+    // is handled in the future.
+    //parent.advancedOrientationPipeline.startPipeline(input);
 }
 
 void MyoDevice::MyoCallbacks::onGyroscopeData(Myo* myo, uint64_t timestamp, const Vector3<float>& gyro) 
@@ -249,20 +280,10 @@ void MyoDevice::MyoCallbacks::onGyroscopeData(Myo* myo, uint64_t timestamp, cons
     input[GYRO_DATA_Y] = gyro.y();
     input[GYRO_DATA_Z] = gyro.z();
 
-    // The following is junk data. The averaging filter should be modified so
-    // that it doesn't deal with the data so specifically.
-    input[QUAT_DATA_X] = 0.0f;
-    input[QUAT_DATA_Y] = 0.0f;
-    input[QUAT_DATA_Z] = 0.0f;
-    input[QUAT_DATA_W] = 0.0f;
-    input[ACCEL_DATA_X] = 0.0f;
-    input[ACCEL_DATA_Y] = 0.0f;
-    input[ACCEL_DATA_Z] = 0.0f;
-    input[RSSI] = (int8_t)0;
-    input[INPUT_ARM] = parent.arm;
-    input[INPUT_X_DIRECTION] = parent.xDirection;
-
-    //parent.orientationPipeline.startPipeline(input); //TODO - solve race condition and enable this
+    // For now, advancedOrientationPipeline doesnt use this data, so not going
+    // to bother starting pipeline. Uncomment (and it will work fine) if data
+    // is handled in the future.
+    //parent.advancedOrientationPipeline.startPipeline(input);
 }
 
 void MyoDevice::MyoCallbacks::onPair(Myo* myo, uint64_t timestamp, FirmwareVersion firmwareVersion) { 
@@ -278,17 +299,16 @@ void MyoDevice::MyoCallbacks::onConnect(Myo* myo, uint64_t timestamp, FirmwareVe
     filterDataMap input;
     input[ISCONNECTED_INPUT] = true;
 
-    parent.connectPipeline.startPipeline(input);
+    parent.advancedConnectPipeline.startPipeline(input);
 
     parent.connectedMyos.push_back(myo);
-    //parent.currentMyo = myo;
 }
 void MyoDevice::MyoCallbacks::onDisconnect(Myo* myo, uint64_t timestamp) { 
     std::cout << "on disconnect." << std::endl; 
     filterDataMap input;
     input[ISCONNECTED_INPUT] = false;
 
-    parent.connectPipeline.startPipeline(input);
+    parent.advancedConnectPipeline.startPipeline(input);
 
     for (std::vector<Myo*>::iterator it = parent.connectedMyos.begin(); it != parent.connectedMyos.end(); it++)
     {
@@ -298,7 +318,6 @@ void MyoDevice::MyoCallbacks::onDisconnect(Myo* myo, uint64_t timestamp) {
             break;
         }
     }
-    //parent.currentMyo = NULL;
 }
 
 void MyoDevice::MyoCallbacks::onArmSync(Myo *myo, uint64_t timestamp, Arm arm, XDirection xDirection, float rotation, WarmupState warmupState)
@@ -306,11 +325,25 @@ void MyoDevice::MyoCallbacks::onArmSync(Myo *myo, uint64_t timestamp, Arm arm, X
     parent.arm = arm;
     parent.xDirection = xDirection;
     std::cout << "on arm sync." << std::endl;
+
+    filterDataMap input;
+
+    input[INPUT_ARM] = parent.arm;
+    input[INPUT_X_DIRECTION] = parent.xDirection;
+
+    parent.advancedOrientationPipeline.startPipeline(input);
 }
 void MyoDevice::MyoCallbacks::onArmSync(Myo* myo, uint64_t timestamp, Arm arm, XDirection xDirection) { 
     parent.arm = arm;
     parent.xDirection = xDirection;
     std::cout << "on arm sync." << std::endl; 
+
+    filterDataMap input;
+
+    input[INPUT_ARM] = parent.arm;
+    input[INPUT_X_DIRECTION] = parent.xDirection;
+
+    parent.advancedOrientationPipeline.startPipeline(input);
 }
 void MyoDevice::MyoCallbacks::onArmUnsync(Myo* myo, uint64_t timestamp) { 
     parent.arm = Arm::armUnknown;
@@ -353,41 +386,19 @@ void MyoDevice::MyoCallbacks::onWarmupCompleted(myo::Myo* myo, uint64_t timestam
 void MyoDevice::MyoCallbacks::onRssi(Myo* myo, uint64_t timestamp, int8_t rssi) {
 	std::cout << "on rssi." << std::endl;
 	filterDataMap input;
-	input[RSSI] = rssi;
+	input[RSSI] = static_cast<float>(rssi);
 
-	// The following is junk data. The averaging filter should be modified so
-	// that it doesn't deal with the data so specifically.
-	input[GYRO_DATA_X] = 0.0f;
-	input[GYRO_DATA_Y] = 0.0f;
-	input[GYRO_DATA_Z] = 0.0f;
-	input[QUAT_DATA_X] = 0.0f;
-	input[QUAT_DATA_Y] = 0.0f;
-	input[QUAT_DATA_Z] = 0.0f;
-	input[QUAT_DATA_W] = 0.0f;
-	input[ACCEL_DATA_X] = 0.0f;
-	input[ACCEL_DATA_Y] = 0.0f;
-	input[ACCEL_DATA_Z] = 0.0f;
-	input[INPUT_ARM] = armUnknown;
-	input[INPUT_X_DIRECTION] = xDirectionUnknown;
-	parent.rssiPipeline.startPipeline(input);
+    parent.advancedRssiPipeline.startPipeline(input);
 }
 
 void MyoDevice::updateProfiles(void)
 {
-    std::list<Filter*>* filters = posePipeline.getFilters();
-	
     int error = (int)filterError::NO_FILTER_ERROR;
-    for (std::list<Filter*>::iterator it = filters->begin(); it != filters->end(); ++it)
-    {
-		error |= (int)(*it)->updateBasedOnProfile(*profileManager, state->getProfile());//profileSignaller.getProfileName());
-    }
+
+    error |= (int)advancedPosePipeline.updateFiltersBasedOnProfile(*profileManager, state->getProfile());
 	
-    filters = orientationPipeline.getFilters();
-    for (std::list<Filter*>::iterator it = filters->begin(); it != filters->end(); ++it)
-    {
-		error |= (int)(*it)->updateBasedOnProfile(*profileManager, state->getProfile());// profileSignaller.getProfileName());
-    }
-	
+    error |= (int)advancedOrientationPipeline.updateFiltersBasedOnProfile(*profileManager, state->getProfile());
+    	
     if (error != (int)filterError::NO_FILTER_ERROR)
     {
         throw new std::exception("updateProfileException");

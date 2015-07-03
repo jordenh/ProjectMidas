@@ -191,13 +191,7 @@
     <ClCompile Include="BaseMeasurements.cpp">
       <Filter>Source Files\Midas</Filter>
     </ClCompile>
-    <ClCompile Include="AveragingFilter.cpp">
-      <Filter>Source Files\Midas\Filters</Filter>
-    </ClCompile>
     <ClCompile Include="Filter.cpp">
-      <Filter>Source Files\Midas\Filters</Filter>
-    </ClCompile>
-    <ClCompile Include="FilterPipeline.cpp">
       <Filter>Source Files\Midas\Filters</Filter>
     </ClCompile>
     <ClCompile Include="GestureFilter.cpp">
@@ -296,6 +290,18 @@
     <ClCompile Include="RingData.cpp">
       <Filter>Source Files\Midas\KeyAndMouse</Filter>
     </ClCompile>
+    <ClCompile Include="AdvancedFilterPipeline.cpp">
+      <Filter>Source Files\Midas\Filters</Filter>
+    </ClCompile>
+    <ClCompile Include="GenericAveragingFilter.cpp">
+      <Filter>Source Files\Midas\Filters</Filter>
+    </ClCompile>
+    <ClCompile Include="LinearFilterPipeline.cpp">
+      <Filter>Source Files\Midas\Filters</Filter>
+    </ClCompile>
+    <ClCompile Include="GenericBypassFilter.cpp">
+      <Filter>Source Files\Midas\Filters</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="MidasThread.h">
@@ -381,13 +387,7 @@
     <ClInclude Include="BaseMeasurements.h">
       <Filter>Header Files\Midas</Filter>
     </ClInclude>
-    <ClInclude Include="AveragingFilter.h">
-      <Filter>Header Files\Midas\Filters</Filter>
-    </ClInclude>
     <ClInclude Include="Filter.h">
-      <Filter>Header Files\Midas\Filters</Filter>
-    </ClInclude>
-    <ClInclude Include="FilterPipeline.h">
       <Filter>Header Files\Midas\Filters</Filter>
     </ClInclude>
     <ClInclude Include="GestureFilter.h">
@@ -425,6 +425,21 @@
     </ClInclude>
     <ClInclude Include="RingData.h">
       <Filter>Header Files\Midas\KeyAndMouse</Filter>
+    </ClInclude>
+    <ClInclude Include="AdvancedFilterPipeline.h">
+      <Filter>Header Files\Midas\Filters</Filter>
+    </ClInclude>
+    <ClInclude Include="GenericAveragingFilter.h">
+      <Filter>Header Files\Midas\Filters</Filter>
+    </ClInclude>
+    <ClInclude Include="LinearFilterPipeline.h">
+      <Filter>Header Files\Midas\Filters</Filter>
+    </ClInclude>
+    <ClInclude Include="FilterKeys.h">
+      <Filter>Header Files\Midas\Filters</Filter>
+    </ClInclude>
+    <ClInclude Include="GenericBypassFilter.h">
+      <Filter>Header Files\Midas\Filters</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
