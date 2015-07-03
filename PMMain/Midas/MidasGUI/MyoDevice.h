@@ -24,6 +24,9 @@ class MyoState;
 class MainGUI;
 class ProfileManager;
 class GestureFilter;
+class GenericAveragingFilter;
+class GenericBypassFilter;
+class MyoTranslationFilter;
 
 /**
  * Handles the Myo device, collecting the data using the Myo API, and converting the data
@@ -154,5 +157,26 @@ private:
     XDirection xDirection;
     static ProfileSignaller profileSignaller;
     ProfileManager *profileManager; // not owned
+
+    // owned filters
+    GenericAveragingFilter *genAvgFilterRSSI;
+
+    GenericAveragingFilter *genAvgFilterQX;
+    GenericAveragingFilter *genAvgFilterQY;
+    GenericAveragingFilter *genAvgFilterQZ;
+    GenericAveragingFilter *genAvgFilterQW;
+
+    GenericAveragingFilter *genAvgFilterAY;
+    GenericAveragingFilter *genAvgFilterAZ;
+    GenericAveragingFilter *genAvgFilterAW;
+
+    GenericAveragingFilter *genAvgFilterGY;
+    GenericAveragingFilter *genAvgFilterGZ;
+    GenericAveragingFilter *genAvgFilterGW;
+
+    GenericBypassFilter *genBypassFilterArm;
+    GenericBypassFilter *genBypassFilterXDir;
+
+    MyoTranslationFilter *translationFilter;
 };
 

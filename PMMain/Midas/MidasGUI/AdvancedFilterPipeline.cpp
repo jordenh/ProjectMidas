@@ -16,7 +16,8 @@ void AdvancedFilterPipeline::registerFilterAtLevel(Filter* filter, unsigned int 
 
 AdvancedFilterPipeline::~AdvancedFilterPipeline()
 {
-    if (this->filtersOwned)
+    // If filters ever become owned by this pipeline, code to handle mem is as follows
+    if (false)
     {
         // traverses the vector of filters at each level
         std::vector<std::vector<Filter*>>::iterator levelIt;
