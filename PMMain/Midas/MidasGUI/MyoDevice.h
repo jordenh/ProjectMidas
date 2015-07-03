@@ -24,6 +24,7 @@ class ControlState;
 class MyoState;
 class MainGUI;
 class ProfileManager;
+class GestureFilter;
 
 /**
  * Handles the Myo device, collecting the data using the Myo API, and converting the data
@@ -93,6 +94,7 @@ public:
     void vibrateMyos(myo::Myo::VibrationType vibType, int numReps = 1) const;
 
 private:
+    void setupPosePipeline(GestureFilter *gf);
     void setupOrientationPipeline();
     void setupRSSIPipeline();
 
@@ -144,8 +146,9 @@ private:
     std::string appIdentifier;
     ControlState* state; // not owned
     MyoState* myoState; // not owned
-    LinearFilterPipeline posePipeline, connectPipeline;
-    AdvancedFilterPipeline advancedOrientationPipeline, advancedRssiPipeline;
+    LinearFilterPipeline connectPipeline;
+    AdvancedFilterPipeline advancedPosePipeline, advancedOrientationPipeline,
+        advancedRssiPipeline;
     MainGUI *mainGui; // not owned
     std::string prevProfileName;
 

@@ -48,8 +48,7 @@ void MyoDevice::runDeviceLoop()
     WearableDevice::setDeviceStatus(deviceStatus::RUNNING);
 
     GestureFilter gestureFilter(state, myoState, 0, mainGui);
-    posePipeline.registerFilter(&gestureFilter);
-    posePipeline.registerFilter(WearableDevice::sharedData);
+    setupPosePipeline(&gestureFilter);
 
     setupOrientationPipeline();
 
@@ -137,6 +136,13 @@ void MyoDevice::runDeviceLoop()
     }
 
     WearableDevice::setDeviceStatus(deviceStatus::DONE);
+}
+
+void MyoDevice::setupPosePipeline(GestureFilter *gf)
+{
+    advancedPosePipeline.registerFilterAtDeepestLevel(gf);
+
+    advancedPosePipeline.registerFilterAtNewLevel(WearableDevice::sharedData);
 }
 
 void MyoDevice::setupOrientationPipeline()
@@ -233,11 +239,11 @@ void MyoDevice::MyoCallbacks::onPose(Myo* myo, uint64_t timestamp, Pose pose)
         * Going to manually insert a rest inbetween sequences without a rest.
         */
         input[GESTURE_INPUT] = Pose::rest;
-        parent.posePipeline.startPipeline(input);
+        parent.advancedPosePipeline.startPipeline(input);
     }
 
     input[GESTURE_INPUT] = pose.type();
-    parent.posePipeline.startPipeline(input);
+    parent.advancedPosePipeline.startPipeline(input);
 
     lastPose = pose.type();
     printToDataFile();
@@ -388,14 +394,9 @@ void MyoDevice::MyoCallbacks::onRssi(Myo* myo, uint64_t timestamp, int8_t rssi) 
 
 void MyoDevice::updateProfiles(void)
 {
-    std::list<Filter*>* filters = posePipeline.getFilters();
-	
-    // TODO - upgrade once posePipeline made advanced
     int error = (int)filterError::NO_FILTER_ERROR;
-    for (std::list<Filter*>::iterator it = filters->begin(); it != filters->end(); ++it)
-    {
-		error |= (int)(*it)->updateBasedOnProfile(*profileManager, state->getProfile());
-    }
+
+    error |= (int)advancedPosePipeline.updateFiltersBasedOnProfile(*profileManager, state->getProfile());
 	
     error |= (int)advancedOrientationPipeline.updateFiltersBasedOnProfile(*profileManager, state->getProfile());
     	

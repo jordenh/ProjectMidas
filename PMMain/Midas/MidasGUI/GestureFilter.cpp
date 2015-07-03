@@ -63,15 +63,36 @@ void GestureFilter::process()
 {
     clock_t timeFromLastPose = 0;
     filterDataMap input = Filter::getInput();
-    Pose::Type gesture = boost::any_cast<Pose::Type>(input[GESTURE_INPUT]);
-	
+    Filter::setFilterError(filterError::NO_FILTER_ERROR);
+    Filter::setFilterStatus(filterStatus::OK);
+    Filter::clearOutput();
+
+    Pose::Type gesture;
+    if (input.find(GESTURE_INPUT) != input.end())
+    {
+        boost::any value = input[GESTURE_INPUT];
+        if (value.type() != typeid(Pose::Type))
+        {
+            Filter::setFilterError(filterError::INVALID_INPUT);
+            Filter::setFilterStatus(filterStatus::FILTER_ERROR);
+            return;
+        }
+        else
+        {
+            gesture = boost::any_cast<Pose::Type>(input[GESTURE_INPUT]);
+        }
+    }
+    else
+    {
+        return;
+    }
+
 	// update state and GUI
 	myoStateHandle->pushPose(gesture);
     emitPoseData(gesture);
 
 	if (gesture != lastPoseType)
 	{
-        
         if (lastPoseType != Pose::rest && gesture != Pose::rest)
         {
             // Should not ever happen! (taken care of in MyoDevice)
@@ -83,10 +104,6 @@ void GestureFilter::process()
 		
 		BaseMeasurements::getInstance().setScreenSize(0,0); // dont actually need to do. TODO - remove
 	}
-    
-    Filter::setFilterError(filterError::NO_FILTER_ERROR);
-    Filter::setFilterStatus(filterStatus::OK);
-	Filter::clearOutput();
 
     CommandData response;
     SequenceStatus ss;
