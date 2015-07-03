@@ -1,5 +1,5 @@
 #include "RingData.h"
-
+#include <vector>
 
 ringData::ringData()
 {
@@ -39,3 +39,4 @@ void ringData::setRingOutVector(std::vector<keyboardValue> ringOutVal)
 {
     *ringOutVector = ringOutVal;
 }
+

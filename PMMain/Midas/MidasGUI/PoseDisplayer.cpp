@@ -1,13 +1,17 @@
 #include "PoseDisplayer.h"
-#include <QTimer.h>
+#include "SequenceImageManager.h"
 #include <QAction.h>
 #include <QApplication.h>
-#include <QEvent.h>
 #include <QPainter.h>
 #include <qstyle.h>
 #include <qdesktopwidget.h>
 #include <math.h>
 #include <qmessagebox.h>
+#include <QGridLayout.h>
+#include <qpushbutton.h>
+#include <qlabel.h>
+#include <qimage.h>
+#include <qpixmap.h>
 
 PoseDisplayer::PoseDisplayer(int widgetWidth, int widgetHeight, QWidget *parent)
     : QWidget(parent), indWidth(widgetWidth), indHeight(widgetHeight)
@@ -52,7 +56,6 @@ PoseDisplayer::~PoseDisplayer()
 
 void PoseDisplayer::resizeEvent(QResizeEvent *event)
 {
-    // todo - could handle resize.
 }
 
 QSize PoseDisplayer::sizeHint() const
@@ -65,7 +68,7 @@ void PoseDisplayer::handlePoseImages(std::vector<sequenceImageSet> poseImages)
     if (poseImages.size() == 1)
     {
         QPixmap scaledPic = poseImages[0].nextImage;
-        scaledPic.scaled(indWidth, indHeight);
+        scaledPic = scaledPic.scaled(indWidth, indHeight);        
         poseImgLabel->setPixmap(scaledPic);
     }
 }

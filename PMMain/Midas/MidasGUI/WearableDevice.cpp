@@ -1,4 +1,6 @@
 #include "WearableDevice.h"
+
+#include "SharedCommandData.h"
 #include <thread>
 
 static void wearableThreadWrapper(WearableDevice* wearableDevice);

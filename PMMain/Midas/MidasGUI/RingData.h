@@ -1,6 +1,8 @@
+#ifndef RING_DATA_H
+#define RING_DATA_H
+
 #include <vector>
 
-#pragma once
 class ringData
 {
 public:
@@ -32,3 +34,4 @@ private:
 
 };
 
+#endif RING_DATA_H

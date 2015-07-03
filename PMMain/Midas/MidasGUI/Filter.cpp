@@ -1,5 +1,7 @@
 #include "Filter.h"
 
+#include "ProfileManager.h"
+
 void Filter::addDataAsInput(std::string name, boost::any value)
 {
     inputData[name] = value;
@@ -45,6 +47,11 @@ void Filter::setOutput(filterDataMap output)
     outputData = output;
 }
 
+void Filter::addToOutput(filterDataMap output)
+{
+    outputData = joinFilterDataMaps(outputData, output);
+}
+
 void Filter::clearOutput(void)
 {
     outputData = filterDataMap();
@@ -53,4 +60,28 @@ void Filter::clearOutput(void)
 filterError Filter::updateBasedOnProfile(ProfileManager& pm, std::string name)
 {
     return filterError::NO_FILTER_ERROR;
+}
+
+filterDataMap Filter::joinFilterDataMaps(filterDataMap map0, filterDataMap map1)
+{
+    filterDataMap result = map0;
+    result.insert(map1.begin(), map1.end());
+
+    return result;
+}
+
+bool Filter::mapCollision(filterDataMap map0, filterDataMap map1)
+{
+    for (std::map<std::string, boost::any>::iterator map0It = map0.begin(); map0It != map0.end(); map0It++)
+    {
+        if (map1.find((*map0It).first) != map1.end())
+        {
+            return true;
+        }
+    }
+
+    filterDataMap result = map0;
+    result.insert(map1.begin(), map1.end());
+
+    return false;
 }

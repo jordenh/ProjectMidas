@@ -1,10 +1,7 @@
 #pragma once
 #include <vector>
-#include "ringData.h"
-#include <fstream>
-#include <string>
-#include <iostream>
-#include <boost/algorithm/string.hpp>
+
+class ringData;
 
 class KeyboardSettingsReader
 {
@@ -17,6 +14,5 @@ class KeyboardSettingsReader
 public:
     KeyboardSettingsReader();
     ~KeyboardSettingsReader();
-    void readKeyboardSetupFile(std::vector<ringData> &ringDataHandle);
+    void readKeyboardSetupFile(std::vector<ringData> &ringDataHandle, std::string fileName);
 };
-

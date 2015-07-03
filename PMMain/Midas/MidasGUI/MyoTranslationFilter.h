@@ -2,9 +2,10 @@
 #define _MYO_TRANSLATION_FILTER_H
 
 #include "Filter.h"
-#include "ControlState.h"
+#include "FilterKeys.h"
 #include "GestureHoldModeAction.h"
 #include "ProfileManager.h"
+#include "SettingsSignaller.h"
 #include "myo\myo.hpp"
 
 #ifdef USE_SIMULATOR
@@ -14,21 +15,17 @@ using namespace myoSim;
 using namespace myo;
 #endif
 
-#define INPUT_QUATERNION_X "quatDataX"
-#define INPUT_QUATERNION_Y "quatDataY"
-#define INPUT_QUATERNION_Z "quatDataZ"
-#define INPUT_QUATERNION_W "quatDataW"
-#define INPUT_ARM "arm"
-#define INPUT_X_DIRECTION "xDirection"
+class MyoState;
+class ControlState;
+class MainGUI;
 
-// Testing Constants -- Modify until seems reasonable
-#define MAX_PITCH_ANGLE 0.7853981634f //45deg. //1.04719755f //60 deg /* Maximum delta angle in radians */
-#define MAX_YAW_ANGLE 0.7853981634f //45deg. //1.04719755f //60 deg /* Maximum delta angle in radians */
+#define MAX_PITCH_ANGLE 25.0f /* Maximum delta angle in degrees */
+#define MAX_YAW_ANGLE 30.0f /* Maximum delta angle in degrees */
 
 #define KEYBOARD_THRESH_MAG 30
 
 #define NUM_GESTURES 5
-#define GESTURE_THUMB_TO_PINKY 0 // used as indexes into gestHoldModeAction
+#define GESTURE_DOUBLE_TAP 0 // used as indexes into gestHoldModeAction
 #define GESTURE_FINGERS_SPREAD 1
 #define GESTURE_FIST 2
 #define GESTURE_WAVE_IN 3
@@ -46,7 +43,7 @@ public:
      *
      * @param controlState A handle to ControlState, to keep track of the application state.
      */
-    MyoTranslationFilter(ControlState* controlState);
+    MyoTranslationFilter(ControlState* controlState, MyoState* myoState, MainGUI *mainGuiHandle);
     ~MyoTranslationFilter();
 
     /**
@@ -70,6 +67,12 @@ public:
     filterError updateBasedOnProfile(ProfileManager& pm, std::string name);
 
 private:
+    void handleQuatData(filterDataMap input, filterDataMap output);
+
+    void handleArmData(filterDataMap input, filterDataMap output);
+
+    void handleXDirectionData(filterDataMap input, filterDataMap output);
+
     /**
      * Calculate the 'pitch' angle from the supplied quaternion, consisting of x, y, z and w,
      * and infer sign based on arm and xDirection.
@@ -119,6 +122,8 @@ private:
     */
     point getMouseUnitVelocity(float pitch, float yaw);
 
+	vector2D getMouseDelta(float pitch, float yaw);
+
     void performHoldModeFunc(unsigned int holdNum, filterDataMap& outputToSharedCommandData);
     void performMouseModeFunc(filterDataMap& outputToSharedCommandData);
     void performeKybdModeFunc(filterDataMap& outputToSharedCommandData);
@@ -126,13 +131,17 @@ private:
     bool initGestHoldModeActionArr(void);
     void unregisterHoldModeActions(void);
 
-    ControlState* controlStateHandle;
+    ControlState* controlStateHandle; // not owned
+    MyoState* myoStateHandle; // not owned
     midasMode previousMode;
     float pitch, basePitch, prevPitch, deltaPitchDeg, 
         yaw, baseYaw, prevYaw, deltaYawDeg,
         roll, baseRoll, prevRoll, deltaRollDeg;
 
     GestureHoldModeAction gestHoldModeAction[5];
+
+    MainGUI *mainGui; // not owned
+    static SettingsSignaller settingsSignaller;
 };
 
 #endif

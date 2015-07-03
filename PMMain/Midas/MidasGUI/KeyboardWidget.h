@@ -2,9 +2,12 @@
 #define KEYBOARD_WIDGET_H
 
 #include "DraggableWidget.h"
-#include "RingData.h"
-#include "MidasThread.h"
+
 #include "MyoCommon.h"
+#include "RingData.h"
+
+class MidasThread;
+class ringData;
 
 #define KEYBOARD_RADIUS 200
 #define RING_WIDTH 50

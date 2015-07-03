@@ -1,11 +1,11 @@
 #pragma once
 #include "WearableDevice.h"
-#include "FilterPipeline.h"
-#include "ControlState.h"
+#include "AdvancedFilterPipeline.h"
 #include "myo\myo.hpp"
-#include "MainGUI.h"
 #include "ProfileSignaller.h"
-#include "ProfileManager.h"
+
+#include <iostream>
+#include <fstream>
 
 #ifdef USE_SIMULATOR
 #include "MyoSimIncludes.hpp"
@@ -19,6 +19,14 @@ using namespace myo;
 #define DEFAULT_MYO_ARM Arm::armUnknown
 #define DEFAULT_MYO_XDIR XDirection::xDirectionUnknown
 
+class ControlState;
+class MyoState;
+class MainGUI;
+class ProfileManager;
+class GestureFilter;
+class GenericAveragingFilter;
+class GenericBypassFilter;
+class MyoTranslationFilter;
 
 /**
  * Handles the Myo device, collecting the data using the Myo API, and converting the data
@@ -35,8 +43,8 @@ public:
      * changed, and so that the device can read the current state.
      * @param applicationIdentifier A myo-specific app identifier used to create the myo hub.
      */
-    MyoDevice(SharedCommandData* sharedCommandData, ControlState* controlState, std::string applicationIdentifier, 
-        MainGUI *mainGuiHandle, ProfileManager* profileManagerHandle);
+	MyoDevice(SharedCommandData* sharedCommandData, ControlState* controlState, MyoState* myoState, std::string applicationIdentifier,
+		MainGUI *mainGuiHandle, ProfileManager* profileManagerHandle);
     ~MyoDevice();
 
     /**
@@ -80,7 +88,18 @@ public:
      */
     void updateProfiles(void);
 
+    /**
+     * Send a vibration command to the connected myos.
+     *
+     * @param vibType - indicates Myo vibration type (currently short, medium, or long)
+     */
+    void vibrateMyos(myo::Myo::VibrationType vibType, int numReps = 1) const;
+
 private:
+    void setupPosePipeline(GestureFilter *gf);
+    void setupOrientationPipeline();
+    void setupRSSIPipeline();
+
     /**
      * This class implements all of the callback functions from the Myo DeviceListener
      * class. The methods in this class are called when Myo events occur.
@@ -97,6 +116,7 @@ private:
         void onConnect(Myo* myo, uint64_t timestamp, FirmwareVersion firmwareVersion);
         void onDisconnect(Myo* myo, uint64_t timestamp);
         void onArmSync(Myo* myo, uint64_t timestamp, Arm arm, XDirection xDirection);
+        void onArmSync(Myo *myo, uint64_t timestamp, Arm arm, XDirection xDirection, float rotation, WarmupState warmupState); // SDK V0.9.0
         void onArmUnsync(Myo* myo, uint64_t timestamp);
         // For SDK <= 5, use these 2 arm callbacks.
         void onArmRecognized(Myo* myo, uint64_t timestamp, Arm arm, XDirection xDirection) { onArmSync(myo, timestamp, arm, xDirection); }
@@ -106,23 +126,57 @@ private:
         void onAccelerometerData(Myo* myo, uint64_t timestamp, const Vector3<float>& accel);
         void onGyroscopeData(Myo* myo, uint64_t timestamp, const Vector3<float>& gyro);
         void onRssi(Myo* myo, uint64_t timestamp, int8_t rssi);
+		// Added on upgrade to SDK Win 0.9.0
+		void onUnlock(Myo* myo, uint64_t timestamp);
+		void onLock(Myo* myo, uint64_t timestamp);
+		void onBatteryLevelReceived(myo::Myo* myo, uint64_t timestamp, uint8_t level);
+		void onEmgData(myo::Myo* myo, uint64_t timestamp, const int8_t* emg);
+		void onWarmupCompleted(myo::Myo* myo, uint64_t timestamp, WarmupResult warmupResult);
 
     private:
         MyoDevice& parent;
+
+        void printToDataFile();
+        std::ofstream myoDataFile;
+        Pose::Type lastPose;
+        int8_t lastEMGData[8];
     };
 
-    unsigned int myoFindTimeout;
+    std::vector<myo::Myo*> connectedMyos; // not owned
+        unsigned int myoFindTimeout;
     unsigned int durationInMilliseconds;
     std::string appIdentifier;
-    ControlState* state;
-    FilterPipeline posePipeline, orientationPipeline, rssiPipeline,
-        connectPipeline;
-    MainGUI *mainGui;
+    ControlState* state; // not owned
+    MyoState* myoState; // not owned
+    AdvancedFilterPipeline advancedPosePipeline, advancedOrientationPipeline,
+        advancedRssiPipeline, advancedConnectPipeline;
+    MainGUI *mainGui; // not owned
     std::string prevProfileName;
 
     Arm arm;
     XDirection xDirection;
     static ProfileSignaller profileSignaller;
-    ProfileManager *profileManager;
+    ProfileManager *profileManager; // not owned
+
+    // owned filters
+    GenericAveragingFilter *genAvgFilterRSSI;
+
+    GenericAveragingFilter *genAvgFilterQX;
+    GenericAveragingFilter *genAvgFilterQY;
+    GenericAveragingFilter *genAvgFilterQZ;
+    GenericAveragingFilter *genAvgFilterQW;
+
+    GenericAveragingFilter *genAvgFilterAY;
+    GenericAveragingFilter *genAvgFilterAZ;
+    GenericAveragingFilter *genAvgFilterAW;
+
+    GenericAveragingFilter *genAvgFilterGY;
+    GenericAveragingFilter *genAvgFilterGZ;
+    GenericAveragingFilter *genAvgFilterGW;
+
+    GenericBypassFilter *genBypassFilterArm;
+    GenericBypassFilter *genBypassFilterXDir;
+
+    MyoTranslationFilter *translationFilter;
 };
 

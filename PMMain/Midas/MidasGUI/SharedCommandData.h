@@ -1,16 +1,13 @@
 #ifndef _SHARED_COMMAND_DATA_H
 #define _SHARED_COMMAND_DATA_H
 
+#include "Filter.h"
+#include "FilterKeys.h"
+
 #include <mutex>
 #include <queue>
 #include "MidasCommon.h"
-#include "Filter.h"
-
-#define COMMAND_INPUT "command"
-#define VELOCITY_INPUT "velocity"
-#define ANGLE_INPUT "angle"
-#define RSSI_INPUT "rssi"
-#define ISCONNECTED_INPUT "isConnected"
+#include "CommandData.h"
 
 /**
  * Acts as the shared data between the main thread and the device threads. Contains the 
@@ -20,7 +17,11 @@
 class SharedCommandData : public Filter
 {
 public:
-    SharedCommandData(unsigned int maxKybdGuiSel) : Filter(), mouseVelocity(), kybdGuiSel(0) { this->maxKybdGuiSel = maxKybdGuiSel; }
+#ifdef BUILD_KEYBOARD
+	SharedCommandData(unsigned int maxKybdGuiSel) : Filter(), mouseVelocity(), kybdGuiSel(0) { this->maxKybdGuiSel = maxKybdGuiSel; }
+#else
+    SharedCommandData() : Filter(), mouseVelocity() { }
+#endif
 
     /**
      * Adds a command to the queue of commands. If another thread is modifying the command queue, 
@@ -28,7 +29,7 @@ public:
      *
      * @param dat The data that will be added to the queue.
      */
-    void addCommand(commandData dat);
+    void addCommand(CommandData dat);
 
     /**
     * Adds a command to the queue of commands. If another thread is modifying the command queue,
@@ -38,7 +39,7 @@ public:
     * @param dat The data that will be added to the queue.
     * @return True if a command was successfully added, otherwise false.
     */
-    bool tryAddCommand(commandData dat);
+    bool tryAddCommand(CommandData dat);
 
     /**
     * Takes a command from the queue of commands, removing the command from the queue and 
@@ -48,7 +49,7 @@ public:
     * @param dat This will be set to the next command in the queue.
     * @return True if a command was successfully taken, false if the queue is empty.
     */
-    bool consumeCommand(commandData& dat);
+    bool consumeCommand(CommandData& dat);
 
     /**
     * Takes a command from the queue of commands, removing the command from the queue and
@@ -59,7 +60,7 @@ public:
     * @param outCommandData This will be set to the next command in the queue.
     * @return True if the command was successfully taken from the queue, otherwise false.
     */
-    bool tryConsumeCommand(commandData& outCommandData);
+    bool tryConsumeCommand(CommandData& outCommandData);
 
     /**
      * Sets the cursor velocity in the shared data. If another thread is accessing/changing
@@ -97,35 +98,44 @@ public:
     */
     bool tryGetVelocity(point& outVelocity);
 
-    void setKeySelectAngle(keyboardAngle angle);
-    bool trySetKeySelectAngle(keyboardAngle angle);
-    keyboardAngle getKeySelectAngle();
-    bool tryGetKeySelectAngle(keyboardAngle& outKeySelectAngle);
+#ifdef BUILD_KEYBOARD
+	void setKeySelectAngle(keyboardAngle angle);
+	bool trySetKeySelectAngle(keyboardAngle angle);
+	keyboardAngle getKeySelectAngle();
+	bool tryGetKeySelectAngle(keyboardAngle& outKeySelectAngle);
 
+	keyboardAngle keySelectAngle;
+	void setKybdGuiSel(unsigned int kybdGuiSel);
+	bool trySetKybdGuiSel(unsigned int kybdGuiSel);
+	unsigned int getKybdGuiSel();
+	bool tryGetKybdGuiSel(unsigned int& outKybdGuiSel);
 
-    keyboardAngle keySelectAngle;
-    void setKybdGuiSel(unsigned int kybdGuiSel);
-    bool trySetKybdGuiSel(unsigned int kybdGuiSel);
-    unsigned int getKybdGuiSel();
-    bool tryGetKybdGuiSel(unsigned int& outKybdGuiSel);
+	unsigned int getKybdGuiSelMax();
+	bool tryGetKybdGuiSelMax(unsigned int& outMaxKybdGuiSel);
 
-    unsigned int getKybdGuiSelMax();
-    bool tryGetKybdGuiSelMax(unsigned int& outMaxKybdGuiSel);
+	/**
+	* Returns a float value corresponding to the rssi. This will block
+	* if another thread is using it.
+	*
+	* @return The rssi value as a float.
+	*/
+	float getRssi();
 
-    /**
-     * Returns a float value corresponding to the rssi. This will block
-     * if another thread is using it.
-     *
-     * @return The rssi value as a float.
-     */
-    float getRssi();
+	/**
+	* Sets the rssi. This will block if another thread is using it.
+	*
+	* @param float rssi
+	*/
+	void setRssi(float rssi);
+#endif
 
-    /**
-     * Sets the rssi. This will block if another thread is using it.
-     *
-     * @param float rssi
-     */
-    void setRssi(float rssi);
+	void SharedCommandData::setDelta(vector2D delta);
+
+	bool SharedCommandData::trySetDelta(vector2D delta);
+
+	vector2D SharedCommandData::getDelta();
+
+	bool SharedCommandData::tryGetDelta(vector2D& outDelta);
 
     /**
      * Returns whether the device is connected or not
@@ -173,11 +183,13 @@ private:
     point mouseVelocity;
     float rssiAVG;
     bool  isConnected;
+
+	// point to indicate offset from current mouse position, while a pose is being held 
+	vector2D mouseDelta;
+	std::mutex mouseDeltaMutex;
    
     // together, these 2 vars define which wheel/RingData the keyboard should show on the GUI
-    unsigned int maxKybdGuiSel;
-    unsigned int kybdGuiSel;
-    std::queue<commandData> commandQueue;
+    std::queue<CommandData> commandQueue;
     std::mutex commandQueueMutex;
     std::mutex velocityMutex;
     std::mutex kybdGuiSelMutex;
@@ -188,9 +200,15 @@ private:
 
     void extractCommand(boost::any value);
     void extractPoint(boost::any value);
-    void extractKeySelectAngle(boost::any value);
-    void extractRssi(boost::any value);
     void extractIsConnected(boost::any value);
+	void extractVector2D(boost::any value);
+
+#ifdef BUILD_KEYBOARD
+	unsigned int maxKybdGuiSel;
+	unsigned int kybdGuiSel;
+	void extractKeySelectAngle(boost::any value);
+	void extractRssi(boost::any value);
+#endif
 };
 
 #endif /* _SHARED_COMMAND_DATA_H */

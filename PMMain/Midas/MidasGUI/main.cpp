@@ -1,12 +1,17 @@
 #include "MidasThread.h"
 #include "MouseCtrl.h"
 #include "MainGUI.h"
-#include "KeyboardWidget.h"
-#include "KeyboardSettingsReader.h"
 
 #include <QtWidgets/QApplication>
+#include <qicon.h>
+#include <qlabel.h>
 
 #include "ProfileManager.h"
+
+#ifdef BUILD_KEYBOARD
+#include "KeyboardWidget.h"
+#include "KeyboardSettingsReader.h"
+#endif
 
 #define TASK_BAR_ICON_PATH "Resources\\ProjectMidasLogo.ico"
 
@@ -14,17 +19,22 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    std::vector<ringData> kybrdRingData;
-    KeyboardSettingsReader readFile;
-    readFile.readKeyboardSetupFile(kybrdRingData);
-
-    MidasThread midasThread(&kybrdRingData);
+#ifdef BUILD_KEYBOARD
+	std::vector<ringData> kybrdRingData;
+	KeyboardSettingsReader readFile;
+    std::string fileName = "keyboardData.txt";
+    readFile.readKeyboardSetupFile(kybrdRingData,fileName);
+	
+	MidasThread midasThread(&kybrdRingData);
+#else
+    MidasThread midasThread;
+#endif
 
     qRegisterMetaType<std::vector<sequenceImageSet> >("std::vector<sequenceImageSet>");
     qRegisterMetaType<std::vector<sequenceProgressData> >("std::vector<sequenceProgressData>");
 
     ProfileManager pm;
-    pm.loadProfilesFromFile("profile_test.xml");
+	pm.loadProfilesFromFile("profile_test.xml");
 
     MainGUI mainDisplay(&midasThread, &pm, MOVE_RATE_DEADZONE);
     midasThread.setProfileManagerHandle(&pm);

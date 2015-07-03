@@ -1,13 +1,15 @@
 #ifndef DISTANCE_BAR_H
 #define DISTANCE_BAR_H
 
+#include <qwidget.h>
+
 #include <MidasCommon.h>
 #include <QGraphicsRectItem>
-#include <qlabel.h>
 #include <qpainter.h>
 #include <QPaintEvent>
-#include <qrect.h>
-#include <qwidget.h>
+
+class QRect;
+class QLabel;
 
 class distanceBar : public QWidget
 {

@@ -2,7 +2,6 @@
 #define DRAGGABLE_WIDGET_H
 
 #include <QtWidgets/QWidget.h>
-#include <qlabel.h>
 
 #define GRID_ELEMENT_SIZE   48
 

@@ -1,17 +1,23 @@
 #ifndef MAIN_GUI_H
 #define MAIN_GUI_H
 
-#include <QDialog>
-#include "MouseIndicator.h"
-#include "SequenceDisplayer.h"
-#include "InfoIndicator.h"
-#include "GestureSignaller.h"
-#include "PoseDisplayer.h"
-#include "KeyboardWidget.h"
-#include "ProfileDisplayer.h"
-#include "ProfileSignaller.h"
-#include "ProfileManager.h"
-#include "DistanceWidget.h"
+#include "DraggableWidget.h"
+
+class QVBoxLayout;
+class MidasThread;
+class MouseIndicator;
+class SequenceDisplayer;
+class InfoIndicator;
+class GestureSignaller;
+class PoseDisplayer;
+class ProfileIcon;
+class ProfileDisplayer;
+class ProfileSignaller;
+class ProfileManager;
+class SettingsDisplayer;
+class SettingsSignaller;
+class KeyboardWidget;
+class DistanceWidget;
 
 /**
  * The MainGUI class is the parent GUI of all the widgets used in Midas. It contains the mouse
@@ -38,21 +44,40 @@ public:
     void connectSignallerToInfoIndicator(GestureSignaller *signaller);
     void connectSignallerToSequenceDisplayer(GestureSignaller *signaller);
     void connectSignallerToPoseDisplayer(GestureSignaller *signaller);
-    void connectSignallerToKeyboardToggle(GestureSignaller *signaller);
+	void connectSignallerToProfileIcons(GestureSignaller *signaller);
 
+    void connectSignallerToSettingsDisplayer(SettingsSignaller *signaller);
+
+public:
+	void connectSignallerToKeyboardToggle(GestureSignaller *signaller);
 public slots:
-    void toggleKeyboard();
+	void toggleKeyboard();
+private:
+	KeyboardWidget* keyboard;
+	DistanceWidget* distanceDisplayer;
 
 private:
+
+	void setupProfileIcons();
+
     QVBoxLayout *layout;
     MouseIndicator *mouseIndicator;
     InfoIndicator *infoIndicator;
     SequenceDisplayer *sequenceDisplayer;
     PoseDisplayer *poseDisplayer;
-    KeyboardWidget* keyboard;
+    SettingsDisplayer *settingsDisplayer;
+	ProfileIcon *icon0;
+	ProfileIcon *icon1;
+	bool icon0IsActive;
     std::vector<ProfileDisplayer*> profileWidgets;
-    DistanceWidget* distanceDisplayer;
     int totalWidth, totalHeight;
+    unsigned int numProfiles;
+    unsigned int activeProfile;
+
+public slots:
+    void handleChangeProfile(bool progressForward);
+
+    void handleFocusMidas();
 };
 
 #endif

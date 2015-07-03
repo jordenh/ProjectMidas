@@ -1,11 +1,10 @@
 #ifndef DISTANCE_WIDGET_H
 #define DISTANCE_WIDGET_H
 
-#include "DistanceBar.h"
-#include "MidasCommon.h"
-#include "MidasThread.h"
-#include "qlabel.h"
+#include <qwidget.h>
 
+class distanceBar;
+class MidasThread;
 
 class DistanceWidget : public QWidget
 {

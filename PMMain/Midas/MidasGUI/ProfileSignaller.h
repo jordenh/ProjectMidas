@@ -3,6 +3,8 @@
 
 #include <QObject>
 
+class ControlState;
+
 class ProfileSignaller : public QObject
 {
     Q_OBJECT
@@ -11,13 +13,13 @@ public:
     ProfileSignaller(QObject *parent = 0);
     ~ProfileSignaller();
 
-    std::string getProfileName();
+	void setControlStateHandle(ControlState* handle) { controlStateHandle = handle; }
 
 public slots:
     void handleProfilePress(QString);
 
 private:
-    std::string profileName;
+	ControlState* controlStateHandle; // not owned
 };
 
 #endif // PROFILESIGNALLER_H

@@ -1,10 +1,12 @@
 #ifndef _GESTURE_FILTER_H
 #define _GESTURE_FILTER_H
 
-#include "ControlState.h"
 #include "Filter.h"
-#include "GestureSeqRecorder.h"
-#include "MainGUI.h"
+#include "FilterKeys.h"
+#include "GestureSignaller.h"
+#include "SettingsSignaller.h"
+#include "SequenceImageManager.h"
+#include <ctime>
 
 #ifdef USE_SIMULATOR
 #include "MyoSimIncludes.hpp"
@@ -14,15 +16,18 @@ using namespace myoSim;
 using namespace myo;
 #endif
 
-#define GESTURE_INPUT "gesture"
+class CommandData;
+class ControlState;
+class MyoState;
+class GestureSeqRecorder;
+class MainGUI;
+
 #define MYO_GESTURE_RIGHT_MOUSE Pose::fingersSpread
 #define MYO_GESTURE_LEFT_MOUSE Pose::fist
 
 // GestureFilter spawns a thread to execute callback functions at this
 // period.
 #define SLEEP_LEN 20 // ms
-
-
 
 /**
  * Consult Filter.h for concepts regarding Filters.
@@ -44,7 +49,7 @@ public:
      * @param controlState A handle to the ControlState object that manages application state.
      * @param timeDel The time that a user must hold a gesture before it is registered.
      */
-    GestureFilter(ControlState* controlState, clock_t timeDel, MainGUI *mainGuiHandle);
+	GestureFilter(ControlState* controlState, MyoState* myoState, clock_t timeDel, MainGUI *mainGuiHandle);
     ~GestureFilter();
 
     /**
@@ -64,41 +69,92 @@ public:
     */
     GestureSeqRecorder *getGestureSeqRecorder() { return gestSeqRecorder; }
 
-    static void handleStateChange(commandData response);
+    static void handleStateChange(CommandData response, GestureFilter *gf);
+	static void handleProfileChangeCommand(CommandData response, GestureFilter *gf);
 
     friend void setupCallbackThread(GestureFilter *gf);
     friend void callbackThreadWrapper(GestureFilter *gf);
 
 private:
-
-    filterDataMap extraDataForSCD;
-
     /**
      * Translates gestures into corresponding mouse and keyboard commands.
      *
      * @param pose The pose to translate into a command.
      */
-    commandData translateGesture(Pose::Type pose);
+    CommandData translateGesture(Pose::Type pose);
 
-    // registration functions. to be commented after integration success.
+    /**
+    * Performs initial registration of Mouse Sequences as a default incase profile manager
+    * has no profiles to populate with.
+    */
     void registerMouseSequences(void);
-    void registerKeyboardSequences(void);
-    void registerStateSequences(void);
-    void handleMouseCommand(commandData response);
-    void handleKybrdCommand(commandData response, bool addToExtra = false);
 
+    /**
+    * Performs initial registration of Keyboard Sequences as a default incase profile manager
+    * has no profiles to populate with.
+    */
+    void registerKeyboardSequences(void);
+
+    /**
+    * Performs initial registration of State Sequences as a default incase profile manager
+    * has no profiles to populate with.
+    */
+    void registerStateSequences(void);
+
+    /**
+    * Given a completed sequence, returning a CommandData response, this handles the response
+    * as a Mouse command, populating a filterDataMap which is passed down the filter chain and
+    * returned.
+    *
+    * @param response The CommandData retrieved from a completed sequence to be handled
+    * @return the populated filterDataMap from the CommandData 
+    */
+	filterDataMap handleMouseCommand(CommandData response);
+
+    /**
+    * Given a completed sequence, returning a CommandData response, this handles the response
+    * as a Keyboard command, populating a filterDataMap which is passed down the filter chain and
+    * returned.
+    *
+    * @param response The CommandData retrieved from a completed sequence to be handled
+    * @parfam addToExtra If true, the generated filterDataMap will be set as extra data
+    * that the SCD will consume on it's next iteration
+    * @return the populated filterDataMap from the CommandData
+    */
+	filterDataMap handleKybrdCommand(CommandData response, bool addToExtra = false);
+
+    /**
+    * Given a completed sequence, returning a CommandData response, this handles the response
+    * as a Profile Change command, populating a filterDataMap which is passed down the filter chain and
+    * returned.
+    *
+    * @param response The CommandData retrieved from a completed sequence to be handled
+    * @return the populated filterDataMap from the CommandData
+    */
+	filterDataMap handleProfileChangeCommand(CommandData response);
+
+    /**
+    * Emit a pose value from an owned signaller, to relay to the GUI thread
+    *
+    * @param poseInt The int corresponding to the desired Pose ID to be reflected
+    * on the GUI
+    */
     void emitPoseData(int poseInt);
+
+    filterDataMap extraDataForSCD;
 
     Pose::Type lastPoseType;
     
-    static ControlState* controlStateHandle;
+    static ControlState* controlStateHandle; // not owned
+    MyoState* myoStateHandle; // not owned
     clock_t timeDelta;
     clock_t lastTime;
 
     GestureSeqRecorder* gestSeqRecorder;
 
-    MainGUI *mainGui;
-    static GestureSignaller signaller;
+    MainGUI *mainGui; // not owned
+    static GestureSignaller gestureSignaller;
+    static SettingsSignaller settingsSignaller;
 
     SequenceImageManager imageManager;
 };

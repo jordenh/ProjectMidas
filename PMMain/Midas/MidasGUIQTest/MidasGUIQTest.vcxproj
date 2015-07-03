@@ -77,7 +77,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="AveragingFiter_Test.cpp" />
     <ClCompile Include="ControlState_Test.cpp" />
     <ClCompile Include="FilterPipeline_Test.cpp" />
     <ClCompile Include="GestureFilter_Test.cpp" />

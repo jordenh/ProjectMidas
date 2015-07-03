@@ -1,14 +1,9 @@
 #ifndef _SCD_DIGESTER_H
 #define _SCD_DIGESTER_H
 
-#include "SharedCommandData.h"
-#include "MidasThread.h"
-#include "ControlState.h"
-#include "MouseCtrl.h"
-#include "kybrdCtrl.h"
+#ifdef BUILD_KEYBOARD
 #include "RingData.h"
-#include "MyoCommon.h"
-#include <iostream>
+#endif
 
 #ifdef USE_SIMULATOR
 #include "MyoSimIncludes.hpp"
@@ -18,31 +13,53 @@ using namespace myoSim;
 using namespace myo;
 #endif
 
+class CommandData;
+class KeyboardController;
+class SharedCommandData;
+class MidasThread;
+class ControlState;
+class MyoState;
+class MouseCtrl;
+class KybrdCtrl;
+class ProfileManager;
+
 class SCDDigester
 {
 public:
-    SCDDigester(SharedCommandData* scd, MidasThread *thread, ControlState *cntrlStateHandle, 
-        MouseCtrl *mouseCtrl, KybrdCtrl *kybrdCtrl, std::vector<ringData> *kybrdRingData);
+#ifdef BUILD_KEYBOARD
+	SCDDigester(SharedCommandData* scd, MidasThread *thread, ControlState *cntrlStateHandle, MyoState *myoStateHandle,
+		MouseCtrl *mouseCtrl, KybrdCtrl *kybrdCtrl, KeyboardController *keyboardController, ProfileManager* profileManagerHandle, std::vector<ringData> *kybrdRingData);
+#else
+	SCDDigester(SharedCommandData* scd, MidasThread *thread, ControlState *cntrlStateHandle, MyoState *myoStateHandle,
+		MouseCtrl *mouseCtrl, KybrdCtrl *kybrdCtrl, KeyboardController *keyboardController, ProfileManager* profileManagerHandle);
+#endif
     ~SCDDigester();
 
     void digest();
 
 private:
-    void digestKybdCmd(commandData nextCommand);
+    void digestKybdCmd(CommandData nextCommand);
 
-    void digestKeyboardGUIData(commandData nextCommand);
+	void digestProfileChange(CommandData nextCmd);
 
-    int getSelectedKeyFromAngle(double angle, std::vector<ringData::keyboardValue> *ring);
+#ifdef BUILD_KEYBOARD
+    void digestKeyboardGUIData(CommandData nextCommand);
 
-    SharedCommandData *scdHandle;
-    MidasThread *threadHandle;
-    ControlState *cntrlStateHandle;
-    MouseCtrl *mouseCtrl;
-    KybrdCtrl *kybrdCtrl;
+	int getSelectedKeyFromAngle(double angle, std::vector<ringData::keyboardValue> *ring);
+
+	std::vector<ringData> *kybrdRingData;
+#endif
+
+	KeyboardController *keyboardController; // not owned
+    SharedCommandData *scdHandle; // not owned
+    MidasThread *threadHandle; // not owned
+    ControlState *cntrlStateHandle; // not owned
+    MyoState *myoStateHandle; // not owned
+    MouseCtrl *mouseCtrl; // not owned
+    KybrdCtrl *kybrdCtrl; // not owned
     int count;
 
-    KeyboardWidget *keyboardWidget;
-    std::vector<ringData> *kybrdRingData;
+    ProfileManager *pm; // not owned
 };
 
 #endif /* _SCD_DIGESTER_H */

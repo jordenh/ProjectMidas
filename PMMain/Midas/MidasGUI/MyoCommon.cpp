@@ -1,6 +1,7 @@
-
 #include "MyoCommon.h"
 
+#include <string>
+#include <QLabel.h>
 
 std::string PoseTypeToString(Pose::Type gesture)
 {
@@ -16,9 +17,9 @@ std::string PoseTypeToString(Pose::Type gesture)
     {
         return "rest";
     }
-    else if (gesture == Pose::Type::thumbToPinky)
+    else if (gesture == Pose::Type::doubleTap)
     {
-        return "thumbToPinky";
+        return "doubleTap";
     }
     else if (gesture == Pose::Type::waveIn)
     {

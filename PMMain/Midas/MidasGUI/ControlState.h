@@ -3,7 +3,8 @@
 
 #include <mutex>
 #include "MidasCommon.h"
-#include "SharedCommandData.h"
+
+class SharedCommandData;
 
 /**
  * This class keeps track of the current state (or mode) of the Midas application. This
@@ -53,9 +54,15 @@ public:
      */
     midasMode getMode();
 
+	void setProfile(std::string profile);
+	std::string getProfile();
+
+	SharedCommandData* getSCD() { return SCDHandle; }
+
 private:
     midasMode currentMode;
-    SharedCommandData *SCDHandle;
+	std::string currentProfile;
+    SharedCommandData *SCDHandle; // not owned
 };
 
 #endif /* _CONTROL_STATE_H */

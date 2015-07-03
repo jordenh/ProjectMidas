@@ -1,9 +1,10 @@
 #ifndef _WEARABLE_DEVICE_H
 #define _WEARABLE_DEVICE_H
 
-#include "SharedCommandData.h"
+#include <mutex>
 
 class WearableDevice;
+class SharedCommandData;
 
 /**
  * Kicks off the wearable device thread.
@@ -73,7 +74,7 @@ protected:
      */
     bool stopDeviceRequested();
 
-    SharedCommandData* sharedData;
+    SharedCommandData* sharedData; // not owned
 
 private:
     std::mutex statusLock;

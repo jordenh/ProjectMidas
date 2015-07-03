@@ -1,9 +1,11 @@
 #ifndef MOUSE_INDICATOR_H
 #define MOUSE_INDICATOR_H
 
-#include "DraggableWidget.h"
-#include "MidasThread.h"
+#include <qwidget.h>
+
 #include "MidasCommon.h"
+
+class MidasThread;
 
 /**
  * The MouseIndicator class represents a circular GUI which tracks Midas mouse velocity. The GUI supports a

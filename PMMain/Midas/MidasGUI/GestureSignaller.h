@@ -1,4 +1,5 @@
-#pragma once
+#ifndef GESTURE_SIGNALLER_H
+#define GESTURE_SIGNALLER_H
 
 #include "QObject.h"
 #include "MyoCommon.h"
@@ -35,7 +36,11 @@ signals:
     void emitPoseImages(std::vector<sequenceImageSet>);
 
     void emitToggleKeyboard();
+
+    // true if change forwared, false if backwards
+    void emitProfileChange(bool);
 private:
     static bool showAll;
 };
 
+#endif GESTURE_SIGNALLER_H

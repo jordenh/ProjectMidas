@@ -1,10 +1,13 @@
 #ifndef INFO_INDICATOR_H
 #define INFO_INDICATOR_H
 
-#include "DraggableWidget.h"
+#include <QtWidgets/QWidget.h>
+
 #include "MidasCommon.h"
-#include <QGridLayout.h>
-#include <qpushbutton.h>
+
+class QLabel;
+class QHBoxLayout;
+class QPushButton;
 
 class InfoIndicator : public QWidget
 {
@@ -23,7 +26,7 @@ private:
 
     QPoint position;
     int indWidth, indHeight;
-    QGridLayout *layout;
+    QHBoxLayout *layout;
     QLabel *stateLabel;
 
     QPushButton *button;

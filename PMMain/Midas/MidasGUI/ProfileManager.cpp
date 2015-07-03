@@ -9,6 +9,7 @@ std::map<std::string, commandType> profileCommandToCommandTypeMap =
     { "keyboardGui", KYBRD_GUI_CMD },
     { "mouse", MOUSE_CMD },
     { "stateChange", STATE_CHANGE },
+	{ "profileChange", PROFILE_CHANGE },
     { "none", NONE }
 };
 
@@ -51,7 +52,8 @@ std::map<std::string, kybdCmds> profileActionToKybd =
     { "upArrow", UP_ARROW },
     { "downArrow", DOWN_ARROW },
     { "rightArrow", RIGHT_ARROW },
-    { "leftArrow", LEFT_ARROW }
+    { "leftArrow", LEFT_ARROW },
+	{ "inputVector", INPUT_VECTOR }
 };
 
 std::map<std::string, mouseCmds> profileActionToMouseCommands =
@@ -82,6 +84,7 @@ std::map<std::string, midasMode> profileActionToStateChange =
 {
     { "lockMode", LOCK_MODE },
     { "mouseMode", MOUSE_MODE },
+    { "mouseMode2", MOUSE_MODE2 },
     { "keyboardMode", KEYBOARD_MODE },
     { "gestureMode", GESTURE_MODE },
     { "gestureHoldOne", GESTURE_HOLD_ONE },
@@ -91,11 +94,17 @@ std::map<std::string, midasMode> profileActionToStateChange =
     { "gestureHoldFive", GESTURE_HOLD_FIVE }
 };
 
-std::map <std::string, SeqElement::PoseLength> profileGestureTypeToPoseLength =
+std::map<std::string, profileCmds> profileActionToProfileChange =
 {
-    { "tap", SeqElement::PoseLength::TAP },
-    { "hold", SeqElement::PoseLength::HOLD },
-    { "immediate", SeqElement::PoseLength::IMMEDIATE }
+	{ "moveProfileForward", MOVE_PROFILE_FORWARD },
+	{ "moveProfileBackward", MOVE_PROFILE_BACKWARD }
+};
+
+std::map <std::string, PoseLength> profileGestureTypeToPoseLength =
+{
+    { "tap", PoseLength::TAP },
+    { "hold", PoseLength::HOLD },
+    { "immediate", PoseLength::IMMEDIATE }
 };
 
 std::map <std::string, Pose::Type> profileGestureNameToType =
@@ -103,7 +112,7 @@ std::map <std::string, Pose::Type> profileGestureNameToType =
     { "fingersSpread", Pose::Type::fingersSpread },
     { "fist", Pose::Type::fist },
     { "rest", Pose::Type::rest },
-    { "thumbToPinky", Pose::Type::thumbToPinky },
+    { "doubleTap", Pose::Type::doubleTap },
     { "waveIn", Pose::Type::waveIn },
     { "waveOut", Pose::Type::waveOut }
 };
@@ -205,18 +214,24 @@ profileSequence ProfileManager::extractSequenceInformation(const boost::property
         }
     }
 
-    command cmd;
-    const ptree & pt = parentSequence.second.get_child("command");
-    cmd.type = pt.get<std::string>("<xmlattr>.type");
+	std::vector<command> cmds;
+	BOOST_FOREACH(const ptree::value_type & pt, parentSequence.second.get_child("commands")) {
+		command cmd;
+		if (pt.first == "command")
+		{
+			cmd.type = pt.second.get<std::string>("<xmlattr>.type");
+		}
 
-    BOOST_FOREACH(const ptree::value_type & vt, pt.get_child("actions")) {
-        if (vt.first == "action")
-        {
-            cmd.actions.push_back(vt.second.get_value<std::string>());
-        }
-    }
+		BOOST_FOREACH(const ptree::value_type & vt, pt.second.get_child("actions")) {
+			if (vt.first == "action")
+			{
+				cmd.actions.push_back(vt.second.get_value<std::string>());
+			}
+		}
+		cmds.push_back(cmd);
+	}
 
-    seq.cmd = cmd;
+    seq.cmds = cmds;
     seq.gestures = gestures;
     seq.state = sequenceState;
     seq.name = sequenceName;

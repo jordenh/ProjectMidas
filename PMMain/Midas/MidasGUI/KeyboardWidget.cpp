@@ -1,6 +1,9 @@
 #include "KeyboardWidget.h"
+
 #include <QEvent.h>
 #include <QPainter.h>
+#include "RingData.h"
+#include "MidasThread.h"
 
 #define _USE_MATH_DEFINES
 #include <math.h>
