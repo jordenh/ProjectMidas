@@ -35,8 +35,7 @@ SCDDigester::SCDDigester(SharedCommandData* scd, MidasThread *thread, ControlSta
 	MouseCtrl *mouseCtrl, KybrdCtrl *kybrdCtrl, KeyboardController *keyboardController, ProfileManager* profileManagerHandle, std::vector<ringData> *kybrdRingData)
 #else
 SCDDigester::SCDDigester(SharedCommandData* scd, MidasThread *thread, ControlState *cntrlStateHandle, MyoState* myoStateHandle,
-	MouseCtrl *mouseCtrl, KybrdCtrl *kybrdCtrl, KeyboardController *keyboardController, ProfileM
-    anager* profileManagerHandle)
+	MouseCtrl *mouseCtrl, KybrdCtrl *kybrdCtrl, KeyboardController *keyboardController, ProfileManager* profileManagerHandle)
 #endif
 {
     this->scdHandle = scd;

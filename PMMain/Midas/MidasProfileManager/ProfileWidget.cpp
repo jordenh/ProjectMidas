@@ -316,8 +316,8 @@ void ProfileWidget::modifySequence(int ind, Sequence seq)
         sequenceCommand seqCmd;
 
         std::string cmdLabel = "Command type " + seq.cmds[i].type;
-        seqCmd.commandTitle->setText(QString(cmdLabel.c_str()));
-        //seqWidgets.commandTitle->setText(QString(cmdLabel.c_str()));
+        seqCmd.commandTitle = new  QLabel(QString(cmdLabel.c_str()));
+        seqCmd.actions = new QListWidget();
 
         std::vector<std::string> actionList = seq.cmds[i].actions;
         std::vector<std::string>::iterator actionIt;
@@ -326,7 +326,6 @@ void ProfileWidget::modifySequence(int ind, Sequence seq)
         for (actionIt = actionList.begin(); actionIt != actionList.end(); actionIt++)
         {
             QListWidgetItem* action = new QListWidgetItem(QString(actionIt->c_str()));
-            //seqWidgets.actions->addItem(action);
             seqCmd.actions->addItem(action);
         }
 
