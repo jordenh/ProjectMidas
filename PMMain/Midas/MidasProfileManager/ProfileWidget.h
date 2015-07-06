@@ -11,12 +11,16 @@
 #include <QListWidget.h>
 #include <QPushButton.h>
 
+struct sequenceCommand {
+    QLabel* commandTitle;
+    QListWidget* actions;
+};
+
 struct sequenceWidgets {
     QGroupBox* grouper;
     QLabel* stateTitle;
     QListWidget* sequences;
-    QLabel* commandTitle;
-    QListWidget* actions;
+    std::vector<sequenceCommand> commands;
 };
 
 struct holdWidgets {

@@ -212,27 +212,36 @@ void ProfileWidget::drawSequence(Sequence sequence, int ind, bool insertBefore)
 
     sequenceLayout->addWidget(sequences);
 
-    std::string cmdLabel = "Command type " + sequence.cmds[0].type;
-    QLabel* commandTitle = new QLabel(QString(cmdLabel.c_str()));
-    sequenceLayout->addWidget(commandTitle);
-
-    QListWidget* actions = new QListWidget();
-    actions->setMaximumSize(256, 72);
-
-	std::vector<std::string> actionList = sequence.cmds[0].actions;
-    std::vector<std::string>::iterator actionIt;
-
-    for (actionIt = actionList.begin(); actionIt != actionList.end(); actionIt++)
-    {
-        QListWidgetItem* action = new QListWidgetItem(QString(actionIt->c_str()));
-        actions->addItem(action);
-    }
-
-    sequenceLayout->addWidget(actions);
-
     sequenceWidgets seqWidgets;
-    seqWidgets.actions = actions; 
-    seqWidgets.commandTitle = commandTitle;
+
+    for (int i = 0; i < sequence.cmds.size(); i++)
+    {
+        std::string cmdLabel = "Command type " + sequence.cmds[i].type;
+        QLabel* commandTitle = new QLabel(QString(cmdLabel.c_str()));
+        sequenceLayout->addWidget(commandTitle);
+
+        QListWidget* actions = new QListWidget();
+        actions->setMaximumSize(256, 72);
+
+        std::vector<std::string> actionList = sequence.cmds[i].actions;
+        std::vector<std::string>::iterator actionIt;
+
+        for (actionIt = actionList.begin(); actionIt != actionList.end(); actionIt++)
+        {
+            QListWidgetItem* action = new QListWidgetItem(QString(actionIt->c_str()));
+            actions->addItem(action);
+        }
+
+        sequenceLayout->addWidget(actions);
+
+        sequenceCommand seqCmd;
+        seqCmd.commandTitle = commandTitle;
+        seqCmd.actions = actions;
+        seqWidgets.commands.push_back(seqCmd);
+    }
+    
+    //seqWidgets.actions = actions; 
+    //seqWidgets.commandTitle = commandTitle;
     seqWidgets.sequences = sequences;
     seqWidgets.stateTitle = sequenceTitle;
     seqWidgets.grouper = grouper;
@@ -282,17 +291,27 @@ void ProfileWidget::modifySequence(int ind, Sequence seq)
         seqWidgets.sequences->addItem(item);
     }
 
-	std::string cmdLabel = "Command type " + seq.cmds[0].type;
-    seqWidgets.commandTitle->setText(QString(cmdLabel.c_str()));
-
-	std::vector<std::string> actionList = seq.cmds[0].actions;
-    std::vector<std::string>::iterator actionIt;
-
-    seqWidgets.actions->clear();
-    for (actionIt = actionList.begin(); actionIt != actionList.end(); actionIt++)
+    seqWidgets.commands.clear();
+    for (int i = 0; i < seq.cmds.size(); i++)
     {
-        QListWidgetItem* action = new QListWidgetItem(QString(actionIt->c_str()));
-        seqWidgets.actions->addItem(action);
+        sequenceCommand seqCmd;
+
+        std::string cmdLabel = "Command type " + seq.cmds[i].type;
+        seqCmd.commandTitle->setText(QString(cmdLabel.c_str()));
+        //seqWidgets.commandTitle->setText(QString(cmdLabel.c_str()));
+
+        std::vector<std::string> actionList = seq.cmds[i].actions;
+        std::vector<std::string>::iterator actionIt;
+
+        seq.cmds[i].actions.clear();
+        for (actionIt = actionList.begin(); actionIt != actionList.end(); actionIt++)
+        {
+            QListWidgetItem* action = new QListWidgetItem(QString(actionIt->c_str()));
+            //seqWidgets.actions->addItem(action);
+            seqCmd.actions->addItem(action);
+        }
+
+        seqWidgets.commands.push_back(seqCmd);
     }
 }
 
