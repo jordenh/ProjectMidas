@@ -451,21 +451,17 @@ void GestureFilter::handleStateChange(CommandData response, GestureFilter *gf)
 filterDataMap GestureFilter::handleMouseCommand(CommandData response)
 {
 	filterDataMap outputToSharedCommandData;
-    if (controlStateHandle->getMode() == midasMode::MOUSE_MODE ||
-        controlStateHandle->getMode() == midasMode::MOUSE_MODE2 ||
-        controlStateHandle->getMode() == midasMode::GESTURE_MODE)
+
+    CommandData command;
+    command = response;
+
+    outputToSharedCommandData[COMMAND_INPUT] = command;
+    Filter::setOutput(outputToSharedCommandData);
+
+    buzzFeedbackMode bfm = settingsSignaller.getBuzzFeedbackMode();
+    if (bfm >= buzzFeedbackMode::ALLACTIONS)
     {
-        CommandData command;
-        command = response;
-
-        outputToSharedCommandData[COMMAND_INPUT] = command;
-        Filter::setOutput(outputToSharedCommandData);
-
-        buzzFeedbackMode bfm = settingsSignaller.getBuzzFeedbackMode();
-        if (bfm >= buzzFeedbackMode::ALLACTIONS)
-        {
-            myoStateHandle->peakMyo()->vibrateMyos(myo::Myo::VibrationType::vibrationShort);
-        }
+        myoStateHandle->peakMyo()->vibrateMyos(myo::Myo::VibrationType::vibrationShort);
     }
 	return outputToSharedCommandData;
 }
