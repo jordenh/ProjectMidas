@@ -130,7 +130,13 @@ void ProfileManager::loadProfilesFromFile(std::string fileName)
     std::ifstream profileFile(fileName.c_str());
 
     ptree tr;
-    read_xml(profileFile, tr);
+    try {
+        read_xml(profileFile, tr);
+    }
+    catch (const std::exception& e) {
+        // TODO - log error? 
+        return;
+    }
 
     BOOST_FOREACH(const ptree::value_type & vt, tr.get_child("profiles")) {
         if (vt.first == "profile")

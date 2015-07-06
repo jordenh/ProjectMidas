@@ -75,7 +75,10 @@ void MyoDevice::runDeviceLoop()
     advancedConnectPipeline.registerFilterAtDeepestLevel(WearableDevice::sharedData);
 
 	profileSignaller.setControlStateHandle(state);
-	state->setProfile(profileManager->getProfiles()->at(0).profileName);
+    if (profileManager->getProfiles()->size() > 0)
+    {
+        state->setProfile(profileManager->getProfiles()->at(0).profileName);
+    }
 	mainGui->connectSignallerToProfileWidgets(&profileSignaller); 
 
     std::chrono::milliseconds rssi_start =
@@ -131,15 +134,13 @@ void MyoDevice::runDeviceLoop()
 			if ((current_time - rssi_start).count() > MIN_RSSI_DELAY)
             {
                 myo->requestRssi();
-                rssi_start = std::chrono::duration_cast<std::chrono::milliseconds>(
-                    std::chrono::steady_clock::now().time_since_epoch());
+                rssi_start = current_time;
             }
 
 			if ((current_time - battery_start).count() > MIN_BATTERY_LEVEL_DELAY)
 			{
 				myo->requestBatteryLevel();
-				battery_start = std::chrono::duration_cast<std::chrono::milliseconds>(
-					std::chrono::steady_clock::now().time_since_epoch());
+                battery_start = current_time;
 			}
 
             hub.run(durationInMilliseconds);
@@ -410,6 +411,8 @@ void MyoDevice::MyoCallbacks::onRssi(Myo* myo, uint64_t timestamp, int8_t rssi) 
 void MyoDevice::updateProfiles(void)
 {
     int error = (int)filterError::NO_FILTER_ERROR;
+
+    if (profileManager->getProfiles()->size() == 0) { return; }
 
     error |= (int)advancedPosePipeline.updateFiltersBasedOnProfile(*profileManager, state->getProfile());
 	
