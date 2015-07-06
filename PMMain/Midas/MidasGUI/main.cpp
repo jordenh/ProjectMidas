@@ -1,5 +1,5 @@
 /*
-    Copyright (C) 2015 Jorden Hetherington
+    Copyright (C) 2015 Midas
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Lesser General Public
