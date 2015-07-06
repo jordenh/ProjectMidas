@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
     qRegisterMetaType<std::vector<sequenceProgressData> >("std::vector<sequenceProgressData>");
 
     ProfileManager pm;
-	pm.loadProfilesFromFile("profile_test.xml");
+    pm.loadProfilesFromFile("test.xml");//"profile_test.xml");
 
     MainGUI mainDisplay(&midasThread, &pm, MOVE_RATE_DEADZONE);
     midasThread.setProfileManagerHandle(&pm);

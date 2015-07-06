@@ -417,7 +417,10 @@ void GestureFilter::handleStateChange(CommandData response, GestureFilter *gf)
 		else if (changeStateCommands[i].type == commandType::KYBRD_CMD || changeStateCommands[i].type == commandType::KYBRD_GUI_CMD)
 		{
 			dataMap = gf->handleKybrdCommand(changeStateCommands[i]);
-		}
+        }
+        else {
+            continue;
+        }
         gf->clearOutput();
 		fp.startPipeline(dataMap);
 	}
