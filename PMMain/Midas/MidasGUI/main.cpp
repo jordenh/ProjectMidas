@@ -8,6 +8,8 @@
 
 #include "ProfileManager.h"
 
+#define DEFAULT_PROFILES "profiles.xml"
+
 #ifdef BUILD_KEYBOARD
 #include "KeyboardWidget.h"
 #include "KeyboardSettingsReader.h"
@@ -34,7 +36,7 @@ int main(int argc, char *argv[])
     qRegisterMetaType<std::vector<sequenceProgressData> >("std::vector<sequenceProgressData>");
 
     ProfileManager pm;
-    pm.loadProfilesFromFile("test.xml");//"profile_test.xml");
+    pm.loadProfilesFromFile(DEFAULT_PROFILES);
 
     MainGUI mainDisplay(&midasThread, &pm, MOVE_RATE_DEADZONE);
     midasThread.setProfileManagerHandle(&pm);
