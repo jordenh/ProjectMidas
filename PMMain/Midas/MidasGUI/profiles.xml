@@ -3,18 +3,6 @@
 <profiles>
 	<profile name="Rotate Model">
         <sequences>
-			<sequence state="lockMode" name="Scroll Up">
-                <gestures>
-					<gesture type="immediate">waveIn</gesture>
-                </gestures>
-                <commands>
-				<command type="mouse">
-                    <actions>
-                        <action>scrollUp</action>
-                    </actions>
-                </command>
-				</commands>
-            </sequence>
 			<sequence state="lockMode" name="Control Mouse">
                 <gestures>
 					<gesture type="tap">fingersSpread</gesture>
