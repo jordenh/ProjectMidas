@@ -1,5 +1,4 @@
 # ProjectMidas
-============
 
 A wearable interface for the Windows OS, replacing the functionality of a mouse (and optionally keyboard).
 
