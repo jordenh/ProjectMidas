@@ -6,7 +6,7 @@ A wearable interface for the Windows OS, replacing the functionality of a mouse 
 
 Two quick start options are available:
 
-- [Download the latest release](https://github.com/jordenh/ProjectMidas/blob/master/MidasInstall.zip).
+- [Download the latest release](https://github.com/jordenh/ProjectMidas/releases/download/v1.0/MidasInstall.zip).
 - Clone the repo: `git clone https://github.com/jordenh/ProjectMidas`.
 
 ### What's included
