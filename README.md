@@ -1,4 +1,4 @@
-# ProjectMidas
+# Project Midas
 
 A wearable interface for the Windows OS, replacing the functionality of a mouse (and optionally keyboard). Currently interacts with the Myo armband from Thalmic Labs.
 
