@@ -32,12 +32,6 @@ class SharedCommandData;
 
 class HoldModeObserver {
 public:
-    enum HoldModeActionType {
-        INTERVAL_DELTA, // if in a given interval an angle is +/- beyond a threshold, >=1 action will ensue 
-        ABS_DELTA_FINITE, // Based on the net delta beyond threshold, ensure the number of +/- actions is at a certain value (repeatable change)
-        ABS_DELTA_VELOCITY // Based on net delta beyond threshold, continue spewing actions
-    };
-
     HoldModeObserver();
     HoldModeObserver(MyoState* myoState, SharedCommandData* scd, GestureHoldModeAction* actions, unsigned int callbackPeriod = DEFAULT_CALLBACK_PER, HoldModeActionType actionType = DEFAULT_ACTION_TYPE,
         unsigned int intervalLen = DEFAULT_INTERVAL_LEN, unsigned int velocityIntervalLen = DEFAULT_INTERVAL_LEN);

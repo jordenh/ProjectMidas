@@ -246,4 +246,10 @@ struct keyboardAngle {
     int x, y;
 };
 
+enum HoldModeActionType {
+    ABS_DELTA_FINITE, // Based on the net delta beyond threshold, ensure the number of +/- actions is at a certain value (repeatable change)
+    ABS_DELTA_VELOCITY, // Based on net delta beyond threshold, continue spewing actions
+    INTERVAL_DELTA // if in a given interval an angle is +/- beyond a threshold, >=1 action will ensue 
+};
+
 #endif /* _MIDAS_COMMON_H */
