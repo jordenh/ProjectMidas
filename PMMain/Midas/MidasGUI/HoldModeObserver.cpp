@@ -96,16 +96,24 @@ void HoldModeObserver::handleIntervalDelta()
 
 void HoldModeObserver::handleAbsDeltaFinite()
 {
+    // TODO - REMOVE! This is TEMP
+    if (myoStateHandle->mostRecentPose() != myo::Pose::fist)
+    {
+        return;
+    }
     float deltaRollDeg = MyoTranslationFilter::radToDeg(MyoTranslationFilter::calcRingDelta(BaseMeasurements::getInstance().getCurrentRoll(), BaseMeasurements::getInstance().getBaseRoll()));
     float deltaPitchDeg = MyoTranslationFilter::radToDeg(MyoTranslationFilter::calcRingDelta(BaseMeasurements::getInstance().getCurrentPitch(), BaseMeasurements::getInstance().getBasePitch()));
     float deltaYawDeg = MyoTranslationFilter::radToDeg(MyoTranslationFilter::calcRingDelta(BaseMeasurements::getInstance().getCurrentYaw(), BaseMeasurements::getInstance().getBaseYaw()));
 
-    // TODO - decide if this is a better method - this way will send (repeatably) the number of ticks all at once on each interval,
-    // but may be too fast? -- Alternative is to only send ONE cmd per interval and modify the currXXXExecuted vars iteratively. That was initial design, but 
-    // tryin this for now...
-    int rollTicks =  (deltaRollDeg / actions->getRollSensitivity())   - currRollExecuted;
-    int pitchTicks = (deltaPitchDeg / actions->getPitchSensitivity()) - currPitchExecuted;
-    int yawTicks =   (deltaYawDeg / actions->getYawSensitivity())     - currYawExecuted;
+    // TODO - decide if this is THE better method (its different than below)
+    int desiredRollTicks = (deltaRollDeg / actions->getRollSensitivity()) - currRollExecuted;
+    int desiredPitchTicks = (deltaPitchDeg / actions->getPitchSensitivity()) - currPitchExecuted;
+    int desiredYawTicks = (deltaYawDeg / actions->getYawSensitivity()) - currYawExecuted;
+
+    // normalize to 0, -1, or 1
+    int rollTicks   = desiredRollTicks  == 0 ? 0 : (desiredRollTicks / abs(desiredRollTicks));
+    int pitchTicks  = desiredPitchTicks == 0 ? 0 : (desiredPitchTicks / abs(desiredPitchTicks));
+    int yawTicks    = desiredYawTicks   == 0 ? 0 : (desiredYawTicks / abs(desiredYawTicks));
 
     // if 0, will return associated negative cmd, but wont be executed (so its safe).
     kybdCmds rollCmd = actions->getAction(angleData(angleData::AngleType::ROLL, rollTicks > 0));
@@ -114,9 +122,33 @@ void HoldModeObserver::handleAbsDeltaFinite()
 
     executeCommands(rollCmd, abs(rollTicks), pitchCmd, abs(pitchTicks), yawCmd, abs(yawTicks));
 
-    currRollExecuted = (deltaRollDeg / actions->getRollSensitivity());
-    currPitchExecuted = (deltaPitchDeg / actions->getPitchSensitivity());
-    currYawExecuted = (deltaYawDeg / actions->getYawSensitivity());
+    currRollExecuted += rollTicks;
+    currPitchExecuted += pitchTicks;
+    currYawExecuted += yawTicks;
+
+    // This code 'works', but seems to be suffering from sending too much data too quickly to the keyboard controller - therefore it's losing it's initial
+    // desired properties of repeatability. Modifying above for a second attempt
+//    float deltaRollDeg = MyoTranslationFilter::radToDeg(MyoTranslationFilter::calcRingDelta(BaseMeasurements::getInstance().getCurrentRoll(), BaseMeasurements::getInstance().getBaseRoll()));
+//    float deltaPitchDeg = MyoTranslationFilter::radToDeg(MyoTranslationFilter::calcRingDelta(BaseMeasurements::getInstance().getCurrentPitch(), BaseMeasurements::getInstance().getBasePitch()));
+//    float deltaYawDeg = MyoTranslationFilter::radToDeg(MyoTranslationFilter::calcRingDelta(BaseMeasurements::getInstance().getCurrentYaw(), BaseMeasurements::getInstance().getBaseYaw()));
+//
+//    // TODO - decide if this is a better method - this way will send (repeatably) the number of ticks all at once on each interval,
+//    // but may be too fast? -- Alternative is to only send ONE cmd per interval and modify the currXXXExecuted vars iteratively. That was initial design, but 
+//    // tryin this for now...
+//    int rollTicks =  (deltaRollDeg / actions->getRollSensitivity())   - currRollExecuted;
+//    int pitchTicks = (deltaPitchDeg / actions->getPitchSensitivity()) - currPitchExecuted;
+//    int yawTicks =   (deltaYawDeg / actions->getYawSensitivity())     - currYawExecuted;
+//
+//    // if 0, will return associated negative cmd, but wont be executed (so its safe).
+//    kybdCmds rollCmd = actions->getAction(angleData(angleData::AngleType::ROLL, rollTicks > 0));
+//    kybdCmds pitchCmd = actions->getAction(angleData(angleData::AngleType::PITCH, pitchTicks > 0));
+//    kybdCmds yawCmd = actions->getAction(angleData(angleData::AngleType::YAW, yawTicks > 0));
+//
+//    executeCommands(rollCmd, abs(rollTicks), pitchCmd, abs(pitchTicks), yawCmd, abs(yawTicks));
+//
+//    currRollExecuted = (deltaRollDeg / actions->getRollSensitivity());
+//    currPitchExecuted = (deltaPitchDeg / actions->getPitchSensitivity());
+//    currYawExecuted = (deltaYawDeg / actions->getYawSensitivity());
 }
 
 void HoldModeObserver::handleAbsDeltaVelocity()

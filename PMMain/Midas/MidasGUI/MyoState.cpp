@@ -161,6 +161,24 @@ myo::Pose MyoState::popPose()
 	return front;
 }
 
+myo::Pose MyoState::mostRecentPose()
+{
+    myoStateMutex.lock();
+    myo::Pose front;
+    if (poseHistory.size() > 0)
+    {
+        front = poseHistory.back();
+    }
+    else
+    {
+        front = myo::Pose::rest;
+    }
+
+    myoStateMutex.unlock();
+
+    return front;
+}
+
 std::deque<myo::Pose> MyoState::getPoseHistory()
 {
 	myoStateMutex.lock();
