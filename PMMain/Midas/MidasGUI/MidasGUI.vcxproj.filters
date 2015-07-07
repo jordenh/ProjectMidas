@@ -299,6 +299,9 @@
     <ClCompile Include="GenericBypassFilter.cpp">
       <Filter>Source Files\Midas\Filters</Filter>
     </ClCompile>
+    <ClCompile Include="HoldModeObserver.cpp">
+      <Filter>Source Files\Midas</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="MidasThread.h">
@@ -434,6 +437,9 @@
     </ClInclude>
     <ClInclude Include="GenericBypassFilter.h">
       <Filter>Header Files\Midas\Filters</Filter>
+    </ClInclude>
+    <ClInclude Include="HoldModeObserver.h">
+      <Filter>Header Files\Midas</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

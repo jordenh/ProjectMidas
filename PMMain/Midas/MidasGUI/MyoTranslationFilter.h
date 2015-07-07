@@ -26,6 +26,7 @@
 #include "ProfileManager.h"
 #include "SettingsSignaller.h"
 #include "myo\myo.hpp"
+#include <math.h>
 
 #ifdef USE_SIMULATOR
 #include "MyoSimIncludes.hpp"
@@ -37,6 +38,7 @@ using namespace myo;
 class MyoState;
 class ControlState;
 class MainGUI;
+class HoldModeObserver;
 
 #define MAX_PITCH_ANGLE 25.0f /* Maximum delta angle in degrees */
 #define MAX_YAW_ANGLE 30.0f /* Maximum delta angle in degrees */
@@ -82,6 +84,16 @@ public:
     * @return a value from -pi to +pi representing the delta between two input angles
     */
     static float calcRingDelta(float current, float base);
+
+    static float radToDeg(float rad)
+    {
+        return rad * (180.0 / M_PI);
+    }
+
+    static float degToRad(float deg)
+    {
+        return (deg / 180.0) * M_PI;
+    }
 
     filterError updateBasedOnProfile(ProfileManager& pm, std::string name);
 
@@ -157,6 +169,7 @@ private:
         yaw, baseYaw, prevYaw, deltaYawDeg,
         roll, baseRoll, prevRoll, deltaRollDeg;
 
+    HoldModeObserver *hmo;
     GestureHoldModeAction gestHoldModeAction[5];
 
     MainGUI *mainGui; // not owned

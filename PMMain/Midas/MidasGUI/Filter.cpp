@@ -28,52 +28,76 @@ void Filter::addDataAsInput(std::string name, boost::any value)
 
 void Filter::setInput(filterDataMap input)
 {
+    filterMutex.lock();
     inputData = input;
+    filterMutex.unlock();
 }
 
 filterDataMap Filter::getOutput()
 {
-    return outputData;
+    filterMutex.lock();
+    filterDataMap retVal = outputData;
+    filterMutex.unlock();
+    return retVal;
 }
 
 filterStatus Filter::getFilterStatus()
 {
-    return status;
+    filterMutex.lock();
+    filterStatus retVal = status;
+    filterMutex.unlock();
+    return retVal;
 }
 
 filterError Filter::getFilterError()
 {
-    return error;
+    filterMutex.lock();
+    filterError retVal = error;
+    filterMutex.unlock();
+    return retVal;
 }
 
 void Filter::setFilterStatus(filterStatus status)
 {
+    filterMutex.lock();
     this->status = status;
+    filterMutex.unlock();
 }
 
 void Filter::setFilterError(filterError error)
 {
+    filterMutex.lock();
     this->error = error;
+    filterMutex.unlock();
 }
 
 filterDataMap Filter::getInput()
 {
-    return inputData;
+    filterMutex.lock();
+    filterDataMap retVal = inputData;
+    filterMutex.unlock();
+    return retVal;
 }
 
 void Filter::setOutput(filterDataMap output)
 {
+    filterMutex.lock();
     outputData = output;
+    filterMutex.unlock();
 }
 
 void Filter::addToOutput(filterDataMap output)
 {
+    filterMutex.lock();
     outputData = joinFilterDataMaps(outputData, output);
+    filterMutex.unlock();
 }
 
 void Filter::clearOutput(void)
 {
+    filterMutex.lock();
     outputData = filterDataMap();
+    filterMutex.unlock();
 }
 
 filterError Filter::updateBasedOnProfile(ProfileManager& pm, std::string name)

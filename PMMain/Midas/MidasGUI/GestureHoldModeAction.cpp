@@ -19,13 +19,12 @@
 
 #include "GestureHoldModeAction.h"
 
-GestureHoldModeAction::GestureHoldModeAction() : minIntervalLen(50) {
-
+GestureHoldModeAction::GestureHoldModeAction() {
 }
 
-GestureHoldModeAction::GestureHoldModeAction(unsigned int minIntervalLen) : minIntervalLen(minIntervalLen) {
-
-}
+GestureHoldModeAction::GestureHoldModeAction(float rollSensitivity, float pitchSensitivity, float yawSensitivity) : 
+    rollSensitivity(rollSensitivity), pitchSensitivity(pitchSensitivity), yawSensitivity(yawSensitivity)
+{}
 
 void GestureHoldModeAction::clearMap()
 {

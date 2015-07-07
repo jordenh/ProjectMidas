@@ -47,6 +47,18 @@ typedef struct angleData {
         PITCH,
         YAW
     };
+
+    angleData()
+    {
+        angleType = ROLL;
+        anglePositive = true;
+    }
+    angleData(AngleType type, bool positive)
+    {
+        angleType = type;
+        anglePositive = positive;
+    }
+
     AngleType angleType;
     bool anglePositive;
 } angleData;
@@ -54,7 +66,7 @@ typedef struct angleData {
 class GestureHoldModeAction {
 public:
     GestureHoldModeAction();
-    GestureHoldModeAction(unsigned int minIntervalLen);
+    GestureHoldModeAction(float rollSensitivity, float pitchSensitivity, float yawSensitivity);
 
     void clearMap();
 
@@ -62,18 +74,23 @@ public:
 
     kybdCmds getAction(angleData ad);
 
+    void setRollSensitivity(float sensitivity) { rollSensitivity = sensitivity; }
+    float getRollSensitivity() { return rollSensitivity; }
+
+    void setPitchSensitivity(float sensitivity) { pitchSensitivity = sensitivity; }
+    float getPitchSensitivity() { return pitchSensitivity; }
+
+    void setYawSensitivity(float sensitivity) { yawSensitivity = sensitivity; }
+    float getYawSensitivity() { return yawSensitivity; }
+
 private:
-    // TODO - actually care about this type. In the meantime, coding Interval_delta since it's easiest.
-    // enum holdModeActionType {
-    //     INTERVAL_DELTA, // if in a given interval a signal is +/-, an action will ensue
-    //     ABSOLUTE_DELTA_NUM_SIGS, // Based on the delta, ensure the number of +/- actions is at a certain value (repeatable change)
-    //     ABSOLUTE_DELTA_VELOCITY // Based on delta, continue spewing actions
-    // };
+    // Sensitivities indicate how many DEGREES are required to trigger ONE action
+    // (stored in the actionMap)
+    float rollSensitivity;
+    float pitchSensitivity;
+    float yawSensitivity;
 
-    std::unordered_map<int, kybdCmds> actionMap;
-
-    unsigned int minIntervalLen; // between sampling signals and sending actions // TODO - make this useful
-    
+    std::unordered_map<int, kybdCmds> actionMap;    
 };
 
 #endif /* GESTURE_HOLD_MODE_ACTION_HPP */

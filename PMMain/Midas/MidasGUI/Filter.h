@@ -22,6 +22,7 @@
 
 #include <string>
 #include <map>
+#include <mutex>
 #include <boost/any.hpp>
 
 class ProfileManager;
@@ -183,6 +184,8 @@ private:
     filterDataMap outputData;
     filterStatus status;
     filterError error;
+
+    std::mutex filterMutex;
 };
 
 #endif FILTER_H

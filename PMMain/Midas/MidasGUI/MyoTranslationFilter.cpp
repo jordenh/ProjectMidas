@@ -26,21 +26,15 @@
 #include "MainGUI.h"
 #include "ProfileManager.h"
 #include "BaseMeasurements.h"
+#include "HoldModeObserver.h"
 #include "myo\myo.hpp"
-#include <math.h>
 #include <iostream>
 
+/* Test Code - TODO - remove */
+GestureHoldModeAction actions;
+/*  */
+
 SettingsSignaller MyoTranslationFilter::settingsSignaller;
-
-float radToDeg(float rad)
-{
-    return rad * (180.0 / M_PI);
-}
-
-float degToRad(float deg)
-{
-    return (deg / 180.0) * M_PI;
-}
 
 MyoTranslationFilter::MyoTranslationFilter(ControlState* controlState, MyoState* myoState, MainGUI *mainGuiHandle)
     : controlStateHandle(controlState), myoStateHandle(myoState), previousMode(LOCK_MODE),
@@ -59,10 +53,26 @@ MyoTranslationFilter::MyoTranslationFilter(ControlState* controlState, MyoState*
     {
         mainGui->connectSignallerToSettingsDisplayer(&settingsSignaller);
     }
+
+    /* Test Code - TODO - remove */
+    actions.setRollSensitivity(1);
+    actions.setPitchSensitivity(1);
+    actions.setYawSensitivity(1);
+    //actions.addToActionMap(angleData(angleData::AngleType::YAW, true), kybdCmds::RIGHT_ARROW);
+    //actions.addToActionMap(angleData(angleData::AngleType::YAW, false), kybdCmds::LEFT_ARROW);
+    //actions.addToActionMap(angleData(angleData::AngleType::PITCH, true), kybdCmds::UP_ARROW);
+    //actions.addToActionMap(angleData(angleData::AngleType::PITCH, false), kybdCmds::DOWN_ARROW);
+    actions.addToActionMap(angleData(angleData::AngleType::ROLL, true), kybdCmds::VOLUME_UP);
+    actions.addToActionMap(angleData(angleData::AngleType::ROLL, false), kybdCmds::VOLUME_DOWN);
+
+    hmo = new HoldModeObserver(myoState, controlState->getSCD(), &actions);// , 1000, HoldModeObserver::ABS_DELTA_FINITE, 2000, 2000);
+    hmo->kickOffObserver();
+    //*********************************
 }
 
 MyoTranslationFilter::~MyoTranslationFilter()
 {
+    delete hmo; hmo = NULL;
 }
 
 void MyoTranslationFilter::process()
