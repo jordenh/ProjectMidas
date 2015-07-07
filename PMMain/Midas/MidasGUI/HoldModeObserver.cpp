@@ -36,8 +36,8 @@ HoldModeObserver::~HoldModeObserver()
 }
 
 HoldModeObserver::HoldModeObserver(MyoState* myoState, SharedCommandData* scd, GestureHoldModeAction* actions, unsigned int callbackPeriod, HoldModeActionType actionType, unsigned int intervalLen, unsigned int velocityIntervalLen) :
-    sharedCommandDataHandle(scd), myoStateHandle(myoState), actions(actions), callbackPeriod(callbackPeriod), actionType(actionType),
-    intervalLen(intervalLen), currIntervalCount(0), velocityIntervalLen(velocityIntervalLen), velocityCurrIntervalCount(0),
+    sharedCommandDataHandle(scd), myoStateHandle(myoState), actions(actions), callbackPeriod(callbackPeriod), currIntervalCount(0), velocityCurrIntervalCount(0), 
+    // actionType(actionType), intervalLen(intervalLen),  velocityIntervalLen(velocityIntervalLen), 
     currRollExecuted(0), currPitchExecuted(0), currYawExecuted(0)
 {
     prevRoll  = BaseMeasurements::getInstance().getCurrentRoll();
@@ -62,7 +62,7 @@ void HoldModeObserver::observerThread()
         if (commitSuicide)
             break;
         // TODO do stuff
-        switch (actionType)
+        switch (actions->getActionType())
         {
         case INTERVAL_DELTA:
             handleIntervalDelta();

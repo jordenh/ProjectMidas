@@ -529,20 +529,26 @@ filterError MyoTranslationFilter::updateBasedOnProfile(ProfileManager& pm, std::
             gestType = GESTURE_WAVE_OUT;
         }
 
+        gestHoldModeAction[gestType].setActionType(holdModeActionTypeMap[it->holdModeActionType]);
+        gestHoldModeAction[gestType].setIntervalLen(it->intervalLen);
+
         for (std::vector<angleAction>::iterator angleIt = it->angles.begin(); angleIt != it->angles.end(); ++angleIt)
         {
             angleData ad;
             if (angleIt->type == "roll")
             {
                 ad.angleType = angleData::AngleType::ROLL;
+                gestHoldModeAction[gestType].setRollSensitivity(angleIt->sensitivity);
             }
             else if (angleIt->type == "pitch")
             {
                 ad.angleType = angleData::AngleType::PITCH;
+                gestHoldModeAction[gestType].setPitchSensitivity(angleIt->sensitivity);
             }
             else
             {
                 ad.angleType = angleData::AngleType::YAW;
+                gestHoldModeAction[gestType].setYawSensitivity(angleIt->sensitivity);
             }
 
             ad.anglePositive = true;

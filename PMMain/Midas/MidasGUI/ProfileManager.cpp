@@ -136,6 +136,13 @@ std::map <std::string, Pose::Type> profileGestureNameToType =
     { "waveOut", Pose::Type::waveOut }
 };
 
+std::map <std::string, HoldModeActionType> holdModeActionTypeMap =
+{
+    { "absDeltaFinite", ABS_DELTA_FINITE },
+    { "absDeltaVelocity", ABS_DELTA_VELOCITY },
+    { "intervalDelta", INTERVAL_DELTA }
+};
+
 ProfileManager::ProfileManager() { }
 
 ProfileManager::~ProfileManager() { }
@@ -206,12 +213,19 @@ profile ProfileManager::extractProfileInformation(const boost::property_tree::pt
                     std::string angleType = angleVt.second.get<std::string>("<xmlattr>.type");
                     std::string anglePositive = angleVt.second.get_child("anglePositive").get_value<std::string>();
                     std::string angleNegative = angleVt.second.get_child("angleNegative").get_value<std::string>();
+                    unsigned int angleSensitivity = angleVt.second.get_child("sensitivity").get_value<unsigned int>();
                     currAngle.anglePositive = anglePositive;
                     currAngle.angleNegative = angleNegative;
+                    currAngle.sensitivity = angleSensitivity;
                     currAngle.type = angleType;
                     currHold.angles.push_back(currAngle);
                 }
             }
+
+            std::string holdModeActionType = vt.second.get_child("holdModeActionType").get_value<std::string>();
+            unsigned int intervalLen = vt.second.get_child("intervalLength").get_value<unsigned int>();
+            currHold.holdModeActionType = holdModeActionType;
+            currHold.intervalLen = intervalLen;
 
             pr.holds.push_back(currHold);
         }

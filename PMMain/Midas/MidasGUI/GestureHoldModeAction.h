@@ -83,12 +83,31 @@ public:
     void setYawSensitivity(float sensitivity) { yawSensitivity = sensitivity; }
     float getYawSensitivity() { return yawSensitivity; }
 
+    void setActionType(HoldModeActionType type) { actionType = type; }
+    HoldModeActionType getActionType() { return actionType; }
+
+    void setIntervalLen(unsigned int len) { intervalLen = len; }
+    unsigned int getIntervalLen() { return intervalLen; }
+
+    void setVelocityIntervalLen(unsigned int len) { velocityIntervalLen = len; }
+    unsigned int getVelocityIntervalLen() { return velocityIntervalLen; }
+
 private:
     // Sensitivities indicate how many DEGREES are required to trigger ONE action
     // (stored in the actionMap)
     float rollSensitivity;
     float pitchSensitivity;
     float yawSensitivity;
+
+    // defines functionality for observer
+    HoldModeActionType actionType;
+
+    // Vars required for INTERVAL_DELTA mode
+    unsigned int intervalLen;
+    unsigned int currIntervalCount;
+    // Vars required for ABS_DELTA_VELOCITY mode
+    unsigned int velocityIntervalLen;
+    unsigned int velocityCurrIntervalCount;
 
     std::unordered_map<int, kybdCmds> actionMap;    
 };

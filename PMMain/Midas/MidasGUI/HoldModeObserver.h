@@ -42,14 +42,14 @@ public:
     void setCallbackPeriod(unsigned int callbackPeriod) { this->callbackPeriod = callbackPeriod; }
     unsigned int getCallbackPeriod() { return callbackPeriod; }
 
-    void setActionType(HoldModeActionType type) { actionType = type; }
-    HoldModeActionType getActionType() { return actionType; }
-
-    void setIntervalLen(unsigned int len) { intervalLen = len; }
-    unsigned int getIntervalLen() { return intervalLen; }
-
-    void setVelocityIntervalLen(unsigned int len) { velocityIntervalLen = len; }
-    unsigned int getVelocityIntervalLen() { return velocityIntervalLen; }
+//    void setActionType(HoldModeActionType type) { actionType = type; }
+//    HoldModeActionType getActionType() { return actionType; }
+//
+//    void setIntervalLen(unsigned int len) { intervalLen = len; }
+//    unsigned int getIntervalLen() { return intervalLen; }
+//
+//    void setVelocityIntervalLen(unsigned int len) { velocityIntervalLen = len; }
+//    unsigned int getVelocityIntervalLen() { return velocityIntervalLen; }
 
     void kill() { commitSuicide = true; }
 
@@ -75,14 +75,14 @@ private:
     // defines frequency of observer.
     unsigned int callbackPeriod;
 
-    // defines functionality of observer
-    HoldModeActionType actionType;
+//    // defines functionality of observer
+//    HoldModeActionType actionType;
     
     // defines actions of observer
     GestureHoldModeAction* actions; // not owned
 
-    // Vars required for INTERVAL_DELTA mode
-    unsigned int intervalLen;
+//    // Vars required for INTERVAL_DELTA mode
+//    unsigned int intervalLen;
     unsigned int currIntervalCount;
 
     // Vars required for ABS_DELTA_FINITE mode
@@ -91,8 +91,8 @@ private:
     int currPitchExecuted; 
     int currYawExecuted; 
 
-    // Vars required for ABS_DELTA_VELOCITY mode
-    unsigned int velocityIntervalLen;
+//    // Vars required for ABS_DELTA_VELOCITY mode
+//    unsigned int velocityIntervalLen;
     unsigned int velocityCurrIntervalCount;
 
     // used to stop thread
