@@ -54,19 +54,20 @@ MyoTranslationFilter::MyoTranslationFilter(ControlState* controlState, MyoState*
         mainGui->connectSignallerToSettingsDisplayer(&settingsSignaller);
     }
 
+    hmo = NULL;
     /* Test Code - TODO - remove */
-    actions.setRollSensitivity(3);
-    actions.setPitchSensitivity(1);
-    actions.setYawSensitivity(1);
-    actions.addToActionMap(angleData(angleData::AngleType::YAW, true), kybdCmds::RIGHT_ARROW);
-    actions.addToActionMap(angleData(angleData::AngleType::YAW, false), kybdCmds::LEFT_ARROW);
-    actions.addToActionMap(angleData(angleData::AngleType::PITCH, true), kybdCmds::UP_ARROW);
-    actions.addToActionMap(angleData(angleData::AngleType::PITCH, false), kybdCmds::DOWN_ARROW);
-    //actions.addToActionMap(angleData(angleData::AngleType::ROLL, true), kybdCmds::VOLUME_UP);
-    //actions.addToActionMap(angleData(angleData::AngleType::ROLL, false), kybdCmds::VOLUME_DOWN);
-
-    hmo = new HoldModeObserver(myoState, controlState->getSCD(), &actions);// , 1000, HoldModeObserver::ABS_DELTA_FINITE, 2000, 2000);
-    hmo->kickOffObserver();
+//   actions.setRollSensitivity(3);
+//   actions.setPitchSensitivity(1);
+//   actions.setYawSensitivity(1);
+//   actions.addToActionMap(angleData(angleData::AngleType::YAW, true), kybdCmds::RIGHT_ARROW);
+//   actions.addToActionMap(angleData(angleData::AngleType::YAW, false), kybdCmds::LEFT_ARROW);
+//   actions.addToActionMap(angleData(angleData::AngleType::PITCH, true), kybdCmds::UP_ARROW);
+//   actions.addToActionMap(angleData(angleData::AngleType::PITCH, false), kybdCmds::DOWN_ARROW);
+//   //actions.addToActionMap(angleData(angleData::AngleType::ROLL, true), kybdCmds::VOLUME_UP);
+//   //actions.addToActionMap(angleData(angleData::AngleType::ROLL, false), kybdCmds::VOLUME_DOWN);
+//
+//   hmo = new HoldModeObserver(myoState, controlState->getSCD(), &actions);// , 1000, HoldModeObserver::ABS_DELTA_FINITE, 2000, 2000);
+//   hmo->kickOffObserver();
     //*********************************
 }
 
@@ -140,6 +141,8 @@ void MyoTranslationFilter::handleQuatData(filterDataMap input, filterDataMap out
                 BaseMeasurements::getInstance().setBaseAngles(roll, pitch, yaw);
                 BaseMeasurements::getInstance().updateBaseCursor();
                 BaseMeasurements::getInstance().setCurrentState(currMode);
+
+                updateHoldModeObserver(currMode);
             }
 
             deltaRollDeg = radToDeg(calcRingDelta(roll, BaseMeasurements::getInstance().getBaseRoll()) - calcRingDelta(prevRoll, BaseMeasurements::getInstance().getBaseRoll())); // normalized to avoid overflow
@@ -462,29 +465,27 @@ bool MyoTranslationFilter::initGestHoldModeActionArr(void)
     angleData ad;
     ad.angleType = angleData::AngleType::ROLL;
     ad.anglePositive = true;
+    gestHoldModeAction[GESTURE_FIST].setRollSensitivity(5);
     initOkay &= gestHoldModeAction[GESTURE_FIST].addToActionMap(ad, kybdCmds::VOLUME_UP);
     ad.anglePositive = false;
     initOkay &= gestHoldModeAction[GESTURE_FIST].addToActionMap(ad, kybdCmds::VOLUME_DOWN);
 
     ad.angleType = angleData::AngleType::PITCH;
+    gestHoldModeAction[GESTURE_FINGERS_SPREAD].setPitchSensitivity(2);
     ad.anglePositive = true;
     initOkay &= gestHoldModeAction[GESTURE_FINGERS_SPREAD].addToActionMap(ad, kybdCmds::UP_ARROW);
     ad.anglePositive = false;
     initOkay &= gestHoldModeAction[GESTURE_FINGERS_SPREAD].addToActionMap(ad, kybdCmds::DOWN_ARROW);
 
     ad.angleType = angleData::AngleType::YAW;
+    gestHoldModeAction[GESTURE_FINGERS_SPREAD].setYawSensitivity(2);
     ad.anglePositive = true;
     initOkay &= gestHoldModeAction[GESTURE_FINGERS_SPREAD].addToActionMap(ad, kybdCmds::RIGHT_ARROW);
     ad.anglePositive = false;
     initOkay &= gestHoldModeAction[GESTURE_FINGERS_SPREAD].addToActionMap(ad, kybdCmds::LEFT_ARROW);
 
-    ad.angleType = angleData::AngleType::PITCH;
-    ad.anglePositive = true;
-    initOkay &= gestHoldModeAction[GESTURE_DOUBLE_TAP].addToActionMap(ad, kybdCmds::ZOOM_IN);
-    ad.anglePositive = false;
-    initOkay &= gestHoldModeAction[GESTURE_DOUBLE_TAP].addToActionMap(ad, kybdCmds::ZOOM_OUT);
-
     ad.angleType = angleData::AngleType::YAW;
+    gestHoldModeAction[GESTURE_WAVE_IN].setYawSensitivity(10);
     ad.anglePositive = false;
     initOkay &= gestHoldModeAction[GESTURE_WAVE_IN].addToActionMap(ad, kybdCmds::UNDO);
     ad.anglePositive = true;
@@ -495,10 +496,11 @@ bool MyoTranslationFilter::initGestHoldModeActionArr(void)
 
 void MyoTranslationFilter::unregisterHoldModeActions(void)
 {
-    for (int i = 0; i < NUM_GESTURES; i++)
-    {
-        gestHoldModeAction[i].clearMap();
-    }
+    // TODO - re-add this - Jorden July 7 RE ADD THIS!!! And then fix profiles.xml to parse holds properly.
+//    for (int i = 0; i < NUM_GESTURES; i++)
+//    {
+//        gestHoldModeAction[i].clearMap();
+//    }
 }
 
 filterError MyoTranslationFilter::updateBasedOnProfile(ProfileManager& pm, std::string name)
@@ -575,4 +577,28 @@ filterError MyoTranslationFilter::updateBasedOnProfile(ProfileManager& pm, std::
     }
 
     return filterError::NO_FILTER_ERROR;
+}
+
+void MyoTranslationFilter::updateHoldModeObserver(midasMode currMode)
+{
+
+    if (currMode == GESTURE_HOLD_ONE ||
+        currMode == GESTURE_HOLD_TWO ||
+        currMode == GESTURE_HOLD_THREE ||
+        currMode == GESTURE_HOLD_FOUR ||
+        currMode == GESTURE_HOLD_FIVE)
+    {
+        if (hmo == NULL)
+        {
+            hmo = new HoldModeObserver(myoStateHandle, controlStateHandle->getSCD(), &gestHoldModeAction[midasHoldModeToMyoPose(currMode).type()]);// , 1000, HoldModeObserver::ABS_DELTA_FINITE, 2000, 2000);
+            hmo->kickOffObserver();
+        }
+    }
+    else
+    {
+        if (hmo != NULL)
+        {
+            hmo->kill(); hmo = NULL;
+        }
+    }
 }

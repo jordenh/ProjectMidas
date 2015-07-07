@@ -21,6 +21,7 @@
 #define _MYO_COMMON_H
 
 #include "myo\myo.hpp"
+#include "MidasCommon.h"
 #include <qpixmap.h>
 
 #define CENTER_MAIN "Space"
@@ -152,4 +153,41 @@ static std::string buzzFeedbackModeToString(buzzFeedbackMode bfm)
     }
 }
 
+static midasMode myoPoseToMidasHoldMode(myo::Pose pose)
+{
+    switch (pose.type())
+    {
+    case Pose::doubleTap:
+        return GESTURE_HOLD_ONE;
+    case Pose::fingersSpread:
+        return GESTURE_HOLD_TWO;
+    case Pose::fist:
+        return GESTURE_HOLD_THREE;
+    case Pose::waveIn:
+        return GESTURE_HOLD_FOUR;
+    case Pose::waveOut:
+        return GESTURE_HOLD_FIVE;
+    default:
+        return GESTURE_HOLD_FIVE;
+    }
+}
+
+static myo::Pose midasHoldModeToMyoPose(midasMode holdMode)
+{
+    switch (holdMode)
+    {
+    case GESTURE_HOLD_ONE:
+        return Pose::doubleTap;
+    case GESTURE_HOLD_TWO:
+        return Pose::fingersSpread;
+    case GESTURE_HOLD_THREE:
+        return Pose::fist;
+    case GESTURE_HOLD_FOUR:
+        return Pose::waveIn;
+    case GESTURE_HOLD_FIVE:
+        return Pose::waveOut;
+    default:
+        return Pose::waveOut;
+    }
+}
 #endif /* _MYO_COMMON_H */

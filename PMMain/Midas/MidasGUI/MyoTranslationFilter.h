@@ -162,6 +162,8 @@ private:
     bool initGestHoldModeActionArr(void);
     void unregisterHoldModeActions(void);
 
+    void updateHoldModeObserver(midasMode currMode);
+
     ControlState* controlStateHandle; // not owned
     MyoState* myoStateHandle; // not owned
     midasMode previousMode;

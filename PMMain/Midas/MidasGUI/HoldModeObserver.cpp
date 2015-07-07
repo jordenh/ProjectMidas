@@ -28,7 +28,11 @@
 
 HoldModeObserver::HoldModeObserver()
 {
+    commitSuicide = false;
+}
 
+HoldModeObserver::~HoldModeObserver()
+{
 }
 
 HoldModeObserver::HoldModeObserver(MyoState* myoState, SharedCommandData* scd, GestureHoldModeAction* actions, unsigned int callbackPeriod, HoldModeActionType actionType, unsigned int intervalLen, unsigned int velocityIntervalLen) :
@@ -39,6 +43,7 @@ HoldModeObserver::HoldModeObserver(MyoState* myoState, SharedCommandData* scd, G
     prevRoll  = BaseMeasurements::getInstance().getCurrentRoll();
     prevPitch = BaseMeasurements::getInstance().getCurrentPitch();
     prevYaw   = BaseMeasurements::getInstance().getCurrentYaw();
+    commitSuicide = false;
 }
 
 void HoldModeObserver::kickOffObserver()
@@ -54,6 +59,8 @@ void HoldModeObserver::observerThread()
     do {
         std::this_thread::sleep_for(period);
         
+        if (commitSuicide)
+            break;
         // TODO do stuff
         switch (actionType)
         {
@@ -74,6 +81,8 @@ void HoldModeObserver::observerThread()
         prevPitch = BaseMeasurements::getInstance().getCurrentPitch();
         prevYaw = BaseMeasurements::getInstance().getCurrentYaw();
     } while (true);
+
+    delete this;
 }
 
 void HoldModeObserver::handleIntervalDelta()
@@ -96,11 +105,6 @@ void HoldModeObserver::handleIntervalDelta()
 
 void HoldModeObserver::handleAbsDeltaFinite()
 {
-    // TODO - REMOVE! This is TEMP
-    if (myoStateHandle->mostRecentPose() != myo::Pose::fist)
-    {
-        return;
-    }
     float deltaRollDeg = MyoTranslationFilter::radToDeg(MyoTranslationFilter::calcRingDelta(BaseMeasurements::getInstance().getCurrentRoll(), BaseMeasurements::getInstance().getBaseRoll()));
     float deltaPitchDeg = MyoTranslationFilter::radToDeg(MyoTranslationFilter::calcRingDelta(BaseMeasurements::getInstance().getCurrentPitch(), BaseMeasurements::getInstance().getBasePitch()));
     float deltaYawDeg = MyoTranslationFilter::radToDeg(MyoTranslationFilter::calcRingDelta(BaseMeasurements::getInstance().getCurrentYaw(), BaseMeasurements::getInstance().getBaseYaw()));

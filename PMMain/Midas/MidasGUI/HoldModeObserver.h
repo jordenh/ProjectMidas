@@ -41,6 +41,7 @@ public:
     HoldModeObserver();
     HoldModeObserver(MyoState* myoState, SharedCommandData* scd, GestureHoldModeAction* actions, unsigned int callbackPeriod = DEFAULT_CALLBACK_PER, HoldModeActionType actionType = DEFAULT_ACTION_TYPE,
         unsigned int intervalLen = DEFAULT_INTERVAL_LEN, unsigned int velocityIntervalLen = DEFAULT_INTERVAL_LEN);
+    ~HoldModeObserver();
 
     void kickOffObserver();
 
@@ -55,6 +56,8 @@ public:
 
     void setVelocityIntervalLen(unsigned int len) { velocityIntervalLen = len; }
     unsigned int getVelocityIntervalLen() { return velocityIntervalLen; }
+
+    void kill() { commitSuicide = true; }
 
 private:
     // Thread with main logic of observer, alive for state duration,
@@ -97,6 +100,9 @@ private:
     // Vars required for ABS_DELTA_VELOCITY mode
     unsigned int velocityIntervalLen;
     unsigned int velocityCurrIntervalCount;
+
+    // used to stop thread
+    bool commitSuicide;
 };
 
 #endif

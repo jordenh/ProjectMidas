@@ -3,6 +3,31 @@
 <profiles>
 	<profile name="Rotate Model">
         <sequences>
+			<sequence state="lockMode" name="Arrow Keys">
+                <gestures>
+					<gesture type="hold">fingersSpread</gesture>
+                </gestures>
+                <commands>
+				<command type="stateChange">
+                    <actions>
+                        <action>gestureHoldTwo</action>
+                    </actions>
+                </command>
+				</commands>
+            </sequence>
+			<sequence state="gestureHoldTwo" name="Release">
+                <gestures>
+					<gesture type="immediate">rest</gesture>
+                </gestures>
+                <commands>
+				<command type="stateChange">
+                    <actions>
+                        <action>lockMode</action>
+                    </actions>
+                </command>
+				</commands>
+            </sequence>
+		
 			<sequence state="lockMode" name="Control Mouse">
                 <gestures>
 					<gesture type="tap">fingersSpread</gesture>

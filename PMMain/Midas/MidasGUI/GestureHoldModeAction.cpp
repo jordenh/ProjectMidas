@@ -20,6 +20,7 @@
 #include "GestureHoldModeAction.h"
 
 GestureHoldModeAction::GestureHoldModeAction() {
+    rollSensitivity = 1; pitchSensitivity = 1; yawSensitivity = 1;
 }
 
 GestureHoldModeAction::GestureHoldModeAction(float rollSensitivity, float pitchSensitivity, float yawSensitivity) : 
