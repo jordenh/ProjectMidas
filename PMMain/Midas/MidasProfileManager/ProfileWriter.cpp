@@ -175,11 +175,7 @@ Profile ProfileWriter::extractProfileInformation(const boost::property_tree::ptr
         {
             Hold currHold;
             std::string gesture = vt.second.get<std::string>("<xmlattr>.gesture");
-            std::string holdModeActionType = vt.second.get_child("holdModeActionType").get_value<std::string>();
-            unsigned int intervalLen = vt.second.get_child("intervalLength").get_value<unsigned int>();
             currHold.gesture = gesture;
-            currHold.holdModeActionType = holdModeActionType;
-            currHold.intervalLen = intervalLen;
 
             BOOST_FOREACH(const ptree::value_type & angleVt, vt.second)
             {
@@ -197,6 +193,11 @@ Profile ProfileWriter::extractProfileInformation(const boost::property_tree::ptr
                     currHold.angles.push_back(currAngle);
                 }
             }
+
+            std::string holdModeActionType = vt.second.get_child("holdModeActionType").get_value<std::string>();
+            unsigned int intervalLen = vt.second.get_child("intervalLength").get_value<unsigned int>();
+            currHold.holdModeActionType = holdModeActionType;
+            currHold.intervalLen = intervalLen;
 
             pr.holds.push_back(currHold);
         }

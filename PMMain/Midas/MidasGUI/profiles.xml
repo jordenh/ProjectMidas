@@ -275,9 +275,9 @@
                     <angleNegative>leftArrow</angleNegative>
 					<sensitivity>3</sensitivity>
                 </angle>
+				<holdModeActionType>absDeltaFinite</holdModeActionType>
+				<intervalLength>100</intervalLength>
             </hold>
-			<holdModeActionType>absDeltaFinite</holdModeActionType>
-			<intervalLength>100</intervalLength>
         </holds>
     </profile>
 	<profile name="Draw on Model">
@@ -289,11 +289,11 @@
 					<gesture type="immediate">doubleTap</gesture>
                 </gestures>
                 <commands>
-				<command type="stateChange">
-                    <actions>
-                        <action>mouseMode2</action>
-                    </actions>
-                </command>
+					<command type="stateChange">
+						<actions>
+							<action>mouseMode2</action>
+						</actions>
+					</command>
 				</commands>
             </sequence>
 			<sequence state="mouseMode2" name="Lock">

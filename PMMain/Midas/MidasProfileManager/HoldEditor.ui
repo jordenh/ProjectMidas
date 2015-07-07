@@ -36,13 +36,8 @@
     </rect>
    </property>
    <property name="currentText">
-    <string>doubleTap</string>
+    <string>fist</string>
    </property>
-   <item>
-    <property name="text">
-     <string>doubleTap</string>
-    </property>
-   </item>
    <item>
     <property name="text">
      <string>fist</string>
