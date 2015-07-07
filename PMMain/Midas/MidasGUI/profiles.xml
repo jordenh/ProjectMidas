@@ -265,11 +265,6 @@
         </sequences>
         <holds>
 			<hold gesture="fingersSpread">
-                <angle type="pitch">
-                    <anglePositive>upArrow</anglePositive>
-                    <angleNegative>downArrow</angleNegative>
-					<sensitivity>3</sensitivity>
-                </angle>
                 <angle type="yaw">
                     <anglePositive>rightArrow</anglePositive>
                     <angleNegative>leftArrow</angleNegative>

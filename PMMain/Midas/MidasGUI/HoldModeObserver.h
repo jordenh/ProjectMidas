@@ -22,9 +22,7 @@
 
 #include "MidasCommon.h"
 
-#define DEFAULT_CALLBACK_PER 20
-#define DEFAULT_INTERVAL_LEN 100
-#define DEFAULT_ACTION_TYPE HoldModeActionType::ABS_DELTA_FINITE
+#define DEFAULT_CALLBACK_PER 50
 
 class MyoState;
 class GestureHoldModeAction;
@@ -33,8 +31,7 @@ class SharedCommandData;
 class HoldModeObserver {
 public:
     HoldModeObserver();
-    HoldModeObserver(MyoState* myoState, SharedCommandData* scd, GestureHoldModeAction* actions, unsigned int callbackPeriod = DEFAULT_CALLBACK_PER, HoldModeActionType actionType = DEFAULT_ACTION_TYPE,
-        unsigned int intervalLen = DEFAULT_INTERVAL_LEN, unsigned int velocityIntervalLen = DEFAULT_INTERVAL_LEN);
+    HoldModeObserver(MyoState* myoState, SharedCommandData* scd, GestureHoldModeAction* actions, unsigned int callbackPeriod = DEFAULT_CALLBACK_PER);
     ~HoldModeObserver();
 
     void kickOffObserver();

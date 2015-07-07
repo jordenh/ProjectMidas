@@ -23,6 +23,10 @@
 #include "MidasCommon.h"
 #include <unordered_map>
 
+#define DEFAULT_SENSITIVITY 1
+#define DEFAULT_INTERVAL_LEN 100
+#define DEFAULT_ACTION_TYPE HoldModeActionType::ABS_DELTA_FINITE
+
 typedef struct angleData {
     bool operator==(const angleData& ad)
     {
@@ -68,7 +72,7 @@ public:
     GestureHoldModeAction();
     GestureHoldModeAction(float rollSensitivity, float pitchSensitivity, float yawSensitivity);
 
-    void clearMap();
+    void clean();
 
     bool addToActionMap(angleData ad, kybdCmds command);
 
@@ -104,10 +108,8 @@ private:
 
     // Vars required for INTERVAL_DELTA mode
     unsigned int intervalLen;
-    unsigned int currIntervalCount;
     // Vars required for ABS_DELTA_VELOCITY mode
     unsigned int velocityIntervalLen;
-    unsigned int velocityCurrIntervalCount;
 
     std::unordered_map<int, kybdCmds> actionMap;    
 };

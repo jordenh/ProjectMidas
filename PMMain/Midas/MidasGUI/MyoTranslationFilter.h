@@ -172,6 +172,24 @@ private:
         roll, baseRoll, prevRoll, deltaRollDeg;
 
     HoldModeObserver *hmo;
+    int gestHoldModeActionIdx(midasMode mode)
+    {
+        switch (mode)
+        {
+        case GESTURE_HOLD_ONE:
+            return GESTURE_DOUBLE_TAP;
+        case GESTURE_HOLD_TWO:
+            return GESTURE_FINGERS_SPREAD;
+        case GESTURE_HOLD_THREE:
+            return GESTURE_FIST;
+        case GESTURE_HOLD_FOUR:
+            return GESTURE_WAVE_IN;
+        case GESTURE_HOLD_FIVE:
+            return GESTURE_WAVE_OUT;
+        default:
+            return GESTURE_WAVE_OUT;
+        }
+    }
     GestureHoldModeAction gestHoldModeAction[5];
 
     MainGUI *mainGui; // not owned

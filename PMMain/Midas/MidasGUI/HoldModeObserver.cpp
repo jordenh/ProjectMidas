@@ -35,7 +35,7 @@ HoldModeObserver::~HoldModeObserver()
 {
 }
 
-HoldModeObserver::HoldModeObserver(MyoState* myoState, SharedCommandData* scd, GestureHoldModeAction* actions, unsigned int callbackPeriod, HoldModeActionType actionType, unsigned int intervalLen, unsigned int velocityIntervalLen) :
+HoldModeObserver::HoldModeObserver(MyoState* myoState, SharedCommandData* scd, GestureHoldModeAction* actions, unsigned int callbackPeriod) :
     sharedCommandDataHandle(scd), myoStateHandle(myoState), actions(actions), callbackPeriod(callbackPeriod), currIntervalCount(0), velocityCurrIntervalCount(0), 
     // actionType(actionType), intervalLen(intervalLen),  velocityIntervalLen(velocityIntervalLen), 
     currRollExecuted(0), currPitchExecuted(0), currYawExecuted(0)
@@ -87,20 +87,28 @@ void HoldModeObserver::observerThread()
 
 void HoldModeObserver::handleIntervalDelta()
 {
-    float deltaRollDeg  = MyoTranslationFilter::radToDeg(MyoTranslationFilter::calcRingDelta(BaseMeasurements::getInstance().getCurrentRoll() , prevRoll));
-    float deltaPitchDeg = MyoTranslationFilter::radToDeg(MyoTranslationFilter::calcRingDelta(BaseMeasurements::getInstance().getCurrentPitch(), prevPitch));
-    float deltaYawDeg   = MyoTranslationFilter::radToDeg(MyoTranslationFilter::calcRingDelta(BaseMeasurements::getInstance().getCurrentYaw(), prevYaw));
-    
-    int rollTicks = deltaRollDeg / actions->getRollSensitivity();
-    int pitchTicks = deltaPitchDeg / actions->getPitchSensitivity();
-    int yawTicks = deltaYawDeg / actions->getYawSensitivity();
-    
-    // if 0, will return associated negative cmd, but wont be executed (so its safe).
-    kybdCmds rollCmd = actions->getAction(angleData(angleData::AngleType::ROLL, rollTicks > 0));
-    kybdCmds pitchCmd = actions->getAction(angleData(angleData::AngleType::PITCH, pitchTicks > 0));
-    kybdCmds yawCmd = actions->getAction(angleData(angleData::AngleType::YAW, yawTicks > 0));
+    if (currIntervalCount >= actions->getIntervalLen())
+    {
+        currIntervalCount = 0;
+        float deltaRollDeg = MyoTranslationFilter::radToDeg(MyoTranslationFilter::calcRingDelta(BaseMeasurements::getInstance().getCurrentRoll(), prevRoll));
+        float deltaPitchDeg = MyoTranslationFilter::radToDeg(MyoTranslationFilter::calcRingDelta(BaseMeasurements::getInstance().getCurrentPitch(), prevPitch));
+        float deltaYawDeg = MyoTranslationFilter::radToDeg(MyoTranslationFilter::calcRingDelta(BaseMeasurements::getInstance().getCurrentYaw(), prevYaw));
 
-    executeCommands(rollCmd, abs(rollTicks), pitchCmd, abs(pitchTicks), yawCmd, abs(yawTicks));
+        int rollTicks = deltaRollDeg / actions->getRollSensitivity();
+        int pitchTicks = deltaPitchDeg / actions->getPitchSensitivity();
+        int yawTicks = deltaYawDeg / actions->getYawSensitivity();
+
+        // if 0, will return associated negative cmd, but wont be executed (so its safe).
+        kybdCmds rollCmd = actions->getAction(angleData(angleData::AngleType::ROLL, rollTicks > 0));
+        kybdCmds pitchCmd = actions->getAction(angleData(angleData::AngleType::PITCH, pitchTicks > 0));
+        kybdCmds yawCmd = actions->getAction(angleData(angleData::AngleType::YAW, yawTicks > 0));
+
+        executeCommands(rollCmd, abs(rollTicks), pitchCmd, abs(pitchTicks), yawCmd, abs(yawTicks));
+    }
+    else
+    {
+        currIntervalCount += callbackPeriod;
+    }
 }
 
 void HoldModeObserver::handleAbsDeltaFinite()
@@ -157,20 +165,27 @@ void HoldModeObserver::handleAbsDeltaFinite()
 
 void HoldModeObserver::handleAbsDeltaVelocity()
 {
-    float deltaRollDeg = MyoTranslationFilter::radToDeg(MyoTranslationFilter::calcRingDelta(BaseMeasurements::getInstance().getCurrentRoll(), BaseMeasurements::getInstance().getBaseRoll()));
-    float deltaPitchDeg = MyoTranslationFilter::radToDeg(MyoTranslationFilter::calcRingDelta(BaseMeasurements::getInstance().getCurrentPitch(), BaseMeasurements::getInstance().getBasePitch()));
-    float deltaYawDeg = MyoTranslationFilter::radToDeg(MyoTranslationFilter::calcRingDelta(BaseMeasurements::getInstance().getCurrentYaw(), BaseMeasurements::getInstance().getBaseYaw()));
-    
-    int rollTicks = deltaRollDeg / actions->getRollSensitivity();
-    int pitchTicks = deltaPitchDeg / actions->getPitchSensitivity();
-    int yawTicks = deltaYawDeg / actions->getYawSensitivity();
-    
-    // if 0, will return associated negative cmd, but wont be executed (so its safe).
-    kybdCmds rollCmd = actions->getAction(angleData(angleData::AngleType::ROLL, rollTicks > 0));
-    kybdCmds pitchCmd = actions->getAction(angleData(angleData::AngleType::PITCH, pitchTicks > 0));
-    kybdCmds yawCmd = actions->getAction(angleData(angleData::AngleType::YAW, yawTicks > 0));
-    
-    executeCommands(rollCmd, abs(rollTicks), pitchCmd, abs(pitchTicks), yawCmd, abs(yawTicks));
+    if (velocityCurrIntervalCount >= actions->getVelocityIntervalLen())
+    {
+        float deltaRollDeg = MyoTranslationFilter::radToDeg(MyoTranslationFilter::calcRingDelta(BaseMeasurements::getInstance().getCurrentRoll(), BaseMeasurements::getInstance().getBaseRoll()));
+        float deltaPitchDeg = MyoTranslationFilter::radToDeg(MyoTranslationFilter::calcRingDelta(BaseMeasurements::getInstance().getCurrentPitch(), BaseMeasurements::getInstance().getBasePitch()));
+        float deltaYawDeg = MyoTranslationFilter::radToDeg(MyoTranslationFilter::calcRingDelta(BaseMeasurements::getInstance().getCurrentYaw(), BaseMeasurements::getInstance().getBaseYaw()));
+
+        int rollTicks = deltaRollDeg / actions->getRollSensitivity();
+        int pitchTicks = deltaPitchDeg / actions->getPitchSensitivity();
+        int yawTicks = deltaYawDeg / actions->getYawSensitivity();
+
+        // if 0, will return associated negative cmd, but wont be executed (so its safe).
+        kybdCmds rollCmd = actions->getAction(angleData(angleData::AngleType::ROLL, rollTicks > 0));
+        kybdCmds pitchCmd = actions->getAction(angleData(angleData::AngleType::PITCH, pitchTicks > 0));
+        kybdCmds yawCmd = actions->getAction(angleData(angleData::AngleType::YAW, yawTicks > 0));
+
+        executeCommands(rollCmd, abs(rollTicks), pitchCmd, abs(pitchTicks), yawCmd, abs(yawTicks));
+    }
+    else
+    {
+        currIntervalCount += callbackPeriod;
+    }
 }
 
 void HoldModeObserver::executeCommands(kybdCmds rollCmd, unsigned int rollTicks, kybdCmds pitchCmd, unsigned int pitchTicks, kybdCmds yawCmd, unsigned int yawTicks)

@@ -480,7 +480,7 @@ void MyoTranslationFilter::unregisterHoldModeActions(void)
 {
     for (int i = 0; i < NUM_GESTURES; i++)
     {
-        gestHoldModeAction[i].clearMap();
+        gestHoldModeAction[i].clean();
     }
 }
 
@@ -577,7 +577,7 @@ void MyoTranslationFilter::updateHoldModeObserver(midasMode currMode)
     {
         if (hmo == NULL)
         {
-            hmo = new HoldModeObserver(myoStateHandle, controlStateHandle->getSCD(), &gestHoldModeAction[midasHoldModeToMyoPose(currMode).type()]);// , 1000, HoldModeObserver::ABS_DELTA_FINITE, 2000, 2000);
+            hmo = new HoldModeObserver(myoStateHandle, controlStateHandle->getSCD(), &gestHoldModeAction[gestHoldModeActionIdx(currMode)]);
             hmo->kickOffObserver();
         }
     }
