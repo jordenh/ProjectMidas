@@ -30,10 +30,6 @@
 #include "myo\myo.hpp"
 #include <iostream>
 
-/* Test Code - TODO - remove */
-GestureHoldModeAction actions;
-/*  */
-
 SettingsSignaller MyoTranslationFilter::settingsSignaller;
 
 MyoTranslationFilter::MyoTranslationFilter(ControlState* controlState, MyoState* myoState, MainGUI *mainGuiHandle)
@@ -55,20 +51,6 @@ MyoTranslationFilter::MyoTranslationFilter(ControlState* controlState, MyoState*
     }
 
     hmo = NULL;
-    /* Test Code - TODO - remove */
-//   actions.setRollSensitivity(3);
-//   actions.setPitchSensitivity(1);
-//   actions.setYawSensitivity(1);
-//   actions.addToActionMap(angleData(angleData::AngleType::YAW, true), kybdCmds::RIGHT_ARROW);
-//   actions.addToActionMap(angleData(angleData::AngleType::YAW, false), kybdCmds::LEFT_ARROW);
-//   actions.addToActionMap(angleData(angleData::AngleType::PITCH, true), kybdCmds::UP_ARROW);
-//   actions.addToActionMap(angleData(angleData::AngleType::PITCH, false), kybdCmds::DOWN_ARROW);
-//   //actions.addToActionMap(angleData(angleData::AngleType::ROLL, true), kybdCmds::VOLUME_UP);
-//   //actions.addToActionMap(angleData(angleData::AngleType::ROLL, false), kybdCmds::VOLUME_DOWN);
-//
-//   hmo = new HoldModeObserver(myoState, controlState->getSCD(), &actions);// , 1000, HoldModeObserver::ABS_DELTA_FINITE, 2000, 2000);
-//   hmo->kickOffObserver();
-    //*********************************
 }
 
 MyoTranslationFilter::~MyoTranslationFilter()
@@ -496,11 +478,10 @@ bool MyoTranslationFilter::initGestHoldModeActionArr(void)
 
 void MyoTranslationFilter::unregisterHoldModeActions(void)
 {
-    // TODO - re-add this - Jorden July 7 RE ADD THIS!!! And then fix profiles.xml to parse holds properly.
-//    for (int i = 0; i < NUM_GESTURES; i++)
-//    {
-//        gestHoldModeAction[i].clearMap();
-//    }
+    for (int i = 0; i < NUM_GESTURES; i++)
+    {
+        gestHoldModeAction[i].clearMap();
+    }
 }
 
 filterError MyoTranslationFilter::updateBasedOnProfile(ProfileManager& pm, std::string name)

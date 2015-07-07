@@ -264,6 +264,16 @@
             </sequence>
         </sequences>
         <holds>
+			<hold gesture="fingersSpread">
+                <angle type="pitch">
+                    <anglePositive>upArrow</anglePositive>
+                    <angleNegative>downArrow</angleNegative>
+                </angle>
+                <angle type="yaw">
+                    <anglePositive>rightArrow</anglePositive>
+                    <angleNegative>leftArrow</angleNegative>
+                </angle>
+            </hold>
         </holds>
     </profile>
 	<profile name="Draw on Model">
