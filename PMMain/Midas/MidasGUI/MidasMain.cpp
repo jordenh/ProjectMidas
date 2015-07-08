@@ -28,7 +28,6 @@
 #include "MidasThread.h"
 #include "ProfileManager.h"
 #include "SCDDigester.h"
-#include "kybrdCtrl.h"
 #include "MouseCtrl.h"
 #include "WearableDevice.h"
 #include "SharedCommandData.h"
@@ -124,16 +123,15 @@ int midasMain(MidasThread *threadHandle, MainGUI *mainGui, ProfileManager *pm) {
 	MyoDevice* myoDevice = new MyoDevice(&sharedData, &controlState, &myoState, "com.midas.midas-test", mainGui, pm);
     myoState.setMyo(myoDevice);
     MouseCtrl* mouseCtrl = new MouseCtrl();
-    KybrdCtrl* kybrdCtrl = new KybrdCtrl();
 	KeyboardController* keyboardController = new KeyboardController();
 
     // Kick off device thread
     startWearableDeviceListener(myoDevice); // TODO - add a flag in myoDevice to see if it is running. Don't enter 'while true' until running.
 
 #ifdef BUILD_KEYBOARD
-	SCDDigester scdDigester(&sharedData, threadHandle, &controlState, &myoState, mouseCtrl, kybrdCtrl,keyboardController, pm, kybrdRingData);
+	SCDDigester scdDigester(&sharedData, threadHandle, &controlState, &myoState, mouseCtrl, keyboardController, pm, kybrdRingData);
 #else
-	SCDDigester scdDigester(&sharedData, threadHandle, &controlState, &myoState, mouseCtrl, kybrdCtrl, keyboardController, pm);
+	SCDDigester scdDigester(&sharedData, threadHandle, &controlState, &myoState, mouseCtrl, keyboardController, pm);
 #endif
 
     while (true)
@@ -146,7 +144,6 @@ int midasMain(MidasThread *threadHandle, MainGUI *mainGui, ProfileManager *pm) {
 
 	delete myoDevice;
 	delete mouseCtrl;
-	delete kybrdCtrl;
 	delete keyboardController;
 
 #endif

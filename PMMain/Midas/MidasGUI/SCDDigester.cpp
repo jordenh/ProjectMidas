@@ -27,15 +27,14 @@
 #include "ControlState.h"
 #include "MyoState.h"
 #include "MouseCtrl.h"
-#include "kybrdCtrl.h"
 #include "ProfileManager.h"
 
 #ifdef BUILD_KEYBOARD
 SCDDigester::SCDDigester(SharedCommandData* scd, MidasThread *thread, ControlState *cntrlStateHandle, MyoState* myoStateHandle,
-	MouseCtrl *mouseCtrl, KybrdCtrl *kybrdCtrl, KeyboardController *keyboardController, ProfileManager* profileManagerHandle, std::vector<ringData> *kybrdRingData)
+	MouseCtrl *mouseCtrl, KeyboardController *keyboardController, ProfileManager* profileManagerHandle, std::vector<ringData> *kybrdRingData)
 #else
 SCDDigester::SCDDigester(SharedCommandData* scd, MidasThread *thread, ControlState *cntrlStateHandle, MyoState* myoStateHandle,
-	MouseCtrl *mouseCtrl, KybrdCtrl *kybrdCtrl, KeyboardController *keyboardController, ProfileManager* profileManagerHandle)
+	MouseCtrl *mouseCtrl, KeyboardController *keyboardController, ProfileManager* profileManagerHandle)
 #endif
 {
     this->scdHandle = scd;
@@ -43,7 +42,6 @@ SCDDigester::SCDDigester(SharedCommandData* scd, MidasThread *thread, ControlSta
     this->cntrlStateHandle = cntrlStateHandle;
 	this->myoStateHandle = myoStateHandle;
     this->mouseCtrl = mouseCtrl;
-    this->kybrdCtrl = kybrdCtrl;
 	this->keyboardController = keyboardController;
 
 	this->pm = profileManagerHandle;
@@ -178,6 +176,7 @@ void SCDDigester::digestKeyboardGUIData(CommandData nextCommand)
     if (nextCommand.type == KYBRD_GUI_CMD)
     {
         unsigned int kybdGUISel = scdHandle->getKybdGuiSel();
+        KeyboardVector kiVec;
 
         // handle special commands for keyboard gui updating.
         switch (nextCommand.action.kybdGUI)
@@ -224,8 +223,9 @@ void SCDDigester::digestKeyboardGUIData(CommandData nextCommand)
                 key = CENTER_MAIN_KEY;
             }
 
-            kybrdCtrl->setKeyChar(key);
-            kybrdCtrl->sendData();
+            kiVec.inputCharDownUp(key);
+            keyboardController->setKiVector(kiVec);
+            keyboardController->sendData();
 
             //threadHandle->animateSelection(); // TODO
             
@@ -251,8 +251,9 @@ void SCDDigester::digestKeyboardGUIData(CommandData nextCommand)
                 key = CENTER_HOLD_KEY;
             }
 
-            kybrdCtrl->setKeyChar(key);
-            kybrdCtrl->sendData();
+            kiVec.inputCharDownUp(key);
+            keyboardController->setKiVector(kiVec);
+            keyboardController->sendData();
 
             //threadHandle->animateSelection(); // TODO
 

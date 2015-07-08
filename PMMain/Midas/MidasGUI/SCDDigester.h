@@ -39,7 +39,6 @@ class MidasThread;
 class ControlState;
 class MyoState;
 class MouseCtrl;
-class KybrdCtrl;
 class ProfileManager;
 
 class SCDDigester
@@ -47,10 +46,10 @@ class SCDDigester
 public:
 #ifdef BUILD_KEYBOARD
 	SCDDigester(SharedCommandData* scd, MidasThread *thread, ControlState *cntrlStateHandle, MyoState *myoStateHandle,
-		MouseCtrl *mouseCtrl, KybrdCtrl *kybrdCtrl, KeyboardController *keyboardController, ProfileManager* profileManagerHandle, std::vector<ringData> *kybrdRingData);
+		MouseCtrl *mouseCtrl, KeyboardController *keyboardController, ProfileManager* profileManagerHandle, std::vector<ringData> *kybrdRingData);
 #else
 	SCDDigester(SharedCommandData* scd, MidasThread *thread, ControlState *cntrlStateHandle, MyoState *myoStateHandle,
-		MouseCtrl *mouseCtrl, KybrdCtrl *kybrdCtrl, KeyboardController *keyboardController, ProfileManager* profileManagerHandle);
+		MouseCtrl *mouseCtrl, KeyboardController *keyboardController, ProfileManager* profileManagerHandle);
 #endif
     ~SCDDigester();
 
@@ -75,7 +74,6 @@ private:
     ControlState *cntrlStateHandle; // not owned
     MyoState *myoStateHandle; // not owned
     MouseCtrl *mouseCtrl; // not owned
-    KybrdCtrl *kybrdCtrl; // not owned
     int count;
 
     ProfileManager *pm; // not owned
