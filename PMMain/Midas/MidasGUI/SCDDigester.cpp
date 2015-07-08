@@ -89,7 +89,7 @@ void SCDDigester::digest()
 
     if (consumed && nextCmd.type == commandType::MOUSE_CMD)
     {
-        mouseCtrl->sendCommand(nextCmd.action.mouse);
+        mouseCtrl->sendCommand(nextCmd.action.mouse); // TODO - move into switch statement, and likewise wrap switch with condition on consumed?
     }
 
 	vector2D mouseDelta = scdHandle->getDelta();
@@ -278,7 +278,7 @@ void SCDDigester::digestKybdCmd(CommandData nextCommand)
 	{
 		KeyboardVector vec = KeyboardVector::createFromCommand(nextCommand.action.kybd);
 		keyboardController->setKiVector(vec);
-		keyboardController->sendDataDelayed(10);
+		keyboardController->sendDataDelayed(10); // TODO - modify to try a lower value to see if lag can be reduced. Or change how 'sending delayed' works.
 	}
 }
 

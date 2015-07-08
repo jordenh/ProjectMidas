@@ -88,8 +88,12 @@ MainGUI::MainGUI(MidasThread *mainThread, ProfileManager *pm, int deadZoneRad)
     }
 #endif
 
+#ifdef SHOW_SETTINGS
     settingsDisplayer = new SettingsDisplayer(PROF_INDICATOR_WIDTH, 2*INFO_INDICATOR_HEIGHT, this);
     layout->addWidget(settingsDisplayer, 0, Qt::AlignRight);
+#else
+    settingsDisplayer = NULL;
+#endif
 
 	// create HBox for specific profile icons: Change this icon to be specific to your app
 	QHBoxLayout *profileIconLayout = new QHBoxLayout;
@@ -116,11 +120,15 @@ MainGUI::MainGUI(MidasThread *mainThread, ProfileManager *pm, int deadZoneRad)
 
     totalWidth = std::max(sequenceDisplayer->width(), 
                         (infoIndicator->width() + poseDisplayer->width()));
-    totalHeight = sequenceDisplayer->height() + poseDisplayer->height() +
+    totalHeight = sequenceDisplayer->height() + poseDisplayer->height()
 #ifdef SHOW_PROFILE_BUTTONS
-        profileHeights + 
+    + profileHeights
 #endif
-        settingsDisplayer->height(); 
+#ifdef SHOW_SETTINGS
+    + settingsDisplayer->height()
+#else
+        ;
+#endif
 
     QRect screen = QApplication::desktop()->availableGeometry(this);
     setGeometry(screen.right() - totalWidth - SCREEN_RIGHT_BUFFER,
@@ -152,8 +160,10 @@ MainGUI::~MainGUI()
     sequenceDisplayer = NULL;
     delete poseDisplayer;
     poseDisplayer = NULL;
+#ifdef SHOW_SETTINGS
     delete settingsDisplayer;
     settingsDisplayer = NULL;
+#endif
     delete layout;
     layout = NULL;
 	delete icon0;
@@ -180,10 +190,13 @@ void MainGUI::connectSignallerToKeyboardToggle(GestureSignaller *signaller)
 
 void MainGUI::connectSignallerToSettingsDisplayer(SettingsSignaller *signaller)
 {
-    QObject::connect(settingsDisplayer, SIGNAL(emitSliderValues(unsigned int, unsigned int)),
-        signaller, SLOT(handleSliderValues(unsigned int, unsigned int)));
-    QObject::connect(settingsDisplayer, SIGNAL(emitBuzzFeedbackChange(unsigned int)),
-        signaller, SLOT(handleBuzzFeedbackChange(unsigned int)));
+    if (settingsDisplayer != NULL)
+    {
+        QObject::connect(settingsDisplayer, SIGNAL(emitSliderValues(unsigned int, unsigned int)),
+            signaller, SLOT(handleSliderValues(unsigned int, unsigned int)));
+        QObject::connect(settingsDisplayer, SIGNAL(emitBuzzFeedbackChange(unsigned int)),
+            signaller, SLOT(handleBuzzFeedbackChange(unsigned int)));
+    }
 }
 
 void MainGUI::connectSignallerToProfileWidgets(ProfileSignaller* signaller)
