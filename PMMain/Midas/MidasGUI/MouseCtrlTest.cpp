@@ -1,5 +1,4 @@
 #include "MouseCtrlTest.h"
-#include "kybrdCtrl.h"
 #include <time.h>
 
 void MouseCtrlTest::testMouseSquare(DWORD mouseRate)
@@ -104,10 +103,10 @@ void MouseCtrlTest::testScrollZoomMouse(unsigned int size, int scrollRate)
     size /= scrollRate; // This adjusts it so that the expected loopSize states how many scroll 'clicks' ACTUALLY should happen.
     cout << "Welcome to the Mouse Scroll Test. The mouse will scroll autonomously up/down. Sides not working." << endl;
 
-    KybrdCtrl *kc = new KybrdCtrl();
-    kc->setKeyCmd(kybdCmds::CONTROL, false); // push and hold control.
-    kc->sendData();
-
+//    KybrdCtrl *kc = new KybrdCtrl();
+//    kc->setKeyCmd(kybdCmds::CONTROL, false); // push and hold control.
+//    kc->sendData();
+//
     MouseCtrl *mc = new MouseCtrl();
     mc->setScrollRate(scrollRate);
 
@@ -125,9 +124,9 @@ void MouseCtrlTest::testScrollZoomMouse(unsigned int size, int scrollRate)
         t2 = clock() * (1000 / CLOCKS_PER_SEC);
     }
 
-    kc->setKeyCmd(kybdCmds::CONTROL); // release control.
-    kc->sendData();
+//   kc->setKeyCmd(kybdCmds::CONTROL); // release control.
+//   kc->sendData();
 
     delete mc; mc = NULL;
-    delete kc; kc = NULL;
+//    delete kc; kc = NULL;
 }
