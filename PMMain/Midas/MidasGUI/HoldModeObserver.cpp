@@ -167,6 +167,8 @@ void HoldModeObserver::handleAbsDeltaVelocity()
 {
     if (velocityCurrIntervalCount >= actions->getVelocityIntervalLen())
     {
+        velocityCurrIntervalCount = 0;
+
         float deltaRollDeg = MyoTranslationFilter::radToDeg(MyoTranslationFilter::calcRingDelta(BaseMeasurements::getInstance().getCurrentRoll(), BaseMeasurements::getInstance().getBaseRoll()));
         float deltaPitchDeg = MyoTranslationFilter::radToDeg(MyoTranslationFilter::calcRingDelta(BaseMeasurements::getInstance().getCurrentPitch(), BaseMeasurements::getInstance().getBasePitch()));
         float deltaYawDeg = MyoTranslationFilter::radToDeg(MyoTranslationFilter::calcRingDelta(BaseMeasurements::getInstance().getCurrentYaw(), BaseMeasurements::getInstance().getBaseYaw()));
@@ -184,7 +186,7 @@ void HoldModeObserver::handleAbsDeltaVelocity()
     }
     else
     {
-        currIntervalCount += callbackPeriod;
+        velocityCurrIntervalCount += callbackPeriod;
     }
 }
 

@@ -160,7 +160,7 @@ void MyoTranslationFilter::handleQuatData(filterDataMap input, filterDataMap out
                 gestIdx = 4;
 
             execute:
-                performHoldModeFunc(gestIdx, output);
+                //performHoldModeFunc(gestIdx, output); // Legacy. Not handled like this anymore.
                 break;
             case KEYBOARD_MODE:
                 performeKybdModeFunc(output);
@@ -327,71 +327,71 @@ float MyoTranslationFilter::calcRingDelta(float current, float base)
 
 void MyoTranslationFilter::performHoldModeFunc(unsigned int holdNum, filterDataMap& outputToSharedCommandData)
 {
-    CommandData command;
-    command.type = commandType::KYBRD_CMD;
-    command.name = "HoldMode Command";
-    command.action.kybd = kybdCmds::NO_CMD;
-
-    GestureHoldModeAction currentHoldModeAction = gestHoldModeAction[holdNum];
-    float thresh = .1;
-    
-    CommandData cd;
-    angleData ad;
-    bool tryAction = false;
-
-    ad.angleType = angleData::AngleType::ROLL;
-    if (deltaRollDeg > thresh)
-    {
-        tryAction = true;
-        ad.anglePositive = true;
-        
-    } 
-    else if (deltaRollDeg < -thresh)
-    {
-        tryAction = true;
-        ad.anglePositive = false;
-    }
-    if (tryAction)
-    {
-        command.action.kybd = kybdCmds((unsigned int)command.action.kybd | (unsigned int)currentHoldModeAction.getAction(ad));
-        outputToSharedCommandData[COMMAND_INPUT] = command;
-    }
-
-    tryAction = false;
-    ad.angleType = angleData::AngleType::PITCH;
-    if (deltaPitchDeg > thresh)
-    {
-        tryAction = true;
-        ad.anglePositive = true;
-    }
-    else if (deltaPitchDeg < -thresh)
-    {
-        tryAction = true;
-        ad.anglePositive = false;
-    }
-    if (tryAction)
-    {
-        command.action.kybd = kybdCmds((unsigned int)command.action.kybd | (unsigned int)currentHoldModeAction.getAction(ad));
-        outputToSharedCommandData[COMMAND_INPUT] = command;
-    }
-
-    tryAction = false;
-    ad.angleType = angleData::AngleType::YAW;
-    if (deltaYawDeg > thresh)
-    {
-        tryAction = true;
-        ad.anglePositive = true;
-    }
-    else if (deltaYawDeg < -thresh)
-    {
-        tryAction = true;
-        ad.anglePositive = false;
-    }
-    if (tryAction)
-    {
-        command.action.kybd = kybdCmds((unsigned int)command.action.kybd | (unsigned int)currentHoldModeAction.getAction(ad));
-        outputToSharedCommandData[COMMAND_INPUT] = command;
-    }
+//    CommandData command;
+//    command.type = commandType::KYBRD_CMD;
+//    command.name = "HoldMode Command";
+//    command.action.kybd = kybdCmds::NO_CMD;
+//
+//    GestureHoldModeAction currentHoldModeAction = gestHoldModeAction[holdNum];
+//    float thresh = .1;
+//    
+//    CommandData cd;
+//    angleData ad;
+//    bool tryAction = false;
+//
+//    ad.angleType = angleData::AngleType::ROLL;
+//    if (deltaRollDeg > thresh)
+//    {
+//        tryAction = true;
+//        ad.anglePositive = true;
+//        
+//    } 
+//    else if (deltaRollDeg < -thresh)
+//    {
+//        tryAction = true;
+//        ad.anglePositive = false;
+//    }
+//    if (tryAction)
+//    {
+//        command.action.kybd = kybdCmds((unsigned int)command.action.kybd | (unsigned int)currentHoldModeAction.getAction(ad));
+//        outputToSharedCommandData[COMMAND_INPUT] = command;
+//    }
+//
+//    tryAction = false;
+//    ad.angleType = angleData::AngleType::PITCH;
+//    if (deltaPitchDeg > thresh)
+//    {
+//        tryAction = true;
+//        ad.anglePositive = true;
+//    }
+//    else if (deltaPitchDeg < -thresh)
+//    {
+//        tryAction = true;
+//        ad.anglePositive = false;
+//    }
+//    if (tryAction)
+//    {
+//        command.action.kybd = kybdCmds((unsigned int)command.action.kybd | (unsigned int)currentHoldModeAction.getAction(ad));
+//        outputToSharedCommandData[COMMAND_INPUT] = command;
+//    }
+//
+//    tryAction = false;
+//    ad.angleType = angleData::AngleType::YAW;
+//    if (deltaYawDeg > thresh)
+//    {
+//        tryAction = true;
+//        ad.anglePositive = true;
+//    }
+//    else if (deltaYawDeg < -thresh)
+//    {
+//        tryAction = true;
+//        ad.anglePositive = false;
+//    }
+//    if (tryAction)
+//    {
+//        command.action.kybd = kybdCmds((unsigned int)command.action.kybd | (unsigned int)currentHoldModeAction.getAction(ad));
+//        outputToSharedCommandData[COMMAND_INPUT] = command;
+//    }
 }
 
 void MyoTranslationFilter::performMouseModeFunc(filterDataMap& outputToSharedCommandData)
@@ -531,6 +531,7 @@ filterError MyoTranslationFilter::updateBasedOnProfile(ProfileManager& pm, std::
 
         gestHoldModeAction[gestType].setActionType(holdModeActionTypeMap[it->holdModeActionType]);
         gestHoldModeAction[gestType].setIntervalLen(it->intervalLen);
+        gestHoldModeAction[gestType].setVelocityIntervalLen(it->intervalLen);
 
         for (std::vector<angleAction>::iterator angleIt = it->angles.begin(); angleIt != it->angles.end(); ++angleIt)
         {

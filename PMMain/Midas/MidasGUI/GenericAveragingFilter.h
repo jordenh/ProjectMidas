@@ -34,7 +34,7 @@ class GenericAveragingFilter : public Filter
 public:
     /* Basic Construction/Destruction */
     GenericAveragingFilter(unsigned int avgCount, std::string inputMapKey) : avgCount(avgCount), inputMapKey(inputMapKey) {}
-    ~GenericAveragingFilter() {}
+    ~GenericAveragingFilter();
 
     /**
     * Access data from Inputs, average the data

@@ -1,4 +1,5 @@
 <?-- this is a comment! -->
+<?-- holdModeActionType absDeltaFinite holdModeActionType -->
 <?xml version="1.0" encoding="utf-8"?>
 <profiles>
 	<profile name="Rotate Model">
@@ -268,9 +269,9 @@
                 <angle type="yaw">
                     <anglePositive>rightArrow</anglePositive>
                     <angleNegative>leftArrow</angleNegative>
-					<sensitivity>3</sensitivity>
+					<sensitivity>10</sensitivity>
                 </angle>
-				<holdModeActionType>absDeltaFinite</holdModeActionType>
+				<holdModeActionType>absDeltaVelocity</holdModeActionType>
 				<intervalLength>100</intervalLength>
             </hold>
         </holds>
