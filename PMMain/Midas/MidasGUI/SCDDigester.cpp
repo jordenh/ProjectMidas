@@ -268,6 +268,8 @@ void SCDDigester::digestKybdCmd(CommandData nextCommand)
 {
 	if (nextCommand.action.kybd == kybdCmds::INPUT_VECTOR)
 	{
+        // handle INPUT_VECTOR seperately as KiVector needs to be populated
+        // with each character from the vector.
 		keyboardController->setKiVector(nextCommand.keyboardVector);
 		keyboardController->sendData();
 	}

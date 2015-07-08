@@ -1,20 +1,20 @@
 /*
-Copyright (C) 2015 Midas
+    Copyright (C) 2015 Midas
 
-This library is free software; you can redistribute it and/or
-modify it under the terms of the GNU Lesser General Public
-License as published by the Free Software Foundation; either
-version 2.1 of the License, or (at your option) any later version.
+    This library is free software; you can redistribute it and/or
+    modify it under the terms of the GNU Lesser General Public
+    License as published by the Free Software Foundation; either
+    version 2.1 of the License, or (at your option) any later version.
 
-This library is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-Lesser General Public License for more details.
+    This library is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+    Lesser General Public License for more details.
 
-You should have received a copy of the GNU Lesser General Public
-License along with this library; if not, write to the Free Software
-Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
-USA
+    You should have received a copy of the GNU Lesser General Public
+    License along with this library; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
+    USA
 */
 
 #include "ProfileWriter.h"
@@ -83,6 +83,8 @@ void ProfileWriter::writeProfile(boost::property_tree::ptree &profileNode, Profi
         {
             ptree &holdNode = profileNode.add("holds.hold", "");
             holdNode.put("<xmlattr>.gesture", hold.gesture);
+            holdNode.add("holdModeActionType", hold.holdModeActionType);
+            holdNode.add("intervalLength", hold.intervalLen);
 
             BOOST_FOREACH(AngleAction angleAction, hold.angles)
             {
@@ -91,6 +93,7 @@ void ProfileWriter::writeProfile(boost::property_tree::ptree &profileNode, Profi
 
                 angleNode.add("anglePositive", angleAction.anglePositive);
                 angleNode.add("angleNegative", angleAction.angleNegative);
+                angleNode.add("sensitivity", angleAction.sensitivity);
             }
         }
     }
@@ -182,12 +185,19 @@ Profile ProfileWriter::extractProfileInformation(const boost::property_tree::ptr
                     std::string angleType = angleVt.second.get<std::string>("<xmlattr>.type");
                     std::string anglePositive = angleVt.second.get_child("anglePositive").get_value<std::string>();
                     std::string angleNegative = angleVt.second.get_child("angleNegative").get_value<std::string>();
+                    unsigned int angleSensitivity = angleVt.second.get_child("sensitivity").get_value<unsigned int>();
                     currAngle.anglePositive = anglePositive;
                     currAngle.angleNegative = angleNegative;
+                    currAngle.sensitivity = angleSensitivity;
                     currAngle.type = angleType;
                     currHold.angles.push_back(currAngle);
                 }
             }
+
+            std::string holdModeActionType = vt.second.get_child("holdModeActionType").get_value<std::string>();
+            unsigned int intervalLen = vt.second.get_child("intervalLength").get_value<unsigned int>();
+            currHold.holdModeActionType = holdModeActionType;
+            currHold.intervalLen = intervalLen;
 
             pr.holds.push_back(currHold);
         }

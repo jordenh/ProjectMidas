@@ -43,9 +43,9 @@ GestureFilter::GestureFilter(ControlState* controlState, MyoState* myoState, clo
     imageManager.loadImages();
     gestSeqRecorder = new GestureSeqRecorder(controlState, mainGuiHandle, imageManager);
 
-    registerMouseSequences();
-    registerKeyboardSequences();
-    registerStateSequences();
+    defaultMouseSequences();
+    defaultKeyboardSequences();
+    defaultStateSequences();
 
     controlStateHandle = controlState;
 	myoStateHandle = myoState;
@@ -168,7 +168,7 @@ void GestureFilter::emitPoseData(int poseInt)
     }
 }
 
-void GestureFilter::registerMouseSequences(void)
+void GestureFilter::defaultMouseSequences(void)
 {
     // Register sequence to left click in mouse mode and gesture mode
     sequence clickSeq;
@@ -208,7 +208,7 @@ void GestureFilter::registerMouseSequences(void)
     }
 }
 
-void GestureFilter::registerKeyboardSequences(void)
+void GestureFilter::defaultKeyboardSequences(void)
 {
     sequence kybrdGUISequence;
     CommandData kybrdGUIResponse;
@@ -264,7 +264,7 @@ void GestureFilter::registerKeyboardSequences(void)
     }
 }
 
-void GestureFilter::registerStateSequences(void)
+void GestureFilter::defaultStateSequences(void)
 {
     // Register sequence from lock to Mouse Mode
     sequence lockToMouseSeq;
@@ -451,21 +451,17 @@ void GestureFilter::handleStateChange(CommandData response, GestureFilter *gf)
 filterDataMap GestureFilter::handleMouseCommand(CommandData response)
 {
 	filterDataMap outputToSharedCommandData;
-    if (controlStateHandle->getMode() == midasMode::MOUSE_MODE ||
-        controlStateHandle->getMode() == midasMode::MOUSE_MODE2 ||
-        controlStateHandle->getMode() == midasMode::GESTURE_MODE)
+
+    CommandData command;
+    command = response;
+
+    outputToSharedCommandData[COMMAND_INPUT] = command;
+    Filter::setOutput(outputToSharedCommandData);
+
+    buzzFeedbackMode bfm = settingsSignaller.getBuzzFeedbackMode();
+    if (bfm >= buzzFeedbackMode::ALLACTIONS)
     {
-        CommandData command;
-        command = response;
-
-        outputToSharedCommandData[COMMAND_INPUT] = command;
-        Filter::setOutput(outputToSharedCommandData);
-
-        buzzFeedbackMode bfm = settingsSignaller.getBuzzFeedbackMode();
-        if (bfm >= buzzFeedbackMode::ALLACTIONS)
-        {
-            myoStateHandle->peakMyo()->vibrateMyos(myo::Myo::VibrationType::vibrationShort);
-        }
+        myoStateHandle->peakMyo()->vibrateMyos(myo::Myo::VibrationType::vibrationShort);
     }
 	return outputToSharedCommandData;
 }

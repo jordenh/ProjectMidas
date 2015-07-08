@@ -101,6 +101,10 @@ void ProfileWidget::drawHold(Hold hold, int ind, bool insertBefore)
     grouper->setMaximumSize(400, 310);
 
     QVBoxLayout* holdLayout = new QVBoxLayout();
+
+    std::string description = "holdModeActionType: " + hold.holdModeActionType + "; intervalLen: " + std::to_string(hold.intervalLen);
+    QLabel* descLabel = new QLabel(QString(description.c_str()));
+    holdLayout->addWidget(descLabel);
     
     for (int i = 0; i < hold.angles.size(); i++)
     {
@@ -109,8 +113,8 @@ void ProfileWidget::drawHold(Hold hold, int ind, bool insertBefore)
         QLabel* angleLabel = new QLabel(QString(angleTitle.c_str()));
         holdLayout->addWidget(angleLabel);
 
-        std::string positiveText = "    On positive angle, do action '" + angle.anglePositive + "'";
-        std::string negativeText = "    On negative angle, do action '" + angle.angleNegative + "'";
+        std::string positiveText = "    On positive angle, do action '" + angle.anglePositive + "' with Sensitivity: " + std::to_string(angle.sensitivity);
+        std::string negativeText = "    On negative angle, do action '" + angle.angleNegative + "' with Sensitivity: " + std::to_string(angle.sensitivity);
         QLabel* positiveLabel = new QLabel(QString(positiveText.c_str()));
         QLabel* negativeLabel = new QLabel(QString(negativeText.c_str()));
 

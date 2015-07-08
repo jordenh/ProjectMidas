@@ -21,6 +21,7 @@
 #define _MYO_COMMON_H
 
 #include "myo\myo.hpp"
+#include "MidasCommon.h"
 #include <qpixmap.h>
 
 #define CENTER_MAIN "Space"

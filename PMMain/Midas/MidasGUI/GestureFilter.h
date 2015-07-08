@@ -106,19 +106,19 @@ private:
     * Performs initial registration of Mouse Sequences as a default incase profile manager
     * has no profiles to populate with.
     */
-    void registerMouseSequences(void);
+    void defaultMouseSequences(void);
 
     /**
     * Performs initial registration of Keyboard Sequences as a default incase profile manager
     * has no profiles to populate with.
     */
-    void registerKeyboardSequences(void);
+    void defaultKeyboardSequences(void);
 
     /**
     * Performs initial registration of State Sequences as a default incase profile manager
     * has no profiles to populate with.
     */
-    void registerStateSequences(void);
+    void defaultStateSequences(void);
 
     /**
     * Given a completed sequence, returning a CommandData response, this handles the response

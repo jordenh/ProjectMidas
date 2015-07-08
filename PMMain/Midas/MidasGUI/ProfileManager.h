@@ -47,11 +47,14 @@ struct angleAction {
     std::string type;
     std::string anglePositive;
     std::string angleNegative;
+    unsigned int sensitivity;
 };
 
 struct hold {
     std::string gesture;
     std::vector<angleAction> angles;
+    std::string holdModeActionType;
+    unsigned int intervalLen;
 };
 
 struct profile {
@@ -68,6 +71,7 @@ extern std::map<std::string, midasMode> profileActionToStateChange;
 extern std::map<std::string, profileCmds> profileActionToProfileChange;
 extern std::map <std::string, PoseLength> profileGestureTypeToPoseLength;
 extern std::map <std::string, Pose::Type> profileGestureNameToType;
+extern std::map <std::string, HoldModeActionType> holdModeActionTypeMap;
 
 class ProfileManager {
 

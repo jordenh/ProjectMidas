@@ -19,6 +19,11 @@
 
 #include "GenericAveragingFilter.h"
 
+GenericAveragingFilter::~GenericAveragingFilter()
+{
+    int a = 1;
+}
+
 void GenericAveragingFilter::process()
 {
     filterDataMap input = Filter::getInput();

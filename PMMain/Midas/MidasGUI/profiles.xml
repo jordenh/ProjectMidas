@@ -1,8 +1,58 @@
 <?-- this is a comment! -->
+<?-- holdModeActionType absDeltaFinite holdModeActionType -->
 <?xml version="1.0" encoding="utf-8"?>
 <profiles>
 	<profile name="Rotate Model">
         <sequences>
+			<sequence state="keyboardMode" name="Arrow Keys">
+                <gestures>
+					<gesture type="hold">fingersSpread</gesture>
+                </gestures>
+                <commands>
+					<command type="stateChange">
+						<actions>
+							<action>gestureHoldTwo</action>
+						</actions>
+					</command>
+				</commands>
+            </sequence>
+			<sequence state="gestureHoldTwo" name="Release">
+                <gestures>
+					<gesture type="immediate">rest</gesture>
+                </gestures>
+                <commands>
+					<command type="stateChange">
+						<actions>
+							<action>keyboardMode</action>
+						</actions>
+					</command>
+				</commands>
+            </sequence>
+			<sequence state="keyboardMode" name="Volume">
+                <gestures>
+					<gesture type="hold">fist</gesture>
+                </gestures>
+                <commands>
+					<command type="stateChange">
+						<actions>
+							<action>gestureHoldThree</action>
+						</actions>
+					</command>
+				</commands>
+            </sequence>
+			<sequence state="gestureHoldThree" name="Release">
+                <gestures>
+					<gesture type="immediate">rest</gesture>
+                </gestures>
+                <commands>
+					<command type="stateChange">
+						<actions>
+							<action>keyboardMode</action>
+						</actions>
+					</command>
+				</commands>
+            </sequence>
+		
 			<sequence state="lockMode" name="Control Mouse">
                 <gestures>
 					<gesture type="tap">fingersSpread</gesture>
@@ -238,7 +288,31 @@
 				</commands>
             </sequence>
         </sequences>
+		
         <holds>
+			<hold gesture="fingersSpread">
+                <angle type="pitch">
+                    <anglePositive>upArrow</anglePositive>
+                    <angleNegative>downArrow</angleNegative>
+					<sensitivity>5</sensitivity>
+                </angle>
+				<angle type="yaw">
+                    <anglePositive>rightArrow</anglePositive>
+                    <angleNegative>leftArrow</angleNegative>
+					<sensitivity>5</sensitivity>
+                </angle>
+				<holdModeActionType>absDeltaVelocity</holdModeActionType>
+				<intervalLength>100</intervalLength>
+            </hold>
+			<hold gesture="fist">
+                <angle type="roll">
+                    <anglePositive>volumeUp</anglePositive>
+                    <angleNegative>volumeDown</angleNegative>
+					<sensitivity>1</sensitivity>
+                </angle>
+				<holdModeActionType>absDeltaFinite</holdModeActionType>
+				<intervalLength>100</intervalLength>
+            </hold>
         </holds>
     </profile>
 	<profile name="Draw on Model">
@@ -250,11 +324,11 @@
 					<gesture type="immediate">doubleTap</gesture>
                 </gestures>
                 <commands>
-				<command type="stateChange">
-                    <actions>
-                        <action>mouseMode2</action>
-                    </actions>
-                </command>
+					<command type="stateChange">
+						<actions>
+							<action>mouseMode2</action>
+						</actions>
+					</command>
 				</commands>
             </sequence>
 			<sequence state="mouseMode2" name="Lock">

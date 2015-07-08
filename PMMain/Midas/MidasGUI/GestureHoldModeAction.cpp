@@ -19,17 +19,26 @@
 
 #include "GestureHoldModeAction.h"
 
-GestureHoldModeAction::GestureHoldModeAction() : minIntervalLen(50) {
-
+GestureHoldModeAction::GestureHoldModeAction() {
+    rollSensitivity = DEFAULT_SENSITIVITY; pitchSensitivity = DEFAULT_SENSITIVITY; yawSensitivity = DEFAULT_SENSITIVITY;
+    actionType = DEFAULT_ACTION_TYPE;
+    intervalLen = DEFAULT_INTERVAL_LEN;
+    velocityIntervalLen = DEFAULT_INTERVAL_LEN;
 }
 
-GestureHoldModeAction::GestureHoldModeAction(unsigned int minIntervalLen) : minIntervalLen(minIntervalLen) {
+GestureHoldModeAction::GestureHoldModeAction(float rollSensitivity, float pitchSensitivity, float yawSensitivity) : 
+    rollSensitivity(rollSensitivity), pitchSensitivity(pitchSensitivity), yawSensitivity(yawSensitivity)
+{}
 
-}
-
-void GestureHoldModeAction::clearMap()
+void GestureHoldModeAction::clean()
 {
     actionMap.clear();
+    actionType = DEFAULT_ACTION_TYPE;
+    intervalLen = DEFAULT_INTERVAL_LEN;
+    velocityIntervalLen = DEFAULT_INTERVAL_LEN;
+    rollSensitivity = DEFAULT_SENSITIVITY;
+    pitchSensitivity = DEFAULT_SENSITIVITY;
+    yawSensitivity = DEFAULT_SENSITIVITY;
 }
 
 bool GestureHoldModeAction::addToActionMap(angleData ad, kybdCmds command)

@@ -48,6 +48,7 @@ public:
 	void pushPose(myo::Pose pose);
 	myo::Pose popPose();
 	std::deque<myo::Pose> getPoseHistory();
+    myo::Pose mostRecentPose();
 
     void setMyo(MyoDevice *myo);
     const MyoDevice* peakMyo();

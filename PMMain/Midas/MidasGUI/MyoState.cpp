@@ -161,6 +161,24 @@ myo::Pose MyoState::popPose()
 	return front;
 }
 
+myo::Pose MyoState::mostRecentPose()
+{
+    myoStateMutex.lock();
+    myo::Pose front;
+    if (poseHistory.size() > 0)
+    {
+        front = poseHistory.back();
+    }
+    else
+    {
+        front = myo::Pose::rest;
+    }
+
+    myoStateMutex.unlock();
+
+    return front;
+}
+
 std::deque<myo::Pose> MyoState::getPoseHistory()
 {
 	myoStateMutex.lock();
@@ -192,7 +210,10 @@ void MyoState::setArm(myo::Arm arm)
 
 myo::Arm MyoState::getArm()
 {
-    return this->currentArm;
+    myoStateMutex.lock();
+    myo::Arm retVal = this->currentArm;
+    myoStateMutex.unlock();
+    return retVal;
 }
 
 void MyoState::setWarmupState(myo::WarmupState warmupState)
@@ -204,7 +225,10 @@ void MyoState::setWarmupState(myo::WarmupState warmupState)
 
 myo::WarmupState MyoState::getWarmupState()
 {
-    return this->currentWarmupState;
+    myoStateMutex.lock();
+    myo::WarmupState retVal = this->currentWarmupState;
+    myoStateMutex.unlock();
+    return retVal;
 }
 
 void MyoState::setXDirection(myo::XDirection xDirection)
@@ -216,18 +240,24 @@ void MyoState::setXDirection(myo::XDirection xDirection)
 
 myo::XDirection MyoState::getXDirection()
 {
-    return this->currentXDirection;
+    myoStateMutex.lock();
+    myo::XDirection retVal = this->currentXDirection;
+    myoStateMutex.unlock();
+    return retVal;
 }
 
 bool MyoState::lastPoseNonRest()
 {
+    myoStateMutex.lock();
     if (poseHistory.size() >= 1 &&
         Pose::rest != poseHistory.back())
     {
+        myoStateMutex.unlock();
         return true;
     }
     else
     {
+        myoStateMutex.unlock();
         return false;
     }
 }

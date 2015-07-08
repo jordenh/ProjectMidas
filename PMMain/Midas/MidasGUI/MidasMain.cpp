@@ -138,7 +138,8 @@ int midasMain(MidasThread *threadHandle, MainGUI *mainGui, ProfileManager *pm) {
 
     while (true)
     {
-        if (myoDevice->getDeviceStatus() != deviceStatus::RUNNING) break;
+        if (myoDevice->getDeviceStatus() != deviceStatus::RUNNING) 
+            break;
 
         scdDigester.digest();
     }

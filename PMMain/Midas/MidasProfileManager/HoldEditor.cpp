@@ -46,12 +46,16 @@ void HoldEditor::handleDone()
 {
     returnHold.gesture = ui.gestureComboBox->currentText().toStdString();
     
+    returnHold.holdModeActionType = ui.holdModeActionType->currentText().toStdString();
+    returnHold.intervalLen = ui.intervalLength->value();
+
     if (isAngleSet(ui.rollPositiveComboBox, ui.rollNegativeComboBox))
     {
         AngleAction roll;
         roll.type = "roll";
         roll.anglePositive = ui.rollPositiveComboBox->currentText().toStdString();
         roll.angleNegative = ui.rollNegativeComboBox->currentText().toStdString();
+        roll.sensitivity = ui.rollSensitivity->value();
 
         returnHold.angles.push_back(roll);
     }
@@ -62,6 +66,7 @@ void HoldEditor::handleDone()
         pitch.type = "pitch";
         pitch.anglePositive = ui.pitchPositiveComboBox->currentText().toStdString();
         pitch.angleNegative = ui.pitchNegativeComboBox->currentText().toStdString();
+        pitch.sensitivity = ui.pitchSensitivity->value();
 
         returnHold.angles.push_back(pitch);
     }
@@ -72,6 +77,7 @@ void HoldEditor::handleDone()
         yaw.type = "yaw";
         yaw.anglePositive = ui.yawPositiveComboBox->currentText().toStdString();
         yaw.angleNegative = ui.yawNegativeComboBox->currentText().toStdString();
+        yaw.sensitivity = ui.yawSensitivity->value();
 
         returnHold.angles.push_back(yaw);
     }

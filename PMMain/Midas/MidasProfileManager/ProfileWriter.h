@@ -45,11 +45,14 @@ struct AngleAction {
     std::string type;
     std::string anglePositive;
     std::string angleNegative;
+    unsigned int sensitivity;
 };
 
 struct Hold {
     std::string gesture;
     std::vector<AngleAction> angles;
+    std::string holdModeActionType;
+    unsigned int intervalLen;
 };
 
 struct Profile {

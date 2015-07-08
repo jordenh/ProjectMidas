@@ -30,7 +30,7 @@ MouseCtrl::MouseCtrl()
     lastMouseScroll = lastMouseMoveX;
     minMoveXTimeDelta = DEFAULT_MIN_MOVE_TIME;
     minMoveYTimeDelta = DEFAULT_MIN_MOVE_TIME;
-    scrollRate = DEFAULT_SCROLL_RATE;
+    scrollRate = WHEEL_DELTA;
     currHeld = 0;
 }
 
@@ -42,7 +42,7 @@ void MouseCtrl::setScrollRate(int rate)
 {
     if (rate < -WHEEL_DELTA || rate > WHEEL_DELTA)
     {
-        scrollRate = DEFAULT_SCROLL_RATE; 
+        scrollRate = WHEEL_DELTA;
     } 
     else
     {
@@ -282,11 +282,11 @@ void MouseCtrl::setMouseInputVars(mouseCmds mouseCmd, double& mouseRateIfMove, d
         break;
     case mouseCmds::SCROLL_UP:
         mi.dwFlags = MOUSEEVENTF_WHEEL;
-        mi.mouseData = scrollRate; // RANGE IS FROM -120 to +120 : WHEEL_DELTA = 120, which is one "wheel click"
+        mi.mouseData = abs(scrollRate); // RANGE IS FROM -120 to +120 : WHEEL_DELTA = 120, which is one "wheel click"
         break;
     case mouseCmds::SCROLL_DOWN:
         mi.dwFlags = MOUSEEVENTF_WHEEL;
-        mi.mouseData = -scrollRate; // RANGE IS FROM -120 to +120 : WHEEL_DELTA = 120, which is one "wheel click"
+        mi.mouseData = -abs(scrollRate); // RANGE IS FROM -120 to +120 : WHEEL_DELTA = 120, which is one "wheel click"
         break;
 	case mouseCmds::MOVE_ABSOLUTE:
 		if (!BaseMeasurements::getInstance().areCurrentValuesValid())
