@@ -4,7 +4,7 @@
 <profiles>
 	<profile name="Rotate Model">
         <sequences>
-			<sequence state="lockMode" name="Arrow Keys">
+			<sequence state="keyboardMode" name="Arrow Keys">
                 <gestures>
 					<gesture type="hold">fingersSpread</gesture>
                 </gestures>
@@ -23,12 +23,12 @@
                 <commands>
 					<command type="stateChange">
 						<actions>
-							<action>lockMode</action>
+							<action>keyboardMode</action>
 						</actions>
 					</command>
 				</commands>
             </sequence>
-			<sequence state="lockMode" name="Volume">
+			<sequence state="keyboardMode" name="Volume">
                 <gestures>
 					<gesture type="hold">fist</gesture>
                 </gestures>
@@ -47,7 +47,7 @@
                 <commands>
 					<command type="stateChange">
 						<actions>
-							<action>lockMode</action>
+							<action>keyboardMode</action>
 						</actions>
 					</command>
 				</commands>
@@ -315,8 +315,6 @@
             </hold>
         </holds>
     </profile>
-	
-	
 	<profile name="Draw on Model">
         <sequences>
 			<sequence state="lockMode" name="Control Mouse">
