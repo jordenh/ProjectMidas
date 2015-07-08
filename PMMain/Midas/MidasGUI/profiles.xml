@@ -9,11 +9,11 @@
 					<gesture type="hold">fingersSpread</gesture>
                 </gestures>
                 <commands>
-				<command type="stateChange">
-                    <actions>
-                        <action>gestureHoldTwo</action>
-                    </actions>
-                </command>
+					<command type="stateChange">
+						<actions>
+							<action>gestureHoldTwo</action>
+						</actions>
+					</command>
 				</commands>
             </sequence>
 			<sequence state="gestureHoldTwo" name="Release">
@@ -21,11 +21,35 @@
 					<gesture type="immediate">rest</gesture>
                 </gestures>
                 <commands>
-				<command type="stateChange">
-                    <actions>
-                        <action>lockMode</action>
-                    </actions>
-                </command>
+					<command type="stateChange">
+						<actions>
+							<action>lockMode</action>
+						</actions>
+					</command>
+				</commands>
+            </sequence>
+			<sequence state="lockMode" name="Volume">
+                <gestures>
+					<gesture type="hold">fist</gesture>
+                </gestures>
+                <commands>
+					<command type="stateChange">
+						<actions>
+							<action>gestureHoldThree</action>
+						</actions>
+					</command>
+				</commands>
+            </sequence>
+			<sequence state="gestureHoldThree" name="Release">
+                <gestures>
+					<gesture type="immediate">rest</gesture>
+                </gestures>
+                <commands>
+					<command type="stateChange">
+						<actions>
+							<action>lockMode</action>
+						</actions>
+					</command>
 				</commands>
             </sequence>
 		
@@ -267,12 +291,26 @@
 		
         <holds>
 			<hold gesture="fingersSpread">
-                <angle type="yaw">
+                <angle type="pitch">
+                    <anglePositive>upArrow</anglePositive>
+                    <angleNegative>downArrow</angleNegative>
+					<sensitivity>5</sensitivity>
+                </angle>
+				<angle type="yaw">
                     <anglePositive>rightArrow</anglePositive>
                     <angleNegative>leftArrow</angleNegative>
-					<sensitivity>2</sensitivity>
+					<sensitivity>5</sensitivity>
                 </angle>
-				<holdModeActionType>intervalDelta</holdModeActionType>
+				<holdModeActionType>absDeltaVelocity</holdModeActionType>
+				<intervalLength>100</intervalLength>
+            </hold>
+			<hold gesture="fist">
+                <angle type="roll">
+                    <anglePositive>volumeUp</anglePositive>
+                    <angleNegative>volumeDown</angleNegative>
+					<sensitivity>1</sensitivity>
+                </angle>
+				<holdModeActionType>absDeltaFinite</holdModeActionType>
 				<intervalLength>100</intervalLength>
             </hold>
         </holds>
