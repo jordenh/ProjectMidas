@@ -269,9 +269,6 @@
     <ClCompile Include="KeyboardVector.cpp">
       <Filter>Source Files\Midas\KeyAndMouse</Filter>
     </ClCompile>
-    <ClCompile Include="kybrdCtrl.cpp">
-      <Filter>Source Files\Midas\KeyAndMouse</Filter>
-    </ClCompile>
     <ClCompile Include="MouseCtrl.cpp">
       <Filter>Source Files\Midas\KeyAndMouse</Filter>
     </ClCompile>
@@ -398,9 +395,6 @@
     </ClInclude>
     <ClInclude Include="KeyboardSettingsReader.h">
       <Filter>Header Files\GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="kybrdCtrl.h">
-      <Filter>Header Files\Midas\KeyAndMouse</Filter>
     </ClInclude>
     <ClInclude Include="MouseCtrl.h">
       <Filter>Header Files\Midas\KeyAndMouse</Filter>

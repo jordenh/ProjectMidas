@@ -36,9 +36,6 @@
     <ClCompile Include="GestureSeqRecorder_Test.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="KybrdCtrl_Test.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="MouseCtrl_Test.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

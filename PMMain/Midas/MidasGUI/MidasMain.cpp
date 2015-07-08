@@ -36,7 +36,6 @@
 #include "BaseMeasurements.h"
 #include "MidasThread.h"
 #include "SharedCommandDataTest.h"
-#include "KybrdCtrlTest.h"
 #include "MouseCtrlTest.h"
 #include "MyoState.h"
 
@@ -69,11 +68,6 @@ int midasMain(MidasThread *threadHandle, MainGUI *mainGui, ProfileManager *pm) {
 
 #ifdef TEST_WEARABLE_DEVICE
     SharedCommandDataTest::testQueue();
-#endif
-
-#ifdef KEYBOARD_CONTROL_TEST
-    KybrdCtrlTest::testLock();
-    KybrdCtrlTest::testZoomInOut();
 #endif
 
 #ifdef MOUSE_CONTROL_TEST
