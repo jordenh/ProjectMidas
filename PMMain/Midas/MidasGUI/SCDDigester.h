@@ -32,6 +32,8 @@ using namespace myoSim;
 using namespace myo;
 #endif
 
+#include "ConnectionSignaller.h"
+
 class CommandData;
 class KeyboardController;
 class SharedCommandData;
@@ -40,16 +42,17 @@ class ControlState;
 class MyoState;
 class MouseCtrl;
 class ProfileManager;
+class MainGUI;
 
 class SCDDigester
 {
 public:
 #ifdef BUILD_KEYBOARD
 	SCDDigester(SharedCommandData* scd, MidasThread *thread, ControlState *cntrlStateHandle, MyoState *myoStateHandle,
-		MouseCtrl *mouseCtrl, KeyboardController *keyboardController, ProfileManager* profileManagerHandle, std::vector<ringData> *kybrdRingData);
+        MouseCtrl *mouseCtrl, KeyboardController *keyboardController, ProfileManager* profileManagerHandle, MainGUI *mainGui, std::vector<ringData> *kybrdRingData);
 #else
 	SCDDigester(SharedCommandData* scd, MidasThread *thread, ControlState *cntrlStateHandle, MyoState *myoStateHandle,
-		MouseCtrl *mouseCtrl, KeyboardController *keyboardController, ProfileManager* profileManagerHandle);
+        MouseCtrl *mouseCtrl, KeyboardController *keyboardController, ProfileManager* profileManagerHandle, MainGUI *mainGui);
 #endif
     ~SCDDigester();
 
@@ -74,7 +77,10 @@ private:
     ControlState *cntrlStateHandle; // not owned
     MyoState *myoStateHandle; // not owned
     MouseCtrl *mouseCtrl; // not owned
+    MainGUI *mainGUI; // not owned
     int count;
+
+    ConnectionSignaller *connSignaller; // owned
 
     ProfileManager *pm; // not owned
 };

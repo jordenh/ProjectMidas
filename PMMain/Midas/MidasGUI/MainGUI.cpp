@@ -32,6 +32,7 @@
 #include "SequenceDisplayer.h"
 #include "InfoIndicator.h"
 #include "GestureSignaller.h"
+#include "ConnectionSignaller.h"
 #include "PoseDisplayer.h"
 #include "ProfileDisplayer.h"
 #include "ProfileIcon.h"
@@ -241,6 +242,14 @@ void MainGUI::connectSignallerToPoseDisplayer(GestureSignaller *signaller)
 {
     QObject::connect(signaller, SIGNAL(emitPoseImages(std::vector<sequenceImageSet>)),
         poseDisplayer, SLOT(handlePoseImages(std::vector<sequenceImageSet>)));
+}
+
+void MainGUI::connectSignallerToPoseDisplayer(ConnectionSignaller *signaller)
+{
+    QObject::connect(signaller, SIGNAL(emitDisconnect()),
+        poseDisplayer, SLOT(handleDisconnect()));
+    QObject::connect(signaller, SIGNAL(emitConnect()),
+        poseDisplayer, SLOT(handleConnect()));
 }
 
 void MainGUI::connectSignallerToProfileIcons(GestureSignaller *signaller)

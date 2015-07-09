@@ -123,9 +123,9 @@ int midasMain(MidasThread *threadHandle, MainGUI *mainGui, ProfileManager *pm) {
     startWearableDeviceListener(myoDevice); // TODO - add a flag in myoDevice to see if it is running. Don't enter 'while true' until running.
 
 #ifdef BUILD_KEYBOARD
-	SCDDigester scdDigester(&sharedData, threadHandle, &controlState, &myoState, mouseCtrl, keyboardController, pm, kybrdRingData);
+    SCDDigester scdDigester(&sharedData, threadHandle, &controlState, &myoState, mouseCtrl, keyboardController, pm, mainGui, kybrdRingData);
 #else
-	SCDDigester scdDigester(&sharedData, threadHandle, &controlState, &myoState, mouseCtrl, keyboardController, pm);
+    SCDDigester scdDigester(&sharedData, threadHandle, &controlState, &myoState, mouseCtrl, keyboardController, pm, mainGui);
 #endif
 
     while (true)

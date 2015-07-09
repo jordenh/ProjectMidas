@@ -26,14 +26,14 @@
 #define INIT_PITCH_ANGLE 20.0f /* Maximum delta angle in degrees */
 #define INIT_YAW_ANGLE 25.0f /* Maximum delta angle in degrees */
 
-#define GUI_OPACITY 0.6
+#define GUI_OPACITY 1.0
 
 #ifdef SHOW_PROFILE_ICONS
 #define MOUSE_INDICATOR_SIZE 130
 #define INFO_INDICATOR_WIDTH   150
 #else
 #define GRID_ELEMENT_SIZE   52
-#define MOUSE_INDICATOR_SIZE 109 // 2*GRID_ELEMENT_SIZE + WIDGET_BUFFER
+#define MOUSE_INDICATOR_SIZE 109 // this is 2 * GRID_ELEMENT_SIZE + WIDGET_BUFFER
 #define INFO_INDICATOR_WIDTH   109
 #endif
 #define INFO_INDICATOR_HEIGHT  35

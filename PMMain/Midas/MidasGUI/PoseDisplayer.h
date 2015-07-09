@@ -20,6 +20,10 @@
 #ifndef POSE_DISPLAYER_H
 #define POSE_DISPLAYER_H
 
+#define DISCONNECTED_PATH   "Resources\\assets\\gesture_icons\\reConnect.png"
+#define UNSYNCHED_PATH      "Resources\\assets\\gesture_icons\\reSync.png"
+#define NORMAL_STATE_PATH   "Resources\\assets\\gesture_icons\\blue.png"
+
 #include <qwidget.h>
 
 #include "MyoCommon.h"
@@ -49,7 +53,11 @@ private:
     QLabel *poseImgLabel;
 
 public slots:
-void handlePoseImages(std::vector<sequenceImageSet> poseImages);
+    void handlePoseImages(std::vector<sequenceImageSet> poseImages);
+    void handleDisconnect();
+    void handleConnect();
+    void handleUnsync();
+    void handleSync();
 };
 
 #endif POSE_DISPLAYER_H

@@ -305,6 +305,15 @@
     <ClCompile Include="GestureSeqRecorder.cpp">
       <Filter>Source Files\Midas\Myo</Filter>
     </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ConnectionSignaller.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ConnectionSignaller.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="ConnectionSignaller.cpp">
+      <Filter>Source Files\Midas\Signallers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="MouseIndicator.h">
@@ -354,6 +363,9 @@
     </CustomBuild>
     <CustomBuild Include="MidasThread.h">
       <Filter>Header Files\Midas\Common</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ConnectionSignaller.h">
+      <Filter>Header Files\Midas\Signallers</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>

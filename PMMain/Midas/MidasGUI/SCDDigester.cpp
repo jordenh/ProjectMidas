@@ -28,13 +28,14 @@
 #include "MyoState.h"
 #include "MouseCtrl.h"
 #include "ProfileManager.h"
+#include "MainGUI.h"
 
 #ifdef BUILD_KEYBOARD
 SCDDigester::SCDDigester(SharedCommandData* scd, MidasThread *thread, ControlState *cntrlStateHandle, MyoState* myoStateHandle,
-	MouseCtrl *mouseCtrl, KeyboardController *keyboardController, ProfileManager* profileManagerHandle, std::vector<ringData> *kybrdRingData)
+    MouseCtrl *mouseCtrl, KeyboardController *keyboardController, ProfileManager* profileManagerHandle,  MainGUI *mainGui std::vector<ringData> *kybrdRingData)
 #else
 SCDDigester::SCDDigester(SharedCommandData* scd, MidasThread *thread, ControlState *cntrlStateHandle, MyoState* myoStateHandle,
-	MouseCtrl *mouseCtrl, KeyboardController *keyboardController, ProfileManager* profileManagerHandle)
+    MouseCtrl *mouseCtrl, KeyboardController *keyboardController, ProfileManager* profileManagerHandle, MainGUI *mainGui)
 #endif
 {
     this->scdHandle = scd;
@@ -43,6 +44,7 @@ SCDDigester::SCDDigester(SharedCommandData* scd, MidasThread *thread, ControlSta
 	this->myoStateHandle = myoStateHandle;
     this->mouseCtrl = mouseCtrl;
 	this->keyboardController = keyboardController;
+    this->mainGUI = mainGui;
 
 	this->pm = profileManagerHandle;
     this->count = 0;
@@ -50,11 +52,15 @@ SCDDigester::SCDDigester(SharedCommandData* scd, MidasThread *thread, ControlSta
 #ifdef BUILD_KEYBOARD
 	this->kybrdRingData = kybrdRingData;
 #endif
+    connSignaller = new ConnectionSignaller();
+    connSignaller->setCurrentlyConnected(false);
+    mainGUI->connectSignallerToPoseDisplayer(connSignaller);
 }
 
 
 SCDDigester::~SCDDigester()
 {
+    delete connSignaller; connSignaller = NULL;
 }
 
 void SCDDigester::digest()
@@ -98,6 +104,21 @@ void SCDDigester::digest()
 	{
 		mouseCtrl->sendCommand(mouseCmds::MOVE_ABSOLUTE, mouseDelta.x, -mouseDelta.y);
 	}
+
+    // signall connection actions... TODO
+    if (scdHandle->getIsConnected() != connSignaller->getCurrentlyConnected())
+    {
+        if (scdHandle->getIsConnected())
+        {
+            connSignaller->emitConnect();
+            connSignaller->setCurrentlyConnected(true);
+        }
+        else
+        {
+            connSignaller->emitDisconnect();
+            connSignaller->setCurrentlyConnected(false);
+        }
+    }
 
 #ifdef JOYSTICK_CURSOR
     point unitVelocity = scdHandle->getVelocity();

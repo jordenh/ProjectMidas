@@ -28,6 +28,7 @@ class MouseIndicator;
 class SequenceDisplayer;
 class InfoIndicator;
 class GestureSignaller;
+class ConnectionSignaller;
 class PoseDisplayer;
 class ProfileIcon;
 class ProfileDisplayer;
@@ -63,6 +64,7 @@ public:
     void connectSignallerToInfoIndicator(GestureSignaller *signaller);
     void connectSignallerToSequenceDisplayer(GestureSignaller *signaller);
     void connectSignallerToPoseDisplayer(GestureSignaller *signaller);
+    void connectSignallerToPoseDisplayer(ConnectionSignaller *signaller);
 	void connectSignallerToProfileIcons(GestureSignaller *signaller);
 
     void connectSignallerToSettingsDisplayer(SettingsSignaller *signaller);
