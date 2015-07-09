@@ -125,7 +125,7 @@
 				</commands>
             </sequence>
 			
-			<sequence state="gestureMode" name="View Flow Map">
+			<sequence state="gestureMode" name="Flow Map">
                 <gestures>
                     <gesture type="tap">doubleTap</gesture>
 					<gesture type="immediate">waveOut</gesture>
@@ -138,7 +138,7 @@
 					</command>
 				</commands>
             </sequence>
-			<sequence state="gestureMode" name="View Impedance Map">
+			<sequence state="gestureMode" name="Impedance Map">
                 <gestures>
                     <gesture type="tap">doubleTap</gesture>
 					<gesture type="immediate">waveIn</gesture>

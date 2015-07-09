@@ -501,18 +501,24 @@ SequenceStatus GestureSeqRecorder::findActivation(Pose::Type gesture, ControlSta
         {
             clock_t now = clock();
             progressBaseTime = now;
-            if (it->seq.at(0).poseLen == PoseLength::IMMEDIATE)
-            {
-                // Special case. Immediate isn't 'held'
-                response = it->sequenceResponse;
-                break;
-            }
 
             // found sequence to activate!
             activeSequencesMutex.lock();
             activeSequences.push_back(&(*it));
             activeSequencesMutex.unlock();
             printStatus(true);
+
+            if (it->seq.at(0).poseLen == PoseLength::IMMEDIATE)
+            {
+                // Special case. Immediate isn't 'held'
+                response = it->sequenceResponse;
+//#ifdef BUILD_FOR_KARDIUM
+//                // show the completed sequence, and in mouse_mode, it wont be removed.
+//                (&(*it))->progress++;
+//                updateGuiSequences();
+//#endif
+                break;
+            }
 
             holdGestTimer = REQ_HOLD_TIME; // set count on any progression
         }
@@ -524,6 +530,14 @@ SequenceStatus GestureSeqRecorder::findActivation(Pose::Type gesture, ControlSta
 
 void GestureSeqRecorder::updateGuiSequences()
 {
+//#ifdef BUILD_FOR_KARDIUM
+//    if (controlStateHandle->getMode() == MOUSE_MODE)
+//    {
+//        // don't update the GUI sequence for this build, as the idea is to have the entire sequence list shown.
+//        return;
+//    }
+//#endif
+
     std::vector<sequenceProgressData> progressDataVec;
     if (signaller.getShowAll())
     {
@@ -531,14 +545,6 @@ void GestureSeqRecorder::updateGuiSequences()
         sequenceList* sl = (*seqMapPerMode)[controlStateHandle->getMode()];
 
         std::list<sequenceInfo>::iterator it;
-        // loop once to find the max progress
-        unsigned int maxProg = 0;
-        for (it = sl->begin(); it != sl->end(); ++it)
-        {
-            if (it->progress > maxProg)
-                maxProg = it->progress;
-        }
-        // loop twice to 'load' all sequences == progress
         for (it = sl->begin(); it != sl->end(); ++it)
         {
             sequenceProgressData progressData;

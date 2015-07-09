@@ -42,9 +42,15 @@ MyoDevice::MyoDevice(SharedCommandData* sharedCommandData, ControlState* control
     std::string applicationIdentifier, MainGUI *mainGuiHandle, ProfileManager *profileManagerHandle)
     : WearableDevice(sharedCommandData), appIdentifier(applicationIdentifier), myoFindTimeout(DEFAULT_FIND_MYO_TIMEOUT),
     durationInMilliseconds(DEFAULT_MYO_DURATION_MS), state(controlState), myoState(myoState), arm(DEFAULT_MYO_ARM), 
-	xDirection(DEFAULT_MYO_XDIR), mainGui(mainGuiHandle), profileManager(profileManagerHandle)
+    xDirection(DEFAULT_MYO_XDIR), mainGui(mainGuiHandle), profileManager(profileManagerHandle), gestureFilter(controlState, myoState, 0, mainGuiHandle)
 {
     prevProfileName = "";
+
+    setupPosePipeline(&gestureFilter);
+
+    setupOrientationPipeline();
+
+    setupRSSIPipeline();
 }
 
 MyoDevice::~MyoDevice()
@@ -83,13 +89,6 @@ void MyoDevice::setMyoEventLoopDuration(unsigned int milliseconds)
 void MyoDevice::runDeviceLoop()
 {
     WearableDevice::setDeviceStatus(deviceStatus::RUNNING);
-
-    GestureFilter gestureFilter(state, myoState, 0, mainGui);
-    setupPosePipeline(&gestureFilter);
-
-    setupOrientationPipeline();
-
-    setupRSSIPipeline();
 
     advancedConnectPipeline.registerFilterAtDeepestLevel(WearableDevice::sharedData);
 

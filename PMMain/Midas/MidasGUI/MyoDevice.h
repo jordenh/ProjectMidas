@@ -19,6 +19,7 @@
 
 #pragma once
 #include "WearableDevice.h"
+#include "GestureFilter.h"
 #include "AdvancedFilterPipeline.h"
 #include "myo\myo.hpp"
 #include "ProfileSignaller.h"
@@ -42,7 +43,6 @@ class ControlState;
 class MyoState;
 class MainGUI;
 class ProfileManager;
-class GestureFilter;
 class GenericAveragingFilter;
 class GenericBypassFilter;
 class MyoTranslationFilter;
@@ -177,6 +177,7 @@ private:
     static ProfileSignaller profileSignaller;
     ProfileManager *profileManager; // not owned
 
+    GestureFilter gestureFilter;
     // owned filters
     GenericAveragingFilter *genAvgFilterRSSI;
 
