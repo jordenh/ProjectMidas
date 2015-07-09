@@ -126,9 +126,8 @@ MainGUI::MainGUI(MidasThread *mainThread, ProfileManager *pm, int deadZoneRad)
 #endif
 #ifdef SHOW_SETTINGS
     + settingsDisplayer->height()
-#else
-        ;
 #endif
+        ;
 
     QRect screen = QApplication::desktop()->availableGeometry(this);
     setGeometry(screen.right() - totalWidth - SCREEN_RIGHT_BUFFER,

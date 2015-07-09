@@ -35,6 +35,7 @@
 #define NUM_SEQUENCE_STEPS  3
 #define NUM_COLS (LABEL_NUM_COLS + SEQ_NUMBER_NUM_COLS + NUM_SEQUENCE_STEPS)
 #define GUI_WIDTH_BUFFER 1
+#define MAX_NUM_SEQUENCES_DISPLAYED 15
 
 SequenceDisplayer::SequenceDisplayer(QWidget *parent)
     : QWidget(parent)
@@ -43,7 +44,7 @@ SequenceDisplayer::SequenceDisplayer(QWidget *parent)
     gridLayout->setAlignment(Qt::AlignRight | Qt::AlignBottom);
     gridLayout->setSpacing(5);
     setLayout(gridLayout);
-    maxNumSequences = 10;
+    maxNumSequences = MAX_NUM_SEQUENCES_DISPLAYED;
 
     setAttribute(Qt::WA_TranslucentBackground);
     setWindowOpacity(0.8);
