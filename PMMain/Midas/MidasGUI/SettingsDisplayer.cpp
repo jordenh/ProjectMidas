@@ -41,7 +41,7 @@ SettingsDisplayer::SettingsDisplayer(int widgetWidth, int widgetHeight, QWidget 
     setWindowFlags(Qt::WindowStaysOnTopHint);
 
     mainLayout = new QVBoxLayout;
-    mainLayout->setSpacing(5);
+    mainLayout->setSpacing(WIDGET_BUFFER);
     setLayout(mainLayout);
 
     yawSlider = new QSlider(Qt::Orientation::Horizontal, this);

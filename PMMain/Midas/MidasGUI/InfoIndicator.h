@@ -39,6 +39,8 @@ public:
 
 protected:
     void resizeEvent(QResizeEvent *event);
+
+    void paintEvent(QPaintEvent *e);
     
 private:
     QString getShowAllString();

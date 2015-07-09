@@ -37,7 +37,7 @@ ProfileDisplayer::ProfileDisplayer(std::string name, int widgetWidth, int widget
     setFrameShadow(QFrame::Shadow::Raised);
 
     layout = new QGridLayout;
-    layout->setSpacing(5);
+    layout->setSpacing(WIDGET_BUFFER);
     setLayout(layout);
 
     QFont timesFont("Times", 9, QFont::Bold);

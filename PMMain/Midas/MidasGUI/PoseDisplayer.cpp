@@ -50,7 +50,7 @@ PoseDisplayer::PoseDisplayer(int widgetWidth, int widgetHeight, QWidget *parent)
     setWindowFlags(Qt::WindowStaysOnTopHint);
 
     layout = new QGridLayout;
-    layout->setSpacing(0);
+    layout->setMargin(0);
     setLayout(layout);
 
     poseImgLabel = new QLabel();

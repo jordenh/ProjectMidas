@@ -26,8 +26,13 @@
 #define INIT_PITCH_ANGLE 20.0f /* Maximum delta angle in degrees */
 #define INIT_YAW_ANGLE 25.0f /* Maximum delta angle in degrees */
 
+#ifdef SHOW_PROFILE_ICONS
 #define MOUSE_INDICATOR_SIZE 130
 #define INFO_INDICATOR_WIDTH   150
+#else
+#define MOUSE_INDICATOR_SIZE 110
+#define INFO_INDICATOR_WIDTH   110
+#endif
 #define INFO_INDICATOR_HEIGHT  35
 #define PROF_INDICATOR_WIDTH   250
 #define PROF_INDICATOR_HEIGHT  35

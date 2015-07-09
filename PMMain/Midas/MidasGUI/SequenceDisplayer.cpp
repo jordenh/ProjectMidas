@@ -28,7 +28,7 @@
 #include <QGridLayout.h>
 #include <qlabel.h>
 
-#define LABEL_NUM_COLS      3
+#define LABEL_NUM_COLS      2
 #define LABEL_NUM_ROWS      1
 #define SEQ_NUMBER_NUM_COLS 1
 #define SEQ_NUMBER_NUM_ROWS 1
@@ -42,7 +42,8 @@ SequenceDisplayer::SequenceDisplayer(QWidget *parent)
 {
     gridLayout = new QGridLayout;
     gridLayout->setAlignment(Qt::AlignRight | Qt::AlignBottom);
-    gridLayout->setSpacing(5);
+    gridLayout->setSpacing(WIDGET_BUFFER);
+    gridLayout->setMargin(0);
     setLayout(gridLayout);
     maxNumSequences = MAX_NUM_SEQUENCES_DISPLAYED;
 
@@ -191,17 +192,23 @@ void SequenceDisplayer::updateSequences()
         sequenceData seq = it->second;
         int currCol = 0;
         seq.seqLabel->setHidden(false);
-        seq.seqPosLabel->setHidden(false);
         gridLayout->addWidget(seq.seqLabel, currRow, currCol, LABEL_NUM_ROWS, LABEL_NUM_COLS);
         currCol += LABEL_NUM_COLS;
+#ifdef SHOW_SEQUENCE_COUNT
+        seq.seqPosLabel->setHidden(false);
         gridLayout->addWidget(seq.seqPosLabel, currRow, currCol, SEQ_NUMBER_NUM_ROWS, SEQ_NUMBER_NUM_COLS);
         currCol += SEQ_NUMBER_NUM_COLS;
+#endif
         std::vector<sequenceImageSet>::iterator sequenceIt;
-        for (sequenceIt = seq.sequenceImages.begin(); // + seq.imageOffset;
+        for (sequenceIt = seq.sequenceImages.begin();
             sequenceIt != seq.sequenceImages.end() && currCol < NUM_COLS; sequenceIt++)
         {
             QPixmap pixmap;
+#ifdef SHOW_SEQUENCE_COUNT
             if (currCol < (LABEL_NUM_COLS + SEQ_NUMBER_NUM_COLS + seq.imageOffset))
+#else
+            if (currCol < (LABEL_NUM_COLS + seq.imageOffset))
+#endif
             {
                 // show completed sequenceImages (for legacy reasons called laterImage)
                 pixmap = sequenceIt->laterImage;
