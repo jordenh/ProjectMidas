@@ -24,21 +24,19 @@
 #include <map>
 #include <vector>
 
-/* Rel. Image Paths */
-#define FINGER_SPREAD_LATER_PATH  "Resources\\BW200PxImgs\\fingerSpread.jpg"
-#define FINGER_SPREAD_NEXT_PATH   "Resources\\Post200PxImgs\\fingerSpread.jpg"
-#define FIST_LATER_PATH           "Resources\\BW200PxImgs\\fist.jpg"
-#define FIST_NEXT_PATH            "Resources\\Post200PxImgs\\fist.jpg"
-//#define PINKY_TO_THUMB_LATER_PATH "Resources\\BW200PxImgs\\pinkyToThumb.jpg"
-//#define PINKY_TO_THUMB_NEXT_PATH  "Resources\\Post200PxImgs\\pinkyToThumb.jpg"
-#define DOUBLE_TAP_LATER_PATH     "Resources\\BW200PxImgs\\doubleTap.jpg"
-#define DOUBLE_TAP_NEXT_PATH      "Resources\\Post200PxImgs\\doubleTap.jpg"
-#define WAVE_IN_LATER_PATH        "Resources\\BW200PxImgs\\waveIn.jpg"
-#define WAVE_IN_NEXT_PATH         "Resources\\Post200PxImgs\\waveIn.jpg"
-#define WAVE_OUT_LATER_PATH       "Resources\\BW200PxImgs\\waveOut.jpg"
-#define WAVE_OUT_NEXT_PATH        "Resources\\Post200PxImgs\\waveOut.jpg"
-#define NO_HAND_LATER_PATH           "Resources\\Post200PxImgs\\noHand.jpg"
-#define NO_HAND_NEXT_PATH            "Resources\\Post200PxImgs\\noHand.jpg"
+/* Relative Image Paths */
+#define FINGER_SPREAD_LATER_PATH   "Resources\\assets\\gesture_icons\\solid_grey_RH_spread_fingers.png"         // "Resources\\BW200PxImgs\\fingerSpread.jpg"
+#define FINGER_SPREAD_NEXT_PATH    "Resources\\assets\\gesture_icons\\blue_outline_RH_spread_fingers.png"       //"Resources\\Post200PxImgs\\fingerSpread.jpg"
+#define FIST_LATER_PATH            "Resources\\assets\\gesture_icons\\solid_grey_RH_fist.png"                   //"Resources\\BW200PxImgs\\fist.jpg"
+#define FIST_NEXT_PATH             "Resources\\assets\\gesture_icons\\blue_outline_RH_fist.png"                 //"Resources\\Post200PxImgs\\fist.jpg"
+#define DOUBLE_TAP_LATER_PATH      "Resources\\assets\\gesture_icons\\solid_grey_RH_double_tap.png"             //"Resources\\BW200PxImgs\\doubleTap.jpg"
+#define DOUBLE_TAP_NEXT_PATH       "Resources\\assets\\gesture_icons\\blue_outline_RH_double_tap.png"           //"Resources\\Post200PxImgs\\doubleTap.jpg"
+#define WAVE_IN_LATER_PATH         "Resources\\assets\\gesture_icons\\solid_grey_RH_wave_left.png"              //"Resources\\BW200PxImgs\\waveIn.jpg"
+#define WAVE_IN_NEXT_PATH          "Resources\\assets\\gesture_icons\\blue_outline_RH_wave_left.png"            //"Resources\\Post200PxImgs\\waveIn.jpg"
+#define WAVE_OUT_LATER_PATH        "Resources\\assets\\gesture_icons\\solid_grey_RH_wave_right.png"             //"Resources\\BW200PxImgs\\waveOut.jpg"
+#define WAVE_OUT_NEXT_PATH         "Resources\\assets\\gesture_icons\\blue_outline_RH_wave_right.png"           //"Resources\\Post200PxImgs\\waveOut.jpg"
+#define NO_HAND_LATER_PATH         "Resources\\assets\\gesture_icons\\grey.png"                                 //"Resources\\Post200PxImgs\\noHand.jpg"
+#define NO_HAND_NEXT_PATH          "Resources\\assets\\gesture_icons\\blue.png"                                 //"Resources\\Post200PxImgs\\noHand.jpg"
 
 #define POSE_LENGTH_IMMEDIATE_PATH "Resources\\icons\\PoseLenImmediate.png"
 #define POSE_LENGTH_HOLD_PATH "Resources\\icons\\PoseLenHold.png"

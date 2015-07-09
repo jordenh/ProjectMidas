@@ -113,8 +113,6 @@ void SequenceImageManager::loadImages()
     QImage fingerSpreadNext(QString(FINGER_SPREAD_NEXT_PATH));
     QImage fistLater(QString(FIST_LATER_PATH));
     QImage fistNext(QString(FIST_NEXT_PATH));
-//    QImage pinkyToThumbLater(QString(PINKY_TO_THUMB_LATER_PATH));
-//    QImage pinkyToThumbNext(QString(PINKY_TO_THUMB_NEXT_PATH));
     QImage doubleTapLater(QString(DOUBLE_TAP_LATER_PATH));
     QImage doubleTapNext(QString(DOUBLE_TAP_NEXT_PATH));
     QImage waveInLater(QString(WAVE_IN_LATER_PATH));
