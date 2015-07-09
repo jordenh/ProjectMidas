@@ -541,27 +541,10 @@ void GestureSeqRecorder::updateGuiSequences()
         // loop twice to 'load' all sequences == progress
         for (it = sl->begin(); it != sl->end(); ++it)
         {
-            if (it->progress >= maxProg)
-            {
-                sequenceProgressData progressData;
-
-                progressData.seqId = it->id;
-                progressData.progress = it->progress;
-                progressDataVec.push_back(progressData);
-            }
-        }
-    }
-    else if (activeSequences.size() > 0)
-    {
-        // Add only the active sequences
-        std::list<sequenceInfo*>::iterator it;
-
-        for (it = activeSequences.begin(); it != activeSequences.end(); ++it)
-        {
             sequenceProgressData progressData;
 
-            progressData.seqId = (*it)->id;
-            progressData.progress = (*it)->progress;
+            progressData.seqId = it->id;
+            progressData.progress = it->progress;
             progressDataVec.push_back(progressData);
         }
     }

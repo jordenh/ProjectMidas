@@ -32,7 +32,7 @@
 #define LABEL_NUM_ROWS      1
 #define SEQ_NUMBER_NUM_COLS 1
 #define SEQ_NUMBER_NUM_ROWS 1
-#define NUM_SEQUENCE_STEPS  3
+#define NUM_SEQUENCE_STEPS  4 // Max number of steps to show to a user at a time
 #define NUM_COLS (LABEL_NUM_COLS + SEQ_NUMBER_NUM_COLS + NUM_SEQUENCE_STEPS)
 #define GUI_WIDTH_BUFFER 1
 #define MAX_NUM_SEQUENCES_DISPLAYED 15
@@ -197,11 +197,20 @@ void SequenceDisplayer::updateSequences()
         gridLayout->addWidget(seq.seqPosLabel, currRow, currCol, SEQ_NUMBER_NUM_ROWS, SEQ_NUMBER_NUM_COLS);
         currCol += SEQ_NUMBER_NUM_COLS;
         std::vector<sequenceImageSet>::iterator sequenceIt;
-        for (sequenceIt = seq.sequenceImages.begin() + seq.imageOffset;
+        for (sequenceIt = seq.sequenceImages.begin(); // + seq.imageOffset;
             sequenceIt != seq.sequenceImages.end() && currCol < NUM_COLS; sequenceIt++)
         {
-            QPixmap pixmap = sequenceIt->laterImage;
-            if (currCol == LABEL_NUM_COLS + SEQ_NUMBER_NUM_COLS) pixmap = sequenceIt->nextImage;
+            QPixmap pixmap;
+            if (currCol < (LABEL_NUM_COLS + SEQ_NUMBER_NUM_COLS + seq.imageOffset))
+            {
+                // show completed sequenceImages (for legacy reasons called laterImage)
+                pixmap = sequenceIt->laterImage;
+            }
+            else
+            {
+                // show upcoming sequenceImages, which are a different more vibrant colour (called nextImage)
+                pixmap = sequenceIt->nextImage;
+            }
 
             sequenceIt->currentImgLabel->setPixmap(pixmap);
             sequenceIt->currentImgLabel->setEnabled(!pixmap.isNull());
