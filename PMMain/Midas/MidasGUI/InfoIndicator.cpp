@@ -51,7 +51,7 @@ InfoIndicator::InfoIndicator(int widgetWidth, int widgetHeight, QWidget *parent)
         "Use the right mouse button to open a context menu."));
     setWindowTitle(tr("Info Indicator"));
 
-    setWindowOpacity(0.75);
+    setWindowOpacity(GUI_OPACITY);
     QPalette pal;
     pal.setColor(QPalette::Background, QColor(205, 205, 193));
     setAutoFillBackground(true);

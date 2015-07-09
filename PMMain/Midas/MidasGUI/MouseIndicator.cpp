@@ -50,7 +50,7 @@ MouseIndicator::MouseIndicator(MidasThread *mainThread, int deadZoneRad, int wid
                   "Use the right mouse button to open a context menu."));
     setWindowTitle(tr("Mouse Indicator"));
 
-    setWindowOpacity(0.75);
+    setWindowOpacity(GUI_OPACITY);
     QPalette pal;
     pal.setColor(QPalette::Background, QColor(205, 205, 193));
     setAutoFillBackground(true);

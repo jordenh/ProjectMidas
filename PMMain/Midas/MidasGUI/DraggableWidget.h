@@ -22,8 +22,6 @@
 
 #include <QtWidgets/QWidget.h>
 
-#define GRID_ELEMENT_SIZE   48
-
 /**
  * This class represents a Widget that can be dragged using the mouse, by left-clicking the widget
  * and dragging.

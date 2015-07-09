@@ -48,7 +48,7 @@ SequenceDisplayer::SequenceDisplayer(QWidget *parent)
     maxNumSequences = MAX_NUM_SEQUENCES_DISPLAYED;
 
     setAttribute(Qt::WA_TranslucentBackground);
-    setWindowOpacity(0.8);
+    setWindowOpacity(GUI_OPACITY);
 
     maxHeight = GRID_ELEMENT_SIZE * maxNumSequences;
     maxWidth = GRID_ELEMENT_SIZE * (NUM_COLS + GUI_WIDTH_BUFFER);
@@ -105,9 +105,9 @@ void SequenceDisplayer::registerSequenceImages(int seqId, QString sequenceName, 
     newSequence.sequenceImages = sequenceImages;
     QFont timesFont("Times", 9, QFont::Bold);
     newSequence.seqLabel = new QLabel(tr("%1").arg(sequenceName));
-    newSequence.seqLabel->setFont(timesFont);
     newSequence.seqLabel->setWordWrap(true);
-    formBoxLabel(newSequence.seqLabel);
+    formBoxLabel(newSequence.seqLabel);  
+    newSequence.seqLabel->setFont(timesFont);
     newSequence.seqLabel->setFixedSize(GRID_ELEMENT_SIZE * LABEL_NUM_COLS, GRID_ELEMENT_SIZE);
     newSequence.seqPosLabel = new QLabel;
     newSequence.seqPosLabel->setFont(timesFont);

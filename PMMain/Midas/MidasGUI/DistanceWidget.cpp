@@ -51,7 +51,7 @@ DistanceWidget::DistanceWidget(MidasThread* mainThread, int width, int height, Q
 
     layout->addWidget(bar);
 
-    setWindowOpacity(0.75);
+    setWindowOpacity(GUI_OPACITY);
     QPalette pal;
     setPalette(pal);
 

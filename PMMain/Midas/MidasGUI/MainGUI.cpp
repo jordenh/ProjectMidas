@@ -48,7 +48,7 @@
 #include "DistanceWidget.h"
 #endif
 
-#define SCREEN_RIGHT_BUFFER    20 
+#define SCREEN_RIGHT_BUFFER    25 
 #define SCREEN_BOTTOM_BUFFER   30
 
 MainGUI::MainGUI(MidasThread *mainThread, ProfileManager *pm, int deadZoneRad)
@@ -69,7 +69,7 @@ MainGUI::MainGUI(MidasThread *mainThread, ProfileManager *pm, int deadZoneRad)
     this->setFocus();
     //setWindowFlags(windowFlags() | Qt::Tool);
     setAttribute(Qt::WA_TranslucentBackground);
-    setWindowOpacity(0.8);
+    setWindowOpacity(GUI_OPACITY);
 
 	// create main layout and add sequences (they are at the top and constantly go in/out of view)
     layout = new QVBoxLayout;

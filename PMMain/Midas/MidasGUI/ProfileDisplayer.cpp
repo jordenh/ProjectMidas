@@ -25,7 +25,7 @@
 ProfileDisplayer::ProfileDisplayer(std::string name, int widgetWidth, int widgetHeight, QWidget *parent)
     : QFrame(parent), indWidth(widgetWidth), indHeight(widgetHeight), profileName(name)
 {
-    setWindowOpacity(0.75);
+    setWindowOpacity(GUI_OPACITY);
   //  setStyleSheet(QString("background-color: rgba(205, 205, 193, 191); \
    //                       border: 1px solid red; min-width: %1; min-height: %2").arg(QString::number(indWidth),  QString::number(indHeight)));
     QPalette pal;
