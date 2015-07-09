@@ -46,11 +46,11 @@ PoseDisplayer::PoseDisplayer(int widgetWidth, int widgetHeight, QWidget *parent)
         "Use the right mouse button to open a context menu."));
     setWindowTitle(tr("Pose Displayer"));
 
-    setWindowOpacity(0.75);
+    setWindowOpacity(GUI_OPACITY);
     setWindowFlags(Qt::WindowStaysOnTopHint);
 
     layout = new QGridLayout;
-    layout->setSpacing(0);
+    layout->setMargin(0);
     setLayout(layout);
 
     poseImgLabel = new QLabel();

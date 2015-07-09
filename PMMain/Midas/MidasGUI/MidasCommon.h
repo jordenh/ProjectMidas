@@ -26,8 +26,16 @@
 #define INIT_PITCH_ANGLE 20.0f /* Maximum delta angle in degrees */
 #define INIT_YAW_ANGLE 25.0f /* Maximum delta angle in degrees */
 
+#define GUI_OPACITY 0.6
+
+#ifdef SHOW_PROFILE_ICONS
 #define MOUSE_INDICATOR_SIZE 130
 #define INFO_INDICATOR_WIDTH   150
+#else
+#define GRID_ELEMENT_SIZE   52
+#define MOUSE_INDICATOR_SIZE 109 // 2*GRID_ELEMENT_SIZE + WIDGET_BUFFER
+#define INFO_INDICATOR_WIDTH   109
+#endif
 #define INFO_INDICATOR_HEIGHT  35
 #define PROF_INDICATOR_WIDTH   250
 #define PROF_INDICATOR_HEIGHT  35
@@ -167,13 +175,13 @@ static std::string modeToString(midasMode mm)
     {
     case LOCK_MODE:   
 #ifdef BUILD_FOR_KARDIUM
-        return "Basic Mode";
+        return "LOCKED";
 #else
         return "Locked";
 #endif
     case MOUSE_MODE:  
 #ifdef BUILD_FOR_KARDIUM
-        return "Advanced Mode";
+        return "UNLOCKED";
 #else
         return "Mouse Mouse";
 #endif
@@ -183,7 +191,7 @@ static std::string modeToString(midasMode mm)
         return "Keyboard Mode";
     case GESTURE_MODE:  
 #ifdef BUILD_FOR_KARDIUM
-        return "Advanced Mode";
+        return "UNLOCKED";
 #else
         return "Gesture Mode";
 #endif

@@ -36,7 +36,7 @@ KeyboardWidget::KeyboardWidget(MidasThread *mainThread, int radius, int ringWidt
         selectedKey(-1), holdFont("Times", 9, QFont::Normal), timesFont("Times", 16, QFont::DemiBold)
 {
     setAttribute(Qt::WA_TranslucentBackground);
-    setWindowOpacity(0.8);
+    setWindowOpacity(GUI_OPACITY);
 
     setFixedSize(radius * 2 + POPOUT_DISTANCE + EXTRA_WINDOW_DIST, radius * 2 + POPOUT_DISTANCE + EXTRA_WINDOW_DIST);
 

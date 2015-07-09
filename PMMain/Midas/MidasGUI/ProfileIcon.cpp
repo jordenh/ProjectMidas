@@ -30,7 +30,7 @@ ProfileIcon::ProfileIcon(int widgetWidth, int widgetHeight, bool active, QPixmap
 		"Use the right mouse button to open a context menu."));
 	setWindowTitle(tr("Profile Icon"));
 
-	setWindowOpacity(0.75);
+	setWindowOpacity(GUI_OPACITY);
 	QPalette pal;
 	pal.setColor(QPalette::Background, QColor(205, 205, 193));
 	setAutoFillBackground(true);

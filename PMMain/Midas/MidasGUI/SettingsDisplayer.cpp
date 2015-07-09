@@ -33,7 +33,7 @@ SettingsDisplayer::SettingsDisplayer(int widgetWidth, int widgetHeight, QWidget 
         "Use the right mouse button to open a context menu."));
     setWindowTitle(tr("Settings Displayer"));
 
-    setWindowOpacity(0.75);
+    setWindowOpacity(GUI_OPACITY);
     QPalette pal;
     pal.setColor(QPalette::Background, QColor(205, 205, 193));
     setAutoFillBackground(true);
@@ -41,7 +41,7 @@ SettingsDisplayer::SettingsDisplayer(int widgetWidth, int widgetHeight, QWidget 
     setWindowFlags(Qt::WindowStaysOnTopHint);
 
     mainLayout = new QVBoxLayout;
-    mainLayout->setSpacing(5);
+    mainLayout->setSpacing(WIDGET_BUFFER);
     setLayout(mainLayout);
 
     yawSlider = new QSlider(Qt::Orientation::Horizontal, this);

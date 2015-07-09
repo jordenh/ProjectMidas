@@ -48,13 +48,13 @@
 #include "DistanceWidget.h"
 #endif
 
-#define SCREEN_RIGHT_BUFFER    20 
+#define SCREEN_RIGHT_BUFFER    25 
 #define SCREEN_BOTTOM_BUFFER   30
 
 MainGUI::MainGUI(MidasThread *mainThread, ProfileManager *pm, int deadZoneRad)
     : DraggableWidget(NULL, Qt::FramelessWindowHint | Qt::WindowSystemMenuHint | Qt::WindowStaysOnTopHint)
 {
-	infoIndicator = new InfoIndicator(INFO_INDICATOR_WIDTH, INFO_INDICATOR_HEIGHT, this);
+    infoIndicator = new InfoIndicator(INFO_INDICATOR_WIDTH, INFO_INDICATOR_HEIGHT, this);
     sequenceDisplayer = new SequenceDisplayer(this);
 	poseDisplayer = new PoseDisplayer(MOUSE_INDICATOR_SIZE, MOUSE_INDICATOR_SIZE, this);
 #ifdef BUILD_KEYBOARD
@@ -69,7 +69,7 @@ MainGUI::MainGUI(MidasThread *mainThread, ProfileManager *pm, int deadZoneRad)
     this->setFocus();
     //setWindowFlags(windowFlags() | Qt::Tool);
     setAttribute(Qt::WA_TranslucentBackground);
-    setWindowOpacity(0.8);
+    setWindowOpacity(GUI_OPACITY);
 
 	// create main layout and add sequences (they are at the top and constantly go in/out of view)
     layout = new QVBoxLayout;
@@ -88,21 +88,33 @@ MainGUI::MainGUI(MidasThread *mainThread, ProfileManager *pm, int deadZoneRad)
     }
 #endif
 
+#ifdef SHOW_SETTINGS
     settingsDisplayer = new SettingsDisplayer(PROF_INDICATOR_WIDTH, 2*INFO_INDICATOR_HEIGHT, this);
     layout->addWidget(settingsDisplayer, 0, Qt::AlignRight);
+#else
+    settingsDisplayer = NULL;
+#endif
+
+    QVBoxLayout *leftBoxLayout = new QVBoxLayout;
+    leftBoxLayout->addWidget(infoIndicator);
+
+#ifdef SHOW_PROFILE_ICONS
+    QHBoxLayout *mainBoxLayout = new QHBoxLayout;
 
 	// create HBox for specific profile icons: Change this icon to be specific to your app
 	QHBoxLayout *profileIconLayout = new QHBoxLayout;
 	profileIconLayout->addWidget(icon0);
 	profileIconLayout->addWidget(icon1);
 
-	QVBoxLayout *leftBoxLayout = new QVBoxLayout;
-	leftBoxLayout->addWidget(infoIndicator);
-	leftBoxLayout->addItem(profileIconLayout);
+    leftBoxLayout->addItem(profileIconLayout);
+#else 
+    QVBoxLayout *mainBoxLayout = new QVBoxLayout;
+#endif
 
-	QHBoxLayout *mainBoxLayout = new QHBoxLayout;
+	
 	mainBoxLayout->addItem(leftBoxLayout);
 	mainBoxLayout->addWidget(poseDisplayer);
+    mainBoxLayout->setSpacing(WIDGET_BUFFER);
 	mainBoxLayout->setAlignment(Qt::AlignRight);
 
 	layout->addItem(mainBoxLayout);
@@ -116,11 +128,17 @@ MainGUI::MainGUI(MidasThread *mainThread, ProfileManager *pm, int deadZoneRad)
 
     totalWidth = std::max(sequenceDisplayer->width(), 
                         (infoIndicator->width() + poseDisplayer->width()));
-    totalHeight = sequenceDisplayer->height() + poseDisplayer->height() +
+    totalHeight = sequenceDisplayer->height() + poseDisplayer->height()
 #ifdef SHOW_PROFILE_BUTTONS
-        profileHeights + 
+    + profileHeights
 #endif
-        settingsDisplayer->height(); 
+#ifdef SHOW_SETTINGS
+    + settingsDisplayer->height()
+#endif
+#ifndef SHOW_PROFILE_ICONS
+    + infoIndicator->height()
+#endif
+        ;
 
     QRect screen = QApplication::desktop()->availableGeometry(this);
     setGeometry(screen.right() - totalWidth - SCREEN_RIGHT_BUFFER,
@@ -152,14 +170,18 @@ MainGUI::~MainGUI()
     sequenceDisplayer = NULL;
     delete poseDisplayer;
     poseDisplayer = NULL;
+#ifdef SHOW_SETTINGS
     delete settingsDisplayer;
     settingsDisplayer = NULL;
+#endif
     delete layout;
     layout = NULL;
+#ifdef SHOW_PROFILE_ICONS
 	delete icon0;
 	icon0 = NULL;
 	delete icon1;
 	icon1 = NULL;
+#endif
 
 #ifdef SHOW_PROFILE_BUTTONS
     for (int i = 0; i < profileWidgets.size(); i++)
@@ -180,10 +202,13 @@ void MainGUI::connectSignallerToKeyboardToggle(GestureSignaller *signaller)
 
 void MainGUI::connectSignallerToSettingsDisplayer(SettingsSignaller *signaller)
 {
-    QObject::connect(settingsDisplayer, SIGNAL(emitSliderValues(unsigned int, unsigned int)),
-        signaller, SLOT(handleSliderValues(unsigned int, unsigned int)));
-    QObject::connect(settingsDisplayer, SIGNAL(emitBuzzFeedbackChange(unsigned int)),
-        signaller, SLOT(handleBuzzFeedbackChange(unsigned int)));
+    if (settingsDisplayer != NULL)
+    {
+        QObject::connect(settingsDisplayer, SIGNAL(emitSliderValues(unsigned int, unsigned int)),
+            signaller, SLOT(handleSliderValues(unsigned int, unsigned int)));
+        QObject::connect(settingsDisplayer, SIGNAL(emitBuzzFeedbackChange(unsigned int)),
+            signaller, SLOT(handleBuzzFeedbackChange(unsigned int)));
+    }
 }
 
 void MainGUI::connectSignallerToProfileWidgets(ProfileSignaller* signaller)
@@ -226,6 +251,7 @@ void MainGUI::connectSignallerToProfileIcons(GestureSignaller *signaller)
 
 void MainGUI::setupProfileIcons()
 {
+#ifdef SHOW_PROFILE_ICONS
 	QImage icon0Active(QString(PROFILE_ICON0_ACTIVE));
 	QImage icon0Inactive(QString(PROFILE_ICON0_INACTIVE));
 	QImage icon1Active(QString(PROFILE_ICON1_ACTIVE));
@@ -235,10 +261,12 @@ void MainGUI::setupProfileIcons()
     activeProfile = 0;
 	icon0 = new ProfileIcon(SPECIFIC_PROFILE_ICON_SIZE, SPECIFIC_PROFILE_ICON_SIZE, true, QPixmap::fromImage(icon0Active), QPixmap::fromImage(icon0Inactive), this);
 	icon1 = new ProfileIcon(SPECIFIC_PROFILE_ICON_SIZE, SPECIFIC_PROFILE_ICON_SIZE, false, QPixmap::fromImage(icon1Active), QPixmap::fromImage(icon1Inactive), this);
+#endif
 }
 
 void MainGUI::handleChangeProfile(bool progressForward)
 {
+#ifdef SHOW_PROFILE_ICONS
     if (progressForward)
     {
         activeProfile++;
@@ -268,6 +296,7 @@ void MainGUI::handleChangeProfile(bool progressForward)
         icon0->setImgActiveSel(false);
         icon1->setImgActiveSel(false);
     }
+#endif
 }
 
 void MainGUI::handleFocusMidas()

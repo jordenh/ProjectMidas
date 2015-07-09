@@ -28,25 +28,27 @@
 #include <QGridLayout.h>
 #include <qlabel.h>
 
-#define LABEL_NUM_COLS      3
+#define LABEL_NUM_COLS      2
 #define LABEL_NUM_ROWS      1
 #define SEQ_NUMBER_NUM_COLS 1
 #define SEQ_NUMBER_NUM_ROWS 1
-#define NUM_SEQUENCE_STEPS  3
+#define NUM_SEQUENCE_STEPS  4 // Max number of steps to show to a user at a time
 #define NUM_COLS (LABEL_NUM_COLS + SEQ_NUMBER_NUM_COLS + NUM_SEQUENCE_STEPS)
 #define GUI_WIDTH_BUFFER 1
+#define MAX_NUM_SEQUENCES_DISPLAYED 15
 
 SequenceDisplayer::SequenceDisplayer(QWidget *parent)
     : QWidget(parent)
 {
     gridLayout = new QGridLayout;
     gridLayout->setAlignment(Qt::AlignRight | Qt::AlignBottom);
-    gridLayout->setSpacing(5);
+    gridLayout->setSpacing(WIDGET_BUFFER);
+    gridLayout->setMargin(0);
     setLayout(gridLayout);
-    maxNumSequences = 10;
+    maxNumSequences = MAX_NUM_SEQUENCES_DISPLAYED;
 
     setAttribute(Qt::WA_TranslucentBackground);
-    setWindowOpacity(0.8);
+    setWindowOpacity(GUI_OPACITY);
 
     maxHeight = GRID_ELEMENT_SIZE * maxNumSequences;
     maxWidth = GRID_ELEMENT_SIZE * (NUM_COLS + GUI_WIDTH_BUFFER);
@@ -103,9 +105,9 @@ void SequenceDisplayer::registerSequenceImages(int seqId, QString sequenceName, 
     newSequence.sequenceImages = sequenceImages;
     QFont timesFont("Times", 9, QFont::Bold);
     newSequence.seqLabel = new QLabel(tr("%1").arg(sequenceName));
-    newSequence.seqLabel->setFont(timesFont);
     newSequence.seqLabel->setWordWrap(true);
-    formBoxLabel(newSequence.seqLabel);
+    formBoxLabel(newSequence.seqLabel);  
+    newSequence.seqLabel->setFont(timesFont);
     newSequence.seqLabel->setFixedSize(GRID_ELEMENT_SIZE * LABEL_NUM_COLS, GRID_ELEMENT_SIZE);
     newSequence.seqPosLabel = new QLabel;
     newSequence.seqPosLabel->setFont(timesFont);
@@ -190,17 +192,32 @@ void SequenceDisplayer::updateSequences()
         sequenceData seq = it->second;
         int currCol = 0;
         seq.seqLabel->setHidden(false);
-        seq.seqPosLabel->setHidden(false);
         gridLayout->addWidget(seq.seqLabel, currRow, currCol, LABEL_NUM_ROWS, LABEL_NUM_COLS);
         currCol += LABEL_NUM_COLS;
+#ifdef SHOW_SEQUENCE_COUNT
+        seq.seqPosLabel->setHidden(false);
         gridLayout->addWidget(seq.seqPosLabel, currRow, currCol, SEQ_NUMBER_NUM_ROWS, SEQ_NUMBER_NUM_COLS);
         currCol += SEQ_NUMBER_NUM_COLS;
+#endif
         std::vector<sequenceImageSet>::iterator sequenceIt;
-        for (sequenceIt = seq.sequenceImages.begin() + seq.imageOffset;
+        for (sequenceIt = seq.sequenceImages.begin();
             sequenceIt != seq.sequenceImages.end() && currCol < NUM_COLS; sequenceIt++)
         {
-            QPixmap pixmap = sequenceIt->laterImage;
-            if (currCol == LABEL_NUM_COLS + SEQ_NUMBER_NUM_COLS) pixmap = sequenceIt->nextImage;
+            QPixmap pixmap;
+#ifdef SHOW_SEQUENCE_COUNT
+            if (currCol < (LABEL_NUM_COLS + SEQ_NUMBER_NUM_COLS + seq.imageOffset))
+#else
+            if (currCol < (LABEL_NUM_COLS + seq.imageOffset))
+#endif
+            {
+                // show completed sequenceImages (for legacy reasons called laterImage)
+                pixmap = sequenceIt->laterImage;
+            }
+            else
+            {
+                // show upcoming sequenceImages, which are a different more vibrant colour (called nextImage)
+                pixmap = sequenceIt->nextImage;
+            }
 
             sequenceIt->currentImgLabel->setPixmap(pixmap);
             sequenceIt->currentImgLabel->setEnabled(!pixmap.isNull());
