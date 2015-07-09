@@ -134,12 +134,6 @@ void SequenceImageManager::loadImages()
     fist.laterImage = QPixmap::fromImage(fistLater);
     idToImageMap[fist.actionTag] = fist;
 
-    /*sequenceImageSet pinkyToThumb;
-    pinkyToThumb.actionTag = Pose::doubleTap;
-    pinkyToThumb.nextImage = QPixmap::fromImage(pinkyToThumbNext);
-    pinkyToThumb.laterImage = QPixmap::fromImage(pinkyToThumbLater);
-    idToImageMap[pinkyToThumb.actionTag] = pinkyToThumb;*/
-
     sequenceImageSet doubleTap;
     doubleTap.actionTag = Pose::doubleTap;
     doubleTap.nextImage = QPixmap::fromImage(doubleTapNext);

@@ -105,7 +105,7 @@ void SCDDigester::digest()
 		mouseCtrl->sendCommand(mouseCmds::MOVE_ABSOLUTE, mouseDelta.x, -mouseDelta.y);
 	}
 
-    // signall connection actions... TODO
+    // signall connection/sync
     if (scdHandle->getIsConnected() != connSignaller->getCurrentlyConnected())
     {
         if (scdHandle->getIsConnected())
@@ -117,6 +117,19 @@ void SCDDigester::digest()
         {
             connSignaller->emitDisconnect();
             connSignaller->setCurrentlyConnected(false);
+        }
+    }
+    if (scdHandle->getIsSynched() != connSignaller->getCurrentlySynched())
+    {
+        if (scdHandle->getIsSynched())
+        {
+            connSignaller->emitSync();
+            connSignaller->setCurrentlySynched(true);
+        }
+        else
+        {
+            connSignaller->emitUnsync();
+            connSignaller->setCurrentlySynched(false);
         }
     }
 

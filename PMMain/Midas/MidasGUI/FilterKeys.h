@@ -21,6 +21,7 @@
 #define COMMAND_INPUT "command"
 #define VELOCITY_INPUT "velocity"
 #define ISCONNECTED_INPUT "isConnected"
+#define SYNCHED_INPUT "isSynched"
 #define DELTA_INPUT "deltaInput"
 #define ANGLE_INPUT "angle"
 #define RSSI_INPUT "rssi"

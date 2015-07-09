@@ -29,18 +29,23 @@ class ConnectionSignaller : public QObject
     Q_OBJECT
 
 public:
-    ConnectionSignaller(QObject *parent = 0, bool currentlyConnected = false);
+    ConnectionSignaller(QObject *parent = 0, bool currentlyConnected = false, bool currentlySynched = false);
     ~ConnectionSignaller();
 
     void setCurrentlyConnected(bool conn) { currentlyConnected = conn; }
     bool getCurrentlyConnected() { return currentlyConnected; }
 
+    void setCurrentlySynched(bool sync) { currentlySynched = sync; }
+    bool getCurrentlySynched() { return currentlySynched; }
 signals:
     void emitDisconnect();
     void emitConnect();
+    void emitSync();
+    void emitUnsync();
 
 private:
     bool currentlyConnected;
+    bool currentlySynched;
 };
 
 #endif // SETTINGS_SIGNALLER_H

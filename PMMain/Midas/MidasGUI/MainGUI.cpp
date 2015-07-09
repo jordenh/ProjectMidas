@@ -250,6 +250,11 @@ void MainGUI::connectSignallerToPoseDisplayer(ConnectionSignaller *signaller)
         poseDisplayer, SLOT(handleDisconnect()));
     QObject::connect(signaller, SIGNAL(emitConnect()),
         poseDisplayer, SLOT(handleConnect()));
+
+    QObject::connect(signaller, SIGNAL(emitSync()),
+        poseDisplayer, SLOT(handleSync()));
+    QObject::connect(signaller, SIGNAL(emitUnsync()),
+        poseDisplayer, SLOT(handleUnsync()));
 }
 
 void MainGUI::connectSignallerToProfileIcons(GestureSignaller *signaller)

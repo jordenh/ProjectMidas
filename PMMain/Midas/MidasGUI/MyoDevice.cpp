@@ -92,6 +92,8 @@ void MyoDevice::runDeviceLoop()
 
     advancedConnectPipeline.registerFilterAtDeepestLevel(WearableDevice::sharedData);
 
+    advancedSyncPipeline.registerFilterAtDeepestLevel(WearableDevice::sharedData);
+
 	profileSignaller.setControlStateHandle(state);
     if (profileManager->getProfiles()->size() > 0)
     {
@@ -362,11 +364,13 @@ void MyoDevice::MyoCallbacks::onArmSync(Myo *myo, uint64_t timestamp, Arm arm, X
     std::cout << "on arm sync." << std::endl;
 
     filterDataMap input;
-
     input[INPUT_ARM] = parent.arm;
     input[INPUT_X_DIRECTION] = parent.xDirection;
-
     parent.advancedOrientationPipeline.startPipeline(input);
+
+    filterDataMap syncInput;
+    syncInput[SYNCHED_INPUT] = true;
+    parent.advancedSyncPipeline.startPipeline(syncInput);
 }
 void MyoDevice::MyoCallbacks::onArmSync(Myo* myo, uint64_t timestamp, Arm arm, XDirection xDirection) { 
     parent.arm = arm;
@@ -374,16 +378,22 @@ void MyoDevice::MyoCallbacks::onArmSync(Myo* myo, uint64_t timestamp, Arm arm, X
     std::cout << "on arm sync." << std::endl; 
 
     filterDataMap input;
-
     input[INPUT_ARM] = parent.arm;
     input[INPUT_X_DIRECTION] = parent.xDirection;
-
     parent.advancedOrientationPipeline.startPipeline(input);
+
+    filterDataMap syncInput;
+    syncInput[SYNCHED_INPUT] = true;
+    parent.advancedSyncPipeline.startPipeline(syncInput);
 }
 void MyoDevice::MyoCallbacks::onArmUnsync(Myo* myo, uint64_t timestamp) { 
     parent.arm = Arm::armUnknown;
     parent.xDirection = XDirection::xDirectionUnknown;
     std::cout << "on arm unsync." << std::endl; 
+
+    filterDataMap input;
+    input[SYNCHED_INPUT] = false;
+    parent.advancedSyncPipeline.startPipeline(input);
 }
 
 void MyoDevice::MyoCallbacks::onUnlock(Myo* myo, uint64_t timestamp)

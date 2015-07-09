@@ -26,7 +26,7 @@
 #define INIT_PITCH_ANGLE 20.0f /* Maximum delta angle in degrees */
 #define INIT_YAW_ANGLE 25.0f /* Maximum delta angle in degrees */
 
-#define GUI_OPACITY 1.0
+#define GUI_OPACITY 0.65
 
 #ifdef SHOW_PROFILE_ICONS
 #define MOUSE_INDICATOR_SIZE 130

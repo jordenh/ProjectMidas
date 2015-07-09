@@ -234,6 +234,20 @@ void SharedCommandData::setIsConnected(bool connected)
     isConnectedMutex.unlock();
 }
 
+bool SharedCommandData::getIsSynched(void)
+{
+    isSynchedMutex.lock();
+    bool synched = isSynched;
+    isSynchedMutex.unlock();
+    return synched;
+}
+
+void SharedCommandData::setIsSynched(bool synched)
+{
+    isSynchedMutex.lock();
+    isSynched = synched;
+    isSynchedMutex.unlock();
+}
 bool SharedCommandData::isCommandQueueEmpty()
 {
     return commandQueue.empty();
@@ -267,6 +281,12 @@ void SharedCommandData::process()
     {
         boost::any value = input[ISCONNECTED_INPUT];
         extractIsConnected(value);
+    }
+
+    if (input.find(SYNCHED_INPUT) != input.end())
+    {
+        boost::any value = input[SYNCHED_INPUT];
+        extractIsSynched(value);
     }
 
 #ifdef BUILD_KEYBOARD
@@ -373,6 +393,20 @@ void SharedCommandData::extractIsConnected(boost::any value)
     {
         bool isConnected = boost::any_cast<bool> (value);
         setIsConnected(isConnected);
+    }
+}
+
+void SharedCommandData::extractIsSynched(boost::any value)
+{
+    if (value.type() != typeid(bool))
+    {
+        Filter::setFilterError(filterError::INVALID_INPUT);
+        Filter::setFilterStatus(filterStatus::FILTER_ERROR);
+    }
+    else
+    {
+        bool isSynced = boost::any_cast<bool> (value);
+        setIsSynched(isSynced);
     }
 }
 

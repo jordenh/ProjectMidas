@@ -19,9 +19,10 @@
 
 #include "ConnectionSignaller.h"
 
-ConnectionSignaller::ConnectionSignaller(QObject *parent, bool currentlyConnected)
+ConnectionSignaller::ConnectionSignaller(QObject *parent, bool currentlyConnected, bool currentlySynched)
 {
-    currentlyConnected = currentlyConnected;
+    this->currentlyConnected = currentlyConnected;
+    this->currentlySynched = currentlySynched;
 }
 
 ConnectionSignaller::~ConnectionSignaller()

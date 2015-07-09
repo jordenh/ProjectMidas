@@ -168,7 +168,7 @@ private:
     ControlState* state; // not owned
     MyoState* myoState; // not owned
     AdvancedFilterPipeline advancedPosePipeline, advancedOrientationPipeline,
-        advancedRssiPipeline, advancedConnectPipeline;
+        advancedRssiPipeline, advancedConnectPipeline, advancedSyncPipeline;
     MainGUI *mainGui; // not owned
     std::string prevProfileName;
 
