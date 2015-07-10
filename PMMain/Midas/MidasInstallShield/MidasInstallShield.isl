@@ -354,7 +354,6 @@
 		<row><td>ISX_DEFAULTCOMPONENT7</td><td>{266DDABE-B101-41E9-BDA9-F8A04A0F4DFA}</td><td>MYO_MARKET_BADGE</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>ISX_DEFAULTCOMPONENT8</td><td>{045A5595-65CA-48CD-9F89-3344751D7634}</td><td>BW200PXIMGS</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>ISX_DEFAULTCOMPONENT9</td><td>{D85C656C-90B7-4505-889F-C562C8AA48CE}</td><td>LICENSE</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>MidasGUI.Debug_Symbols</td><td>{7A8AAD63-65C3-4D67-97ED-47763537C2D8}</td><td>INSTALLDIR</td><td>2</td><td/><td>midasgui.debug_symbols</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>MidasGUI.Primary_Output</td><td>{D2675582-083B-412D-B96F-EFF640045AD6}</td><td>INSTALLDIR</td><td>2</td><td/><td>midasgui.primary_output</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>MidasProfileManager.Primary_Output</td><td>{DEAEB11C-26BD-42B6-A437-CC8F156D8ACA}</td><td>INSTALLDIR</td><td>2</td><td/><td>midasprofilemanager.primary_</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>myo32.dll</td><td>{B790985C-9A56-4E5F-BB1E-900729419C4E}</td><td>INSTALLDIR</td><td>2</td><td/><td>myo32.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
@@ -1909,7 +1908,6 @@
 		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT7</td></row>
 		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT8</td></row>
 		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT9</td></row>
-		<row><td>AlwaysInstall</td><td>MidasGUI.Debug_Symbols</td></row>
 		<row><td>AlwaysInstall</td><td>MidasGUI.Primary_Output</td></row>
 		<row><td>AlwaysInstall</td><td>MidasProfileManager.Primary_Output</td></row>
 		<row><td>AlwaysInstall</td><td>myo32.dll</td></row>
@@ -1954,7 +1952,6 @@
 		<row><td>fist.jpg3</td><td>ISX_DEFAULTCOMPONENT13</td><td>fist.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\Post200PxImgs\fist.jpg</td><td>1</td><td/></row>
 		<row><td>grey.png</td><td>ISX_DEFAULTCOMPONENT4</td><td>grey.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\assets\gesture_icons\grey.png</td><td>1</td><td/></row>
 		<row><td>license.rtf</td><td>ISX_DEFAULTCOMPONENT9</td><td>LICENSE.rtf</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\LICENSE\LICENSE.rtf</td><td>1</td><td/></row>
-		<row><td>midasgui.debug_symbols</td><td>MidasGUI.Debug_Symbols</td><td>MidasGUI.Debug Symbols</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;MidasGUI&gt;|Symbols</td><td>3</td><td/></row>
 		<row><td>midasgui.primary_output</td><td>MidasGUI.Primary_Output</td><td>MidasGUI.Primary Output</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;MidasGUI&gt;|Built</td><td>3</td><td/></row>
 		<row><td>midasguiex1.psd</td><td>ISX_DEFAULTCOMPONENT12</td><td>MIDASG~1.PSD|MidasGUIEx1.psd</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\mockups\MidasGUIEx1.psd</td><td>1</td><td/></row>
 		<row><td>midasguiex1_copy.jpg</td><td>ISX_DEFAULTCOMPONENT12</td><td>MIDASG~1.JPG|MidasGUIEx1 copy.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\mockups\MidasGUIEx1 copy.jpg</td><td>1</td><td/></row>
@@ -1988,6 +1985,7 @@
 		<row><td>poselenhold.png</td><td>ISX_DEFAULTCOMPONENT10</td><td>POSELE~1.PNG|PoseLenHold.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\icons\PoseLenHold.png</td><td>1</td><td/></row>
 		<row><td>poselenimmediate.png</td><td>ISX_DEFAULTCOMPONENT10</td><td>POSELE~1.PNG|PoseLenImmediate.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\icons\PoseLenImmediate.png</td><td>1</td><td/></row>
 		<row><td>profiles.xml</td><td>ISX_DEFAULTCOMPONENT1</td><td>profiles.xml</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\profiles.xml</td><td>1</td><td/></row>
+		<row><td>profiles_v2.xml</td><td>ISX_DEFAULTCOMPONENT1</td><td>PROFIL~1.XML|profiles_V2.xml</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\Personal\ReleaseMidasTest\ReleaseMidasTest\profiles_V2.xml</td><td>1</td><td/></row>
 		<row><td>projectmidaslogo.ico</td><td>ISX_DEFAULTCOMPONENT</td><td>PROJEC~1.ICO|ProjectMidasLogo.ico</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\ProjectMidasLogo.ico</td><td>1</td><td/></row>
 		<row><td>reconnect.png</td><td>ISX_DEFAULTCOMPONENT4</td><td>RECONN~1.PNG|reConnect.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\assets\gesture_icons\reConnect.png</td><td>1</td><td/></row>
 		<row><td>resync.png</td><td>ISX_DEFAULTCOMPONENT4</td><td>reSync.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\assets\gesture_icons\reSync.png</td><td>1</td><td/></row>
@@ -2176,7 +2174,6 @@
 		<row><td>ISX_DEFAULTCOMPONENT7</td><td/><td/><td>_C67BE7BB_EE0B_4B34_A58B_9D3F97C330EB_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>ISX_DEFAULTCOMPONENT8</td><td/><td/><td>_C4002CDE_FF96_4F57_938B_85BB57ED2908_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>ISX_DEFAULTCOMPONENT9</td><td/><td/><td>_E9265C8C_0B9C_4114_A218_3907C0C33FB3_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>MidasGUI.Debug_Symbols</td><td/><td/><td>_1B7F262C_F5DE_4FEC_A2F3_0BC60F84C601_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>MidasGUI.Primary_Output</td><td/><td/><td>_D70EAE3F_DD82_4E29_BD55_29F30C970CE3_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>MidasProfileManager.Primary_Output</td><td/><td/><td>_088EF78A_90DA_4EF9_96C1_D323FDB32707_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>myo32.dll</td><td/><td/><td>_D7629186_E39A_4501_9200_6BD2CF1D05E9_FILTER</td><td/><td/><td/><td/></row>
@@ -2281,6 +2278,8 @@
 		<col key="yes" def="s38">Feature_</col>
 		<col key="yes" def="s255">ISMergeModule_</col>
 		<col key="yes" def="i2">Language_</col>
+		<row><td>AlwaysInstall</td><td>Microsoft_VC120_CRT_x86.194841A2_D0F2_3B96_9F71_05BA91BEA0FA</td><td>0</td></row>
+		<row><td>AlwaysInstall</td><td>Microsoft_VC120_DebugCRT_x86.194841A2_D0F2_3B96_9F71_05BA91BEA0FA</td><td>0</td></row>
 	</table>
 
 	<table name="ISFeatureSetupPrerequisites">
@@ -2403,6 +2402,8 @@
 		<col def="s255">Name</col>
 		<col def="S255">Destination</col>
 		<col def="I4">ISAttributes</col>
+		<row><td>Microsoft_VC120_CRT_x86.194841A2_D0F2_3B96_9F71_05BA91BEA0FA</td><td>0</td><td>Visual C++ 12.0 CRT (x86)</td><td/><td/></row>
+		<row><td>Microsoft_VC120_DebugCRT_x86.194841A2_D0F2_3B96_9F71_05BA91BEA0FA</td><td>0</td><td>Visual C++ 12.0 DebugCRT (x86)</td><td/><td/></row>
 	</table>
 
 	<table name="ISMergeModuleCfgValues">
