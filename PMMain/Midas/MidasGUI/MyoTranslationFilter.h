@@ -140,7 +140,7 @@ private:
     * @param w The w coordinate of the quaternion.
     * @return Returns the 'roll' angle, in radians.
     */
-    float getRollFromQuaternion(float x, float y, float z, float w);
+    float getRollFromQuaternion(float x, float y, float z, float w, Arm arm, XDirection xDirection);
 
     /**
     * Calculates the percent of the mouse cursor's total velocity along the x

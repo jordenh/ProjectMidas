@@ -56,6 +56,7 @@ SCDDigester::SCDDigester(SharedCommandData* scd, MidasThread *thread, ControlSta
     connSignaller->setCurrentlyConnected(false);
     connSignaller->setCurrentlySynched(false);
     mainGUI->connectSignallerToPoseDisplayer(connSignaller);
+    mainGUI->connectSignallerToSequenceDisplayer(connSignaller);
 }
 
 
@@ -106,33 +107,7 @@ void SCDDigester::digest()
 		mouseCtrl->sendCommand(mouseCmds::MOVE_ABSOLUTE, mouseDelta.x, -mouseDelta.y);
 	}
 
-    // signall connection/sync
-    if (scdHandle->getIsConnected() != connSignaller->getCurrentlyConnected())
-    {
-        if (scdHandle->getIsConnected())
-        {
-            connSignaller->emitConnect();
-            connSignaller->setCurrentlyConnected(true);
-        }
-        else
-        {
-            connSignaller->emitDisconnect();
-            connSignaller->setCurrentlyConnected(false);
-        }
-    }
-    if (scdHandle->getIsSynched() != connSignaller->getCurrentlySynched())
-    {
-        if (scdHandle->getIsSynched())
-        {
-            connSignaller->emitSync();
-            connSignaller->setCurrentlySynched(true);
-        }
-        else
-        {
-            connSignaller->emitUnsync();
-            connSignaller->setCurrentlySynched(false);
-        }
-    }
+    handleConnectionData();
 
 #ifdef JOYSTICK_CURSOR
     point unitVelocity = scdHandle->getVelocity();
@@ -358,4 +333,46 @@ void SCDDigester::digestProfileChange(CommandData nextCmd)
 	{
 		cntrlStateHandle->setProfile(prevProfileName);
 	}
+}
+
+void SCDDigester::handleConnectionData()
+{
+    // signall connection/sync
+    if (scdHandle->getIsConnected() != connSignaller->getCurrentlyConnected())
+    {
+        if (scdHandle->getIsConnected())
+        {
+            connSignaller->emitConnect();
+            connSignaller->setCurrentlyConnected(true);
+        }
+        else
+        {
+            connSignaller->emitDisconnect();
+            connSignaller->setCurrentlyConnected(false);
+        }
+    }
+    if (scdHandle->getIsSynched() != connSignaller->getCurrentlySynched())
+    {
+        if (scdHandle->getIsSynched())
+        {
+            connSignaller->emitSync();
+            connSignaller->setCurrentlySynched(true);
+        }
+        else
+        {
+            connSignaller->emitUnsync();
+            connSignaller->setCurrentlySynched(false);
+        }
+    }
+
+    if (myoStateHandle->getArm() == Arm::armRight && !connSignaller->getIsRightHand())
+    {
+        connSignaller->emitIsRightHand(true);
+        connSignaller->setIsRightHand(true);
+    }
+    if (myoStateHandle->getArm() == Arm::armLeft && connSignaller->getIsRightHand())
+    {
+        connSignaller->emitIsRightHand(false);
+        connSignaller->setIsRightHand(false);
+    }
 }
