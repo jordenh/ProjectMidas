@@ -61,7 +61,8 @@ enum class PoseLength {
 */
 struct sequenceImageSet
 {
-    QPixmap nextImage, laterImage;
+    QPixmap nextImageRight, laterImageRight;
+    QPixmap nextImageLeft, laterImageLeft;
     QLabel* currentImgLabel;
     int actionTag;
     PoseLength poseLen;

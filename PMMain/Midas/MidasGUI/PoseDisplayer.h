@@ -54,6 +54,7 @@ private:
 
     QLabel *poseImgLabel;
 
+    bool isRightHand;
     bool connected;
     bool synched;
 
@@ -67,6 +68,7 @@ public slots:
     void handleConnect();
     void handleUnsync();
     void handleSync();
+    void handleIsRightHand(bool);
 
     
 };

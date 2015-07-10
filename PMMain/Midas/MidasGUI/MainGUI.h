@@ -63,6 +63,7 @@ public:
 
     void connectSignallerToInfoIndicator(GestureSignaller *signaller);
     void connectSignallerToSequenceDisplayer(GestureSignaller *signaller);
+    void connectSignallerToSequenceDisplayer(ConnectionSignaller *signaller);
     void connectSignallerToPoseDisplayer(GestureSignaller *signaller);
     void connectSignallerToPoseDisplayer(ConnectionSignaller *signaller);
 	void connectSignallerToProfileIcons(GestureSignaller *signaller);

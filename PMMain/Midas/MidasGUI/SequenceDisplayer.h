@@ -78,6 +78,8 @@ public slots:
      * @param sequenceIdProgressPairs A vector containing the pairs of sequence IDs and sequence positions.
      */
     void showSequences(std::vector<sequenceProgressData>);
+
+    void handleIsRightHand(bool);
  
 private:
     /**
@@ -113,6 +115,8 @@ private:
      * Cleans up the memory allocated by the sequence displayer.
      */
     void cleanup();
+
+    bool isRightHand;
 
     std::map<int, sequenceData> sequenceIdToDataMap;
     std::map<int, sequenceData> activeSequencesIdToDataMap;

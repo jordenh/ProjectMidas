@@ -52,20 +52,31 @@ std::vector<sequenceImageSet> SequenceImageManager::formSequenceSetFromIds(std::
         {
             sequenceImageSet currentImageSet = idToImageMap[*it];
 
-            int currentWidth = currentImageSet.nextImage.width();
-            int currentHeight = currentImageSet.nextImage.height();
+            int currentWidth = currentImageSet.nextImageRight.width();
+            int currentHeight = currentImageSet.nextImageRight.height();
 
-            QPixmap nextModified(currentWidth, currentHeight);
-            nextModified.fill(Qt::transparent); // force alpha channel
-            QPainter painter(&nextModified);
-            painter.drawPixmap(0, 0, currentImageSet.nextImage);
+            QPixmap nextRightModified(currentWidth, currentHeight);
+            nextRightModified.fill(Qt::transparent); // force alpha channel
+            QPainter painter(&nextRightModified);
+            painter.drawPixmap(0, 0, currentImageSet.nextImageRight);
+            
+            QPixmap nextLeftModified(currentWidth, currentHeight);
+            nextLeftModified.fill(Qt::transparent); // force alpha channel
+            QPainter painter1b(&nextLeftModified);
+            painter1b.drawPixmap(0, 0, currentImageSet.nextImageLeft);
 
-            QPixmap laterModified(currentWidth, currentHeight);
-            laterModified.fill(Qt::transparent); // force alpha channel
-            QPainter painter2(&laterModified);
+            QPixmap laterRightModified(currentWidth, currentHeight);
+            laterRightModified.fill(Qt::transparent); // force alpha channel
+            QPainter painter2(&laterRightModified);
+            painter2.drawPixmap(0, 0, currentImageSet.laterImageRight);
+
+            QPixmap laterLeftModified(currentWidth, currentHeight);
+            laterLeftModified.fill(Qt::transparent); // force alpha channel
+            QPainter painter2b(&laterLeftModified);
+            painter2b.drawPixmap(0, 0, currentImageSet.laterImageLeft);
+
             QImage holdOverlayImage;
             QPixmap pic;
-            painter2.drawPixmap(0, 0, currentImageSet.laterImage);
             switch (lengths[idx])
             {
             case PoseLength::HOLD:
@@ -74,9 +85,13 @@ std::vector<sequenceImageSet> SequenceImageManager::formSequenceSetFromIds(std::
                 pic = pic.scaled(currentWidth / POSE_LEN_SCALEDOWN_ICON, currentHeight / POSE_LEN_SCALEDOWN_ICON, Qt::IgnoreAspectRatio, Qt::TransformationMode::SmoothTransformation);
 
                 painter.drawPixmap(currentWidth - (currentWidth / POSE_LEN_SCALEDOWN_ICON), 0, pic);
+                painter1b.drawPixmap(currentWidth - (currentWidth / POSE_LEN_SCALEDOWN_ICON), 0, pic);
                 painter2.drawPixmap(currentWidth - (currentWidth / POSE_LEN_SCALEDOWN_ICON), 0, pic);
-                currentImageSet.nextImage = nextModified;
-                currentImageSet.laterImage = laterModified;
+                painter2b.drawPixmap(currentWidth - (currentWidth / POSE_LEN_SCALEDOWN_ICON), 0, pic);
+                currentImageSet.nextImageRight = nextRightModified;
+                currentImageSet.nextImageLeft = nextLeftModified;
+                currentImageSet.laterImageRight = laterRightModified;
+                currentImageSet.laterImageLeft = laterLeftModified;
                 break;
             case PoseLength::IMMEDIATE:
                 holdOverlayImage = QImage(QString(POSE_LENGTH_IMMEDIATE_PATH));
@@ -84,9 +99,13 @@ std::vector<sequenceImageSet> SequenceImageManager::formSequenceSetFromIds(std::
                 pic = pic.scaled(currentWidth / POSE_LEN_SCALEDOWN_ICON, currentHeight / POSE_LEN_SCALEDOWN_ICON, Qt::IgnoreAspectRatio, Qt::TransformationMode::SmoothTransformation);
 
                 painter.drawPixmap(currentWidth - (currentWidth / POSE_LEN_SCALEDOWN_ICON), 0, pic);
+                painter1b.drawPixmap(currentWidth - (currentWidth / POSE_LEN_SCALEDOWN_ICON), 0, pic);
                 painter2.drawPixmap(currentWidth - (currentWidth / POSE_LEN_SCALEDOWN_ICON), 0, pic);
-                currentImageSet.nextImage = nextModified;
-                currentImageSet.laterImage = laterModified;
+                painter2b.drawPixmap(currentWidth - (currentWidth / POSE_LEN_SCALEDOWN_ICON), 0, pic);
+                currentImageSet.nextImageRight = nextRightModified;
+                currentImageSet.nextImageLeft = nextLeftModified;
+                currentImageSet.laterImageRight = laterRightModified;
+                currentImageSet.laterImageLeft = laterLeftModified;
                 break;
             case PoseLength::TAP:
                 break;
@@ -124,38 +143,38 @@ void SequenceImageManager::loadImages()
     
     sequenceImageSet fingerSpread;
     fingerSpread.actionTag = Pose::fingersSpread;
-    fingerSpread.nextImage = QPixmap::fromImage(fingerSpreadNext);
-    fingerSpread.laterImage = QPixmap::fromImage(fingerSpreadLater);
+    fingerSpread.nextImageRight = QPixmap::fromImage(fingerSpreadNext);
+    fingerSpread.laterImageRight = QPixmap::fromImage(fingerSpreadLater);
     idToImageMap[fingerSpread.actionTag] = fingerSpread;
 
     sequenceImageSet fist;
     fist.actionTag = Pose::fist;
-    fist.nextImage = QPixmap::fromImage(fistNext);
-    fist.laterImage = QPixmap::fromImage(fistLater);
+    fist.nextImageRight = QPixmap::fromImage(fistNext);
+    fist.laterImageRight = QPixmap::fromImage(fistLater);
     idToImageMap[fist.actionTag] = fist;
 
     sequenceImageSet doubleTap;
     doubleTap.actionTag = Pose::doubleTap;
-    doubleTap.nextImage = QPixmap::fromImage(doubleTapNext);
-    doubleTap.laterImage = QPixmap::fromImage(doubleTapLater);
+    doubleTap.nextImageRight = QPixmap::fromImage(doubleTapNext);
+    doubleTap.laterImageRight = QPixmap::fromImage(doubleTapLater);
     idToImageMap[doubleTap.actionTag] = doubleTap;
 
     sequenceImageSet waveIn;
     waveIn.actionTag = Pose::waveIn;
-    waveIn.nextImage = QPixmap::fromImage(waveInNext);
-    waveIn.laterImage = QPixmap::fromImage(waveInLater);
+    waveIn.nextImageRight = QPixmap::fromImage(waveInNext);
+    waveIn.laterImageRight = QPixmap::fromImage(waveInLater);
     idToImageMap[waveIn.actionTag] = waveIn;
 
     sequenceImageSet waveOut;
     waveOut.actionTag = Pose::waveOut;
-    waveOut.nextImage = QPixmap::fromImage(waveOutNext);
-    waveOut.laterImage = QPixmap::fromImage(waveOutLater);
+    waveOut.nextImageRight = QPixmap::fromImage(waveOutNext);
+    waveOut.laterImageRight = QPixmap::fromImage(waveOutLater);
     idToImageMap[waveOut.actionTag] = waveOut;
 
     sequenceImageSet rest;
     rest.actionTag = Pose::rest;
-    rest.nextImage = QPixmap::fromImage(noHandNext);
-    rest.laterImage = QPixmap::fromImage(noHandLater);
+    rest.nextImageRight = QPixmap::fromImage(noHandNext);
+    rest.laterImageRight = QPixmap::fromImage(noHandLater);
     idToImageMap[rest.actionTag] = rest;
 
 }

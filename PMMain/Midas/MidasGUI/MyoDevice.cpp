@@ -41,8 +41,8 @@ ProfileSignaller MyoDevice::profileSignaller;
 MyoDevice::MyoDevice(SharedCommandData* sharedCommandData, ControlState* controlState, MyoState* myoState,
     std::string applicationIdentifier, MainGUI *mainGuiHandle, ProfileManager *profileManagerHandle)
     : WearableDevice(sharedCommandData), appIdentifier(applicationIdentifier), myoFindTimeout(DEFAULT_FIND_MYO_TIMEOUT),
-    durationInMilliseconds(DEFAULT_MYO_DURATION_MS), state(controlState), myoState(myoState), arm(DEFAULT_MYO_ARM), 
-    xDirection(DEFAULT_MYO_XDIR), mainGui(mainGuiHandle), profileManager(profileManagerHandle), gestureFilter(controlState, myoState, 0, mainGuiHandle)
+    durationInMilliseconds(DEFAULT_MYO_DURATION_MS), state(controlState), myoState(myoState),
+    mainGui(mainGuiHandle), profileManager(profileManagerHandle), gestureFilter(controlState, myoState, 0, mainGuiHandle)
 {
     prevProfileName = "";
 
@@ -244,7 +244,7 @@ void MyoDevice::vibrateMyos(myo::Myo::VibrationType vibType, int numReps) const
 {
     for (int i = 0; i < connectedMyos.size(); i++)
     {
-        Myo* myo = connectedMyos[i];
+        Myo* myo = connectedMyos[i].myo;
         if (myo != NULL) {
             for (int j = 0; j < numReps; j++)
             {
@@ -338,14 +338,14 @@ void MyoDevice::MyoCallbacks::onConnect(Myo* myo, uint64_t timestamp, FirmwareVe
 
     parent.advancedConnectPipeline.startPipeline(input);
 
-    parent.connectedMyos.push_back(myo);
+    parent.connectedMyos.push_back(MyoWithData(myo));
 }
 void MyoDevice::MyoCallbacks::onDisconnect(Myo* myo, uint64_t timestamp) { 
     std::cout << "on disconnect." << std::endl; 
 
-    for (std::vector<Myo*>::iterator it = parent.connectedMyos.begin(); it != parent.connectedMyos.end(); it++)
+    for (std::vector<MyoWithData>::iterator it = parent.connectedMyos.begin(); it != parent.connectedMyos.end(); it++)
     {
-        if (myo == *it)
+        if (myo == it->myo)
         {
             parent.connectedMyos.erase(it);
             break;
@@ -363,13 +363,13 @@ void MyoDevice::MyoCallbacks::onDisconnect(Myo* myo, uint64_t timestamp) {
 
 void MyoDevice::MyoCallbacks::onArmSync(Myo *myo, uint64_t timestamp, Arm arm, XDirection xDirection, float rotation, WarmupState warmupState)
 {
-    parent.arm = arm;
-    parent.xDirection = xDirection;
+    parent.setArmAndX(myo, arm, xDirection);
     std::cout << "on arm sync." << std::endl;
 
+    // Setup GUI to interact with most recently synched Myo
     filterDataMap input;
-    input[INPUT_ARM] = parent.arm;
-    input[INPUT_X_DIRECTION] = parent.xDirection;
+    input[INPUT_ARM] = arm;
+    input[INPUT_X_DIRECTION] = xDirection;
     parent.advancedOrientationPipeline.startPipeline(input);
 
     filterDataMap syncInput;
@@ -377,13 +377,13 @@ void MyoDevice::MyoCallbacks::onArmSync(Myo *myo, uint64_t timestamp, Arm arm, X
     parent.advancedSyncPipeline.startPipeline(syncInput);
 }
 void MyoDevice::MyoCallbacks::onArmSync(Myo* myo, uint64_t timestamp, Arm arm, XDirection xDirection) { 
-    parent.arm = arm;
-    parent.xDirection = xDirection;
+    parent.setArmAndX(myo, arm, xDirection);
     std::cout << "on arm sync." << std::endl; 
 
+    // Setup GUI to interact with most recently synched Myo
     filterDataMap input;
-    input[INPUT_ARM] = parent.arm;
-    input[INPUT_X_DIRECTION] = parent.xDirection;
+    input[INPUT_ARM] = arm;
+    input[INPUT_X_DIRECTION] = xDirection;
     parent.advancedOrientationPipeline.startPipeline(input);
 
     filterDataMap syncInput;
@@ -391,8 +391,7 @@ void MyoDevice::MyoCallbacks::onArmSync(Myo* myo, uint64_t timestamp, Arm arm, X
     parent.advancedSyncPipeline.startPipeline(syncInput);
 }
 void MyoDevice::MyoCallbacks::onArmUnsync(Myo* myo, uint64_t timestamp) { 
-    parent.arm = Arm::armUnknown;
-    parent.xDirection = XDirection::xDirectionUnknown;
+    parent.setArmAndX(myo, Arm::armUnknown, XDirection::xDirectionUnknown);
     std::cout << "on arm unsync." << std::endl; 
 
     filterDataMap input;
@@ -463,4 +462,20 @@ void MyoDevice::MyoCallbacks::printToDataFile()
         myoDataFile << static_cast<int>(lastEMGData[emgIdx]) << ",";
     }
     myoDataFile << ((int)lastPose) << std::endl;
+}
+
+void MyoDevice::setArmAndX(Myo* myo, Arm arm, XDirection xDirection)
+{
+    int idx = 0;
+    for (std::vector<MyoWithData>::iterator it = connectedMyos.begin(); it != connectedMyos.end(); it++)
+    {
+        if (myo == it->myo)
+        {
+            connectedMyos.at(idx).arm = arm;
+            connectedMyos.at(idx).xDirection = xDirection;
+            break;
+        }
+        idx++;
+    }
+    return;
 }
