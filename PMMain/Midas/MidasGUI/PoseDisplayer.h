@@ -46,11 +46,20 @@ protected:
 private:
     void initPoseImgMap();
 
+    void updateDisplayerAlerts();
+
     QPoint position;
     int indWidth, indHeight;
     QGridLayout *layout;
 
     QLabel *poseImgLabel;
+
+    bool connected;
+    bool synched;
+
+    QImage *disconnectedImage;
+    QImage *unsynchedImage;
+    QImage *normalImage ;
 
 public slots:
     void handlePoseImages(std::vector<sequenceImageSet> poseImages);
@@ -58,6 +67,8 @@ public slots:
     void handleConnect();
     void handleUnsync();
     void handleSync();
+
+    
 };
 
 #endif POSE_DISPLAYER_H

@@ -54,6 +54,7 @@ SCDDigester::SCDDigester(SharedCommandData* scd, MidasThread *thread, ControlSta
 #endif
     connSignaller = new ConnectionSignaller();
     connSignaller->setCurrentlyConnected(false);
+    connSignaller->setCurrentlySynched(false);
     mainGUI->connectSignallerToPoseDisplayer(connSignaller);
 }
 

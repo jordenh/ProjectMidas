@@ -39,7 +39,7 @@ public:
 #ifdef BUILD_KEYBOARD
     SharedCommandData(unsigned int maxKybdGuiSel) : Filter(), mouseVelocity(), kybdGuiSel(0), isSynched(true), isConnected(true) { this->maxKybdGuiSel = maxKybdGuiSel; }
 #else
-    SharedCommandData() : Filter(), mouseVelocity(), isSynched(true), isConnected(true) {}
+    SharedCommandData() : Filter(), mouseVelocity(), isSynched(false), isConnected(false) {}
 #endif
 
     /**
