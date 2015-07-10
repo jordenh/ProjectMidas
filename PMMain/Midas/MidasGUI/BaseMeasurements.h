@@ -1,3 +1,22 @@
+/*
+    Copyright (C) 2015 Midas
+
+    This library is free software; you can redistribute it and/or
+    modify it under the terms of the GNU Lesser General Public
+    License as published by the Free Software Foundation; either
+    version 2.1 of the License, or (at your option) any later version.
+
+    This library is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+    Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public
+    License along with this library; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
+    USA
+*/
+
 #ifndef BASE_MEASUREMENTS_H
 #define BASE_MEASUREMENTS_H
 
@@ -36,21 +55,33 @@ public:
 
 	void setControlStateHandle(ControlState* controlState) { controlStateHandle = controlState; }
 
-	float getBaseRoll() { return baseRoll; }
-	float getBasePitch() { return basePitch; }
-	float getBaseYaw() { return baseYaw; }
-	float getBaseCursorX() { return baseCursorX; }
-	float getBaseCursorY() { return baseCursorY; }
-	float getScreenSizeX() { return screenSizeX; }
-	float getScreenSizeY() { return screenSizeY; }
-	myo::Pose BaseMeasurements::getCurrentPose() { return currentPose; }
-	midasMode BaseMeasurements::getCurrentState() { return currentState; }
+    float getCurrentRoll()    { accessMutex.lock();   float retVal = currentRoll;     accessMutex.unlock(); return retVal; }
+    float getCurrentPitch()   { accessMutex.lock();   float retVal = currentPitch;    accessMutex.unlock(); return retVal; }
+    float getCurrentYaw()     { accessMutex.lock();   float retVal = currentYaw;      accessMutex.unlock(); return retVal; }
+	float getBaseRoll()    { accessMutex.lock();   float retVal = baseRoll;     accessMutex.unlock(); return retVal; }
+	float getBasePitch()   { accessMutex.lock();   float retVal = basePitch;    accessMutex.unlock(); return retVal; }
+	float getBaseYaw()     { accessMutex.lock();   float retVal = baseYaw;      accessMutex.unlock(); return retVal; }
+	float getBaseCursorX() { accessMutex.lock();   float retVal = baseCursorX;  accessMutex.unlock(); return retVal; }
+	float getBaseCursorY() { accessMutex.lock();   float retVal = baseCursorY;  accessMutex.unlock(); return retVal; }
+	float getScreenSizeX() { accessMutex.lock();   float retVal = screenSizeX;  accessMutex.unlock(); return retVal; }
+	float getScreenSizeY() { accessMutex.lock();   float retVal = screenSizeY;  accessMutex.unlock(); return retVal; }
+    myo::Pose BaseMeasurements::getCurrentPose() { accessMutex.lock(); myo::Pose retVal = currentPose;  accessMutex.unlock(); return retVal; }
+    midasMode BaseMeasurements::getCurrentState() { accessMutex.lock(); midasMode retVal = currentState; accessMutex.unlock(); return retVal; }
 
 	bool areCurrentValuesValid();
 
 private:
 	// Force as singleton
-	BaseMeasurements() { myoStateHandle = NULL; currentState = LOCK_MODE; currentPose = myo::Pose::rest; };
+	BaseMeasurements() { 
+        baseRoll = 0; basePitch = 0; baseYaw = 0;
+        baseCursorX = 0; baseCursorY = 0; 
+        screenSizeX = 0; screenSizeY = 0;
+        currentRoll = 0; currentPitch = 0; currentYaw = 0;
+        myoStateHandle = NULL;
+        controlStateHandle = NULL;
+        currentState = LOCK_MODE;
+        currentPose = myo::Pose::rest; 
+    };
 	//~BaseMeasurements();
 	BaseMeasurements(BaseMeasurements const&) = delete;
 	void operator=(BaseMeasurements const&) = delete;

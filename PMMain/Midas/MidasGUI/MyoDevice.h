@@ -1,5 +1,25 @@
+/*
+    Copyright (C) 2015 Midas
+
+    This library is free software; you can redistribute it and/or
+    modify it under the terms of the GNU Lesser General Public
+    License as published by the Free Software Foundation; either
+    version 2.1 of the License, or (at your option) any later version.
+
+    This library is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+    Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public
+    License along with this library; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
+    USA
+*/
+
 #pragma once
 #include "WearableDevice.h"
+#include "GestureFilter.h"
 #include "AdvancedFilterPipeline.h"
 #include "myo\myo.hpp"
 #include "ProfileSignaller.h"
@@ -23,7 +43,6 @@ class ControlState;
 class MyoState;
 class MainGUI;
 class ProfileManager;
-class GestureFilter;
 class GenericAveragingFilter;
 class GenericBypassFilter;
 class MyoTranslationFilter;
@@ -149,7 +168,7 @@ private:
     ControlState* state; // not owned
     MyoState* myoState; // not owned
     AdvancedFilterPipeline advancedPosePipeline, advancedOrientationPipeline,
-        advancedRssiPipeline, advancedConnectPipeline;
+        advancedRssiPipeline, advancedConnectPipeline, advancedSyncPipeline;
     MainGUI *mainGui; // not owned
     std::string prevProfileName;
 
@@ -158,6 +177,7 @@ private:
     static ProfileSignaller profileSignaller;
     ProfileManager *profileManager; // not owned
 
+    GestureFilter gestureFilter;
     // owned filters
     GenericAveragingFilter *genAvgFilterRSSI;
 

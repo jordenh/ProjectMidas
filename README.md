@@ -1,16 +1,26 @@
-ProjectMidas
-============
+# Project Midas
 
-A wearable interface for the Windows OS, replacing various peripherals.
+A wearable interface for the Windows OS, replacing the functionality of a mouse (and optionally keyboard). Currently interacts with the Myo armband from Thalmic Labs.
 
-Please refer to PMMain/doc/Project Midas.docx for a full system overview.
+## Quick start
+
+Two quick start options are available:
+
+- [Download the latest release](https://github.com/jordenh/ProjectMidas/releases/download/v1.0/MidasInstall.zip).
+- Clone the repo: `git clone https://github.com/jordenh/ProjectMidas`.
+
+### What's included
+
+A version of Midas primarily intended to replace the Mouse (MidasGUI.exe). Also includes a profile manager to quickly edit profiles (MidasProfileManager.exe), which should be used to edit profiles.xml if changes are desired.
+
+### Developer Details
 
 Currently setup to work with Myo Armband:
 - SDK Win 0.9.0
 - Firmware 1.4.1670
 - Myo Connect V 0.14.0
 
-<b>To build MidasGUI:</b>
+#### To build MidasGUI:
 
 - Need Visual Studio 2013
 - Download and install Qt 5.4.0 2013 x86 with opengl (qt-opensource-windows-x86-msvc2013_opengl-5.4.0.exe from http://download.qt.io/archive/qt/5.4/5.4.0/)

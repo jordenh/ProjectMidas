@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>384</width>
-    <height>375</height>
+    <width>459</width>
+    <height>442</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -36,13 +36,8 @@
     </rect>
    </property>
    <property name="currentText">
-    <string>doubleTap</string>
+    <string>fist</string>
    </property>
-   <item>
-    <property name="text">
-     <string>doubleTap</string>
-    </property>
-   </item>
    <item>
     <property name="text">
      <string>fist</string>
@@ -70,7 +65,7 @@
      <x>10</x>
      <y>40</y>
      <width>261</width>
-     <height>91</height>
+     <height>111</height>
     </rect>
    </property>
    <property name="title">
@@ -422,14 +417,43 @@
      </property>
     </item>
    </widget>
+   <widget class="QLabel" name="label_9">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>80</y>
+      <width>81</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Sensitivity:</string>
+    </property>
+   </widget>
+   <widget class="QSpinBox" name="rollSensitivity">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>80</y>
+      <width>42</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="minimum">
+     <number>1</number>
+    </property>
+    <property name="maximum">
+     <number>30</number>
+    </property>
+   </widget>
   </widget>
   <widget class="QGroupBox" name="groupBox_2">
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>140</y>
+     <y>160</y>
      <width>261</width>
-     <height>91</height>
+     <height>111</height>
     </rect>
    </property>
    <property name="title">
@@ -781,14 +805,43 @@
      </property>
     </item>
    </widget>
+   <widget class="QSpinBox" name="pitchSensitivity">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>80</y>
+      <width>42</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="minimum">
+     <number>1</number>
+    </property>
+    <property name="maximum">
+     <number>30</number>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_10">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>80</y>
+      <width>81</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Sensitivity:</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QGroupBox" name="groupBox_3">
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>240</y>
+     <y>280</y>
      <width>261</width>
-     <height>91</height>
+     <height>111</height>
     </rect>
    </property>
    <property name="title">
@@ -1140,18 +1193,117 @@
      </property>
     </item>
    </widget>
+   <widget class="QSpinBox" name="yawSensitivity">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>80</y>
+      <width>42</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="minimum">
+     <number>1</number>
+    </property>
+    <property name="maximum">
+     <number>30</number>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_11">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>80</y>
+      <width>81</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Sensitivity:</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QPushButton" name="doneButton">
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>340</y>
+     <y>400</y>
      <width>75</width>
      <height>23</height>
     </rect>
    </property>
    <property name="text">
     <string>Done</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_12">
+   <property name="geometry">
+    <rect>
+     <x>300</x>
+     <y>50</y>
+     <width>131</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Hold Mode Action Type:</string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="holdModeActionType">
+   <property name="geometry">
+    <rect>
+     <x>300</x>
+     <y>70</y>
+     <width>111</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>absDeltaFinite</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>absDeltaVelocity</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>intervalDelta</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QLabel" name="label_13">
+   <property name="geometry">
+    <rect>
+     <x>300</x>
+     <y>100</y>
+     <width>131</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Interval Length (ms):</string>
+   </property>
+  </widget>
+  <widget class="QSpinBox" name="intervalLength">
+   <property name="geometry">
+    <rect>
+     <x>300</x>
+     <y>120</y>
+     <width>111</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="minimum">
+    <number>50</number>
+   </property>
+   <property name="maximum">
+    <number>999999</number>
+   </property>
+   <property name="value">
+    <number>100</number>
    </property>
   </widget>
  </widget>

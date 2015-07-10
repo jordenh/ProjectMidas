@@ -1,3 +1,22 @@
+/*
+    Copyright (C) 2015 Midas
+
+    This library is free software; you can redistribute it and/or
+    modify it under the terms of the GNU Lesser General Public
+    License as published by the Free Software Foundation; either
+    version 2.1 of the License, or (at your option) any later version.
+
+    This library is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+    Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public
+    License along with this library; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
+    USA
+*/
+
 #include "InfoIndicator.h"
 
 #include <QGridLayout.h>
@@ -9,6 +28,7 @@
 #include <QEvent.h>
 #include <QPainter.h>
 #include <qstyle.h>
+#include <qframe.h>
 #include <qdesktopwidget.h>
 #include <math.h>
 #include <qmessagebox.h>
@@ -31,7 +51,7 @@ InfoIndicator::InfoIndicator(int widgetWidth, int widgetHeight, QWidget *parent)
         "Use the right mouse button to open a context menu."));
     setWindowTitle(tr("Info Indicator"));
 
-    setWindowOpacity(0.75);
+    setWindowOpacity(GUI_OPACITY);
     QPalette pal;
     pal.setColor(QPalette::Background, QColor(205, 205, 193));
     setAutoFillBackground(true);
@@ -39,11 +59,19 @@ InfoIndicator::InfoIndicator(int widgetWidth, int widgetHeight, QWidget *parent)
     setWindowFlags(Qt::WindowStaysOnTopHint);
 
     layout = new QHBoxLayout;
-    layout->setSpacing(5);
+    layout->setSpacing(WIDGET_BUFFER);
     setLayout(layout);
+    
+    // attempt 2
+    //setStyleSheet("border: 1px solid black");
+    //
+    // attempt 1
+    //QFrame *frame = new QFrame;
+    //frame->setFrameShape(QFrame::Shape::Box);
+    //layout->addWidget(frame);
 
     QFont timesFont("Times", 9, QFont::Bold);
-    stateLabel = new QLabel(tr("%1").arg("jorden test"));
+    stateLabel = new QLabel();
     stateLabel->setFont(timesFont);
     layout->addWidget(stateLabel, 1, Qt::AlignLeft);
 
@@ -57,6 +85,14 @@ InfoIndicator::InfoIndicator(int widgetWidth, int widgetHeight, QWidget *parent)
 
 	setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     setMinimumSize(indWidth, indHeight);
+}
+
+void InfoIndicator::paintEvent(QPaintEvent *e)
+{
+    // Give the GUI a single pixel black border.
+    QPainter painter(this);
+    painter.drawRoundedRect(QRect(0, 0, this->width() - 1, this->height() - 1), 0, 0);
+    QWidget::paintEvent(e);
 }
 
 void InfoIndicator::resizeEvent(QResizeEvent *event)

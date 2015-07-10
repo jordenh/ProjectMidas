@@ -1,3 +1,22 @@
+/*
+    Copyright (C) 2015 Midas
+
+    This library is free software; you can redistribute it and/or
+    modify it under the terms of the GNU Lesser General Public
+    License as published by the Free Software Foundation; either
+    version 2.1 of the License, or (at your option) any later version.
+
+    This library is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+    Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public
+    License along with this library; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
+    USA
+*/
+
 #include "Filter.h"
 
 #include "ProfileManager.h"
@@ -9,52 +28,76 @@ void Filter::addDataAsInput(std::string name, boost::any value)
 
 void Filter::setInput(filterDataMap input)
 {
+    filterMutex.lock();
     inputData = input;
+    filterMutex.unlock();
 }
 
 filterDataMap Filter::getOutput()
 {
-    return outputData;
+    filterMutex.lock();
+    filterDataMap retVal = outputData;
+    filterMutex.unlock();
+    return retVal;
 }
 
 filterStatus Filter::getFilterStatus()
 {
-    return status;
+    filterMutex.lock();
+    filterStatus retVal = status;
+    filterMutex.unlock();
+    return retVal;
 }
 
 filterError Filter::getFilterError()
 {
-    return error;
+    filterMutex.lock();
+    filterError retVal = error;
+    filterMutex.unlock();
+    return retVal;
 }
 
 void Filter::setFilterStatus(filterStatus status)
 {
+    filterMutex.lock();
     this->status = status;
+    filterMutex.unlock();
 }
 
 void Filter::setFilterError(filterError error)
 {
+    filterMutex.lock();
     this->error = error;
+    filterMutex.unlock();
 }
 
 filterDataMap Filter::getInput()
 {
-    return inputData;
+    filterMutex.lock();
+    filterDataMap retVal = inputData;
+    filterMutex.unlock();
+    return retVal;
 }
 
 void Filter::setOutput(filterDataMap output)
 {
+    filterMutex.lock();
     outputData = output;
+    filterMutex.unlock();
 }
 
 void Filter::addToOutput(filterDataMap output)
 {
+    filterMutex.lock();
     outputData = joinFilterDataMaps(outputData, output);
+    filterMutex.unlock();
 }
 
 void Filter::clearOutput(void)
 {
+    filterMutex.lock();
     outputData = filterDataMap();
+    filterMutex.unlock();
 }
 
 filterError Filter::updateBasedOnProfile(ProfileManager& pm, std::string name)

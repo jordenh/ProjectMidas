@@ -1,3 +1,22 @@
+/*
+    Copyright (C) 2015 Midas
+
+    This library is free software; you can redistribute it and/or
+    modify it under the terms of the GNU Lesser General Public
+    License as published by the Free Software Foundation; either
+    version 2.1 of the License, or (at your option) any later version.
+
+    This library is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+    Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public
+    License along with this library; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
+    USA
+*/
+
 #ifndef _SHARED_COMMAND_DATA_H
 #define _SHARED_COMMAND_DATA_H
 
@@ -18,9 +37,9 @@ class SharedCommandData : public Filter
 {
 public:
 #ifdef BUILD_KEYBOARD
-	SharedCommandData(unsigned int maxKybdGuiSel) : Filter(), mouseVelocity(), kybdGuiSel(0) { this->maxKybdGuiSel = maxKybdGuiSel; }
+    SharedCommandData(unsigned int maxKybdGuiSel) : Filter(), mouseVelocity(), kybdGuiSel(0), isSynched(true), isConnected(true) { this->maxKybdGuiSel = maxKybdGuiSel; }
 #else
-    SharedCommandData() : Filter(), mouseVelocity() { }
+    SharedCommandData() : Filter(), mouseVelocity(), isSynched(false), isConnected(false) {}
 #endif
 
     /**
@@ -152,6 +171,20 @@ public:
     void setIsConnected(bool connected);
 
     /**
+    * Returns whether the device is synched or not
+    *
+    * @return A boolean for whether or not the device is synched
+    */
+    bool getIsSynched(void);
+
+    /**
+    * Sets the device synched flag
+    *
+    * @param bool isSycned
+    */
+    void setIsSynched(bool synched);
+
+    /**
      * Returns true if the command queue is empty, otherwise false.
      *
      * @return True if the command queue is empty, otherwise false.
@@ -182,7 +215,8 @@ public:
 private:
     point mouseVelocity;
     float rssiAVG;
-    bool  isConnected;
+    bool isConnected;
+    bool isSynched;
 
 	// point to indicate offset from current mouse position, while a pose is being held 
 	vector2D mouseDelta;
@@ -197,10 +231,12 @@ private:
     std::mutex keySelectAngleMutex;
     std::mutex rssiMutex;
     std::mutex isConnectedMutex;
+    std::mutex isSynchedMutex;
 
     void extractCommand(boost::any value);
     void extractPoint(boost::any value);
     void extractIsConnected(boost::any value);
+    void extractIsSynched(boost::any value);
 	void extractVector2D(boost::any value);
 
 #ifdef BUILD_KEYBOARD

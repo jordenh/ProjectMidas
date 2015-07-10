@@ -1,3 +1,22 @@
+/*
+Copyright (C) 2015 Midas
+
+This library is free software; you can redistribute it and/or
+modify it under the terms of the GNU Lesser General Public
+License as published by the Free Software Foundation; either
+version 2.1 of the License, or (at your option) any later version.
+
+This library is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this library; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
+USA
+*/
+
 #include "HoldEditor.h"
 
 HoldEditor::HoldEditor(QWidget *parent)
@@ -27,12 +46,16 @@ void HoldEditor::handleDone()
 {
     returnHold.gesture = ui.gestureComboBox->currentText().toStdString();
     
+    returnHold.holdModeActionType = ui.holdModeActionType->currentText().toStdString();
+    returnHold.intervalLen = ui.intervalLength->value();
+
     if (isAngleSet(ui.rollPositiveComboBox, ui.rollNegativeComboBox))
     {
         AngleAction roll;
         roll.type = "roll";
         roll.anglePositive = ui.rollPositiveComboBox->currentText().toStdString();
         roll.angleNegative = ui.rollNegativeComboBox->currentText().toStdString();
+        roll.sensitivity = ui.rollSensitivity->value();
 
         returnHold.angles.push_back(roll);
     }
@@ -43,6 +66,7 @@ void HoldEditor::handleDone()
         pitch.type = "pitch";
         pitch.anglePositive = ui.pitchPositiveComboBox->currentText().toStdString();
         pitch.angleNegative = ui.pitchNegativeComboBox->currentText().toStdString();
+        pitch.sensitivity = ui.pitchSensitivity->value();
 
         returnHold.angles.push_back(pitch);
     }
@@ -53,6 +77,7 @@ void HoldEditor::handleDone()
         yaw.type = "yaw";
         yaw.anglePositive = ui.yawPositiveComboBox->currentText().toStdString();
         yaw.angleNegative = ui.yawNegativeComboBox->currentText().toStdString();
+        yaw.sensitivity = ui.yawSensitivity->value();
 
         returnHold.angles.push_back(yaw);
     }

@@ -1,3 +1,22 @@
+/*
+    Copyright (C) 2015 Midas
+
+    This library is free software; you can redistribute it and/or
+    modify it under the terms of the GNU Lesser General Public
+    License as published by the Free Software Foundation; either
+    version 2.1 of the License, or (at your option) any later version.
+
+    This library is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+    Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public
+    License along with this library; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
+    USA
+*/
+
 #define NOMINMAX
 #include "MyoTranslationFilter.h"
 
@@ -7,21 +26,11 @@
 #include "MainGUI.h"
 #include "ProfileManager.h"
 #include "BaseMeasurements.h"
+#include "HoldModeObserver.h"
 #include "myo\myo.hpp"
-#include <math.h>
 #include <iostream>
 
 SettingsSignaller MyoTranslationFilter::settingsSignaller;
-
-float radToDeg(float rad)
-{
-    return rad * (180.0 / M_PI);
-}
-
-float degToRad(float deg)
-{
-    return (deg / 180.0) * M_PI;
-}
 
 MyoTranslationFilter::MyoTranslationFilter(ControlState* controlState, MyoState* myoState, MainGUI *mainGuiHandle)
     : controlStateHandle(controlState), myoStateHandle(myoState), previousMode(LOCK_MODE),
@@ -40,10 +49,13 @@ MyoTranslationFilter::MyoTranslationFilter(ControlState* controlState, MyoState*
     {
         mainGui->connectSignallerToSettingsDisplayer(&settingsSignaller);
     }
+
+    hmo = NULL;
 }
 
 MyoTranslationFilter::~MyoTranslationFilter()
 {
+    delete hmo; hmo = NULL;
 }
 
 void MyoTranslationFilter::process()
@@ -111,6 +123,8 @@ void MyoTranslationFilter::handleQuatData(filterDataMap input, filterDataMap out
                 BaseMeasurements::getInstance().setBaseAngles(roll, pitch, yaw);
                 BaseMeasurements::getInstance().updateBaseCursor();
                 BaseMeasurements::getInstance().setCurrentState(currMode);
+
+                updateHoldModeObserver(currMode);
             }
 
             deltaRollDeg = radToDeg(calcRingDelta(roll, BaseMeasurements::getInstance().getBaseRoll()) - calcRingDelta(prevRoll, BaseMeasurements::getInstance().getBaseRoll())); // normalized to avoid overflow
@@ -146,7 +160,7 @@ void MyoTranslationFilter::handleQuatData(filterDataMap input, filterDataMap out
                 gestIdx = 4;
 
             execute:
-                performHoldModeFunc(gestIdx, output);
+                //performHoldModeFunc(gestIdx, output); // Legacy. Not handled like this anymore.
                 break;
             case KEYBOARD_MODE:
                 performeKybdModeFunc(output);
@@ -313,71 +327,71 @@ float MyoTranslationFilter::calcRingDelta(float current, float base)
 
 void MyoTranslationFilter::performHoldModeFunc(unsigned int holdNum, filterDataMap& outputToSharedCommandData)
 {
-    CommandData command;
-    command.type = commandType::KYBRD_CMD;
-    command.name = "HoldMode Command";
-    command.action.kybd = kybdCmds::NO_CMD;
-
-    GestureHoldModeAction currentHoldModeAction = gestHoldModeAction[holdNum];
-    float thresh = .1;
-    
-    CommandData cd;
-    angleData ad;
-    bool tryAction = false;
-
-    ad.angleType = angleData::AngleType::ROLL;
-    if (deltaRollDeg > thresh)
-    {
-        tryAction = true;
-        ad.anglePositive = true;
-        
-    } 
-    else if (deltaRollDeg < -thresh)
-    {
-        tryAction = true;
-        ad.anglePositive = false;
-    }
-    if (tryAction)
-    {
-        command.action.kybd = kybdCmds((unsigned int)command.action.kybd | (unsigned int)currentHoldModeAction.getAction(ad));
-        outputToSharedCommandData[COMMAND_INPUT] = command;
-    }
-
-    tryAction = false;
-    ad.angleType = angleData::AngleType::PITCH;
-    if (deltaPitchDeg > thresh)
-    {
-        tryAction = true;
-        ad.anglePositive = true;
-    }
-    else if (deltaPitchDeg < -thresh)
-    {
-        tryAction = true;
-        ad.anglePositive = false;
-    }
-    if (tryAction)
-    {
-        command.action.kybd = kybdCmds((unsigned int)command.action.kybd | (unsigned int)currentHoldModeAction.getAction(ad));
-        outputToSharedCommandData[COMMAND_INPUT] = command;
-    }
-
-    tryAction = false;
-    ad.angleType = angleData::AngleType::YAW;
-    if (deltaYawDeg > thresh)
-    {
-        tryAction = true;
-        ad.anglePositive = true;
-    }
-    else if (deltaYawDeg < -thresh)
-    {
-        tryAction = true;
-        ad.anglePositive = false;
-    }
-    if (tryAction)
-    {
-        command.action.kybd = kybdCmds((unsigned int)command.action.kybd | (unsigned int)currentHoldModeAction.getAction(ad));
-        outputToSharedCommandData[COMMAND_INPUT] = command;
-    }
+//    CommandData command;
+//    command.type = commandType::KYBRD_CMD;
+//    command.name = "HoldMode Command";
+//    command.action.kybd = kybdCmds::NO_CMD;
+//
+//    GestureHoldModeAction currentHoldModeAction = gestHoldModeAction[holdNum];
+//    float thresh = .1;
+//    
+//    CommandData cd;
+//    angleData ad;
+//    bool tryAction = false;
+//
+//    ad.angleType = angleData::AngleType::ROLL;
+//    if (deltaRollDeg > thresh)
+//    {
+//        tryAction = true;
+//        ad.anglePositive = true;
+//        
+//    } 
+//    else if (deltaRollDeg < -thresh)
+//    {
+//        tryAction = true;
+//        ad.anglePositive = false;
+//    }
+//    if (tryAction)
+//    {
+//        command.action.kybd = kybdCmds((unsigned int)command.action.kybd | (unsigned int)currentHoldModeAction.getAction(ad));
+//        outputToSharedCommandData[COMMAND_INPUT] = command;
+//    }
+//
+//    tryAction = false;
+//    ad.angleType = angleData::AngleType::PITCH;
+//    if (deltaPitchDeg > thresh)
+//    {
+//        tryAction = true;
+//        ad.anglePositive = true;
+//    }
+//    else if (deltaPitchDeg < -thresh)
+//    {
+//        tryAction = true;
+//        ad.anglePositive = false;
+//    }
+//    if (tryAction)
+//    {
+//        command.action.kybd = kybdCmds((unsigned int)command.action.kybd | (unsigned int)currentHoldModeAction.getAction(ad));
+//        outputToSharedCommandData[COMMAND_INPUT] = command;
+//    }
+//
+//    tryAction = false;
+//    ad.angleType = angleData::AngleType::YAW;
+//    if (deltaYawDeg > thresh)
+//    {
+//        tryAction = true;
+//        ad.anglePositive = true;
+//    }
+//    else if (deltaYawDeg < -thresh)
+//    {
+//        tryAction = true;
+//        ad.anglePositive = false;
+//    }
+//    if (tryAction)
+//    {
+//        command.action.kybd = kybdCmds((unsigned int)command.action.kybd | (unsigned int)currentHoldModeAction.getAction(ad));
+//        outputToSharedCommandData[COMMAND_INPUT] = command;
+//    }
 }
 
 void MyoTranslationFilter::performMouseModeFunc(filterDataMap& outputToSharedCommandData)
@@ -433,29 +447,27 @@ bool MyoTranslationFilter::initGestHoldModeActionArr(void)
     angleData ad;
     ad.angleType = angleData::AngleType::ROLL;
     ad.anglePositive = true;
+    gestHoldModeAction[GESTURE_FIST].setRollSensitivity(5);
     initOkay &= gestHoldModeAction[GESTURE_FIST].addToActionMap(ad, kybdCmds::VOLUME_UP);
     ad.anglePositive = false;
     initOkay &= gestHoldModeAction[GESTURE_FIST].addToActionMap(ad, kybdCmds::VOLUME_DOWN);
 
     ad.angleType = angleData::AngleType::PITCH;
+    gestHoldModeAction[GESTURE_FINGERS_SPREAD].setPitchSensitivity(2);
     ad.anglePositive = true;
     initOkay &= gestHoldModeAction[GESTURE_FINGERS_SPREAD].addToActionMap(ad, kybdCmds::UP_ARROW);
     ad.anglePositive = false;
     initOkay &= gestHoldModeAction[GESTURE_FINGERS_SPREAD].addToActionMap(ad, kybdCmds::DOWN_ARROW);
 
     ad.angleType = angleData::AngleType::YAW;
+    gestHoldModeAction[GESTURE_FINGERS_SPREAD].setYawSensitivity(2);
     ad.anglePositive = true;
     initOkay &= gestHoldModeAction[GESTURE_FINGERS_SPREAD].addToActionMap(ad, kybdCmds::RIGHT_ARROW);
     ad.anglePositive = false;
     initOkay &= gestHoldModeAction[GESTURE_FINGERS_SPREAD].addToActionMap(ad, kybdCmds::LEFT_ARROW);
 
-    ad.angleType = angleData::AngleType::PITCH;
-    ad.anglePositive = true;
-    initOkay &= gestHoldModeAction[GESTURE_DOUBLE_TAP].addToActionMap(ad, kybdCmds::ZOOM_IN);
-    ad.anglePositive = false;
-    initOkay &= gestHoldModeAction[GESTURE_DOUBLE_TAP].addToActionMap(ad, kybdCmds::ZOOM_OUT);
-
     ad.angleType = angleData::AngleType::YAW;
+    gestHoldModeAction[GESTURE_WAVE_IN].setYawSensitivity(10);
     ad.anglePositive = false;
     initOkay &= gestHoldModeAction[GESTURE_WAVE_IN].addToActionMap(ad, kybdCmds::UNDO);
     ad.anglePositive = true;
@@ -468,7 +480,7 @@ void MyoTranslationFilter::unregisterHoldModeActions(void)
 {
     for (int i = 0; i < NUM_GESTURES; i++)
     {
-        gestHoldModeAction[i].clearMap();
+        gestHoldModeAction[i].clean();
     }
 }
 
@@ -517,20 +529,27 @@ filterError MyoTranslationFilter::updateBasedOnProfile(ProfileManager& pm, std::
             gestType = GESTURE_WAVE_OUT;
         }
 
+        gestHoldModeAction[gestType].setActionType(holdModeActionTypeMap[it->holdModeActionType]);
+        gestHoldModeAction[gestType].setIntervalLen(it->intervalLen);
+        gestHoldModeAction[gestType].setVelocityIntervalLen(it->intervalLen);
+
         for (std::vector<angleAction>::iterator angleIt = it->angles.begin(); angleIt != it->angles.end(); ++angleIt)
         {
             angleData ad;
             if (angleIt->type == "roll")
             {
                 ad.angleType = angleData::AngleType::ROLL;
+                gestHoldModeAction[gestType].setRollSensitivity(angleIt->sensitivity);
             }
             else if (angleIt->type == "pitch")
             {
                 ad.angleType = angleData::AngleType::PITCH;
+                gestHoldModeAction[gestType].setPitchSensitivity(angleIt->sensitivity);
             }
             else
             {
                 ad.angleType = angleData::AngleType::YAW;
+                gestHoldModeAction[gestType].setYawSensitivity(angleIt->sensitivity);
             }
 
             ad.anglePositive = true;
@@ -546,4 +565,28 @@ filterError MyoTranslationFilter::updateBasedOnProfile(ProfileManager& pm, std::
     }
 
     return filterError::NO_FILTER_ERROR;
+}
+
+void MyoTranslationFilter::updateHoldModeObserver(midasMode currMode)
+{
+
+    if (currMode == GESTURE_HOLD_ONE ||
+        currMode == GESTURE_HOLD_TWO ||
+        currMode == GESTURE_HOLD_THREE ||
+        currMode == GESTURE_HOLD_FOUR ||
+        currMode == GESTURE_HOLD_FIVE)
+    {
+        if (hmo == NULL)
+        {
+            hmo = new HoldModeObserver(myoStateHandle, controlStateHandle->getSCD(), &gestHoldModeAction[gestHoldModeActionIdx(currMode)]);
+            hmo->kickOffObserver();
+        }
+    }
+    else
+    {
+        if (hmo != NULL)
+        {
+            hmo->kill(); hmo = NULL;
+        }
+    }
 }

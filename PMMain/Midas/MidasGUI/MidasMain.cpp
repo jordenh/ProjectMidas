@@ -1,3 +1,22 @@
+/*
+    Copyright (C) 2015 Midas
+
+    This library is free software; you can redistribute it and/or
+    modify it under the terms of the GNU Lesser General Public
+    License as published by the Free Software Foundation; either
+    version 2.1 of the License, or (at your option) any later version.
+
+    This library is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+    Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public
+    License along with this library; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
+    USA
+*/
+
 #include "MidasMain.h"
 
 #include <iostream>
@@ -9,7 +28,6 @@
 #include "MidasThread.h"
 #include "ProfileManager.h"
 #include "SCDDigester.h"
-#include "kybrdCtrl.h"
 #include "MouseCtrl.h"
 #include "WearableDevice.h"
 #include "SharedCommandData.h"
@@ -18,7 +36,6 @@
 #include "BaseMeasurements.h"
 #include "MidasThread.h"
 #include "SharedCommandDataTest.h"
-#include "KybrdCtrlTest.h"
 #include "MouseCtrlTest.h"
 #include "MyoState.h"
 
@@ -51,11 +68,6 @@ int midasMain(MidasThread *threadHandle, MainGUI *mainGui, ProfileManager *pm) {
 
 #ifdef TEST_WEARABLE_DEVICE
     SharedCommandDataTest::testQueue();
-#endif
-
-#ifdef KEYBOARD_CONTROL_TEST
-    KybrdCtrlTest::testLock();
-    KybrdCtrlTest::testZoomInOut();
 #endif
 
 #ifdef MOUSE_CONTROL_TEST
@@ -105,28 +117,27 @@ int midasMain(MidasThread *threadHandle, MainGUI *mainGui, ProfileManager *pm) {
 	MyoDevice* myoDevice = new MyoDevice(&sharedData, &controlState, &myoState, "com.midas.midas-test", mainGui, pm);
     myoState.setMyo(myoDevice);
     MouseCtrl* mouseCtrl = new MouseCtrl();
-    KybrdCtrl* kybrdCtrl = new KybrdCtrl();
 	KeyboardController* keyboardController = new KeyboardController();
 
     // Kick off device thread
     startWearableDeviceListener(myoDevice); // TODO - add a flag in myoDevice to see if it is running. Don't enter 'while true' until running.
 
 #ifdef BUILD_KEYBOARD
-	SCDDigester scdDigester(&sharedData, threadHandle, &controlState, &myoState, mouseCtrl, kybrdCtrl,keyboardController, pm, kybrdRingData);
+    SCDDigester scdDigester(&sharedData, threadHandle, &controlState, &myoState, mouseCtrl, keyboardController, pm, mainGui, kybrdRingData);
 #else
-	SCDDigester scdDigester(&sharedData, threadHandle, &controlState, &myoState, mouseCtrl, kybrdCtrl, keyboardController, pm);
+    SCDDigester scdDigester(&sharedData, threadHandle, &controlState, &myoState, mouseCtrl, keyboardController, pm, mainGui);
 #endif
 
     while (true)
     {
-        if (myoDevice->getDeviceStatus() != deviceStatus::RUNNING) break;
+        if (myoDevice->getDeviceStatus() != deviceStatus::RUNNING) 
+            break;
 
         scdDigester.digest();
     }
 
 	delete myoDevice;
 	delete mouseCtrl;
-	delete kybrdCtrl;
 	delete keyboardController;
 
 #endif

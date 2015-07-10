@@ -82,7 +82,6 @@
     <ClCompile Include="GestureFilter_Test.cpp" />
     <ClCompile Include="GestureSeqRecorder_Test.cpp" />
     <ClCompile Include="KeyboardSettingFileReader_Test.cpp" />
-    <ClCompile Include="KybrdCtrl_Test.cpp" />
     <ClCompile Include="MouseCtrl_Test.cpp" />
     <ClCompile Include="MyoDevice_Test.cpp" />
     <ClCompile Include="MyoTranslationFilter_Test.cpp" />

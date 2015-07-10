@@ -1,3 +1,22 @@
+/*
+    Copyright (C) 2015 Midas
+
+    This library is free software; you can redistribute it and/or
+    modify it under the terms of the GNU Lesser General Public
+    License as published by the Free Software Foundation; either
+    version 2.1 of the License, or (at your option) any later version.
+
+    This library is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+    Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public
+    License along with this library; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
+    USA
+*/
+
 #ifndef _MIDAS_COMMON_H
 #define _MIDAS_COMMON_H
 
@@ -7,8 +26,16 @@
 #define INIT_PITCH_ANGLE 20.0f /* Maximum delta angle in degrees */
 #define INIT_YAW_ANGLE 25.0f /* Maximum delta angle in degrees */
 
+#define GUI_OPACITY 0.70
+
+#ifdef SHOW_PROFILE_ICONS
 #define MOUSE_INDICATOR_SIZE 130
 #define INFO_INDICATOR_WIDTH   150
+#else
+#define GRID_ELEMENT_SIZE   52
+#define MOUSE_INDICATOR_SIZE 109 // this is 2 * GRID_ELEMENT_SIZE + WIDGET_BUFFER
+#define INFO_INDICATOR_WIDTH   109
+#endif
 #define INFO_INDICATOR_HEIGHT  35
 #define PROF_INDICATOR_WIDTH   250
 #define PROF_INDICATOR_HEIGHT  35
@@ -148,13 +175,13 @@ static std::string modeToString(midasMode mm)
     {
     case LOCK_MODE:   
 #ifdef BUILD_FOR_KARDIUM
-        return "Basic Mode";
+        return "LOCKED";
 #else
         return "Locked";
 #endif
     case MOUSE_MODE:  
 #ifdef BUILD_FOR_KARDIUM
-        return "Advanced Mode";
+        return "UNLOCKED";
 #else
         return "Mouse Mouse";
 #endif
@@ -164,7 +191,7 @@ static std::string modeToString(midasMode mm)
         return "Keyboard Mode";
     case GESTURE_MODE:  
 #ifdef BUILD_FOR_KARDIUM
-        return "Advanced Mode";
+        return "UNLOCKED";
 #else
         return "Gesture Mode";
 #endif
@@ -225,6 +252,12 @@ struct keyboardAngle {
     
     // below are temporary values for debugging purposes!
     int x, y;
+};
+
+enum HoldModeActionType {
+    ABS_DELTA_FINITE, // Based on the net delta beyond threshold, ensure the number of +/- actions is at a certain value (repeatable change)
+    ABS_DELTA_VELOCITY, // Based on net delta beyond threshold, continue spewing actions
+    INTERVAL_DELTA // if in a given interval an angle is +/- beyond a threshold, >=1 action will ensue 
 };
 
 #endif /* _MIDAS_COMMON_H */

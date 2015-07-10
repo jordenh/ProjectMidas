@@ -1,3 +1,22 @@
+/*
+    Copyright (C) 2015 Midas
+
+    This library is free software; you can redistribute it and/or
+    modify it under the terms of the GNU Lesser General Public
+    License as published by the Free Software Foundation; either
+    version 2.1 of the License, or (at your option) any later version.
+
+    This library is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+    Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public
+    License along with this library; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
+    USA
+*/
+
 #include "MyoDevice.h"
 #include "GestureFilter.h"
 #include "FilterKeys.h"
@@ -23,9 +42,15 @@ MyoDevice::MyoDevice(SharedCommandData* sharedCommandData, ControlState* control
     std::string applicationIdentifier, MainGUI *mainGuiHandle, ProfileManager *profileManagerHandle)
     : WearableDevice(sharedCommandData), appIdentifier(applicationIdentifier), myoFindTimeout(DEFAULT_FIND_MYO_TIMEOUT),
     durationInMilliseconds(DEFAULT_MYO_DURATION_MS), state(controlState), myoState(myoState), arm(DEFAULT_MYO_ARM), 
-	xDirection(DEFAULT_MYO_XDIR), mainGui(mainGuiHandle), profileManager(profileManagerHandle)
+    xDirection(DEFAULT_MYO_XDIR), mainGui(mainGuiHandle), profileManager(profileManagerHandle), gestureFilter(controlState, myoState, 0, mainGuiHandle)
 {
     prevProfileName = "";
+
+    setupPosePipeline(&gestureFilter);
+
+    setupOrientationPipeline();
+
+    setupRSSIPipeline();
 }
 
 MyoDevice::~MyoDevice()
@@ -65,17 +90,15 @@ void MyoDevice::runDeviceLoop()
 {
     WearableDevice::setDeviceStatus(deviceStatus::RUNNING);
 
-    GestureFilter gestureFilter(state, myoState, 0, mainGui);
-    setupPosePipeline(&gestureFilter);
-
-    setupOrientationPipeline();
-
-    setupRSSIPipeline();
-
     advancedConnectPipeline.registerFilterAtDeepestLevel(WearableDevice::sharedData);
 
+    advancedSyncPipeline.registerFilterAtDeepestLevel(WearableDevice::sharedData);
+
 	profileSignaller.setControlStateHandle(state);
-	state->setProfile(profileManager->getProfiles()->at(0).profileName);
+    if (profileManager->getProfiles()->size() > 0)
+    {
+        state->setProfile(profileManager->getProfiles()->at(0).profileName);
+    }
 	mainGui->connectSignallerToProfileWidgets(&profileSignaller); 
 
     std::chrono::milliseconds rssi_start =
@@ -131,15 +154,13 @@ void MyoDevice::runDeviceLoop()
 			if ((current_time - rssi_start).count() > MIN_RSSI_DELAY)
             {
                 myo->requestRssi();
-                rssi_start = std::chrono::duration_cast<std::chrono::milliseconds>(
-                    std::chrono::steady_clock::now().time_since_epoch());
+                rssi_start = current_time;
             }
 
 			if ((current_time - battery_start).count() > MIN_BATTERY_LEVEL_DELAY)
 			{
 				myo->requestBatteryLevel();
-				battery_start = std::chrono::duration_cast<std::chrono::milliseconds>(
-					std::chrono::steady_clock::now().time_since_epoch());
+                battery_start = current_time;
 			}
 
             hub.run(durationInMilliseconds);
@@ -321,10 +342,6 @@ void MyoDevice::MyoCallbacks::onConnect(Myo* myo, uint64_t timestamp, FirmwareVe
 }
 void MyoDevice::MyoCallbacks::onDisconnect(Myo* myo, uint64_t timestamp) { 
     std::cout << "on disconnect." << std::endl; 
-    filterDataMap input;
-    input[ISCONNECTED_INPUT] = false;
-
-    parent.advancedConnectPipeline.startPipeline(input);
 
     for (std::vector<Myo*>::iterator it = parent.connectedMyos.begin(); it != parent.connectedMyos.end(); it++)
     {
@@ -333,6 +350,14 @@ void MyoDevice::MyoCallbacks::onDisconnect(Myo* myo, uint64_t timestamp) {
             parent.connectedMyos.erase(it);
             break;
         }
+    }
+
+    if (parent.connectedMyos.size() == 0)
+    {
+        filterDataMap input;
+        input[ISCONNECTED_INPUT] = false;
+
+        parent.advancedConnectPipeline.startPipeline(input);
     }
 }
 
@@ -343,11 +368,13 @@ void MyoDevice::MyoCallbacks::onArmSync(Myo *myo, uint64_t timestamp, Arm arm, X
     std::cout << "on arm sync." << std::endl;
 
     filterDataMap input;
-
     input[INPUT_ARM] = parent.arm;
     input[INPUT_X_DIRECTION] = parent.xDirection;
-
     parent.advancedOrientationPipeline.startPipeline(input);
+
+    filterDataMap syncInput;
+    syncInput[SYNCHED_INPUT] = true;
+    parent.advancedSyncPipeline.startPipeline(syncInput);
 }
 void MyoDevice::MyoCallbacks::onArmSync(Myo* myo, uint64_t timestamp, Arm arm, XDirection xDirection) { 
     parent.arm = arm;
@@ -355,16 +382,22 @@ void MyoDevice::MyoCallbacks::onArmSync(Myo* myo, uint64_t timestamp, Arm arm, X
     std::cout << "on arm sync." << std::endl; 
 
     filterDataMap input;
-
     input[INPUT_ARM] = parent.arm;
     input[INPUT_X_DIRECTION] = parent.xDirection;
-
     parent.advancedOrientationPipeline.startPipeline(input);
+
+    filterDataMap syncInput;
+    syncInput[SYNCHED_INPUT] = true;
+    parent.advancedSyncPipeline.startPipeline(syncInput);
 }
 void MyoDevice::MyoCallbacks::onArmUnsync(Myo* myo, uint64_t timestamp) { 
     parent.arm = Arm::armUnknown;
     parent.xDirection = XDirection::xDirectionUnknown;
     std::cout << "on arm unsync." << std::endl; 
+
+    filterDataMap input;
+    input[SYNCHED_INPUT] = false;
+    parent.advancedSyncPipeline.startPipeline(input);
 }
 
 void MyoDevice::MyoCallbacks::onUnlock(Myo* myo, uint64_t timestamp)
@@ -410,6 +443,8 @@ void MyoDevice::MyoCallbacks::onRssi(Myo* myo, uint64_t timestamp, int8_t rssi) 
 void MyoDevice::updateProfiles(void)
 {
     int error = (int)filterError::NO_FILTER_ERROR;
+
+    if (profileManager->getProfiles()->size() == 0) { return; }
 
     error |= (int)advancedPosePipeline.updateFiltersBasedOnProfile(*profileManager, state->getProfile());
 	

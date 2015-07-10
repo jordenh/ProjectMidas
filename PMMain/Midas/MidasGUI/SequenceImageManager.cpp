@@ -1,3 +1,22 @@
+/*
+    Copyright (C) 2015 Midas
+
+    This library is free software; you can redistribute it and/or
+    modify it under the terms of the GNU Lesser General Public
+    License as published by the Free Software Foundation; either
+    version 2.1 of the License, or (at your option) any later version.
+
+    This library is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+    Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public
+    License along with this library; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
+    USA
+*/
+
 #include "SequenceImageManager.h"
 #include <QImage.h>
 #include <qpainter.h>
@@ -52,7 +71,7 @@ std::vector<sequenceImageSet> SequenceImageManager::formSequenceSetFromIds(std::
             case PoseLength::HOLD:
                 holdOverlayImage = QImage(QString(POSE_LENGTH_HOLD_PATH));
                 pic = QPixmap::fromImage(holdOverlayImage);
-                pic = pic.scaled(currentWidth / POSE_LEN_SCALEDOWN_ICON, currentHeight / POSE_LEN_SCALEDOWN_ICON);
+                pic = pic.scaled(currentWidth / POSE_LEN_SCALEDOWN_ICON, currentHeight / POSE_LEN_SCALEDOWN_ICON, Qt::IgnoreAspectRatio, Qt::TransformationMode::SmoothTransformation);
 
                 painter.drawPixmap(currentWidth - (currentWidth / POSE_LEN_SCALEDOWN_ICON), 0, pic);
                 painter2.drawPixmap(currentWidth - (currentWidth / POSE_LEN_SCALEDOWN_ICON), 0, pic);
@@ -62,7 +81,7 @@ std::vector<sequenceImageSet> SequenceImageManager::formSequenceSetFromIds(std::
             case PoseLength::IMMEDIATE:
                 holdOverlayImage = QImage(QString(POSE_LENGTH_IMMEDIATE_PATH));
                 pic = QPixmap::fromImage(holdOverlayImage);
-                pic = pic.scaled(currentWidth / POSE_LEN_SCALEDOWN_ICON, currentHeight / POSE_LEN_SCALEDOWN_ICON);
+                pic = pic.scaled(currentWidth / POSE_LEN_SCALEDOWN_ICON, currentHeight / POSE_LEN_SCALEDOWN_ICON, Qt::IgnoreAspectRatio, Qt::TransformationMode::SmoothTransformation);
 
                 painter.drawPixmap(currentWidth - (currentWidth / POSE_LEN_SCALEDOWN_ICON), 0, pic);
                 painter2.drawPixmap(currentWidth - (currentWidth / POSE_LEN_SCALEDOWN_ICON), 0, pic);
@@ -94,8 +113,6 @@ void SequenceImageManager::loadImages()
     QImage fingerSpreadNext(QString(FINGER_SPREAD_NEXT_PATH));
     QImage fistLater(QString(FIST_LATER_PATH));
     QImage fistNext(QString(FIST_NEXT_PATH));
-//    QImage pinkyToThumbLater(QString(PINKY_TO_THUMB_LATER_PATH));
-//    QImage pinkyToThumbNext(QString(PINKY_TO_THUMB_NEXT_PATH));
     QImage doubleTapLater(QString(DOUBLE_TAP_LATER_PATH));
     QImage doubleTapNext(QString(DOUBLE_TAP_NEXT_PATH));
     QImage waveInLater(QString(WAVE_IN_LATER_PATH));
@@ -116,12 +133,6 @@ void SequenceImageManager::loadImages()
     fist.nextImage = QPixmap::fromImage(fistNext);
     fist.laterImage = QPixmap::fromImage(fistLater);
     idToImageMap[fist.actionTag] = fist;
-
-    /*sequenceImageSet pinkyToThumb;
-    pinkyToThumb.actionTag = Pose::doubleTap;
-    pinkyToThumb.nextImage = QPixmap::fromImage(pinkyToThumbNext);
-    pinkyToThumb.laterImage = QPixmap::fromImage(pinkyToThumbLater);
-    idToImageMap[pinkyToThumb.actionTag] = pinkyToThumb;*/
 
     sequenceImageSet doubleTap;
     doubleTap.actionTag = Pose::doubleTap;
