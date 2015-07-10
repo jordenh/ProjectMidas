@@ -119,6 +119,8 @@ private:
     void setupOrientationPipeline();
     void setupRSSIPipeline();
 
+    void setArmAndX(Myo* myo, Arm arm, XDirection xDirection);
+
     /**
      * This class implements all of the callback functions from the Myo DeviceListener
      * class. The methods in this class are called when Myo events occur.
@@ -161,7 +163,15 @@ private:
         int8_t lastEMGData[8];
     };
 
-    std::vector<myo::Myo*> connectedMyos; // not owned
+    struct MyoWithData {
+        MyoWithData(Myo* myo) { this->myo = myo; arm = Arm::armUnknown; xDirection = XDirection::xDirectionUnknown; }
+
+        Myo* myo;
+        Arm arm;
+        XDirection xDirection;
+    };
+
+    std::vector<MyoWithData> connectedMyos; // not owned
         unsigned int myoFindTimeout;
     unsigned int durationInMilliseconds;
     std::string appIdentifier;
@@ -172,8 +182,8 @@ private:
     MainGUI *mainGui; // not owned
     std::string prevProfileName;
 
-    Arm arm;
-    XDirection xDirection;
+//    Arm arm;
+//    XDirection xDirection;
     static ProfileSignaller profileSignaller;
     ProfileManager *profileManager; // not owned
 

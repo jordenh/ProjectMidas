@@ -238,6 +238,12 @@ void MainGUI::connectSignallerToSequenceDisplayer(GestureSignaller *signaller)
         sequenceDisplayer, SLOT(showSequences(std::vector<sequenceProgressData>)));
 }
 
+void MainGUI::connectSignallerToSequenceDisplayer(ConnectionSignaller *signaller)
+{
+    QObject::connect(signaller, SIGNAL(emitIsRightHand(bool)),
+        sequenceDisplayer, SLOT(handleIsRightHand(bool)));
+}
+
 void MainGUI::connectSignallerToPoseDisplayer(GestureSignaller *signaller)
 {
     QObject::connect(signaller, SIGNAL(emitPoseImages(std::vector<sequenceImageSet>)),
@@ -255,6 +261,9 @@ void MainGUI::connectSignallerToPoseDisplayer(ConnectionSignaller *signaller)
         poseDisplayer, SLOT(handleSync()));
     QObject::connect(signaller, SIGNAL(emitUnsync()),
         poseDisplayer, SLOT(handleUnsync()));
+
+    QObject::connect(signaller, SIGNAL(emitIsRightHand(bool)),
+        poseDisplayer, SLOT(handleIsRightHand(bool)));
 }
 
 void MainGUI::connectSignallerToProfileIcons(GestureSignaller *signaller)

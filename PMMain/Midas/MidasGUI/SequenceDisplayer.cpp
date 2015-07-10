@@ -38,7 +38,7 @@
 #define MAX_NUM_SEQUENCES_DISPLAYED 15
 
 SequenceDisplayer::SequenceDisplayer(QWidget *parent)
-    : QWidget(parent)
+    : QWidget(parent), isRightHand(true)
 {
     gridLayout = new QGridLayout;
     gridLayout->setAlignment(Qt::AlignRight | Qt::AlignBottom);
@@ -211,12 +211,12 @@ void SequenceDisplayer::updateSequences()
 #endif
             {
                 // show completed sequenceImages (for legacy reasons called laterImage)
-                pixmap = sequenceIt->laterImage;
+                pixmap = isRightHand ? sequenceIt->laterImageRight : sequenceIt->laterImageLeft;
             }
             else
             {
                 // show upcoming sequenceImages, which are a different more vibrant colour (called nextImage)
-                pixmap = sequenceIt->nextImage;
+                pixmap = isRightHand ? sequenceIt->nextImageRight : sequenceIt->nextImageLeft;
             }
 
             sequenceIt->currentImgLabel->setPixmap(pixmap);
@@ -228,4 +228,10 @@ void SequenceDisplayer::updateSequences()
 
         currRow++;
     }
+}
+
+void SequenceDisplayer::handleIsRightHand(bool isRightHand)
+{
+    this->isRightHand = isRightHand;
+    updateSequences();
 }

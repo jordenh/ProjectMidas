@@ -29,7 +29,7 @@ class ConnectionSignaller : public QObject
     Q_OBJECT
 
 public:
-    ConnectionSignaller(QObject *parent = 0, bool currentlyConnected = false, bool currentlySynched = false);
+    ConnectionSignaller(QObject *parent = 0, bool currentlyConnected = false, bool currentlySynched = false, bool isRightHand = true);
     ~ConnectionSignaller();
 
     void setCurrentlyConnected(bool conn) { currentlyConnected = conn; }
@@ -37,15 +37,22 @@ public:
 
     void setCurrentlySynched(bool sync) { currentlySynched = sync; }
     bool getCurrentlySynched() { return currentlySynched; }
+
+    void setIsRightHand(bool isRightHand) { this->isRightHand = isRightHand; }
+    bool getIsRightHand() { return isRightHand; }
+
 signals:
     void emitDisconnect();
     void emitConnect();
     void emitSync();
     void emitUnsync();
 
+    void emitIsRightHand(bool);
+
 private:
     bool currentlyConnected;
     bool currentlySynched;
+    bool isRightHand;
 };
 
 #endif // SETTINGS_SIGNALLER_H
