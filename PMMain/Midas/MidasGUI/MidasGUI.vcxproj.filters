@@ -452,7 +452,6 @@
     </ClInclude>
     <ClInclude Include="WearableDevice.h">
       <Filter>Header Files\Midas\Common</Filter>
->>>>>>> cf402d99005b639d27f2b3f496ce012c84f8b814
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
