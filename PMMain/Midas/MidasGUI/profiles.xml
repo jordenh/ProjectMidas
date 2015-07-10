@@ -1,5 +1,4 @@
 <?-- this is a comment! -->
-<?-- holdModeActionType absDeltaFinite holdModeActionType -->
 <?xml version="1.0" encoding="utf-8"?>
 <profiles>
 	<profile name="Rotate Model">
@@ -51,82 +50,7 @@
 						</actions>
 					</command>
 				</commands>
-            </sequence>
-		
-			<sequence state="lockMode" name="Control Mouse">
-                <gestures>
-					<gesture type="tap">fingersSpread</gesture>
-					<gesture type="tap">doubleTap</gesture>
-					<gesture type="immediate">doubleTap</gesture>
-                </gestures>
-                <commands>
-				<command type="stateChange">
-                    <actions>
-                        <action>mouseMode2</action>
-                    </actions>
-                </command>
-				</commands>
-            </sequence>
-			<sequence state="mouseMode2" name="Lock">
-                <gestures>
-					<gesture type="immediate">doubleTap</gesture>
-                </gestures>
-                <commands>
-					<command type="stateChange">
-						<actions>
-							<action>lockMode</action>
-						</actions>
-					</command>
-				</commands>
-            </sequence>
-			<sequence state="mouseMode2" name="Switch Rotate/Draw">
-                <gestures>
-                    <gesture type="hold">waveOut</gesture>
-                </gestures>
-				<commands>
-				<command type="profileChange">
-                    <actions>
-                        <action>moveProfileForward</action>
-                    </actions>
-                </command>
-				</commands>
-            </sequence>
-			<sequence state="mouseMode2" name="Rotate">
-                <gestures>
-					<gesture type="immediate">fist</gesture>
-                </gestures>
-                <commands>
-					<command type="mouse">
-						<actions>
-							<action>middleHold</action>
-						</actions>
-					</command>
-				</commands>
-            </sequence>
-			<sequence state="mouseMode2" name="Right Click">
-                <gestures>
-					<gesture type="tap">waveOut</gesture>
-                </gestures>
-                <commands>
-					<command type="mouse">
-						<actions>
-							<action>rightClick</action>
-						</actions>
-					</command>
-				</commands>
-            </sequence>
-			<sequence state="mouseMode2" name="Release Button">
-                <gestures>
-					<gesture type="immediate">rest</gesture>
-                </gestures>
-                <commands>
-					<command type="mouse">
-						<actions>
-							<action>releaseLrmButs</action>
-						</actions>
-					</command>
-				</commands>
-            </sequence>
+            </sequence>		
 		
 			<sequence state="lockMode" name="Unlock">
                 <gestures>

@@ -176,13 +176,13 @@ static std::string modeToString(midasMode mm)
     {
     case LOCK_MODE:   
 #ifdef BUILD_FOR_KARDIUM
-        return "LOCKED";
+        return "MAP MODE";
 #else
         return "Locked";
 #endif
     case MOUSE_MODE:  
 #ifdef BUILD_FOR_KARDIUM
-        return "UNLOCKED";
+        return "CURSOR MODE";
 #else
         return "Mouse Mouse";
 #endif
@@ -192,7 +192,7 @@ static std::string modeToString(midasMode mm)
         return "Keyboard Mode";
     case GESTURE_MODE:  
 #ifdef BUILD_FOR_KARDIUM
-        return "UNLOCKED";
+        return "CURSOR MODE";
 #else
         return "Gesture Mode";
 #endif
