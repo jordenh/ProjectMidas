@@ -66,3 +66,6 @@ PMMain/Midas/MidasProfileManager/GeneratedFiles/*
 PMMain/Midas/Win32/
 PMMain/Midas/ipch/
 *myoDataFile.csv
+
+# Installer stuff
+PMMain/Midas/MidasInstallShield/MidasInstallShield/*
