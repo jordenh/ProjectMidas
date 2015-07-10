@@ -33,7 +33,7 @@
 #include <qpixmap.h>
 
 PoseDisplayer::PoseDisplayer(int widgetWidth, int widgetHeight, QWidget *parent)
-    : QWidget(parent), indWidth(widgetWidth), indHeight(widgetHeight)
+    : QWidget(parent), indWidth(widgetWidth), indHeight(widgetHeight), connected(false), synched(false)
 {
     // Temporarily allow a Quit
     QAction *quitAction = new QAction(tr("E&xit"), this);
@@ -65,12 +65,20 @@ PoseDisplayer::PoseDisplayer(int widgetWidth, int widgetHeight, QWidget *parent)
     
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     setFixedSize(indWidth, indHeight);
+
+    disconnectedImage = new QImage(QString(DISCONNECTED_PATH));
+    unsynchedImage = new QImage(QString(UNSYNCHED_PATH));
+    normalImage = new QImage(QString(NORMAL_STATE_PATH));
+    updateDisplayerAlerts();
 }
 
 PoseDisplayer::~PoseDisplayer()
 {
     delete poseImgLabel; poseImgLabel = NULL;
     delete layout; layout = NULL;
+    delete disconnectedImage; disconnectedImage = NULL;
+    delete unsynchedImage; unsynchedImage = NULL;
+    delete normalImage; normalImage = NULL;
 }
 
 void PoseDisplayer::resizeEvent(QResizeEvent *event)
@@ -94,32 +102,47 @@ void PoseDisplayer::handlePoseImages(std::vector<sequenceImageSet> poseImages)
 
 void PoseDisplayer::handleDisconnect()
 {   
-    QImage disconnectedImage(QString(DISCONNECTED_PATH));
-    QPixmap scaledPic = QPixmap::fromImage(disconnectedImage);
-    scaledPic = scaledPic.scaled(indWidth, indHeight, Qt::IgnoreAspectRatio, Qt::TransformationMode::SmoothTransformation);
-    poseImgLabel->setPixmap(scaledPic);
+    connected = false;
+    updateDisplayerAlerts();
 }
 
 void PoseDisplayer::handleConnect()
 {
-    QImage connectedImage(QString(NORMAL_STATE_PATH));
-    QPixmap scaledPic = QPixmap::fromImage(connectedImage);
-    scaledPic = scaledPic.scaled(indWidth, indHeight, Qt::IgnoreAspectRatio, Qt::TransformationMode::SmoothTransformation);
-    poseImgLabel->setPixmap(scaledPic);
+    connected = true;
+    updateDisplayerAlerts();
 }
 
 void PoseDisplayer::handleUnsync()
 {
-    QImage disconnectedImage(QString(UNSYNCHED_PATH));
-    QPixmap scaledPic = QPixmap::fromImage(disconnectedImage);
-    scaledPic = scaledPic.scaled(indWidth, indHeight, Qt::IgnoreAspectRatio, Qt::TransformationMode::SmoothTransformation);
-    poseImgLabel->setPixmap(scaledPic);
+    synched = false;
+    updateDisplayerAlerts();
 }
 
 void PoseDisplayer::handleSync()
 {
-    QImage connectedImage(QString(NORMAL_STATE_PATH));
-    QPixmap scaledPic = QPixmap::fromImage(connectedImage);
-    scaledPic = scaledPic.scaled(indWidth, indHeight, Qt::IgnoreAspectRatio, Qt::TransformationMode::SmoothTransformation);
-    poseImgLabel->setPixmap(scaledPic);
+    synched = true;
+    updateDisplayerAlerts();
+}
+
+void PoseDisplayer::updateDisplayerAlerts()
+{
+    // Disconnected takes priority over synched.
+    if (!connected)
+    {
+        QPixmap scaledPic = QPixmap::fromImage(*disconnectedImage);
+        scaledPic = scaledPic.scaled(indWidth, indHeight, Qt::IgnoreAspectRatio, Qt::TransformationMode::SmoothTransformation);
+        poseImgLabel->setPixmap(scaledPic);
+    }
+    else if (!synched)
+    {
+        QPixmap scaledPic = QPixmap::fromImage(*unsynchedImage);
+        scaledPic = scaledPic.scaled(indWidth, indHeight, Qt::IgnoreAspectRatio, Qt::TransformationMode::SmoothTransformation);
+        poseImgLabel->setPixmap(scaledPic);
+    }
+    else
+    {
+        QPixmap scaledPic = QPixmap::fromImage(*normalImage);
+        scaledPic = scaledPic.scaled(indWidth, indHeight, Qt::IgnoreAspectRatio, Qt::TransformationMode::SmoothTransformation);
+        poseImgLabel->setPixmap(scaledPic);
+    }
 }
