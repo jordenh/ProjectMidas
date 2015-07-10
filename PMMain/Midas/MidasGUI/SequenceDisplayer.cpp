@@ -233,4 +233,5 @@ void SequenceDisplayer::updateSequences()
 void SequenceDisplayer::handleIsRightHand(bool isRightHand)
 {
     this->isRightHand = isRightHand;
+    updateSequences();
 }

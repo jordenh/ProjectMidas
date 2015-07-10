@@ -128,53 +128,77 @@ std::vector<sequenceImageSet> SequenceImageManager::formSequenceSetFromIds(std::
 
 void SequenceImageManager::loadImages()
 {
-    QImage fingerSpreadLater(QString(FINGER_SPREAD_LATER_PATH));
-    QImage fingerSpreadNext(QString(FINGER_SPREAD_NEXT_PATH));
-    QImage fistLater(QString(FIST_LATER_PATH));
-    QImage fistNext(QString(FIST_NEXT_PATH));
-    QImage doubleTapLater(QString(DOUBLE_TAP_LATER_PATH));
-    QImage doubleTapNext(QString(DOUBLE_TAP_NEXT_PATH));
-    QImage waveInLater(QString(WAVE_IN_LATER_PATH));
-    QImage waveInNext(QString(WAVE_IN_NEXT_PATH));
-    QImage waveOutLater(QString(WAVE_OUT_LATER_PATH));
-    QImage waveOutNext(QString(WAVE_OUT_NEXT_PATH));
+    QImage rightFingerSpreadLater(QString(RIGHT_FINGER_SPREAD_LATER_PATH));
+    QImage rightFingerSpreadNext(QString(RIGHT_FINGER_SPREAD_NEXT_PATH));
+    QImage rightFistLater(QString(RIGHT_FIST_LATER_PATH));
+    QImage rightFistNext(QString(RIGHT_FIST_NEXT_PATH));
+    QImage rightDoubleTapLater(QString(RIGHT_DOUBLE_TAP_LATER_PATH));
+    QImage rightDoubleTapNext(QString(RIGHT_DOUBLE_TAP_NEXT_PATH));
+    QImage rightWaveInLater(QString(RIGHT_WAVE_IN_LATER_PATH));
+    QImage rightWaveInNext(QString(RIGHT_WAVE_IN_NEXT_PATH));
+    QImage rightWaveOutLater(QString(RIGHT_WAVE_OUT_LATER_PATH));
+    QImage rightWaveOutNext(QString(RIGHT_WAVE_OUT_NEXT_PATH));
+    QImage leftFingerSpreadLater(QString(LEFT_FINGER_SPREAD_LATER_PATH));
+    QImage leftFingerSpreadNext(QString(LEFT_FINGER_SPREAD_NEXT_PATH));
+    QImage leftFistLater(QString(LEFT_FIST_LATER_PATH));
+    QImage leftFistNext(QString(LEFT_FIST_NEXT_PATH));
+    QImage leftDoubleTapLater(QString(LEFT_DOUBLE_TAP_LATER_PATH));
+    QImage leftDoubleTapNext(QString(LEFT_DOUBLE_TAP_NEXT_PATH));
+    QImage leftWaveInLater(QString(LEFT_WAVE_IN_LATER_PATH));
+    QImage leftWaveInNext(QString(LEFT_WAVE_IN_NEXT_PATH));
+    QImage leftWaveOutLater(QString(LEFT_WAVE_OUT_LATER_PATH));
+    QImage leftWaveOutNext(QString(LEFT_WAVE_OUT_NEXT_PATH));
+
+
     QImage noHandLater(QString(NO_HAND_LATER_PATH));
     QImage noHandNext(QString(NO_HAND_NEXT_PATH));
     
     sequenceImageSet fingerSpread;
     fingerSpread.actionTag = Pose::fingersSpread;
-    fingerSpread.nextImageRight = QPixmap::fromImage(fingerSpreadNext);
-    fingerSpread.laterImageRight = QPixmap::fromImage(fingerSpreadLater);
+    fingerSpread.nextImageRight = QPixmap::fromImage(rightFingerSpreadNext);
+    fingerSpread.laterImageRight = QPixmap::fromImage(rightFingerSpreadLater);
+    fingerSpread.nextImageLeft = QPixmap::fromImage(leftFingerSpreadNext);
+    fingerSpread.laterImageLeft = QPixmap::fromImage(leftFingerSpreadLater);
     idToImageMap[fingerSpread.actionTag] = fingerSpread;
 
     sequenceImageSet fist;
     fist.actionTag = Pose::fist;
-    fist.nextImageRight = QPixmap::fromImage(fistNext);
-    fist.laterImageRight = QPixmap::fromImage(fistLater);
+    fist.nextImageRight = QPixmap::fromImage(rightFistNext);
+    fist.laterImageRight = QPixmap::fromImage(rightFistLater);
+    fist.nextImageLeft = QPixmap::fromImage(leftFistNext);
+    fist.laterImageLeft = QPixmap::fromImage(leftFistLater);
     idToImageMap[fist.actionTag] = fist;
 
     sequenceImageSet doubleTap;
     doubleTap.actionTag = Pose::doubleTap;
-    doubleTap.nextImageRight = QPixmap::fromImage(doubleTapNext);
-    doubleTap.laterImageRight = QPixmap::fromImage(doubleTapLater);
+    doubleTap.nextImageRight = QPixmap::fromImage(rightDoubleTapNext);
+    doubleTap.laterImageRight = QPixmap::fromImage(rightDoubleTapLater);
+    doubleTap.nextImageLeft = QPixmap::fromImage(leftDoubleTapNext);
+    doubleTap.laterImageLeft = QPixmap::fromImage(leftDoubleTapLater);
     idToImageMap[doubleTap.actionTag] = doubleTap;
 
     sequenceImageSet waveIn;
     waveIn.actionTag = Pose::waveIn;
-    waveIn.nextImageRight = QPixmap::fromImage(waveInNext);
-    waveIn.laterImageRight = QPixmap::fromImage(waveInLater);
+    waveIn.nextImageRight = QPixmap::fromImage(rightWaveInNext);
+    waveIn.laterImageRight = QPixmap::fromImage(rightWaveInLater);
+    waveIn.nextImageLeft = QPixmap::fromImage(leftWaveInNext);
+    waveIn.laterImageLeft = QPixmap::fromImage(leftWaveInLater);
     idToImageMap[waveIn.actionTag] = waveIn;
 
     sequenceImageSet waveOut;
     waveOut.actionTag = Pose::waveOut;
-    waveOut.nextImageRight = QPixmap::fromImage(waveOutNext);
-    waveOut.laterImageRight = QPixmap::fromImage(waveOutLater);
+    waveOut.nextImageRight = QPixmap::fromImage(rightWaveOutNext);
+    waveOut.laterImageRight = QPixmap::fromImage(rightWaveOutLater);
+    waveOut.nextImageLeft = QPixmap::fromImage(leftWaveOutNext);
+    waveOut.laterImageLeft = QPixmap::fromImage(leftWaveOutLater);
     idToImageMap[waveOut.actionTag] = waveOut;
 
     sequenceImageSet rest;
     rest.actionTag = Pose::rest;
     rest.nextImageRight = QPixmap::fromImage(noHandNext);
     rest.laterImageRight = QPixmap::fromImage(noHandLater);
+    rest.nextImageLeft = QPixmap::fromImage(noHandNext);
+    rest.laterImageLeft = QPixmap::fromImage(noHandLater);
     idToImageMap[rest.actionTag] = rest;
 
 }
