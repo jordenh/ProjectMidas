@@ -64,7 +64,6 @@ GestureFilter::GestureFilter(ControlState* controlState, MyoState* myoState, clo
     }
 
     gestureSignaller.emitStateString(QTranslator::tr((modeToString(controlState->getMode())).c_str()));
-    emitPoseData(Pose::rest);
 
 	Filter::setFilterError(filterError::NO_FILTER_ERROR);
 	Filter::setFilterStatus(filterStatus::OK);

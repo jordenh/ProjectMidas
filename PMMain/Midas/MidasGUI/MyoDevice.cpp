@@ -342,10 +342,6 @@ void MyoDevice::MyoCallbacks::onConnect(Myo* myo, uint64_t timestamp, FirmwareVe
 }
 void MyoDevice::MyoCallbacks::onDisconnect(Myo* myo, uint64_t timestamp) { 
     std::cout << "on disconnect." << std::endl; 
-    filterDataMap input;
-    input[ISCONNECTED_INPUT] = false;
-
-    parent.advancedConnectPipeline.startPipeline(input);
 
     for (std::vector<Myo*>::iterator it = parent.connectedMyos.begin(); it != parent.connectedMyos.end(); it++)
     {
@@ -354,6 +350,14 @@ void MyoDevice::MyoCallbacks::onDisconnect(Myo* myo, uint64_t timestamp) {
             parent.connectedMyos.erase(it);
             break;
         }
+    }
+
+    if (parent.connectedMyos.size() == 0)
+    {
+        filterDataMap input;
+        input[ISCONNECTED_INPUT] = false;
+
+        parent.advancedConnectPipeline.startPipeline(input);
     }
 }
 
