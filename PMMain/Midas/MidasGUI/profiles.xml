@@ -52,19 +52,6 @@
 				</commands>
             </sequence>		
 		
-			<sequence state="lockMode" name="Unlock">
-                <gestures>
-					<gesture type="tap">doubleTap</gesture>
-					<gesture type="immediate">doubleTap</gesture>
-                </gestures>
-                <commands>
-				<command type="stateChange">
-                    <actions>
-                        <action>gestureMode</action>
-                    </actions>
-                </command>
-				</commands>
-            </sequence>
 			<sequence state="lockMode" name="View Flow Map">
                 <gestures>
                     <gesture type="tap">doubleTap</gesture>
@@ -115,6 +102,19 @@
 							<action>inputVector,Z</action>
 						</actions>
 					</command>
+				</commands>
+            </sequence>
+			<sequence state="lockMode" name="Control Cursor">
+                <gestures>
+					<gesture type="tap">doubleTap</gesture>
+					<gesture type="immediate">doubleTap</gesture>
+                </gestures>
+                <commands>
+				<command type="stateChange">
+                    <actions>
+                        <action>gestureMode</action>
+                    </actions>
+                </command>
 				</commands>
             </sequence>
 			<sequence state="gestureMode" name="Switch Rotate/Draw">
@@ -199,7 +199,7 @@
                 </command>
 				</commands>
             </sequence>
-            <sequence state="gestureMode" name="Lock">
+            <sequence state="gestureMode" name="Control Map">
                 <gestures>
                     <gesture type="immediate">doubleTap</gesture>
                 </gestures>
@@ -241,94 +241,6 @@
     </profile>
 	<profile name="Draw on Model">
         <sequences>
-			<sequence state="lockMode" name="Control Mouse">
-                <gestures>
-					<gesture type="tap">fingersSpread</gesture>
-					<gesture type="tap">doubleTap</gesture>
-					<gesture type="immediate">doubleTap</gesture>
-                </gestures>
-                <commands>
-					<command type="stateChange">
-						<actions>
-							<action>mouseMode2</action>
-						</actions>
-					</command>
-				</commands>
-            </sequence>
-			<sequence state="mouseMode2" name="Lock">
-                <gestures>
-					<gesture type="immediate">doubleTap</gesture>
-                </gestures>
-                <commands>
-					<command type="stateChange">
-						<actions>
-							<action>lockMode</action>
-						</actions>
-					</command>
-				</commands>
-            </sequence>
-			<sequence state="mouseMode2" name="Switch Rotate/Draw">
-                <gestures>
-                    <gesture type="hold">waveOut</gesture>
-                </gestures>
-				<commands>
-				<command type="profileChange">
-                    <actions>
-                        <action>moveProfileForward</action>
-                    </actions>
-                </command>
-				</commands>
-            </sequence>
-			<sequence state="mouseMode2" name="Draw">
-                <gestures>
-					<gesture type="immediate">fist</gesture>
-                </gestures>
-                <commands>
-					<command type="mouse">
-						<actions>
-							<action>leftHold</action>
-						</actions>
-					</command>
-				</commands>
-            </sequence>
-			<sequence state="mouseMode2" name="Right Click">
-                <gestures>
-					<gesture type="tap">waveOut</gesture>
-                </gestures>
-                <commands>
-					<command type="mouse">
-						<actions>
-							<action>rightClick</action>
-						</actions>
-					</command>
-				</commands>
-            </sequence>
-			<sequence state="mouseMode2" name="Release Button">
-                <gestures>
-					<gesture type="immediate">rest</gesture>
-                </gestures>
-                <commands>
-					<command type="mouse">
-						<actions>
-							<action>releaseLrmButs</action>
-						</actions>
-					</command>
-				</commands>
-            </sequence>
-			
-			<sequence state="lockMode" name="Unlock">
-                <gestures>
-                    <gesture type="tap">doubleTap</gesture>
-					<gesture type="immediate">doubleTap</gesture>
-                </gestures>
-                <commands>
-				<command type="stateChange">
-                    <actions>
-                        <action>gestureMode</action>
-                    </actions>
-                </command>
-				</commands>
-            </sequence>
 			<sequence state="lockMode" name="View Flow Map">
                 <gestures>
                     <gesture type="tap">doubleTap</gesture>
@@ -379,6 +291,19 @@
 							<action>inputVector,Z</action>
 						</actions>
 					</command>
+				</commands>
+            </sequence>
+			<sequence state="lockMode" name="Control Cursor">
+                <gestures>
+                    <gesture type="tap">doubleTap</gesture>
+					<gesture type="immediate">doubleTap</gesture>
+                </gestures>
+                <commands>
+				<command type="stateChange">
+                    <actions>
+                        <action>gestureMode</action>
+                    </actions>
+                </command>
 				</commands>
             </sequence>
 			<sequence state="gestureMode" name="Switch Rotate/Draw">
@@ -463,7 +388,7 @@
                 </command>
 				</commands>
             </sequence>
-            <sequence state="gestureMode" name="Lock">
+            <sequence state="gestureMode" name="Control Map">
                 <gestures>
                     <gesture type="immediate">doubleTap</gesture>
                 </gestures>
