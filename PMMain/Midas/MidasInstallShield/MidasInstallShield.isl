@@ -52,7 +52,7 @@
 	<summary>
 		<codepage>1252</codepage>
 		<title>Installation Database</title>
-		<subject>Midas</subject>
+		<subject>Midas_UserTest2_Variant1</subject>
 		<author>##ID_STRING3##</author>
 		<keywords>Installer,MSI,Database</keywords>
 		<comments>Contact:  Your local administrator</comments>
@@ -339,15 +339,20 @@
 		<col def="S0">ISDotNetInstallerArgsCommit</col>
 		<col def="S0">ISDotNetInstallerArgsUninstall</col>
 		<col def="S0">ISDotNetInstallerArgsRollback</col>
-		<row><td>ISX_DEFAULTCOMPONENT</td><td>{86395508-5F60-4EA6-9CBC-FB1AD73A3080}</td><td>RESOURCES</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>ISX_DEFAULTCOMPONENT</td><td>{538D5121-7167-460A-BDBA-7B9A84C7966E}</td><td>RESOURCES</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>ISX_DEFAULTCOMPONENT1</td><td>{1E9DC3B5-F62D-4C0B-9604-9EFBBED95D9E}</td><td>INSTALLDIR</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>ISX_DEFAULTCOMPONENT2</td><td>{19BB6F11-5274-4281-91BE-2A63F2C5AA3E}</td><td>_00PXIMGS</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>ISX_DEFAULTCOMPONENT3</td><td>{6CE4D025-D877-44F9-BF3F-F7CF0A68DBB0}</td><td>BW200PXIMGS</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>ISX_DEFAULTCOMPONENT4</td><td>{52CF81A0-B769-462D-A32F-8D5D2063F8DC}</td><td>ICONS</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>ISX_DEFAULTCOMPONENT5</td><td>{71854DC5-0B54-4A7A-9614-06CF7F1E4D4E}</td><td>MAINIMGS</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>ISX_DEFAULTCOMPONENT6</td><td>{F3908B83-885A-4ADE-ACED-6F00BCABF227}</td><td>MOCKUPS</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>ISX_DEFAULTCOMPONENT7</td><td>{67CB2791-F39A-41DB-B279-80AAB9ECB1F8}</td><td>POST200PXIMGS</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>ISX_DEFAULTCOMPONENT8</td><td>{D9810109-3F5C-4C61-BAEB-0502566E0CC5}</td><td>TEMP</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>ISX_DEFAULTCOMPONENT10</td><td>{F4786112-CF08-4CCB-B3B6-413F4A000EBB}</td><td>ICONS</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>ISX_DEFAULTCOMPONENT11</td><td>{F7AD5845-58C2-472D-800F-D937E0F56602}</td><td>MAINIMGS</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>ISX_DEFAULTCOMPONENT12</td><td>{5B38366F-F7EF-465D-BACB-FD1672940933}</td><td>MOCKUPS</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>ISX_DEFAULTCOMPONENT13</td><td>{42D4AF90-E07D-4FEA-9268-661EE6C65726}</td><td>POST200PXIMGS</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>ISX_DEFAULTCOMPONENT14</td><td>{6B9532E3-5B6B-4ADA-AE0B-FCAC20ABF0C6}</td><td>TEMP</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>ISX_DEFAULTCOMPONENT2</td><td>{7B131BBA-F435-4D26-A452-5A866EC1F7DA}</td><td>_00PXIMGS</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>ISX_DEFAULTCOMPONENT3</td><td>{998AA0E2-7FC4-46E0-A805-40829FBEF05E}</td><td>ASSETS</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>ISX_DEFAULTCOMPONENT4</td><td>{AF0199FD-DE7A-4707-ACB1-2708D301D752}</td><td>GESTURE_ICONS</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>ISX_DEFAULTCOMPONENT5</td><td>{F032E618-91EC-4B83-BE42-30DF6D84942E}</td><td>MYO_ICON</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>ISX_DEFAULTCOMPONENT6</td><td>{E39AF6D5-0FAD-45D3-9F7F-0F277F97EBFF}</td><td>MYO_LOGO</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>ISX_DEFAULTCOMPONENT7</td><td>{266DDABE-B101-41E9-BDA9-F8A04A0F4DFA}</td><td>MYO_MARKET_BADGE</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>ISX_DEFAULTCOMPONENT8</td><td>{045A5595-65CA-48CD-9F89-3344751D7634}</td><td>BW200PXIMGS</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>ISX_DEFAULTCOMPONENT9</td><td>{D85C656C-90B7-4505-889F-C562C8AA48CE}</td><td>LICENSE</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>MidasGUI.Debug_Symbols</td><td>{7A8AAD63-65C3-4D67-97ED-47763537C2D8}</td><td>INSTALLDIR</td><td>2</td><td/><td>midasgui.debug_symbols</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>MidasGUI.Primary_Output</td><td>{D2675582-083B-412D-B96F-EFF640045AD6}</td><td>INSTALLDIR</td><td>2</td><td/><td>midasgui.primary_output</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
@@ -1061,6 +1066,7 @@
 	<table name="CreateFolder">
 		<col key="yes" def="s72">Directory_</col>
 		<col key="yes" def="s72">Component_</col>
+		<row><td>ASSETS</td><td>ISX_DEFAULTCOMPONENT3</td></row>
 	</table>
 
 	<table name="CustomAction">
@@ -1140,6 +1146,7 @@
 		<col def="I4">ISAttributes</col>
 		<col def="S255">ISFolderName</col>
 		<row><td>ALLUSERSPROFILE</td><td>TARGETDIR</td><td>.:ALLUSE~1|All Users</td><td/><td>0</td><td/></row>
+		<row><td>ASSETS</td><td>RESOURCES</td><td>assets</td><td/><td>0</td><td/></row>
 		<row><td>AdminToolsFolder</td><td>TARGETDIR</td><td>.:Admint~1|AdminTools</td><td/><td>0</td><td/></row>
 		<row><td>AppDataFolder</td><td>TARGETDIR</td><td>.:APPLIC~1|Application Data</td><td/><td>0</td><td/></row>
 		<row><td>BW200PXIMGS</td><td>RESOURCES</td><td>BW200P~1|BW200PxImgs</td><td/><td>0</td><td/></row>
@@ -1150,9 +1157,10 @@
 		<row><td>DesktopFolder</td><td>TARGETDIR</td><td>.:Desktop</td><td/><td>3</td><td/></row>
 		<row><td>FavoritesFolder</td><td>TARGETDIR</td><td>.:FAVORI~1|Favorites</td><td/><td>0</td><td/></row>
 		<row><td>FontsFolder</td><td>TARGETDIR</td><td>.:Fonts</td><td/><td>0</td><td/></row>
+		<row><td>GESTURE_ICONS</td><td>ASSETS</td><td>GESTUR~1|gesture_icons</td><td/><td>0</td><td/></row>
 		<row><td>GlobalAssemblyCache</td><td>TARGETDIR</td><td>.:Global~1|GlobalAssemblyCache</td><td/><td>0</td><td/></row>
 		<row><td>ICONS</td><td>RESOURCES</td><td>icons</td><td/><td>0</td><td/></row>
-		<row><td>INSTALLDIR</td><td>MIDAS1</td><td>.</td><td/><td>0</td><td/></row>
+		<row><td>INSTALLDIR</td><td>MIDAS_USERTEST2_VARIANT1</td><td>.</td><td/><td>0</td><td/></row>
 		<row><td>ISCommonFilesFolder</td><td>CommonFilesFolder</td><td>Instal~1|InstallShield</td><td/><td>0</td><td/></row>
 		<row><td>ISMyCompanyDir</td><td>ProgramFilesFolder</td><td>MYCOMP~1|My Company Name</td><td/><td>0</td><td/></row>
 		<row><td>ISMyProductDir</td><td>ISMyCompanyDir</td><td>MYPROD~1|My Product Name</td><td/><td>0</td><td/></row>
@@ -1164,7 +1172,11 @@
 		<row><td>MAINIMGS</td><td>RESOURCES</td><td>MainImgs</td><td/><td>0</td><td/></row>
 		<row><td>MIDAS</td><td>KARDIUM_INC.</td><td>Midas</td><td/><td>0</td><td/></row>
 		<row><td>MIDAS1</td><td>JORDENH</td><td>Midas</td><td/><td>0</td><td/></row>
+		<row><td>MIDAS_USERTEST2_VARIANT1</td><td>JORDENH</td><td>MIDAS_~1|Midas_UserTest2_Variant1</td><td/><td>0</td><td/></row>
 		<row><td>MOCKUPS</td><td>RESOURCES</td><td>mockups</td><td/><td>0</td><td/></row>
+		<row><td>MYO_ICON</td><td>ASSETS</td><td>myo_icon</td><td/><td>0</td><td/></row>
+		<row><td>MYO_LOGO</td><td>ASSETS</td><td>myo_logo</td><td/><td>0</td><td/></row>
+		<row><td>MYO_MARKET_BADGE</td><td>ASSETS</td><td>MYO_MA~1|myo_market_badge</td><td/><td>0</td><td/></row>
 		<row><td>MY_PRODUCT_NAME</td><td>KARDIUM_INC.</td><td>MYPROD~1|My Product Name</td><td/><td>0</td><td/></row>
 		<row><td>MyPicturesFolder</td><td>TARGETDIR</td><td>.:MyPict~1|MyPictures</td><td/><td>0</td><td/></row>
 		<row><td>NetHoodFolder</td><td>TARGETDIR</td><td>.:NetHood</td><td/><td>0</td><td/></row>
@@ -1884,6 +1896,11 @@
 		<col key="yes" def="s72">Component_</col>
 		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT</td></row>
 		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT1</td></row>
+		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT10</td></row>
+		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT11</td></row>
+		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT12</td></row>
+		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT13</td></row>
+		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT14</td></row>
 		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT2</td></row>
 		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT3</td></row>
 		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT4</td></row>
@@ -1910,58 +1927,97 @@
 		<col def="S255">ISBuildSourcePath</col>
 		<col def="I4">ISAttributes</col>
 		<col def="S72">ISComponentSubFolder_</col>
+		<row><td>blue.png</td><td>ISX_DEFAULTCOMPONENT4</td><td>blue.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\assets\gesture_icons\blue.png</td><td>1</td><td/></row>
+		<row><td>blue_outline_lh_double_tap.p</td><td>ISX_DEFAULTCOMPONENT4</td><td>BLUE_O~1.PNG|blue_outline_LH_double_tap.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\assets\gesture_icons\blue_outline_LH_double_tap.png</td><td>1</td><td/></row>
+		<row><td>blue_outline_lh_fist.png</td><td>ISX_DEFAULTCOMPONENT4</td><td>BLUE_O~1.PNG|blue_outline_LH_fist.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\assets\gesture_icons\blue_outline_LH_fist.png</td><td>1</td><td/></row>
+		<row><td>blue_outline_lh_spread_finge</td><td>ISX_DEFAULTCOMPONENT4</td><td>BLUE_O~1.PNG|blue_outline_LH_spread_fingers.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\assets\gesture_icons\blue_outline_LH_spread_fingers.png</td><td>1</td><td/></row>
+		<row><td>blue_outline_lh_wave_left.pn</td><td>ISX_DEFAULTCOMPONENT4</td><td>BLUE_O~1.PNG|blue_outline_LH_wave_left.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\assets\gesture_icons\blue_outline_LH_wave_left.png</td><td>1</td><td/></row>
+		<row><td>blue_outline_lh_wave_right.p</td><td>ISX_DEFAULTCOMPONENT4</td><td>BLUE_O~1.PNG|blue_outline_LH_wave_right.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\assets\gesture_icons\blue_outline_LH_wave_right.png</td><td>1</td><td/></row>
+		<row><td>blue_outline_rh_double_tap.p</td><td>ISX_DEFAULTCOMPONENT4</td><td>BLUE_O~1.PNG|blue_outline_RH_double_tap.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\assets\gesture_icons\blue_outline_RH_double_tap.png</td><td>1</td><td/></row>
+		<row><td>blue_outline_rh_fist.png</td><td>ISX_DEFAULTCOMPONENT4</td><td>BLUE_O~1.PNG|blue_outline_RH_fist.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\assets\gesture_icons\blue_outline_RH_fist.png</td><td>1</td><td/></row>
+		<row><td>blue_outline_rh_spread_finge</td><td>ISX_DEFAULTCOMPONENT4</td><td>BLUE_O~1.PNG|blue_outline_RH_spread_fingers.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\assets\gesture_icons\blue_outline_RH_spread_fingers.png</td><td>1</td><td/></row>
+		<row><td>blue_outline_rh_wave_left.pn</td><td>ISX_DEFAULTCOMPONENT4</td><td>BLUE_O~1.PNG|blue_outline_RH_wave_left.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\assets\gesture_icons\blue_outline_RH_wave_left.png</td><td>1</td><td/></row>
+		<row><td>blue_outline_rh_wave_right.p</td><td>ISX_DEFAULTCOMPONENT4</td><td>BLUE_O~1.PNG|blue_outline_RH_wave_right.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\assets\gesture_icons\blue_outline_RH_wave_right.png</td><td>1</td><td/></row>
 		<row><td>boost_license_1_0.txt</td><td>ISX_DEFAULTCOMPONENT9</td><td>BOOST_~1.TXT|BOOST_LICENSE_1_0.txt</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\LICENSE\BOOST_LICENSE_1_0.txt</td><td>1</td><td/></row>
 		<row><td>cloc_midasgui_analysis_jan21</td><td>ISX_DEFAULTCOMPONENT</td><td>CLOC_M~1.PNG|cloc_MidasGUI_analysis_Jan21_2015.PNG</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\cloc_MidasGUI_analysis_Jan21_2015.PNG</td><td>1</td><td/></row>
 		<row><td>doubletap.jpg</td><td>ISX_DEFAULTCOMPONENT2</td><td>DOUBLE~1.JPG|doubleTap.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\200PxImgs\doubleTap.jpg</td><td>1</td><td/></row>
-		<row><td>doubletap.jpg1</td><td>ISX_DEFAULTCOMPONENT3</td><td>DOUBLE~1.JPG|doubleTap.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\BW200PxImgs\doubleTap.jpg</td><td>1</td><td/></row>
-		<row><td>doubletap.jpg2</td><td>ISX_DEFAULTCOMPONENT5</td><td>DOUBLE~1.JPG|doubleTap.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\MainImgs\doubleTap.jpg</td><td>1</td><td/></row>
-		<row><td>doubletap.jpg3</td><td>ISX_DEFAULTCOMPONENT7</td><td>DOUBLE~1.JPG|doubleTap.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\Post200PxImgs\doubleTap.jpg</td><td>1</td><td/></row>
+		<row><td>doubletap.jpg1</td><td>ISX_DEFAULTCOMPONENT8</td><td>DOUBLE~1.JPG|doubleTap.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\BW200PxImgs\doubleTap.jpg</td><td>1</td><td/></row>
+		<row><td>doubletap.jpg2</td><td>ISX_DEFAULTCOMPONENT11</td><td>DOUBLE~1.JPG|doubleTap.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\MainImgs\doubleTap.jpg</td><td>1</td><td/></row>
+		<row><td>doubletap.jpg3</td><td>ISX_DEFAULTCOMPONENT13</td><td>DOUBLE~1.JPG|doubleTap.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\Post200PxImgs\doubleTap.jpg</td><td>1</td><td/></row>
 		<row><td>fingerspread.jpg</td><td>ISX_DEFAULTCOMPONENT2</td><td>FINGER~1.JPG|fingerSpread.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\200PxImgs\fingerSpread.jpg</td><td>1</td><td/></row>
-		<row><td>fingerspread.jpg1</td><td>ISX_DEFAULTCOMPONENT3</td><td>FINGER~1.JPG|fingerSpread.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\BW200PxImgs\fingerSpread.jpg</td><td>1</td><td/></row>
-		<row><td>fingerspread.jpg2</td><td>ISX_DEFAULTCOMPONENT5</td><td>FINGER~1.JPG|fingerSpread.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\MainImgs\fingerSpread.jpg</td><td>1</td><td/></row>
-		<row><td>fingerspread.jpg3</td><td>ISX_DEFAULTCOMPONENT7</td><td>FINGER~1.JPG|fingerSpread.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\Post200PxImgs\fingerSpread.jpg</td><td>1</td><td/></row>
+		<row><td>fingerspread.jpg1</td><td>ISX_DEFAULTCOMPONENT8</td><td>FINGER~1.JPG|fingerSpread.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\BW200PxImgs\fingerSpread.jpg</td><td>1</td><td/></row>
+		<row><td>fingerspread.jpg2</td><td>ISX_DEFAULTCOMPONENT11</td><td>FINGER~1.JPG|fingerSpread.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\MainImgs\fingerSpread.jpg</td><td>1</td><td/></row>
+		<row><td>fingerspread.jpg3</td><td>ISX_DEFAULTCOMPONENT13</td><td>FINGER~1.JPG|fingerSpread.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\Post200PxImgs\fingerSpread.jpg</td><td>1</td><td/></row>
 		<row><td>fist.jpg</td><td>ISX_DEFAULTCOMPONENT2</td><td>fist.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\200PxImgs\fist.jpg</td><td>1</td><td/></row>
-		<row><td>fist.jpg1</td><td>ISX_DEFAULTCOMPONENT3</td><td>fist.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\BW200PxImgs\fist.jpg</td><td>1</td><td/></row>
-		<row><td>fist.jpg2</td><td>ISX_DEFAULTCOMPONENT5</td><td>fist.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\MainImgs\fist.jpg</td><td>1</td><td/></row>
-		<row><td>fist.jpg3</td><td>ISX_DEFAULTCOMPONENT7</td><td>fist.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\Post200PxImgs\fist.jpg</td><td>1</td><td/></row>
+		<row><td>fist.jpg1</td><td>ISX_DEFAULTCOMPONENT8</td><td>fist.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\BW200PxImgs\fist.jpg</td><td>1</td><td/></row>
+		<row><td>fist.jpg2</td><td>ISX_DEFAULTCOMPONENT11</td><td>fist.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\MainImgs\fist.jpg</td><td>1</td><td/></row>
+		<row><td>fist.jpg3</td><td>ISX_DEFAULTCOMPONENT13</td><td>fist.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\Post200PxImgs\fist.jpg</td><td>1</td><td/></row>
+		<row><td>grey.png</td><td>ISX_DEFAULTCOMPONENT4</td><td>grey.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\assets\gesture_icons\grey.png</td><td>1</td><td/></row>
 		<row><td>license.rtf</td><td>ISX_DEFAULTCOMPONENT9</td><td>LICENSE.rtf</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\LICENSE\LICENSE.rtf</td><td>1</td><td/></row>
 		<row><td>midasgui.debug_symbols</td><td>MidasGUI.Debug_Symbols</td><td>MidasGUI.Debug Symbols</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;MidasGUI&gt;|Symbols</td><td>3</td><td/></row>
 		<row><td>midasgui.primary_output</td><td>MidasGUI.Primary_Output</td><td>MidasGUI.Primary Output</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;MidasGUI&gt;|Built</td><td>3</td><td/></row>
-		<row><td>midasguiex1.psd</td><td>ISX_DEFAULTCOMPONENT6</td><td>MIDASG~1.PSD|MidasGUIEx1.psd</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\mockups\MidasGUIEx1.psd</td><td>1</td><td/></row>
-		<row><td>midasguiex1_copy.jpg</td><td>ISX_DEFAULTCOMPONENT6</td><td>MIDASG~1.JPG|MidasGUIEx1 copy.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\mockups\MidasGUIEx1 copy.jpg</td><td>1</td><td/></row>
+		<row><td>midasguiex1.psd</td><td>ISX_DEFAULTCOMPONENT12</td><td>MIDASG~1.PSD|MidasGUIEx1.psd</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\mockups\MidasGUIEx1.psd</td><td>1</td><td/></row>
+		<row><td>midasguiex1_copy.jpg</td><td>ISX_DEFAULTCOMPONENT12</td><td>MIDASG~1.JPG|MidasGUIEx1 copy.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\mockups\MidasGUIEx1 copy.jpg</td><td>1</td><td/></row>
 		<row><td>midasprofilemanager.primary_</td><td>MidasProfileManager.Primary_Output</td><td>MidasProfileManager.Primary Output</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;MidasProfileManager&gt;|Built</td><td>3</td><td/></row>
 		<row><td>myo32.dll</td><td>myo32.dll</td><td>myo32.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\myo\myo32.dll</td><td>1</td><td/></row>
+		<row><td>myo_icon.png</td><td>ISX_DEFAULTCOMPONENT5</td><td>myo_icon.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\assets\myo_icon\myo_icon.png</td><td>1</td><td/></row>
+		<row><td>myo_icon_2x.png</td><td>ISX_DEFAULTCOMPONENT5</td><td>MYO_IC~1.PNG|myo_icon@2x.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\assets\myo_icon\myo_icon@2x.png</td><td>1</td><td/></row>
+		<row><td>myo_icon_blue_dot.png</td><td>ISX_DEFAULTCOMPONENT5</td><td>MYO_IC~1.PNG|myo_icon_blue_dot.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\assets\myo_icon\myo_icon_blue_dot.png</td><td>1</td><td/></row>
+		<row><td>myo_icon_blue_dot_2x.png</td><td>ISX_DEFAULTCOMPONENT5</td><td>MYO_IC~1.PNG|myo_icon_blue_dot@2x.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\assets\myo_icon\myo_icon_blue_dot@2x.png</td><td>1</td><td/></row>
+		<row><td>myo_logo_tagline_grey.png</td><td>ISX_DEFAULTCOMPONENT6</td><td>MYO_LO~1.PNG|myo_logo_tagline_grey.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\assets\myo_logo\myo_logo_tagline_grey.png</td><td>1</td><td/></row>
+		<row><td>myo_logo_tagline_grey_2x.png</td><td>ISX_DEFAULTCOMPONENT6</td><td>MYO_LO~1.PNG|myo_logo_tagline_grey@2x.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\assets\myo_logo\myo_logo_tagline_grey@2x.png</td><td>1</td><td/></row>
+		<row><td>myo_logo_tagline_grey_inline</td><td>ISX_DEFAULTCOMPONENT6</td><td>MYO_LO~1.PNG|myo_logo_tagline_grey_inline.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\assets\myo_logo\myo_logo_tagline_grey_inline.png</td><td>1</td><td/></row>
+		<row><td>myo_logo_tagline_grey_inline1</td><td>ISX_DEFAULTCOMPONENT6</td><td>MYO_LO~1.PNG|myo_logo_tagline_grey_inline@2x.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\assets\myo_logo\myo_logo_tagline_grey_inline@2x.png</td><td>1</td><td/></row>
+		<row><td>myo_logo_tagline_inline_grey</td><td>ISX_DEFAULTCOMPONENT6</td><td>MYO_LO~1.PNG|myo_logo_tagline_inline_grey.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\assets\myo_logo\myo_logo_tagline_inline_grey.png</td><td>1</td><td/></row>
+		<row><td>myo_logo_tagline_inline_whit</td><td>ISX_DEFAULTCOMPONENT6</td><td>MYO_LO~1.PNG|myo_logo_tagline_inline_white.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\assets\myo_logo\myo_logo_tagline_inline_white.png</td><td>1</td><td/></row>
+		<row><td>myo_logo_tagline_inline_whit1</td><td>ISX_DEFAULTCOMPONENT6</td><td>MYO_LO~1.PNG|myo_logo_tagline_inline_white@2x.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\assets\myo_logo\myo_logo_tagline_inline_white@2x.png</td><td>1</td><td/></row>
+		<row><td>myo_logo_tagline_white.png</td><td>ISX_DEFAULTCOMPONENT6</td><td>MYO_LO~1.PNG|myo_logo_tagline_white.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\assets\myo_logo\myo_logo_tagline_white.png</td><td>1</td><td/></row>
+		<row><td>myo_logo_tagline_white_2x.pn</td><td>ISX_DEFAULTCOMPONENT6</td><td>MYO_LO~1.PNG|myo_logo_tagline_white@2x.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\assets\myo_logo\myo_logo_tagline_white@2x.png</td><td>1</td><td/></row>
+		<row><td>myo_market_badge.png</td><td>ISX_DEFAULTCOMPONENT7</td><td>MYO_MA~1.PNG|myo_market_badge.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\assets\myo_market_badge\myo_market_badge.png</td><td>1</td><td/></row>
+		<row><td>myo_market_badge_2x.png</td><td>ISX_DEFAULTCOMPONENT7</td><td>MYO_MA~1.PNG|myo_market_badge@2x.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\assets\myo_market_badge\myo_market_badge@2x.png</td><td>1</td><td/></row>
+		<row><td>myo_market_badge_large.png</td><td>ISX_DEFAULTCOMPONENT7</td><td>MYO_MA~1.PNG|myo_market_badge_large.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\assets\myo_market_badge\myo_market_badge_large.png</td><td>1</td><td/></row>
 		<row><td>myo_sdk_license.txt</td><td>ISX_DEFAULTCOMPONENT9</td><td>MYO_SD~1.TXT|Myo_SDK_LICENSE.txt</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\LICENSE\Myo_SDK_LICENSE.txt</td><td>1</td><td/></row>
-		<row><td>newtab.png</td><td>ISX_DEFAULTCOMPONENT</td><td>newTab.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasProfileManager\Resources\newTab.png</td><td>1</td><td/></row>
-		<row><td>nohand.jpg</td><td>ISX_DEFAULTCOMPONENT3</td><td>noHand.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\BW200PxImgs\noHand.jpg</td><td>1</td><td/></row>
-		<row><td>nohand.jpg1</td><td>ISX_DEFAULTCOMPONENT7</td><td>noHand.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\Post200PxImgs\noHand.jpg</td><td>1</td><td/></row>
-		<row><td>pencil_post.png</td><td>ISX_DEFAULTCOMPONENT4</td><td>PENCIL~1.PNG|Pencil_Post.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\icons\Pencil_Post.png</td><td>1</td><td/></row>
-		<row><td>pencilbw.png</td><td>ISX_DEFAULTCOMPONENT4</td><td>PencilBW.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\icons\PencilBW.png</td><td>1</td><td/></row>
+		<row><td>nohand.jpg</td><td>ISX_DEFAULTCOMPONENT8</td><td>noHand.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\BW200PxImgs\noHand.jpg</td><td>1</td><td/></row>
+		<row><td>nohand.jpg1</td><td>ISX_DEFAULTCOMPONENT13</td><td>noHand.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\Post200PxImgs\noHand.jpg</td><td>1</td><td/></row>
+		<row><td>pencil_post.png</td><td>ISX_DEFAULTCOMPONENT10</td><td>PENCIL~1.PNG|Pencil_Post.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\icons\Pencil_Post.png</td><td>1</td><td/></row>
+		<row><td>pencilbw.png</td><td>ISX_DEFAULTCOMPONENT10</td><td>PencilBW.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\icons\PencilBW.png</td><td>1</td><td/></row>
 		<row><td>pinkytothumb.jpg</td><td>ISX_DEFAULTCOMPONENT2</td><td>PINKYT~1.JPG|pinkyToThumb.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\200PxImgs\pinkyToThumb.jpg</td><td>1</td><td/></row>
-		<row><td>pinkytothumb.jpg1</td><td>ISX_DEFAULTCOMPONENT3</td><td>PINKYT~1.JPG|pinkyToThumb.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\BW200PxImgs\pinkyToThumb.jpg</td><td>1</td><td/></row>
-		<row><td>pinkytothumb.jpg2</td><td>ISX_DEFAULTCOMPONENT5</td><td>PINKYT~1.JPG|pinkyToThumb.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\MainImgs\pinkyToThumb.jpg</td><td>1</td><td/></row>
-		<row><td>pinkytothumb.jpg3</td><td>ISX_DEFAULTCOMPONENT7</td><td>PINKYT~1.JPG|pinkyToThumb.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\Post200PxImgs\pinkyToThumb.jpg</td><td>1</td><td/></row>
-		<row><td>poselenhold.png</td><td>ISX_DEFAULTCOMPONENT4</td><td>POSELE~1.PNG|PoseLenHold.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\icons\PoseLenHold.png</td><td>1</td><td/></row>
-		<row><td>poselenimmediate.png</td><td>ISX_DEFAULTCOMPONENT4</td><td>POSELE~1.PNG|PoseLenImmediate.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\icons\PoseLenImmediate.png</td><td>1</td><td/></row>
+		<row><td>pinkytothumb.jpg1</td><td>ISX_DEFAULTCOMPONENT8</td><td>PINKYT~1.JPG|pinkyToThumb.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\BW200PxImgs\pinkyToThumb.jpg</td><td>1</td><td/></row>
+		<row><td>pinkytothumb.jpg2</td><td>ISX_DEFAULTCOMPONENT11</td><td>PINKYT~1.JPG|pinkyToThumb.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\MainImgs\pinkyToThumb.jpg</td><td>1</td><td/></row>
+		<row><td>pinkytothumb.jpg3</td><td>ISX_DEFAULTCOMPONENT13</td><td>PINKYT~1.JPG|pinkyToThumb.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\Post200PxImgs\pinkyToThumb.jpg</td><td>1</td><td/></row>
+		<row><td>poselenhold.png</td><td>ISX_DEFAULTCOMPONENT10</td><td>POSELE~1.PNG|PoseLenHold.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\icons\PoseLenHold.png</td><td>1</td><td/></row>
+		<row><td>poselenimmediate.png</td><td>ISX_DEFAULTCOMPONENT10</td><td>POSELE~1.PNG|PoseLenImmediate.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\icons\PoseLenImmediate.png</td><td>1</td><td/></row>
 		<row><td>profiles.xml</td><td>ISX_DEFAULTCOMPONENT1</td><td>profiles.xml</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\profiles.xml</td><td>1</td><td/></row>
 		<row><td>projectmidaslogo.ico</td><td>ISX_DEFAULTCOMPONENT</td><td>PROJEC~1.ICO|ProjectMidasLogo.ico</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\ProjectMidasLogo.ico</td><td>1</td><td/></row>
-		<row><td>ring_post.png</td><td>ISX_DEFAULTCOMPONENT4</td><td>RING_P~1.PNG|Ring_Post.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\icons\Ring_Post.png</td><td>1</td><td/></row>
-		<row><td>ring_post2.png</td><td>ISX_DEFAULTCOMPONENT4</td><td>RING_P~1.PNG|Ring_Post2.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\icons\Ring_Post2.png</td><td>1</td><td/></row>
-		<row><td>ringbw.png</td><td>ISX_DEFAULTCOMPONENT4</td><td>RingBW.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\icons\RingBW.png</td><td>1</td><td/></row>
-		<row><td>ringbw2.png</td><td>ISX_DEFAULTCOMPONENT4</td><td>RingBW2.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\icons\RingBW2.png</td><td>1</td><td/></row>
+		<row><td>reconnect.png</td><td>ISX_DEFAULTCOMPONENT4</td><td>RECONN~1.PNG|reConnect.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\assets\gesture_icons\reConnect.png</td><td>1</td><td/></row>
+		<row><td>resync.png</td><td>ISX_DEFAULTCOMPONENT4</td><td>reSync.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\assets\gesture_icons\reSync.png</td><td>1</td><td/></row>
+		<row><td>ring_post.png</td><td>ISX_DEFAULTCOMPONENT10</td><td>RING_P~1.PNG|Ring_Post.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\icons\Ring_Post.png</td><td>1</td><td/></row>
+		<row><td>ring_post2.png</td><td>ISX_DEFAULTCOMPONENT10</td><td>RING_P~1.PNG|Ring_Post2.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\icons\Ring_Post2.png</td><td>1</td><td/></row>
+		<row><td>ringbw.png</td><td>ISX_DEFAULTCOMPONENT10</td><td>RingBW.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\icons\RingBW.png</td><td>1</td><td/></row>
+		<row><td>ringbw2.png</td><td>ISX_DEFAULTCOMPONENT10</td><td>RingBW2.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\icons\RingBW2.png</td><td>1</td><td/></row>
+		<row><td>solid_grey_lh_double_tap.png</td><td>ISX_DEFAULTCOMPONENT4</td><td>SOLID_~1.PNG|solid_grey_LH_double_tap.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\assets\gesture_icons\solid_grey_LH_double_tap.png</td><td>1</td><td/></row>
+		<row><td>solid_grey_lh_fist.png</td><td>ISX_DEFAULTCOMPONENT4</td><td>SOLID_~1.PNG|solid_grey_LH_fist.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\assets\gesture_icons\solid_grey_LH_fist.png</td><td>1</td><td/></row>
+		<row><td>solid_grey_lh_spread_fingers</td><td>ISX_DEFAULTCOMPONENT4</td><td>SOLID_~1.PNG|solid_grey_LH_spread_fingers.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\assets\gesture_icons\solid_grey_LH_spread_fingers.png</td><td>1</td><td/></row>
+		<row><td>solid_grey_lh_wave_left.png</td><td>ISX_DEFAULTCOMPONENT4</td><td>SOLID_~1.PNG|solid_grey_LH_wave_left.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\assets\gesture_icons\solid_grey_LH_wave_left.png</td><td>1</td><td/></row>
+		<row><td>solid_grey_lh_wave_right.png</td><td>ISX_DEFAULTCOMPONENT4</td><td>SOLID_~1.PNG|solid_grey_LH_wave_right.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\assets\gesture_icons\solid_grey_LH_wave_right.png</td><td>1</td><td/></row>
+		<row><td>solid_grey_rh_double_tap.png</td><td>ISX_DEFAULTCOMPONENT4</td><td>SOLID_~1.PNG|solid_grey_RH_double_tap.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\assets\gesture_icons\solid_grey_RH_double_tap.png</td><td>1</td><td/></row>
+		<row><td>solid_grey_rh_fist.png</td><td>ISX_DEFAULTCOMPONENT4</td><td>SOLID_~1.PNG|solid_grey_RH_fist.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\assets\gesture_icons\solid_grey_RH_fist.png</td><td>1</td><td/></row>
+		<row><td>solid_grey_rh_spread_fingers</td><td>ISX_DEFAULTCOMPONENT4</td><td>SOLID_~1.PNG|solid_grey_RH_spread_fingers.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\assets\gesture_icons\solid_grey_RH_spread_fingers.png</td><td>1</td><td/></row>
+		<row><td>solid_grey_rh_wave_left.png</td><td>ISX_DEFAULTCOMPONENT4</td><td>SOLID_~1.PNG|solid_grey_RH_wave_left.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\assets\gesture_icons\solid_grey_RH_wave_left.png</td><td>1</td><td/></row>
+		<row><td>solid_grey_rh_wave_right.png</td><td>ISX_DEFAULTCOMPONENT4</td><td>SOLID_~1.PNG|solid_grey_RH_wave_right.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\assets\gesture_icons\solid_grey_RH_wave_right.png</td><td>1</td><td/></row>
 		<row><td>thumbs.db</td><td>ISX_DEFAULTCOMPONENT2</td><td>Thumbs.db</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\200PxImgs\Thumbs.db</td><td>1</td><td/></row>
-		<row><td>thumbs.db1</td><td>ISX_DEFAULTCOMPONENT3</td><td>Thumbs.db</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\BW200PxImgs\Thumbs.db</td><td>1</td><td/></row>
-		<row><td>thumbs.db2</td><td>ISX_DEFAULTCOMPONENT5</td><td>Thumbs.db</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\MainImgs\Thumbs.db</td><td>1</td><td/></row>
-		<row><td>thumbs.db3</td><td>ISX_DEFAULTCOMPONENT7</td><td>Thumbs.db</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\Post200PxImgs\Thumbs.db</td><td>1</td><td/></row>
-		<row><td>thumbs.db4</td><td>ISX_DEFAULTCOMPONENT8</td><td>Thumbs.db</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\temp\Thumbs.db</td><td>1</td><td/></row>
+		<row><td>thumbs.db1</td><td>ISX_DEFAULTCOMPONENT8</td><td>Thumbs.db</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\BW200PxImgs\Thumbs.db</td><td>1</td><td/></row>
+		<row><td>thumbs.db2</td><td>ISX_DEFAULTCOMPONENT11</td><td>Thumbs.db</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\MainImgs\Thumbs.db</td><td>1</td><td/></row>
+		<row><td>thumbs.db3</td><td>ISX_DEFAULTCOMPONENT13</td><td>Thumbs.db</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\Post200PxImgs\Thumbs.db</td><td>1</td><td/></row>
+		<row><td>thumbs.db4</td><td>ISX_DEFAULTCOMPONENT14</td><td>Thumbs.db</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\temp\Thumbs.db</td><td>1</td><td/></row>
 		<row><td>wavein.jpg</td><td>ISX_DEFAULTCOMPONENT2</td><td>waveIn.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\200PxImgs\waveIn.jpg</td><td>1</td><td/></row>
-		<row><td>wavein.jpg1</td><td>ISX_DEFAULTCOMPONENT3</td><td>waveIn.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\BW200PxImgs\waveIn.jpg</td><td>1</td><td/></row>
-		<row><td>wavein.jpg2</td><td>ISX_DEFAULTCOMPONENT5</td><td>waveIn.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\MainImgs\waveIn.jpg</td><td>1</td><td/></row>
-		<row><td>wavein.jpg3</td><td>ISX_DEFAULTCOMPONENT7</td><td>waveIn.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\Post200PxImgs\waveIn.jpg</td><td>1</td><td/></row>
+		<row><td>wavein.jpg1</td><td>ISX_DEFAULTCOMPONENT8</td><td>waveIn.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\BW200PxImgs\waveIn.jpg</td><td>1</td><td/></row>
+		<row><td>wavein.jpg2</td><td>ISX_DEFAULTCOMPONENT11</td><td>waveIn.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\MainImgs\waveIn.jpg</td><td>1</td><td/></row>
+		<row><td>wavein.jpg3</td><td>ISX_DEFAULTCOMPONENT13</td><td>waveIn.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\Post200PxImgs\waveIn.jpg</td><td>1</td><td/></row>
 		<row><td>waveout.jpg</td><td>ISX_DEFAULTCOMPONENT2</td><td>waveOut.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\200PxImgs\waveOut.jpg</td><td>1</td><td/></row>
-		<row><td>waveout.jpg1</td><td>ISX_DEFAULTCOMPONENT3</td><td>waveOut.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\BW200PxImgs\waveOut.jpg</td><td>1</td><td/></row>
-		<row><td>waveout.jpg2</td><td>ISX_DEFAULTCOMPONENT5</td><td>waveOut.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\MainImgs\waveOut.jpg</td><td>1</td><td/></row>
-		<row><td>waveout.jpg3</td><td>ISX_DEFAULTCOMPONENT7</td><td>waveOut.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\Post200PxImgs\waveOut.jpg</td><td>1</td><td/></row>
+		<row><td>waveout.jpg1</td><td>ISX_DEFAULTCOMPONENT8</td><td>waveOut.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\BW200PxImgs\waveOut.jpg</td><td>1</td><td/></row>
+		<row><td>waveout.jpg2</td><td>ISX_DEFAULTCOMPONENT11</td><td>waveOut.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\MainImgs\waveOut.jpg</td><td>1</td><td/></row>
+		<row><td>waveout.jpg3</td><td>ISX_DEFAULTCOMPONENT13</td><td>waveOut.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\Post200PxImgs\waveOut.jpg</td><td>1</td><td/></row>
 	</table>
 
 	<table name="FileSFPCatalog">
@@ -2105,15 +2161,20 @@
 		<col def="S0">FTPLocation</col>
 		<col def="S0">HTTPLocation</col>
 		<col def="S0">Miscellaneous</col>
-		<row><td>ISX_DEFAULTCOMPONENT</td><td/><td/><td>_040D03EC_CF57_451D_A037_71E353576196_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>ISX_DEFAULTCOMPONENT</td><td/><td/><td>_5C04C921_5AB0_4998_8A4D_E82CC1895B79_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>ISX_DEFAULTCOMPONENT1</td><td/><td/><td>_E5CCF691_FB54_4796_8F8D_EC0ED2F4B747_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>ISX_DEFAULTCOMPONENT2</td><td/><td/><td>_0E0210FD_178A_497B_B670_9B642BBD56FB_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>ISX_DEFAULTCOMPONENT3</td><td/><td/><td>_B1EB9397_FA32_4B69_B2B9_F6AD9A44F36F_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>ISX_DEFAULTCOMPONENT4</td><td/><td/><td>_BEC53CFE_32DE_4A75_A987_B8BCB8A2D55B_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>ISX_DEFAULTCOMPONENT5</td><td/><td/><td>_929D2DE5_18F9_4345_A2D9_29C26B2E8A23_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>ISX_DEFAULTCOMPONENT6</td><td/><td/><td>_3BF8BA57_5187_4E8B_966C_AB05C3D732E9_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>ISX_DEFAULTCOMPONENT7</td><td/><td/><td>_EC25620A_B01B_4C9B_B203_E58A04B45D96_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>ISX_DEFAULTCOMPONENT8</td><td/><td/><td>_F50DDE9B_DE07_44DF_930F_9AEC8A1C2744_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>ISX_DEFAULTCOMPONENT10</td><td/><td/><td>_717F4BB2_D901_47B8_A60D_D726CC46C390_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>ISX_DEFAULTCOMPONENT11</td><td/><td/><td>_AA3777A3_03FE_4DE9_8BF3_D2DC26387B2F_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>ISX_DEFAULTCOMPONENT12</td><td/><td/><td>_D8869536_D3D4_4A2D_90BE_D85F113A1044_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>ISX_DEFAULTCOMPONENT13</td><td/><td/><td>_F8C8565B_3E57_472C_B5A0_4074F6C2FACB_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>ISX_DEFAULTCOMPONENT14</td><td/><td/><td>_AA390617_3323_4CDE_B855_784528061736_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>ISX_DEFAULTCOMPONENT2</td><td/><td/><td>_9276BDC0_F954_4792_88ED_62B3A72AA429_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>ISX_DEFAULTCOMPONENT3</td><td/><td/><td>_CBE4CD53_B13B_42A2_8AAB_73BBBAF443C0_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>ISX_DEFAULTCOMPONENT4</td><td/><td/><td>_5CBD158B_2E5A_4D69_BBCE_448F8A4C8E90_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>ISX_DEFAULTCOMPONENT5</td><td/><td/><td>_9F312949_E2A1_42F3_84EA_598752F1F580_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>ISX_DEFAULTCOMPONENT6</td><td/><td/><td>_A2EB9B57_5B52_4919_861C_D7C55346B394_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>ISX_DEFAULTCOMPONENT7</td><td/><td/><td>_C67BE7BB_EE0B_4B34_A58B_9D3F97C330EB_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>ISX_DEFAULTCOMPONENT8</td><td/><td/><td>_C4002CDE_FF96_4F57_938B_85BB57ED2908_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>ISX_DEFAULTCOMPONENT9</td><td/><td/><td>_E9265C8C_0B9C_4114_A218_3907C0C33FB3_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>MidasGUI.Debug_Symbols</td><td/><td/><td>_1B7F262C_F5DE_4FEC_A2F3_0BC60F84C601_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>MidasGUI.Primary_Output</td><td/><td/><td>_D70EAE3F_DD82_4E29_BD55_29F30C970CE3_FILTER</td><td/><td/><td/><td/></row>
@@ -2737,7 +2798,7 @@
 		<col def="I2">Encoded</col>
 		<col def="S0">Comment</col>
 		<col def="I4">TimeStamp</col>
-		<row><td>COMPANY_NAME</td><td>1033</td><td>jordenh</td><td>0</td><td/><td>866378382</td></row>
+		<row><td>COMPANY_NAME</td><td>1033</td><td>jordenh</td><td>0</td><td/><td>1403224971</td></row>
 		<row><td>DN_AlwaysInstall</td><td>1033</td><td>Always Install</td><td>0</td><td/><td>463721034</td></row>
 		<row><td>IDPROP_EXPRESS_LAUNCH_CONDITION_COLOR</td><td>1033</td><td>The color settings of your system are not adequate for running [ProductName].</td><td>0</td><td/><td>463721034</td></row>
 		<row><td>IDPROP_EXPRESS_LAUNCH_CONDITION_OS</td><td>1033</td><td>The operating system is not adequate for running [ProductName].</td><td>0</td><td/><td>463721034</td></row>
@@ -3838,8 +3899,8 @@
 		<row><td>IDS__TargetReq_DESC_RAM</td><td>1033</td><td>The amount of RAM is not adequate for running [ProductName].</td><td>0</td><td/><td>463721034</td></row>
 		<row><td>IDS__TargetReq_DESC_RESOLUTION</td><td>1033</td><td>The screen resolution is not adequate for running [ProductName].</td><td>0</td><td/><td>463721034</td></row>
 		<row><td>ID_STRING1</td><td>1033</td><td/><td>0</td><td/><td>463723082</td></row>
-		<row><td>ID_STRING2</td><td>1033</td><td>http://www.jordenh.com</td><td>0</td><td/><td>866378382</td></row>
-		<row><td>ID_STRING3</td><td>1033</td><td>jordenh</td><td>0</td><td/><td>866378382</td></row>
+		<row><td>ID_STRING2</td><td>1033</td><td>http://www.jordenh.com</td><td>0</td><td/><td>1403224971</td></row>
+		<row><td>ID_STRING3</td><td>1033</td><td>jordenh</td><td>0</td><td/><td>1403224971</td></row>
 		<row><td>IIDS_UITEXT_FeatureUninstalled</td><td>1033</td><td>This feature will remain uninstalled.</td><td>0</td><td/><td>463721034</td></row>
 	</table>
 
@@ -4062,8 +4123,8 @@
 		<col def="S0">Value</col>
 		<row><td>ActiveLanguage</td><td>1033</td></row>
 		<row><td>Comments</td><td/></row>
-		<row><td>CurrentMedia</td><td dt:dt="bin.base64" md5="de9f554a3bc05c12be9c31b998217995">
-UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
+		<row><td>CurrentMedia</td><td dt:dt="bin.base64" md5="6d78a46bf2c52ee27034bbcad20f7f95">
+QwBEAF8AUgBPAE0AAQBFAHgAcAByAGUAcwBzAA==
 			</td></row>
 		<row><td>DefaultProductConfiguration</td><td>Express</td></row>
 		<row><td>EnableSwidtag</td><td>1</td></row>
@@ -4080,7 +4141,7 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<row><td>ISTheme</td><td>InstallShield Blue.theme</td></row>
 		<row><td>ISUSLock</td><td>{D4CAEE7A-97A4-4940-AEAF-601E5833DAE8}</td></row>
 		<row><td>ISUSSignature</td><td>{ACB64506-BFCF-4C66-BC62-0570F67FF990}</td></row>
-		<row><td>ISVisitedViews</td><td>viewAssistant,viewISToday,viewAppV,viewProject,viewRealSetupDesign,viewRelease,viewSetupDesign,viewSetupTypes,viewUpgradePaths,viewUpdateService,viewAppFiles,viewFeatureFiles,viewObjects,viewDependencies,viewShortcuts,viewRegistry,viewSystemSearch,viewSupportFiles,viewCustomActions,viewUI</td></row>
+		<row><td>ISVisitedViews</td><td>viewAssistant,viewISToday,viewAppV,viewProject,viewRealSetupDesign,viewRelease,viewSetupDesign,viewSetupTypes,viewUpgradePaths,viewUpdateService,viewAppFiles,viewFeatureFiles,viewObjects,viewDependencies,viewShortcuts,viewRegistry,viewSystemSearch,viewSupportFiles,viewCustomActions,viewUI,viewEnvironmentVariables,viewInstallScriptStd,viewDesignPatches</td></row>
 		<row><td>Limited</td><td>1</td></row>
 		<row><td>LockPermissionMode</td><td>1</td></row>
 		<row><td>MsiExecCmdLineOptions</td><td/></row>
@@ -4453,7 +4514,7 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<row><td>PROGMSG_IIS_ROLLBACKVROOTS</td><td>##IDS_PROGMSG_IIS_ROLLBACKVROOTS##</td><td/></row>
 		<row><td>PROGMSG_IIS_ROLLBACKWEBSERVICEEXTENSIONS</td><td>##IDS_PROGMSG_IIS_ROLLBACKWEBSERVICEEXTENSIONS##</td><td/></row>
 		<row><td>ProductCode</td><td>{EFC38015-2A63-43FC-8832-A7977F344DC5}</td><td/></row>
-		<row><td>ProductName</td><td>Midas</td><td/></row>
+		<row><td>ProductName</td><td>Midas_UserTest2_Variant1</td><td/></row>
 		<row><td>ProductVersion</td><td>1.00.0000</td><td/></row>
 		<row><td>ProgressType0</td><td>install</td><td/></row>
 		<row><td>ProgressType1</td><td>Installing</td><td/></row>
