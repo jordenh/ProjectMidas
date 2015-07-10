@@ -87,7 +87,7 @@ void PoseDisplayer::handlePoseImages(std::vector<sequenceImageSet> poseImages)
     if (poseImages.size() == 1)
     {
         QPixmap scaledPic = poseImages[0].nextImage;
-        scaledPic = scaledPic.scaled(indWidth, indHeight);        
+        scaledPic = scaledPic.scaled(indWidth, indHeight, Qt::IgnoreAspectRatio, Qt::TransformationMode::SmoothTransformation);
         poseImgLabel->setPixmap(scaledPic);
     }
 }
@@ -96,7 +96,7 @@ void PoseDisplayer::handleDisconnect()
 {   
     QImage disconnectedImage(QString(DISCONNECTED_PATH));
     QPixmap scaledPic = QPixmap::fromImage(disconnectedImage);
-    scaledPic = scaledPic.scaled(indWidth, indHeight);
+    scaledPic = scaledPic.scaled(indWidth, indHeight, Qt::IgnoreAspectRatio, Qt::TransformationMode::SmoothTransformation);
     poseImgLabel->setPixmap(scaledPic);
 }
 
@@ -104,7 +104,7 @@ void PoseDisplayer::handleConnect()
 {
     QImage connectedImage(QString(NORMAL_STATE_PATH));
     QPixmap scaledPic = QPixmap::fromImage(connectedImage);
-    scaledPic = scaledPic.scaled(indWidth, indHeight);
+    scaledPic = scaledPic.scaled(indWidth, indHeight, Qt::IgnoreAspectRatio, Qt::TransformationMode::SmoothTransformation);
     poseImgLabel->setPixmap(scaledPic);
 }
 
@@ -112,7 +112,7 @@ void PoseDisplayer::handleUnsync()
 {
     QImage disconnectedImage(QString(UNSYNCHED_PATH));
     QPixmap scaledPic = QPixmap::fromImage(disconnectedImage);
-    scaledPic = scaledPic.scaled(indWidth, indHeight);
+    scaledPic = scaledPic.scaled(indWidth, indHeight, Qt::IgnoreAspectRatio, Qt::TransformationMode::SmoothTransformation);
     poseImgLabel->setPixmap(scaledPic);
 }
 
@@ -120,6 +120,6 @@ void PoseDisplayer::handleSync()
 {
     QImage connectedImage(QString(NORMAL_STATE_PATH));
     QPixmap scaledPic = QPixmap::fromImage(connectedImage);
-    scaledPic = scaledPic.scaled(indWidth, indHeight);
+    scaledPic = scaledPic.scaled(indWidth, indHeight, Qt::IgnoreAspectRatio, Qt::TransformationMode::SmoothTransformation);
     poseImgLabel->setPixmap(scaledPic);
 }

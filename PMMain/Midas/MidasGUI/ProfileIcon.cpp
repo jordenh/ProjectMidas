@@ -44,11 +44,11 @@ ProfileIcon::ProfileIcon(int widgetWidth, int widgetHeight, bool active, QPixmap
 	iconLabel = new QLabel();
 	if (active)
 	{
-		iconLabel->setPixmap(imgActive.scaled(indWidth, indHeight));
+        iconLabel->setPixmap(imgActive.scaled(indWidth, indHeight, Qt::IgnoreAspectRatio, Qt::TransformationMode::SmoothTransformation));
 	}
 	else
 	{
-		iconLabel->setPixmap(imgInactive.scaled(indWidth, indHeight));
+        iconLabel->setPixmap(imgInactive.scaled(indWidth, indHeight, Qt::IgnoreAspectRatio, Qt::TransformationMode::SmoothTransformation));
 	}
 
 	iconLabel->setFrameShape(QFrame::Box);
@@ -79,10 +79,10 @@ void ProfileIcon::setImgActiveSel(bool active)
 {
 	if (active)
 	{
-		iconLabel->setPixmap(imgActive.scaled(indWidth, indHeight));
+        iconLabel->setPixmap(imgActive.scaled(indWidth, indHeight, Qt::IgnoreAspectRatio, Qt::TransformationMode::SmoothTransformation));
 	}
 	else
 	{
-		iconLabel->setPixmap(imgInactive.scaled(indWidth, indHeight));
+        iconLabel->setPixmap(imgInactive.scaled(indWidth, indHeight, Qt::IgnoreAspectRatio, Qt::TransformationMode::SmoothTransformation));
 	}
 }

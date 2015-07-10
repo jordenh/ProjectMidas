@@ -71,7 +71,7 @@ std::vector<sequenceImageSet> SequenceImageManager::formSequenceSetFromIds(std::
             case PoseLength::HOLD:
                 holdOverlayImage = QImage(QString(POSE_LENGTH_HOLD_PATH));
                 pic = QPixmap::fromImage(holdOverlayImage);
-                pic = pic.scaled(currentWidth / POSE_LEN_SCALEDOWN_ICON, currentHeight / POSE_LEN_SCALEDOWN_ICON);
+                pic = pic.scaled(currentWidth / POSE_LEN_SCALEDOWN_ICON, currentHeight / POSE_LEN_SCALEDOWN_ICON, Qt::IgnoreAspectRatio, Qt::TransformationMode::SmoothTransformation);
 
                 painter.drawPixmap(currentWidth - (currentWidth / POSE_LEN_SCALEDOWN_ICON), 0, pic);
                 painter2.drawPixmap(currentWidth - (currentWidth / POSE_LEN_SCALEDOWN_ICON), 0, pic);
@@ -81,7 +81,7 @@ std::vector<sequenceImageSet> SequenceImageManager::formSequenceSetFromIds(std::
             case PoseLength::IMMEDIATE:
                 holdOverlayImage = QImage(QString(POSE_LENGTH_IMMEDIATE_PATH));
                 pic = QPixmap::fromImage(holdOverlayImage);
-                pic = pic.scaled(currentWidth / POSE_LEN_SCALEDOWN_ICON, currentHeight / POSE_LEN_SCALEDOWN_ICON);
+                pic = pic.scaled(currentWidth / POSE_LEN_SCALEDOWN_ICON, currentHeight / POSE_LEN_SCALEDOWN_ICON, Qt::IgnoreAspectRatio, Qt::TransformationMode::SmoothTransformation);
 
                 painter.drawPixmap(currentWidth - (currentWidth / POSE_LEN_SCALEDOWN_ICON), 0, pic);
                 painter2.drawPixmap(currentWidth - (currentWidth / POSE_LEN_SCALEDOWN_ICON), 0, pic);
