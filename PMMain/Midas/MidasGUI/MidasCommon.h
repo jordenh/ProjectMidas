@@ -29,6 +29,7 @@
 #define GUI_OPACITY 0.70
 
 #ifdef SHOW_PROFILE_ICONS
+#define GRID_ELEMENT_SIZE 48
 #define MOUSE_INDICATOR_SIZE 130
 #define INFO_INDICATOR_WIDTH   150
 #else
@@ -186,7 +187,11 @@ static std::string modeToString(midasMode mm)
         return "Mouse Mouse";
 #endif
     case MOUSE_MODE2:
+#ifdef BUILD_FOR_KARDIUM
+        return "UNLOCKED";
+#else
         return "Mouse Mode2";
+#endif
     case KEYBOARD_MODE:  
         return "Keyboard Mode";
     case GESTURE_MODE:  
