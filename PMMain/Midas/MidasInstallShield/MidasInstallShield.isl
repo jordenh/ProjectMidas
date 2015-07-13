@@ -5752,7 +5752,7 @@
 		<row><td>IDS__TargetReq_DESC_RAM</td><td>1033</td><td>The amount of RAM is not adequate for running [ProductName].</td><td>0</td><td/><td>463721034</td></row>
 		<row><td>IDS__TargetReq_DESC_RESOLUTION</td><td>1033</td><td>The screen resolution is not adequate for running [ProductName].</td><td>0</td><td/><td>463721034</td></row>
 		<row><td>ID_STRING1</td><td>1033</td><td/><td>0</td><td/><td>463723082</td></row>
-		<row><td>ID_STRING2</td><td>1033</td><td>http://www.jordenh.com</td><td>0</td><td/><td>1805848424</td></row>
+		<row><td>ID_STRING2</td><td>1033</td><td>https://github.com/jordenh/ProjectMidas</td><td>0</td><td/><td>1805867849</td></row>
 		<row><td>ID_STRING3</td><td>1033</td><td>jordenh</td><td>0</td><td/><td>1805848424</td></row>
 		<row><td>IIDS_UITEXT_FeatureUninstalled</td><td>1033</td><td>This feature will remain uninstalled.</td><td>0</td><td/><td>463721034</td></row>
 	</table>
@@ -6366,7 +6366,7 @@ QwBEAF8AUgBPAE0AAQBFAHgAcAByAGUAcwBzAA==
 		<row><td>PROGMSG_IIS_ROLLBACKAPPPOOLS</td><td>##IDS_PROGMSG_IIS_ROLLBACKAPPPOOLS##</td><td/></row>
 		<row><td>PROGMSG_IIS_ROLLBACKVROOTS</td><td>##IDS_PROGMSG_IIS_ROLLBACKVROOTS##</td><td/></row>
 		<row><td>PROGMSG_IIS_ROLLBACKWEBSERVICEEXTENSIONS</td><td>##IDS_PROGMSG_IIS_ROLLBACKWEBSERVICEEXTENSIONS##</td><td/></row>
-		<row><td>ProductCode</td><td>{EFC38015-2A63-43FC-8832-A7977F344DC5}</td><td/></row>
+		<row><td>ProductCode</td><td>{B16C24A1-97AE-4F5B-945B-D7B3645C6577}</td><td/></row>
 		<row><td>ProductName</td><td>Midas_UserTest2_Variant1</td><td/></row>
 		<row><td>ProductVersion</td><td>1.00.0000</td><td/></row>
 		<row><td>ProgressType0</td><td>install</td><td/></row>
