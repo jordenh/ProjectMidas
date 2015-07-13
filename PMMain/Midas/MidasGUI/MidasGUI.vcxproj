@@ -50,7 +50,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PreprocessorDefinitions>SHOW_PROFILE_ICONS;DONT_SHOW_SETTINGS;BUILD_FOR_KARDIUM;DONT_BUILD_KEYBOARD;DONT_SHOW_PROFILE_BUTTONS;DONT_USE_SIMULATOR;UNICODE;WIN32;WIN64;QT_DLL;QT_CORE_LIB;QT_GUI_LIB;QT_WIDGETS_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtWidgets;$(ProjectDir)\myoSim\include;$(ProjectDir)\myo\include;C:\Program Files\boost\boost_1_57_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\GeneratedFiles;.;$(ProjectDir)\Qt\include;.\GeneratedFiles\$(ConfigurationName);$(ProjectDir)\Qt\include\QtCore;$(ProjectDir)\Qt\include\QtGui;$(ProjectDir)\Qt\include\QtWidgets;$(ProjectDir)\myoSim\include;$(ProjectDir)\myo\include;C:\Program Files\boost\boost_1_57_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Disabled</Optimization>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -61,7 +61,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
-      <AdditionalLibraryDirectories>$(QTDIR)\lib;$(ProjectDir)\myo\lib;$(ProjectDir)\myoSim;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)\Qt\lib;$(ProjectDir)\myo\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>qtmaind.lib;Qt5Cored.lib;Qt5Guid.lib;Qt5Widgetsd.lib;myo32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <PreventDllBinding>
@@ -70,16 +70,28 @@
       </IgnoreAllDefaultLibraries>
     </Link>
     <PostBuildEvent>
-      <Command>COPY "$(ProjectDir)myo\myo32.dll" "$(OutDir)"</Command>
-      <Message>Copy the myo dll to the output directory.</Message>
+      <Command>XCOPY "$(ProjectDir)Resources\*" "$(OutDir)\Resources\" /S /Y
+COPY "$(ProjectDir)Qt\Qt5Widgetsd.dll" "$(OutDir)"
+COPY "$(ProjectDir)profiles_V2.xml" "$(OutDir)"
+COPY "$(ProjectDir)myo\myo32.dll" "$(OutDir)"
+COPY "$(ProjectDir)Qt\icudt53.dll" "$(OutDir)"
+COPY "$(ProjectDir)Qt\icuin53.dll" "$(OutDir)"
+COPY "$(ProjectDir)Qt\icuuc53.dll" "$(OutDir)"
+COPY "$(ProjectDir)Qt\Qt5Core.dll" "$(OutDir)"
+COPY "$(ProjectDir)Qt\Qt5Cored.dll" "$(OutDir)"
+COPY "$(ProjectDir)Qt\Qt5Gui.dll" "$(OutDir)"
+COPY "$(ProjectDir)Qt\Qt5Guid.dll" "$(OutDir)"
+COPY "$(ProjectDir)Qt\Qt5Widgets.dll" "$(OutDir)"
+COPY "$(ProjectDir)Qt\Qt5Widgetsd.dll" "$(OutDir)"</Command>
+      <Message>Copy the required dlls to the output directory.</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <PreprocessorDefinitions>DONT_BUILD_FOR_KARDIUM;DONT_BUILD_KEYBOARD;DONT_SHOW_PROFILE_BUTTONS;DONT_USE_SIMULATOR;UNICODE;WIN32;WIN64;QT_DLL;QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_WIDGETS_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtWidgets;$(ProjectDir)\myoSim\include;$(ProjectDir)\myo\include;C:\Program Files\boost\boost_1_57_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>SHOW_PROFILE_ICONS;DONT_SHOW_SETTINGS;BUILD_FOR_KARDIUM;DONT_BUILD_KEYBOARD;DONT_SHOW_PROFILE_BUTTONS;DONT_USE_SIMULATOR;UNICODE;WIN32;WIN64;QT_DLL;QT_CORE_LIB;QT_GUI_LIB;QT_WIDGETS_LIB;QT_NO_DEBUG;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>.\GeneratedFiles;.;$(ProjectDir)\Qt\include;.\GeneratedFiles\$(ConfigurationName);$(ProjectDir)\Qt\include\QtCore;$(ProjectDir)\Qt\include\QtGui;$(ProjectDir)\Qt\include\QtWidgets;$(ProjectDir)\myoSim\include;$(ProjectDir)\myo\include;C:\Program Files\boost\boost_1_57_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat />
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
       <Optimization>MaxSpeed</Optimization>
       <PrecompiledHeaderFile />
@@ -87,15 +99,27 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
-      <AdditionalLibraryDirectories>$(QTDIR)\lib;$(ProjectDir)\myo\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)\Qt\lib;$(ProjectDir)\myo\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <AdditionalDependencies>qtmain.lib;Qt5Core.lib;Qt5Gui.lib;Qt5Widgets.lib;myo32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreAllDefaultLibraries>
       </IgnoreAllDefaultLibraries>
     </Link>
     <PostBuildEvent>
-      <Command>COPY "$(ProjectDir)myo\myo32.dll" "$(OutDir)"</Command>
-      <Message>Copy the myo dll to the output directory.</Message>
+      <Command>XCOPY "$(ProjectDir)Resources\*" "$(OutDir)\Resources\" /S /Y
+COPY "$(ProjectDir)Qt\Qt5Widgetsd.dll" "$(OutDir)"
+COPY "$(ProjectDir)profiles_V2.xml" "$(OutDir)"
+COPY "$(ProjectDir)myo\myo32.dll" "$(OutDir)"
+COPY "$(ProjectDir)Qt\icudt53.dll" "$(OutDir)"
+COPY "$(ProjectDir)Qt\icuin53.dll" "$(OutDir)"
+COPY "$(ProjectDir)Qt\icuuc53.dll" "$(OutDir)"
+COPY "$(ProjectDir)Qt\Qt5Core.dll" "$(OutDir)"
+COPY "$(ProjectDir)Qt\Qt5Cored.dll" "$(OutDir)"
+COPY "$(ProjectDir)Qt\Qt5Gui.dll" "$(OutDir)"
+COPY "$(ProjectDir)Qt\Qt5Guid.dll" "$(OutDir)"
+COPY "$(ProjectDir)Qt\Qt5Widgets.dll" "$(OutDir)"
+COPY "$(ProjectDir)Qt\Qt5Widgetsd.dll" "$(OutDir)"</Command>
+      <Message>Copy the required dlls to the output directory.</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
