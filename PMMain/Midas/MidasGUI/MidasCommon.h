@@ -187,7 +187,11 @@ static std::string modeToString(midasMode mm)
         return "Mouse Mouse";
 #endif
     case MOUSE_MODE2:
+#ifdef BUILD_FOR_KARDIUM
+        return "CURSOR MODE";
+#else
         return "Mouse Mode2";
+#endif
     case KEYBOARD_MODE:  
         return "Keyboard Mode";
     case GESTURE_MODE:  
