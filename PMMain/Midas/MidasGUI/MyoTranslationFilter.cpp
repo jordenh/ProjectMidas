@@ -106,7 +106,7 @@ void MyoTranslationFilter::handleQuatData(filterDataMap input, filterDataMap out
             quatZ = boost::any_cast<float>(valueZ);
             quatW = boost::any_cast<float>(valueW);
 
-            roll = getRollFromQuaternion(quatX, quatY, quatZ, quatW);
+            roll = getRollFromQuaternion(quatX, quatY, quatZ, quatW, myoStateHandle->getArm(), myoStateHandle->getXDirection());
             pitch = getPitchFromQuaternion(quatX, quatY, quatZ, quatW, myoStateHandle->getArm(), myoStateHandle->getXDirection());
             yaw = getYawFromQuaternion(quatX, quatY, quatZ, quatW);
             int rollDeg = (int)(roll * (180 / M_PI));
@@ -281,9 +281,11 @@ float MyoTranslationFilter::getYawFromQuaternion(float x, float y, float z, floa
     return -atan2(2.0f * (w * z + x * y), 1.0f - 2.0f * (y * y + z * z));
 }
 
-float MyoTranslationFilter::getRollFromQuaternion(float x, float y, float z, float w)
+float MyoTranslationFilter::getRollFromQuaternion(float x, float y, float z, float w, Arm arm, XDirection xDirection)
 {
-    return atan2(2.0f * (w * x + y * z), 1.0f - 2.0f * (x * x + y * y));
+    float roll = atan2(2.0f * (w * x + y * z), 1.0f - 2.0f * (x * x + y * y));
+
+    return xDirection == XDirection::xDirectionTowardWrist ? roll : -roll;
 }
 
 float MyoTranslationFilter::calcRingDelta(float current, float base)

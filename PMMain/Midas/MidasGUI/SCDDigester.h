@@ -63,6 +63,8 @@ private:
 
 	void digestProfileChange(CommandData nextCmd);
 
+    void handleConnectionData();
+
 #ifdef BUILD_KEYBOARD
     void digestKeyboardGUIData(CommandData nextCommand);
 

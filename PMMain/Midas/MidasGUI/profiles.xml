@@ -28,7 +28,7 @@
 					</command>
 				</commands>
             </sequence>
-			<sequence state="keyboardMode" name="Volume">
+			<sequence state="lockMode" name="Volume">
                 <gestures>
 					<gesture type="hold">fist</gesture>
                 </gestures>
@@ -47,7 +47,7 @@
                 <commands>
 					<command type="stateChange">
 						<actions>
-							<action>keyboardMode</action>
+							<action>lockMode</action>
 						</actions>
 					</command>
 				</commands>

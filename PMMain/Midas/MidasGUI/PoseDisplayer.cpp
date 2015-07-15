@@ -33,7 +33,7 @@
 #include <qpixmap.h>
 
 PoseDisplayer::PoseDisplayer(int widgetWidth, int widgetHeight, QWidget *parent)
-    : QWidget(parent), indWidth(widgetWidth), indHeight(widgetHeight), connected(false), synched(false)
+    : QWidget(parent), indWidth(widgetWidth), indHeight(widgetHeight), connected(false), synched(false), isRightHand(true)
 {
     // Temporarily allow a Quit
     QAction *quitAction = new QAction(tr("E&xit"), this);
@@ -94,7 +94,15 @@ void PoseDisplayer::handlePoseImages(std::vector<sequenceImageSet> poseImages)
 {
     if (poseImages.size() == 1)
     {
-        QPixmap scaledPic = poseImages[0].nextImage;
+        QPixmap scaledPic;
+        if (isRightHand)
+        {
+            scaledPic = poseImages[0].nextImageRight;
+        }
+        else
+        {
+            scaledPic = poseImages[0].nextImageLeft;
+        }
         scaledPic = scaledPic.scaled(indWidth, indHeight, Qt::IgnoreAspectRatio, Qt::TransformationMode::SmoothTransformation);
         poseImgLabel->setPixmap(scaledPic);
     }
@@ -122,6 +130,11 @@ void PoseDisplayer::handleSync()
 {
     synched = true;
     updateDisplayerAlerts();
+}
+
+void PoseDisplayer::handleIsRightHand(bool isRightHand)
+{
+    this->isRightHand = isRightHand;
 }
 
 void PoseDisplayer::updateDisplayerAlerts()
