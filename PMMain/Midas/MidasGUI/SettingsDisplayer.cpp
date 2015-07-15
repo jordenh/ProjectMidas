@@ -1,28 +1,48 @@
+/*
+    Copyright (C) 2015 Midas
+
+    This library is free software; you can redistribute it and/or
+    modify it under the terms of the GNU Lesser General Public
+    License as published by the Free Software Foundation; either
+    version 2.1 of the License, or (at your option) any later version.
+
+    This library is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+    Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public
+    License along with this library; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
+    USA
+*/
+
 #include "SettingsDisplayer.h"
 #include <QEvent.h>
-#include <QGridLayout.h>
+#include <qgridlayout.h>
 #include <qslider.h>
 #include <QFrame.h>
 #include <qlabel.h>
+#include <qpushbutton.h>
 
 SettingsDisplayer::SettingsDisplayer(int widgetWidth, int widgetHeight, QWidget *parent)
-    : QWidget(parent), indWidth(widgetWidth), indHeight(widgetHeight)
+    : QWidget(parent), indWidth(widgetWidth), indHeight(widgetHeight), currentBuzzModeCount(buzzFeedbackMode::MINIMAL)
 {
     setContextMenuPolicy(Qt::ActionsContextMenu);
     setToolTip(tr("Drag the Settings Displayer with the left mouse button.\n"
         "Use the right mouse button to open a context menu."));
     setWindowTitle(tr("Settings Displayer"));
 
-    setWindowOpacity(0.75);
+    setWindowOpacity(GUI_OPACITY);
     QPalette pal;
     pal.setColor(QPalette::Background, QColor(205, 205, 193));
     setAutoFillBackground(true);
     setPalette(pal);
     setWindowFlags(Qt::WindowStaysOnTopHint);
 
-    layout = new QHBoxLayout;
-    layout->setSpacing(5);
-    setLayout(layout);
+    mainLayout = new QVBoxLayout;
+    mainLayout->setSpacing(WIDGET_BUFFER);
+    setLayout(mainLayout);
 
     yawSlider = new QSlider(Qt::Orientation::Horizontal, this);
     yawSlider->setTracking(true);
@@ -42,17 +62,37 @@ SettingsDisplayer::SettingsDisplayer(int widgetWidth, int widgetHeight, QWidget 
     connect(yawSlider, SIGNAL(sliderMoved(int)), this, SLOT(handleSlidersChange(int)));
     connect(pitchSlider, SIGNAL(sliderMoved(int)), this, SLOT(handleSlidersChange(int)));
 
-    layout->addWidget(new QLabel("Yaw: "));
-    layout->addWidget(yawSlider);
+    buzzFeedbackButton = new QPushButton(buzzFeedbackModeToString((buzzFeedbackMode)(currentBuzzModeCount)).c_str(), this);
+    connect(buzzFeedbackButton, SIGNAL(clicked(bool)), this, SLOT(handleClicked(bool)));
+    mainLayout->addWidget(buzzFeedbackButton);
+
+    hlayout = new QHBoxLayout;
+
+    hlayout->addWidget(new QLabel("Yaw: "));
+    hlayout->addWidget(yawSlider);
     yawValue = new QLabel(QString::number(yawSlider->sliderPosition()));
-    layout->addWidget(yawValue);
-    layout->addWidget(new QLabel("Pitch: "));
-    layout->addWidget(pitchSlider);
+    hlayout->addWidget(yawValue);
+    hlayout->addWidget(new QLabel("Pitch: "));
+    hlayout->addWidget(pitchSlider);
     pitchValue = new QLabel(QString::number(pitchSlider->sliderPosition()));
-    layout->addWidget(pitchValue);
+    hlayout->addWidget(pitchValue);
+
+    mainLayout->addLayout(hlayout);
 
     setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     setMinimumSize(indWidth, indHeight);
+}
+
+SettingsDisplayer::~SettingsDisplayer()
+{
+    delete mainLayout; mainLayout = NULL;
+    delete hlayout; hlayout = NULL;
+    delete stateLabel; stateLabel = NULL;
+    delete yawSlider; yawSlider = NULL;
+    delete pitchSlider; pitchSlider = NULL;
+    delete yawValue; yawValue = NULL;
+    delete pitchValue; pitchValue = NULL;
+    delete buzzFeedbackButton; buzzFeedbackButton = NULL;
 }
 
 QSize SettingsDisplayer::sizeHint() const
@@ -82,4 +122,13 @@ void SettingsDisplayer::handleSlidersChange(int newPos)
     yawValue->setText(QString::number(yawInt));
     int pitchInt = pitchSlider->sliderPosition();
     pitchValue->setText(QString::number(pitchInt));
+}
+
+void SettingsDisplayer::handleClicked(bool checked)
+{
+    // disregard checked - not caring.
+    currentBuzzModeCount++;
+    currentBuzzModeCount %= NUM_BUZZ_MODES;
+    emitBuzzFeedbackChange(currentBuzzModeCount);
+    buzzFeedbackButton->setText(buzzFeedbackModeToString((buzzFeedbackMode)(currentBuzzModeCount)).c_str());
 }

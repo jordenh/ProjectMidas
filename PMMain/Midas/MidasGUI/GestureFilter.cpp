@@ -1,9 +1,27 @@
+/*
+    Copyright (C) 2015 Midas
+
+    This library is free software; you can redistribute it and/or
+    modify it under the terms of the GNU Lesser General Public
+    License as published by the Free Software Foundation; either
+    version 2.1 of the License, or (at your option) any later version.
+
+    This library is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+    Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public
+    License along with this library; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
+    USA
+*/
+
 #include "GestureFilter.h"
 #include "MyoCommon.h"
 #include "CommandData.h"
 #include "ProfileManager.h"
 #include "BaseMeasurements.h"
-#include "FilterPipeline.h"
 #include "MyoDevice.h"
 #include "SharedCommandData.h"
 #include "ControlState.h"
@@ -14,9 +32,9 @@
 #include <thread>
 #include <qtranslator.h>
 
-
 ControlState* GestureFilter::controlStateHandle;
-GestureSignaller GestureFilter::signaller;
+GestureSignaller GestureFilter::gestureSignaller;
+SettingsSignaller GestureFilter::settingsSignaller;
 
 GestureFilter::GestureFilter(ControlState* controlState, MyoState* myoState, clock_t timeDel, MainGUI *mainGuiHandle)
     : timeDelta(timeDel), lastPoseType(Pose::rest),
@@ -25,9 +43,9 @@ GestureFilter::GestureFilter(ControlState* controlState, MyoState* myoState, clo
     imageManager.loadImages();
     gestSeqRecorder = new GestureSeqRecorder(controlState, mainGuiHandle, imageManager);
 
-    registerMouseSequences();
-    registerKeyboardSequences();
-    registerStateSequences();
+    defaultMouseSequences();
+    defaultKeyboardSequences();
+    defaultStateSequences();
 
     controlStateHandle = controlState;
 	myoStateHandle = myoState;
@@ -36,16 +54,16 @@ GestureFilter::GestureFilter(ControlState* controlState, MyoState* myoState, clo
 
     if (mainGui)
     {
-        mainGui->connectSignallerToInfoIndicator(&signaller);
-        mainGui->connectSignallerToPoseDisplayer(&signaller);
+        mainGui->connectSignallerToInfoIndicator(&gestureSignaller);
+        mainGui->connectSignallerToPoseDisplayer(&gestureSignaller);
 #ifdef BUILD_KEYBOARD
-		mainGui->connectSignallerToKeyboardToggle(&signaller);
+		mainGui->connectSignallerToKeyboardToggle(&gestureSignaller);
 #endif
-		mainGui->connectSignallerToProfileIcons(&signaller);
+		mainGui->connectSignallerToProfileIcons(&gestureSignaller);
+        mainGui->connectSignallerToSettingsDisplayer(&settingsSignaller);
     }
 
-    signaller.emitStateString(QTranslator::tr((modeToString(controlState->getMode())).c_str()));
-    emitPoseData(Pose::rest);
+    gestureSignaller.emitStateString(QTranslator::tr((modeToString(controlState->getMode())).c_str()));
 
 	Filter::setFilterError(filterError::NO_FILTER_ERROR);
 	Filter::setFilterStatus(filterStatus::OK);
@@ -61,15 +79,36 @@ void GestureFilter::process()
 {
     clock_t timeFromLastPose = 0;
     filterDataMap input = Filter::getInput();
-    Pose::Type gesture = boost::any_cast<Pose::Type>(input[GESTURE_INPUT]);
-	
+    Filter::setFilterError(filterError::NO_FILTER_ERROR);
+    Filter::setFilterStatus(filterStatus::OK);
+    Filter::clearOutput();
+
+    Pose::Type gesture;
+    if (input.find(GESTURE_INPUT) != input.end())
+    {
+        boost::any value = input[GESTURE_INPUT];
+        if (value.type() != typeid(Pose::Type))
+        {
+            Filter::setFilterError(filterError::INVALID_INPUT);
+            Filter::setFilterStatus(filterStatus::FILTER_ERROR);
+            return;
+        }
+        else
+        {
+            gesture = boost::any_cast<Pose::Type>(input[GESTURE_INPUT]);
+        }
+    }
+    else
+    {
+        return;
+    }
+
 	// update state and GUI
 	myoStateHandle->pushPose(gesture);
     emitPoseData(gesture);
 
 	if (gesture != lastPoseType)
 	{
-        
         if (lastPoseType != Pose::rest && gesture != Pose::rest)
         {
             // Should not ever happen! (taken care of in MyoDevice)
@@ -81,18 +120,6 @@ void GestureFilter::process()
 		
 		BaseMeasurements::getInstance().setScreenSize(0,0); // dont actually need to do. TODO - remove
 	}
-    
-    Filter::setFilterError(filterError::NO_FILTER_ERROR);
-    Filter::setFilterStatus(filterStatus::OK);
-	Filter::clearOutput();
-	
-//	// First, filter based on "hold time" in a specific gesture.
-//    timeFromLastPose = clock() - lastTime;
-//    if (timeFromLastPose < timeDelta)
-//    {
-//        // early exit due to too frequent fluctuation
-//        return;
-//    }
 
     CommandData response;
     SequenceStatus ss;
@@ -136,11 +163,11 @@ void GestureFilter::emitPoseData(int poseInt)
 
     if (images.size() == 1)
     {
-        signaller.emitPoseImages(images);
+        gestureSignaller.emitPoseImages(images);
     }
 }
 
-void GestureFilter::registerMouseSequences(void)
+void GestureFilter::defaultMouseSequences(void)
 {
     // Register sequence to left click in mouse mode and gesture mode
     sequence clickSeq;
@@ -180,7 +207,7 @@ void GestureFilter::registerMouseSequences(void)
     }
 }
 
-void GestureFilter::registerKeyboardSequences(void)
+void GestureFilter::defaultKeyboardSequences(void)
 {
     sequence kybrdGUISequence;
     CommandData kybrdGUIResponse;
@@ -236,7 +263,7 @@ void GestureFilter::registerKeyboardSequences(void)
     }
 }
 
-void GestureFilter::registerStateSequences(void)
+void GestureFilter::defaultStateSequences(void)
 {
     // Register sequence from lock to Mouse Mode
     sequence lockToMouseSeq;
@@ -360,9 +387,17 @@ void GestureFilter::registerStateSequences(void)
 
 void GestureFilter::handleStateChange(CommandData response, GestureFilter *gf)
 {
-    if (gf->controlStateHandle->getMode() == LOCK_MODE || response.action.mode == LOCK_MODE)
+    buzzFeedbackMode bfm = settingsSignaller.getBuzzFeedbackMode();
+    if (bfm >= buzzFeedbackMode::MINIMAL)
     {
-        gf->myoStateHandle->peakMyo()->vibrateMyos(myo::Myo::VibrationType::vibrationMedium);
+        if (gf->controlStateHandle->getMode() == LOCK_MODE || response.action.mode == LOCK_MODE)
+        {
+            gf->myoStateHandle->peakMyo()->vibrateMyos(myo::Myo::VibrationType::vibrationMedium);
+        }
+        else if (bfm >= buzzFeedbackMode::ALLSTATECHANGES)
+        {
+            gf->myoStateHandle->peakMyo()->vibrateMyos(myo::Myo::VibrationType::vibrationShort);
+        }
     }
 
     if (response.type != commandType::STATE_CHANGE)
@@ -373,10 +408,10 @@ void GestureFilter::handleStateChange(CommandData response, GestureFilter *gf)
 
     if (response.action.mode == midasMode::KEYBOARD_MODE || controlStateHandle->getMode() == midasMode::KEYBOARD_MODE)
     {
-        signaller.emitToggleKeyboard();
+        gestureSignaller.emitToggleKeyboard();
     }
 
-    signaller.emitStateString(QTranslator::tr((modeToString(response.action.mode)).c_str()));
+    gestureSignaller.emitStateString(QTranslator::tr((modeToString(response.action.mode)).c_str()));
 
     std::cout << "Transitioning to state: " << response.action.mode << std::endl;
     controlStateHandle->setMode(response.action.mode);
@@ -386,8 +421,10 @@ void GestureFilter::handleStateChange(CommandData response, GestureFilter *gf)
 	// If there are subsequent commands to execute, do so on a seperate pipeline! -- Note this assumes no further 
 	// filtering is desired on this data, and it can go straight to the SCD
 	std::vector<CommandData> changeStateCommands = response.getChangeStateActions();
-	FilterPipeline fp;
-	fp.registerFilter(gf->controlStateHandle->getSCD());
+	AdvancedFilterPipeline fp;
+    // store and replace filterDataMap incase it's used.
+    filterDataMap init_fdm = gf->getOutput();
+	fp.registerFilterAtDeepestLevel(gf->controlStateHandle->getSCD());
 	for (int i = 0; i < changeStateCommands.size(); i++)
 	{
 		filterDataMap dataMap;
@@ -398,9 +435,14 @@ void GestureFilter::handleStateChange(CommandData response, GestureFilter *gf)
 		else if (changeStateCommands[i].type == commandType::KYBRD_CMD || changeStateCommands[i].type == commandType::KYBRD_GUI_CMD)
 		{
 			dataMap = gf->handleKybrdCommand(changeStateCommands[i]);
-		}
+        }
+        else {
+            continue;
+        }
+        gf->clearOutput();
 		fp.startPipeline(dataMap);
 	}
+    gf->setOutput(init_fdm);
 	    
     return;
 }
@@ -408,15 +450,17 @@ void GestureFilter::handleStateChange(CommandData response, GestureFilter *gf)
 filterDataMap GestureFilter::handleMouseCommand(CommandData response)
 {
 	filterDataMap outputToSharedCommandData;
-    if (controlStateHandle->getMode() == midasMode::MOUSE_MODE ||
-        controlStateHandle->getMode() == midasMode::MOUSE_MODE2 ||
-        controlStateHandle->getMode() == midasMode::GESTURE_MODE)
-    {
-        CommandData command;
-        command = response;
 
-        outputToSharedCommandData[COMMAND_INPUT] = command;
-        Filter::setOutput(outputToSharedCommandData);
+    CommandData command;
+    command = response;
+
+    outputToSharedCommandData[COMMAND_INPUT] = command;
+    Filter::setOutput(outputToSharedCommandData);
+
+    buzzFeedbackMode bfm = settingsSignaller.getBuzzFeedbackMode();
+    if (bfm >= buzzFeedbackMode::ALLACTIONS)
+    {
+        myoStateHandle->peakMyo()->vibrateMyos(myo::Myo::VibrationType::vibrationShort);
     }
 	return outputToSharedCommandData;
 }
@@ -436,6 +480,12 @@ filterDataMap GestureFilter::handleKybrdCommand(CommandData response, bool addTo
     else
     {
         Filter::setOutput(outputToSharedCommandData);
+
+        buzzFeedbackMode bfm = settingsSignaller.getBuzzFeedbackMode();
+        if (bfm >= buzzFeedbackMode::ALLACTIONS)
+        {
+            myoStateHandle->peakMyo()->vibrateMyos(myo::Myo::VibrationType::vibrationShort);
+        }
     }
 
 	return outputToSharedCommandData;
@@ -447,15 +497,19 @@ filterDataMap GestureFilter::handleProfileChangeCommand(CommandData response)
 	CommandData command;
 	command = response;
 
-    myoStateHandle->peakMyo()->vibrateMyos(myo::Myo::VibrationType::vibrationShort, 2);
+    buzzFeedbackMode bfm = settingsSignaller.getBuzzFeedbackMode();
+    if (bfm >= buzzFeedbackMode::MINIMAL)
+    {
+        myoStateHandle->peakMyo()->vibrateMyos(myo::Myo::VibrationType::vibrationShort, 2);
+    }
 
     if (response.action.profile == MOVE_PROFILE_FORWARD)
     {
-        signaller.emitProfileChange(true);
+        gestureSignaller.emitProfileChange(true);
     }
     else if (response.action.profile == MOVE_PROFILE_BACKWARD)
     {
-        signaller.emitProfileChange(false);
+        gestureSignaller.emitProfileChange(false);
     }
 
 	outputToSharedCommandData[COMMAND_INPUT] = command;
@@ -469,11 +523,15 @@ void GestureFilter::handleProfileChangeCommand(CommandData response, GestureFilt
 {
 	// If there are subsequent commands to execute, do so on a seperate pipeline! -- Note this assumes no further 
 	// filtering is desired on this data, and it can go straight to the SCD
-	FilterPipeline fp;
-	fp.registerFilter(gf->controlStateHandle->getSCD());
+	AdvancedFilterPipeline fp;
+    filterDataMap init_fdm = gf->getOutput();
+	fp.registerFilterAtDeepestLevel(gf->controlStateHandle->getSCD());
 	filterDataMap dataMap;
 	dataMap = gf->handleProfileChangeCommand(response);
 	fp.startPipeline(dataMap);
+
+    // revert output to init status.
+    gf->setOutput(init_fdm);
 }
 
 filterDataMap GestureFilter::getExtraDataForSCD()
@@ -637,7 +695,7 @@ filterError GestureFilter::updateBasedOnProfile(ProfileManager& pm, std::string 
 //    clickSeq.push_back(SeqElement(Pose::rest, PoseLength::IMMEDIATE));
 //    ss |= (int)gestSeqRecorder->registerSequence(midasMode::MOUSE_MODE, clickSeq, clickResp, "Release Mouse");
 
-#ifdef BUILD_KEYBOARD
+#ifdef BUILD_WITH_HOLD_MODES
     // Register sequence from Gesture Mode to Gesture Hold Modes
     sequence toHoldGestSeq;
     toHoldGestSeq.push_back(SeqElement(Pose::Type::doubleTap, PoseLength::HOLD));

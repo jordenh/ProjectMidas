@@ -65,3 +65,7 @@ PMMain/Midas/MidasProfileManager/GeneratedFiles/*
 *Thumbs.db
 PMMain/Midas/Win32/
 PMMain/Midas/ipch/
+*myoDataFile.csv
+
+# Installer stuff
+PMMain/Midas/MidasInstallShield/MidasInstallShield/*

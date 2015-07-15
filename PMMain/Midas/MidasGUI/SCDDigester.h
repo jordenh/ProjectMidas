@@ -1,3 +1,22 @@
+/*
+    Copyright (C) 2015 Midas
+
+    This library is free software; you can redistribute it and/or
+    modify it under the terms of the GNU Lesser General Public
+    License as published by the Free Software Foundation; either
+    version 2.1 of the License, or (at your option) any later version.
+
+    This library is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+    Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public
+    License along with this library; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
+    USA
+*/
+
 #ifndef _SCD_DIGESTER_H
 #define _SCD_DIGESTER_H
 
@@ -13,6 +32,8 @@ using namespace myoSim;
 using namespace myo;
 #endif
 
+#include "ConnectionSignaller.h"
+
 class CommandData;
 class KeyboardController;
 class SharedCommandData;
@@ -20,18 +41,18 @@ class MidasThread;
 class ControlState;
 class MyoState;
 class MouseCtrl;
-class KybrdCtrl;
 class ProfileManager;
+class MainGUI;
 
 class SCDDigester
 {
 public:
 #ifdef BUILD_KEYBOARD
 	SCDDigester(SharedCommandData* scd, MidasThread *thread, ControlState *cntrlStateHandle, MyoState *myoStateHandle,
-		MouseCtrl *mouseCtrl, KybrdCtrl *kybrdCtrl, KeyboardController *keyboardController, ProfileManager* profileManagerHandle, std::vector<ringData> *kybrdRingData);
+        MouseCtrl *mouseCtrl, KeyboardController *keyboardController, ProfileManager* profileManagerHandle, MainGUI *mainGui, std::vector<ringData> *kybrdRingData);
 #else
 	SCDDigester(SharedCommandData* scd, MidasThread *thread, ControlState *cntrlStateHandle, MyoState *myoStateHandle,
-		MouseCtrl *mouseCtrl, KybrdCtrl *kybrdCtrl, KeyboardController *keyboardController, ProfileManager* profileManagerHandle);
+        MouseCtrl *mouseCtrl, KeyboardController *keyboardController, ProfileManager* profileManagerHandle, MainGUI *mainGui);
 #endif
     ~SCDDigester();
 
@@ -42,25 +63,28 @@ private:
 
 	void digestProfileChange(CommandData nextCmd);
 
+    void handleConnectionData();
+
 #ifdef BUILD_KEYBOARD
     void digestKeyboardGUIData(CommandData nextCommand);
 
 	int getSelectedKeyFromAngle(double angle, std::vector<ringData::keyboardValue> *ring);
 
-	//KeyboardWidget *keyboardWidget;
 	std::vector<ringData> *kybrdRingData;
 #endif
 
-	KeyboardController *keyboardController;
-    SharedCommandData *scdHandle;
-    MidasThread *threadHandle;
-    ControlState *cntrlStateHandle;
-	MyoState *myoStateHandle;
-    MouseCtrl *mouseCtrl;
-    KybrdCtrl *kybrdCtrl;
+	KeyboardController *keyboardController; // not owned
+    SharedCommandData *scdHandle; // not owned
+    MidasThread *threadHandle; // not owned
+    ControlState *cntrlStateHandle; // not owned
+    MyoState *myoStateHandle; // not owned
+    MouseCtrl *mouseCtrl; // not owned
+    MainGUI *mainGUI; // not owned
     int count;
 
-	ProfileManager *pm;
+    ConnectionSignaller *connSignaller; // owned
+
+    ProfileManager *pm; // not owned
 };
 
 #endif /* _SCD_DIGESTER_H */

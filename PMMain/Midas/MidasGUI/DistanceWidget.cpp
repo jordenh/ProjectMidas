@@ -1,4 +1,22 @@
-#ifdef BUILD_KEYBOARD_ANDDISTANCE
+/*
+    Copyright (C) 2015 Midas
+
+    This library is free software; you can redistribute it and/or
+    modify it under the terms of the GNU Lesser General Public
+    License as published by the Free Software Foundation; either
+    version 2.1 of the License, or (at your option) any later version.
+
+    This library is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+    Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public
+    License along with this library; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
+    USA
+*/
+
 #include "DistanceWidget.h"
 
 #include <cmath>
@@ -7,7 +25,7 @@
 #include "qaction.h"
 #include "qapplication.h"
 #include "qboxlayout.h"
-#include "DistanceBar.h"
+#include "distanceBar.h"
 #include "MidasThread.h"
 #include "qlabel.h"
 
@@ -33,7 +51,7 @@ DistanceWidget::DistanceWidget(MidasThread* mainThread, int width, int height, Q
 
     layout->addWidget(bar);
 
-    setWindowOpacity(0.75);
+    setWindowOpacity(GUI_OPACITY);
     QPalette pal;
     setPalette(pal);
 
@@ -79,6 +97,3 @@ inline float DistanceWidget::dbToDist(float db)
         1.5151387757*db +
         13.8505553761;
 }
-
-
-#endif

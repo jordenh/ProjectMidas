@@ -1,3 +1,22 @@
+/*
+    Copyright (C) 2015 Midas
+
+    This library is free software; you can redistribute it and/or
+    modify it under the terms of the GNU Lesser General Public
+    License as published by the Free Software Foundation; either
+    version 2.1 of the License, or (at your option) any later version.
+
+    This library is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+    Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public
+    License along with this library; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
+    USA
+*/
+
 #ifndef _GESTURE_SEQ_RECORDER_H
 #define _GESTURE_SEQ_RECORDER_H
 
@@ -24,7 +43,7 @@ class ControlState;
 class MainGUI;
 
 #define DEFAULT_PROG_MAX_DELTA 3000 // ms
-#define REQ_HOLD_TIME 500 // ms
+#define REQ_HOLD_TIME 1000 // ms
 
 enum class SequenceStatus {
     SUCCESS,
@@ -195,12 +214,12 @@ private:
     void connectGuiSignals();
 
     // Holds all registered CommandDatas in a layered organization.
-    sequenceMapPerMode *seqMapPerMode;
+    sequenceMapPerMode *seqMapPerMode; // owned and memory handled
 
     // Stores pointers to active sequenceInfos, so that progress can be tracked more efficiently.
     // Once ANY sequences are active, ONLY those sequences can potentially progress, until they 
     // are timed out.
-    std::list<sequenceInfo*> activeSequences;
+    std::list<sequenceInfo*> activeSequences; // not owned
 
     std::mutex activeSequencesMutex;
 
@@ -225,10 +244,10 @@ private:
     // will determine if a user tapped a pose, or held it.
     clock_t holdGestTimer;
 
-    ControlState* controlStateHandle;
+    ControlState* controlStateHandle; // not owned
 
     SequenceImageManager imageManager;
-    MainGUI* mainGui;
+    MainGUI* mainGui; // not owned
     GestureSignaller signaller;
 };
 

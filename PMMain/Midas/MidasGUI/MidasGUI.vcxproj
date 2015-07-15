@@ -24,6 +24,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -43,11 +44,13 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+    <LinkIncremental>
+    </LinkIncremental>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <PreprocessorDefinitions>DONT_BUILD_FOR_KARDIUM;DONT_BUILD_KEYBOARD;DONT_SHOW_PROFILE_BUTTONS;DONT_USE_SIMULATOR;UNICODE;WIN32;WIN64;QT_DLL;QT_CORE_LIB;QT_GUI_LIB;QT_WIDGETS_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtWidgets;$(ProjectDir)\myoSim\include;$(ProjectDir)\myo\include;C:\Program Files\boost\boost_1_57_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>DONT_SHOW_PROFILE_ICONS;DONT_SHOW_SETTINGS;BUILD_FOR_KARDIUM;DONT_BUILD_KEYBOARD;DONT_SHOW_PROFILE_BUTTONS;DONT_USE_SIMULATOR;UNICODE;WIN32;WIN64;QT_DLL;QT_CORE_LIB;QT_GUI_LIB;QT_WIDGETS_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>.\GeneratedFiles;.;$(ProjectDir)\Qt\include;.\GeneratedFiles\$(ConfigurationName);$(ProjectDir)\Qt\include\QtCore;$(ProjectDir)\Qt\include\QtGui;$(ProjectDir)\Qt\include\QtWidgets;$(ProjectDir)\myoSim\include;$(ProjectDir)\myo\include;C:\Program Files\boost\boost_1_57_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Disabled</Optimization>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -58,45 +61,86 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
-      <AdditionalLibraryDirectories>$(QTDIR)\lib;$(ProjectDir)\myo\lib;$(ProjectDir)\myoSim;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)\Qt\lib;$(ProjectDir)\myo\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>qtmaind.lib;Qt5Cored.lib;Qt5Guid.lib;Qt5Widgetsd.lib;myo32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <PreventDllBinding>
       </PreventDllBinding>
+      <IgnoreAllDefaultLibraries>
+      </IgnoreAllDefaultLibraries>
     </Link>
     <PostBuildEvent>
-      <Command>COPY "$(ProjectDir)myo\myo32.dll" "$(OutDir)"</Command>
-      <Message>Copy the myo dll to the output directory.</Message>
+      <Command>XCOPY "$(ProjectDir)Resources\*" "$(OutDir)\Resources\" /S /Y
+COPY "$(ProjectDir)Qt\Qt5Widgetsd.dll" "$(OutDir)"
+COPY "$(ProjectDir)profiles_V2.xml" "$(OutDir)"
+COPY "$(ProjectDir)myo\myo32.dll" "$(OutDir)"
+COPY "$(ProjectDir)Qt\icudt53.dll" "$(OutDir)"
+COPY "$(ProjectDir)Qt\icuin53.dll" "$(OutDir)"
+COPY "$(ProjectDir)Qt\icuuc53.dll" "$(OutDir)"
+COPY "$(ProjectDir)Qt\Qt5Core.dll" "$(OutDir)"
+COPY "$(ProjectDir)Qt\Qt5Cored.dll" "$(OutDir)"
+COPY "$(ProjectDir)Qt\Qt5Gui.dll" "$(OutDir)"
+COPY "$(ProjectDir)Qt\Qt5Guid.dll" "$(OutDir)"
+COPY "$(ProjectDir)Qt\Qt5Widgets.dll" "$(OutDir)"
+COPY "$(ProjectDir)Qt\Qt5Widgetsd.dll" "$(OutDir)"</Command>
+      <Message>Copy the required dlls to the output directory.</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <PreprocessorDefinitions>UNICODE;WIN32;WIN64;QT_DLL;QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_WIDGETS_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtWidgets;$(ProjectDir)\myoSim\include;$(ProjectDir)\myo\include;C:\Program Files\boost\boost_1_57_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>DONT_SHOW_PROFILE_ICONS;DONT_SHOW_SETTINGS;BUILD_FOR_KARDIUM;DONT_BUILD_KEYBOARD;DONT_SHOW_PROFILE_BUTTONS;DONT_USE_SIMULATOR;UNICODE;WIN32;WIN64;QT_DLL;QT_CORE_LIB;QT_GUI_LIB;QT_WIDGETS_LIB;QT_NO_DEBUG;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>.\GeneratedFiles;.;$(ProjectDir)\Qt\include;.\GeneratedFiles\$(ConfigurationName);$(ProjectDir)\Qt\include\QtCore;$(ProjectDir)\Qt\include\QtGui;$(ProjectDir)\Qt\include\QtWidgets;$(ProjectDir)\myoSim\include;$(ProjectDir)\myo\include;C:\Program Files\boost\boost_1_57_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat />
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeaderFile />
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
-      <AdditionalLibraryDirectories>$(QTDIR)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)\Qt\lib;$(ProjectDir)\myo\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
-      <AdditionalDependencies>qtmain.lib;Qt5Core.lib;Qt5Gui.lib;Qt5Widgets.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>qtmain.lib;Qt5Core.lib;Qt5Gui.lib;Qt5Widgets.lib;myo32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreAllDefaultLibraries>
+      </IgnoreAllDefaultLibraries>
     </Link>
+    <PostBuildEvent>
+      <Command>XCOPY "$(ProjectDir)Resources\*" "$(OutDir)\Resources\" /S /Y
+COPY "$(ProjectDir)Qt\Qt5Widgetsd.dll" "$(OutDir)"
+COPY "$(ProjectDir)profiles_V2.xml" "$(OutDir)"
+COPY "$(ProjectDir)myo\myo32.dll" "$(OutDir)"
+COPY "$(ProjectDir)Qt\icudt53.dll" "$(OutDir)"
+COPY "$(ProjectDir)Qt\icuin53.dll" "$(OutDir)"
+COPY "$(ProjectDir)Qt\icuuc53.dll" "$(OutDir)"
+COPY "$(ProjectDir)Qt\Qt5Core.dll" "$(OutDir)"
+COPY "$(ProjectDir)Qt\Qt5Cored.dll" "$(OutDir)"
+COPY "$(ProjectDir)Qt\Qt5Gui.dll" "$(OutDir)"
+COPY "$(ProjectDir)Qt\Qt5Guid.dll" "$(OutDir)"
+COPY "$(ProjectDir)Qt\Qt5Widgets.dll" "$(OutDir)"
+COPY "$(ProjectDir)Qt\Qt5Widgetsd.dll" "$(OutDir)"</Command>
+      <Message>Copy the required dlls to the output directory.</Message>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="AveragingFilter.cpp" />
+    <ClCompile Include="AdvancedFilterPipeline.cpp" />
     <ClCompile Include="BaseMeasurements.cpp" />
     <ClCompile Include="CommandData.cpp" />
+    <ClCompile Include="ConnectionSignaller.cpp" />
     <ClCompile Include="ControlState.cpp" />
-    <ClCompile Include="DistanceBar.cpp" />
+    <ClCompile Include="distanceBar.cpp" />
     <ClCompile Include="DistanceWidget.cpp" />
     <ClCompile Include="DraggableWidget.cpp" />
     <ClCompile Include="EMGImpulseFilter.cpp" />
     <ClCompile Include="Filter.cpp" />
-    <ClCompile Include="FilterPipeline.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_DistanceBar.cpp">
+    <ClCompile Include="GeneratedFiles\Debug\moc_ConnectionSignaller.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ConnectionSignaller.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GenericBypassFilter.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_distanceBar.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Debug\moc_DistanceWidget.cpp">
@@ -142,7 +186,7 @@
     <ClCompile Include="GeneratedFiles\Debug\moc_SettingsSignaller.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_DistanceBar.cpp">
+    <ClCompile Include="GeneratedFiles\Release\moc_distanceBar.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Release\moc_DistanceWidget.cpp">
@@ -187,16 +231,17 @@
     <ClCompile Include="GeneratedFiles\Release\moc_SettingsSignaller.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="GenericAveragingFilter.cpp" />
     <ClCompile Include="GestureFilter.cpp" />
     <ClCompile Include="GestureHoldModeAction.cpp" />
     <ClCompile Include="GestureSeqRecorder.cpp" />
     <ClCompile Include="GestureSignaller.cpp" />
+    <ClCompile Include="HoldModeObserver.cpp" />
     <ClCompile Include="InfoIndicator.cpp" />
     <ClCompile Include="KeyboardController.cpp" />
     <ClCompile Include="KeyboardSettingsReader.cpp" />
     <ClCompile Include="KeyboardVector.cpp" />
     <ClCompile Include="KeyboardWidget.cpp" />
-    <ClCompile Include="kybrdCtrl.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainGUI.cpp" />
     <ClCompile Include="MidasMain.cpp" />
@@ -226,9 +271,19 @@
     <ClCompile Include="WearableDevice.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AveragingFilter.h" />
+    <ClInclude Include="AdvancedFilterPipeline.h" />
     <ClInclude Include="BaseMeasurements.h" />
     <ClInclude Include="CommandData.h" />
+    <CustomBuild Include="ConnectionSignaller.h">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing ConnectionSignaller.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DDONT_SHOW_PROFILE_ICONS -DDONT_SHOW_SETTINGS -DBUILD_FOR_KARDIUM -DDONT_BUILD_KEYBOARD -DDONT_SHOW_PROFILE_BUTTONS -DDONT_USE_SIMULATOR -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -D_MBCS "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtWidgets" "-I$(ProjectDir)\myoSim\include" "-I$(ProjectDir)\myo\include" "-IC:\Program Files\boost\boost_1_57_0"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing ConnectionSignaller.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DDONT_BUILD_FOR_KARDIUM -DDONT_BUILD_KEYBOARD -DDONT_SHOW_PROFILE_BUTTONS -DDONT_USE_SIMULATOR -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -D_MBCS "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtWidgets" "-I$(ProjectDir)\myoSim\include" "-I$(ProjectDir)\myo\include" "-IC:\Program Files\boost\boost_1_57_0"</Command>
+    </CustomBuild>
     <ClInclude Include="ControlState.h" />
     <CustomBuild Include="DraggableWidget.h">
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
@@ -240,13 +295,13 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtWidgets"</Command>
     </CustomBuild>
-    <CustomBuild Include="DistanceBar.h">
+    <CustomBuild Include="distanceBar.h">
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing DistanceBar.h...</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing distanceBar.h...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DDONT_USE_SIMULATOR -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -D_MBCS "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtWidgets" "-I$(ProjectDir)\myoSim\include" "-I$(ProjectDir)\myo\include" "-IC:\Program Files\boost\boost_1_57_0"</Command>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing DistanceBar.h...</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing distanceBar.h...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtWidgets" "-I$(ProjectDir)\myoSim\include" "-I$(ProjectDir)\myo\include" "-IC:\Program Files\boost\boost_1_57_0"</Command>
     </CustomBuild>
@@ -262,7 +317,9 @@
     </CustomBuild>
     <ClInclude Include="EMGImpulseFilter.h" />
     <ClInclude Include="Filter.h" />
-    <ClInclude Include="FilterPipeline.h" />
+    <ClInclude Include="FilterKeys.h" />
+    <ClInclude Include="GenericBypassFilter.h" />
+    <ClInclude Include="GenericAveragingFilter.h" />
     <ClInclude Include="GestureFilter.h" />
     <ClInclude Include="GestureHoldModeAction.h" />
     <ClInclude Include="GestureSeqRecorder.h" />
@@ -286,6 +343,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtWidgets"</Command>
     </CustomBuild>
+    <ClInclude Include="HoldModeObserver.h" />
     <ClInclude Include="KeyboardContoller.h" />
     <ClInclude Include="KeyboardSettingsReader.h" />
     <ClInclude Include="KeyboardVector.h" />
@@ -300,7 +358,6 @@
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtWidgets" "-I$(ProjectDir)\myoSim\include" "-I$(ProjectDir)\myo\include" "-IC:\Program Files\boost\boost_1_57_0"</Command>
     </CustomBuild>
     <ClInclude Include="MyoState.h" />
-    <ClInclude Include="kybrdCtrl.h" />
     <CustomBuild Include="MainGUI.h">
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing MainGUI.h...</Message>

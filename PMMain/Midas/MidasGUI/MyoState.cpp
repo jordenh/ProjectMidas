@@ -1,3 +1,22 @@
+/*
+    Copyright (C) 2015 Midas
+
+    This library is free software; you can redistribute it and/or
+    modify it under the terms of the GNU Lesser General Public
+    License as published by the Free Software Foundation; either
+    version 2.1 of the License, or (at your option) any later version.
+
+    This library is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+    Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public
+    License along with this library; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
+    USA
+*/
+
 #include "MyoState.h"
 #include "MyoDevice.h"
 
@@ -5,6 +24,9 @@ MyoState::MyoState()
 {
 	spatialHistLen = 1;
 	poseHistLen = 1;
+    currentArm = myo::Arm::armRight;
+    currentWarmupState = myo::WarmupState::warmupStateWarm;
+    currentXDirection = myo::XDirection::xDirectionTowardElbow;
 }
 
 void MyoState::setSpatialHistLen(int spatialHistLen)
@@ -139,6 +161,24 @@ myo::Pose MyoState::peakFrontPose()
 	return front;
 }
 
+myo::Pose MyoState::mostRecentPose()
+{
+    myoStateMutex.lock();
+    myo::Pose front;
+    if (poseHistory.size() > 0)
+    {
+        front = poseHistory.back();
+    }
+    else
+    {
+        front = myo::Pose::rest;
+    }
+
+    myoStateMutex.unlock();
+
+    return front;
+}
+
 std::deque<myo::Pose> MyoState::getPoseHistory()
 {
 	myoStateMutex.lock();
@@ -150,20 +190,74 @@ std::deque<myo::Pose> MyoState::getPoseHistory()
 }
 
 void MyoState::setMyo(MyoDevice *myo)
-{ myoHandle = myo; }
+{ 
+    myoStateMutex.lock();
+    myoHandle = myo; 
+    myoStateMutex.unlock();
+}
 
 const MyoDevice* MyoState::peakMyo()
-{ return myoHandle; }
+{ 
+    return myoHandle; 
+}
+
+void MyoState::setArm(myo::Arm arm)
+{
+    myoStateMutex.lock();
+    this->currentArm = arm;
+    myoStateMutex.unlock();
+}
+
+myo::Arm MyoState::getArm()
+{
+    myoStateMutex.lock();
+    myo::Arm retVal = this->currentArm;
+    myoStateMutex.unlock();
+    return retVal;
+}
+
+void MyoState::setWarmupState(myo::WarmupState warmupState)
+{
+    myoStateMutex.lock();
+    this->currentWarmupState = warmupState;
+    myoStateMutex.unlock();
+}
+
+myo::WarmupState MyoState::getWarmupState()
+{
+    myoStateMutex.lock();
+    myo::WarmupState retVal = this->currentWarmupState;
+    myoStateMutex.unlock();
+    return retVal;
+}
+
+void MyoState::setXDirection(myo::XDirection xDirection)
+{
+    myoStateMutex.lock();
+    this->currentXDirection = xDirection;
+    myoStateMutex.unlock();
+}
+
+myo::XDirection MyoState::getXDirection()
+{
+    myoStateMutex.lock();
+    myo::XDirection retVal = this->currentXDirection;
+    myoStateMutex.unlock();
+    return retVal;
+}
 
 bool MyoState::lastPoseNonRest()
 {
+    myoStateMutex.lock();
     if (poseHistory.size() >= 1 &&
         Pose::rest != poseHistory.back())
     {
+        myoStateMutex.unlock();
         return true;
     }
     else
     {
+        myoStateMutex.unlock();
         return false;
     }
 }

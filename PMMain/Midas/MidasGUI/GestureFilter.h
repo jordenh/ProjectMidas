@@ -1,8 +1,29 @@
+/*
+    Copyright (C) 2015 Midas
+
+    This library is free software; you can redistribute it and/or
+    modify it under the terms of the GNU Lesser General Public
+    License as published by the Free Software Foundation; either
+    version 2.1 of the License, or (at your option) any later version.
+
+    This library is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+    Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public
+    License along with this library; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
+    USA
+*/
+
 #ifndef _GESTURE_FILTER_H
 #define _GESTURE_FILTER_H
 
 #include "Filter.h"
+#include "FilterKeys.h"
 #include "GestureSignaller.h"
+#include "SettingsSignaller.h"
 #include "SequenceImageManager.h"
 #include <ctime>
 
@@ -20,15 +41,12 @@ class MyoState;
 class GestureSeqRecorder;
 class MainGUI;
 
-#define GESTURE_INPUT "gesture"
 #define MYO_GESTURE_RIGHT_MOUSE Pose::fingersSpread
 #define MYO_GESTURE_LEFT_MOUSE Pose::fist
 
 // GestureFilter spawns a thread to execute callback functions at this
 // period.
 #define SLEEP_LEN 20 // ms
-
-
 
 /**
  * Consult Filter.h for concepts regarding Filters.
@@ -88,19 +106,19 @@ private:
     * Performs initial registration of Mouse Sequences as a default incase profile manager
     * has no profiles to populate with.
     */
-    void registerMouseSequences(void);
+    void defaultMouseSequences(void);
 
     /**
     * Performs initial registration of Keyboard Sequences as a default incase profile manager
     * has no profiles to populate with.
     */
-    void registerKeyboardSequences(void);
+    void defaultKeyboardSequences(void);
 
     /**
     * Performs initial registration of State Sequences as a default incase profile manager
     * has no profiles to populate with.
     */
-    void registerStateSequences(void);
+    void defaultStateSequences(void);
 
     /**
     * Given a completed sequence, returning a CommandData response, this handles the response
@@ -146,15 +164,16 @@ private:
 
     Pose::Type lastPoseType;
     
-    static ControlState* controlStateHandle;
-	MyoState* myoStateHandle;
+    static ControlState* controlStateHandle; // not owned
+    MyoState* myoStateHandle; // not owned
     clock_t timeDelta;
     clock_t lastTime;
 
     GestureSeqRecorder* gestSeqRecorder;
 
-    MainGUI *mainGui;
-    static GestureSignaller signaller;
+    MainGUI *mainGui; // not owned
+    static GestureSignaller gestureSignaller;
+    static SettingsSignaller settingsSignaller;
 
     SequenceImageManager imageManager;
 };

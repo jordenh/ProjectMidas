@@ -1,3 +1,22 @@
+/*
+    Copyright (C) 2015 Midas
+
+    This library is free software; you can redistribute it and/or
+    modify it under the terms of the GNU Lesser General Public
+    License as published by the Free Software Foundation; either
+    version 2.1 of the License, or (at your option) any later version.
+
+    This library is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+    Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public
+    License along with this library; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
+    USA
+*/
+
 #include "SharedCommandData.h"
 
 void SharedCommandData::addCommand(CommandData dat)
@@ -215,6 +234,20 @@ void SharedCommandData::setIsConnected(bool connected)
     isConnectedMutex.unlock();
 }
 
+bool SharedCommandData::getIsSynched(void)
+{
+    isSynchedMutex.lock();
+    bool synched = isSynched;
+    isSynchedMutex.unlock();
+    return synched;
+}
+
+void SharedCommandData::setIsSynched(bool synched)
+{
+    isSynchedMutex.lock();
+    isSynched = synched;
+    isSynchedMutex.unlock();
+}
 bool SharedCommandData::isCommandQueueEmpty()
 {
     return commandQueue.empty();
@@ -254,6 +287,12 @@ void SharedCommandData::process()
     {
         boost::any value = input[IMPULSE_STATUS];
         extractImpulseStatus(value);
+    }
+
+    if (input.find(SYNCHED_INPUT) != input.end())
+    {
+        boost::any value = input[SYNCHED_INPUT];
+        extractIsSynched(value);
     }
 
 #ifdef BUILD_KEYBOARD
@@ -360,6 +399,20 @@ void SharedCommandData::extractIsConnected(boost::any value)
     {
         bool isConnected = boost::any_cast<bool> (value);
         setIsConnected(isConnected);
+    }
+}
+
+void SharedCommandData::extractIsSynched(boost::any value)
+{
+    if (value.type() != typeid(bool))
+    {
+        Filter::setFilterError(filterError::INVALID_INPUT);
+        Filter::setFilterStatus(filterStatus::FILTER_ERROR);
+    }
+    else
+    {
+        bool isSynced = boost::any_cast<bool> (value);
+        setIsSynched(isSynced);
     }
 }
 

@@ -1,3 +1,22 @@
+/*
+    Copyright (C) 2015 Midas
+
+    This library is free software; you can redistribute it and/or
+    modify it under the terms of the GNU Lesser General Public
+    License as published by the Free Software Foundation; either
+    version 2.1 of the License, or (at your option) any later version.
+
+    This library is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+    Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public
+    License along with this library; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
+    USA
+*/
+
 #include "SCDDigester.h"
 
 #include "BaseMeasurements.h"
@@ -8,15 +27,15 @@
 #include "ControlState.h"
 #include "MyoState.h"
 #include "MouseCtrl.h"
-#include "kybrdCtrl.h"
 #include "ProfileManager.h"
+#include "MainGUI.h"
 
 #ifdef BUILD_KEYBOARD
 SCDDigester::SCDDigester(SharedCommandData* scd, MidasThread *thread, ControlState *cntrlStateHandle, MyoState* myoStateHandle,
-	MouseCtrl *mouseCtrl, KybrdCtrl *kybrdCtrl, KeyboardController *keyboardController, ProfileManager* profileManagerHandle, std::vector<ringData> *kybrdRingData)
+    MouseCtrl *mouseCtrl, KeyboardController *keyboardController, ProfileManager* profileManagerHandle,  MainGUI *mainGui std::vector<ringData> *kybrdRingData)
 #else
 SCDDigester::SCDDigester(SharedCommandData* scd, MidasThread *thread, ControlState *cntrlStateHandle, MyoState* myoStateHandle,
-	MouseCtrl *mouseCtrl, KybrdCtrl *kybrdCtrl, KeyboardController *keyboardController, ProfileManager* profileManagerHandle)
+    MouseCtrl *mouseCtrl, KeyboardController *keyboardController, ProfileManager* profileManagerHandle, MainGUI *mainGui)
 #endif
 {
     this->scdHandle = scd;
@@ -24,21 +43,26 @@ SCDDigester::SCDDigester(SharedCommandData* scd, MidasThread *thread, ControlSta
     this->cntrlStateHandle = cntrlStateHandle;
 	this->myoStateHandle = myoStateHandle;
     this->mouseCtrl = mouseCtrl;
-    this->kybrdCtrl = kybrdCtrl;
 	this->keyboardController = keyboardController;
+    this->mainGUI = mainGui;
 
 	this->pm = profileManagerHandle;
     this->count = 0;
 
 #ifdef BUILD_KEYBOARD
 	this->kybrdRingData = kybrdRingData;
-	//this->keyboardWidget = keyboardWidget;
 #endif
+    connSignaller = new ConnectionSignaller();
+    connSignaller->setCurrentlyConnected(false);
+    connSignaller->setCurrentlySynched(false);
+    mainGUI->connectSignallerToPoseDisplayer(connSignaller);
+    mainGUI->connectSignallerToSequenceDisplayer(connSignaller);
 }
 
 
 SCDDigester::~SCDDigester()
 {
+    delete connSignaller; connSignaller = NULL;
 }
 
 void SCDDigester::digest()
@@ -73,7 +97,7 @@ void SCDDigester::digest()
 
     if (consumed && nextCmd.type == commandType::MOUSE_CMD)
     {
-        mouseCtrl->sendCommand(nextCmd.action.mouse);
+        mouseCtrl->sendCommand(nextCmd.action.mouse); // TODO - move into switch statement, and likewise wrap switch with condition on consumed?
     }
 
 	vector2D mouseDelta = scdHandle->getDelta();
@@ -91,6 +115,8 @@ void SCDDigester::digest()
             mouseCtrl->sendCommand(mouseCmds::MOVE_ABSOLUTE, mouseDelta.x, -mouseDelta.y);
         }
 	}
+
+    handleConnectionData();
 
 #ifdef JOYSTICK_CURSOR
     point unitVelocity = scdHandle->getVelocity();
@@ -136,7 +162,7 @@ void SCDDigester::digest()
         if (count % 1000 == 0)
         {
             double angleAsDouble = (double)currKeyAngle.angle;
-            threadHandle->emitUpdateKeyboard(kybdGUISel, angleAsDouble, currKeyAngle.ringThreshReached, false);
+            threadHandle->emitUpdateKeyboard(kybdGUISel, angleAsDouble, currKeyAngle.ringThreshReached, false); // todo kybrd fix test.
 		
             // // TEMP TODO for debug only
             // int x = currKeyAngle.x;
@@ -169,6 +195,7 @@ void SCDDigester::digestKeyboardGUIData(CommandData nextCommand)
     if (nextCommand.type == KYBRD_GUI_CMD)
     {
         unsigned int kybdGUISel = scdHandle->getKybdGuiSel();
+        KeyboardVector kiVec;
 
         // handle special commands for keyboard gui updating.
         switch (nextCommand.action.kybdGUI)
@@ -215,8 +242,9 @@ void SCDDigester::digestKeyboardGUIData(CommandData nextCommand)
                 key = CENTER_MAIN_KEY;
             }
 
-            kybrdCtrl->setKeyChar(key);
-            kybrdCtrl->sendData();
+            kiVec.inputCharDownUp(key);
+            keyboardController->setKiVector(kiVec);
+            keyboardController->sendData();
 
             //threadHandle->animateSelection(); // TODO
             
@@ -242,8 +270,9 @@ void SCDDigester::digestKeyboardGUIData(CommandData nextCommand)
                 key = CENTER_HOLD_KEY;
             }
 
-            kybrdCtrl->setKeyChar(key);
-            kybrdCtrl->sendData();
+            kiVec.inputCharDownUp(key);
+            keyboardController->setKiVector(kiVec);
+            keyboardController->sendData();
 
             //threadHandle->animateSelection(); // TODO
 
@@ -259,6 +288,8 @@ void SCDDigester::digestKybdCmd(CommandData nextCommand)
 {
 	if (nextCommand.action.kybd == kybdCmds::INPUT_VECTOR)
 	{
+        // handle INPUT_VECTOR seperately as KiVector needs to be populated
+        // with each character from the vector.
 		keyboardController->setKiVector(nextCommand.keyboardVector);
 		keyboardController->sendData();
 	}
@@ -266,7 +297,7 @@ void SCDDigester::digestKybdCmd(CommandData nextCommand)
 	{
 		KeyboardVector vec = KeyboardVector::createFromCommand(nextCommand.action.kybd);
 		keyboardController->setKiVector(vec);
-		keyboardController->sendDataDelayed(10);
+		keyboardController->sendDataDelayed(10); // TODO - modify to try a lower value to see if lag can be reduced. Or change how 'sending delayed' works.
 	}
 }
 
@@ -311,4 +342,46 @@ void SCDDigester::digestProfileChange(CommandData nextCmd)
 	{
 		cntrlStateHandle->setProfile(prevProfileName);
 	}
+}
+
+void SCDDigester::handleConnectionData()
+{
+    // signall connection/sync
+    if (scdHandle->getIsConnected() != connSignaller->getCurrentlyConnected())
+    {
+        if (scdHandle->getIsConnected())
+        {
+            connSignaller->emitConnect();
+            connSignaller->setCurrentlyConnected(true);
+        }
+        else
+        {
+            connSignaller->emitDisconnect();
+            connSignaller->setCurrentlyConnected(false);
+        }
+    }
+    if (scdHandle->getIsSynched() != connSignaller->getCurrentlySynched())
+    {
+        if (scdHandle->getIsSynched())
+        {
+            connSignaller->emitSync();
+            connSignaller->setCurrentlySynched(true);
+        }
+        else
+        {
+            connSignaller->emitUnsync();
+            connSignaller->setCurrentlySynched(false);
+        }
+    }
+
+    if (myoStateHandle->getArm() == Arm::armRight && !connSignaller->getIsRightHand())
+    {
+        connSignaller->emitIsRightHand(true);
+        connSignaller->setIsRightHand(true);
+    }
+    if (myoStateHandle->getArm() == Arm::armLeft && connSignaller->getIsRightHand())
+    {
+        connSignaller->emitIsRightHand(false);
+        connSignaller->setIsRightHand(false);
+    }
 }

@@ -1,3 +1,22 @@
+/*
+Copyright (C) 2015 Midas
+
+This library is free software; you can redistribute it and/or
+modify it under the terms of the GNU Lesser General Public
+License as published by the Free Software Foundation; either
+version 2.1 of the License, or (at your option) any later version.
+
+This library is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this library; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
+USA
+*/
+
 #include "SequenceEditor.h"
 #include <QListWidgetItem>
 #include <QMessageBox.h>
@@ -121,6 +140,9 @@ void SequenceEditor::handleAddGesture()
 
 void SequenceEditor::handleAddAction()
 {
+    QString command = ui.commandComboBox->currentText();
+    ui.commandList->addItem(command);
+
     QString action = ui.actionComboBox->currentText();
 	if (action == "inputVector")
 	{
@@ -147,19 +169,43 @@ void SequenceEditor::handleDone()
 
     returnSequence.gestures = gestures;
 
-    std::vector<std::string> actions;
-    for (int row = 0; row < ui.actionList->count(); row++)
+    if (ui.actionList->count() == ui.commandList->count())
     {
-        QListWidgetItem* item = ui.actionList->item(row);
-        std::string action;
-        action = item->text().toStdString();
-        actions.push_back(action);
+        for (int row = 0; row < ui.commandList->count(); row++)
+        {
+            QListWidgetItem* item = ui.commandList->item(row);
+            std::string command;
+            command = item->text().toStdString();
+
+            item = ui.actionList->item(row);
+            std::string action;
+            action = item->text().toStdString();
+
+            Command cmd;
+            cmd.type = command;
+            std::vector<std::string> actionVec;
+            actionVec.push_back(action); // Only support one action per command as of now. Makes more sense to have multiple commands.
+            cmd.actions = actionVec;
+            returnSequence.cmds.push_back(cmd);
+        }
     }
-	// TODO - in the future make this accept/write multiple commands. For now, not supported.
-	Command cmd;
-	cmd.type = ui.commandComboBox->currentText().toStdString();
-	cmd.actions = actions;
-	returnSequence.cmds.push_back(cmd);
+    else
+    {
+        // default to legacy behaviour
+        std::vector<std::string> actions;
+        for (int row = 0; row < ui.actionList->count(); row++)
+        {
+            QListWidgetItem* item = ui.actionList->item(row);
+            std::string action;
+            action = item->text().toStdString();
+            actions.push_back(action);
+        }
+        // TODO - in the future make this accept/write multiple commands. For now, not supported.
+        Command cmd;
+        cmd.type = ui.commandComboBox->currentText().toStdString();
+        cmd.actions = actions;
+        returnSequence.cmds.push_back(cmd);
+    } 
 
     std::string errorMsg;
     if (checkPrefixConstraint(errorMsg))

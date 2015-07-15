@@ -1,11 +1,32 @@
+/*
+    Copyright (C) 2015 Midas
+
+    This library is free software; you can redistribute it and/or
+    modify it under the terms of the GNU Lesser General Public
+    License as published by the Free Software Foundation; either
+    version 2.1 of the License, or (at your option) any later version.
+
+    This library is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+    Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public
+    License along with this library; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
+    USA
+*/
+
 #ifndef _MYO_TRANSLATION_FILTER_H
 #define _MYO_TRANSLATION_FILTER_H
 
 #include "Filter.h"
+#include "FilterKeys.h"
 #include "GestureHoldModeAction.h"
 #include "ProfileManager.h"
 #include "SettingsSignaller.h"
 #include "myo\myo.hpp"
+#include <math.h>
 
 #ifdef USE_SIMULATOR
 #include "MyoSimIncludes.hpp"
@@ -17,13 +38,7 @@ using namespace myo;
 class MyoState;
 class ControlState;
 class MainGUI;
-
-#define INPUT_QUATERNION_X "quatDataX"
-#define INPUT_QUATERNION_Y "quatDataY"
-#define INPUT_QUATERNION_Z "quatDataZ"
-#define INPUT_QUATERNION_W "quatDataW"
-#define INPUT_ARM "arm"
-#define INPUT_X_DIRECTION "xDirection"
+class HoldModeObserver;
 
 #define MAX_PITCH_ANGLE 25.0f /* Maximum delta angle in degrees */
 #define MAX_YAW_ANGLE 30.0f /* Maximum delta angle in degrees */
@@ -70,9 +85,25 @@ public:
     */
     static float calcRingDelta(float current, float base);
 
+    static float radToDeg(float rad)
+    {
+        return rad * (180.0 / M_PI);
+    }
+
+    static float degToRad(float deg)
+    {
+        return (deg / 180.0) * M_PI;
+    }
+
     filterError updateBasedOnProfile(ProfileManager& pm, std::string name);
 
 private:
+    void handleQuatData(filterDataMap input, filterDataMap output);
+
+    void handleArmData(filterDataMap input, filterDataMap output);
+
+    void handleXDirectionData(filterDataMap input, filterDataMap output);
+
     /**
      * Calculate the 'pitch' angle from the supplied quaternion, consisting of x, y, z and w,
      * and infer sign based on arm and xDirection.
@@ -109,7 +140,7 @@ private:
     * @param w The w coordinate of the quaternion.
     * @return Returns the 'roll' angle, in radians.
     */
-    float getRollFromQuaternion(float x, float y, float z, float w);
+    float getRollFromQuaternion(float x, float y, float z, float w, Arm arm, XDirection xDirection);
 
     /**
     * Calculates the percent of the mouse cursor's total velocity along the x
@@ -131,16 +162,37 @@ private:
     bool initGestHoldModeActionArr(void);
     void unregisterHoldModeActions(void);
 
-    ControlState* controlStateHandle;
-	MyoState* myoStateHandle;
+    void updateHoldModeObserver(midasMode currMode);
+
+    ControlState* controlStateHandle; // not owned
+    MyoState* myoStateHandle; // not owned
     midasMode previousMode;
     float pitch, basePitch, prevPitch, deltaPitchDeg, 
         yaw, baseYaw, prevYaw, deltaYawDeg,
         roll, baseRoll, prevRoll, deltaRollDeg;
 
+    HoldModeObserver *hmo;
+    int gestHoldModeActionIdx(midasMode mode)
+    {
+        switch (mode)
+        {
+        case GESTURE_HOLD_ONE:
+            return GESTURE_DOUBLE_TAP;
+        case GESTURE_HOLD_TWO:
+            return GESTURE_FINGERS_SPREAD;
+        case GESTURE_HOLD_THREE:
+            return GESTURE_FIST;
+        case GESTURE_HOLD_FOUR:
+            return GESTURE_WAVE_IN;
+        case GESTURE_HOLD_FIVE:
+            return GESTURE_WAVE_OUT;
+        default:
+            return GESTURE_WAVE_OUT;
+        }
+    }
     GestureHoldModeAction gestHoldModeAction[5];
 
-    MainGUI *mainGui;
+    MainGUI *mainGui; // not owned
     static SettingsSignaller settingsSignaller;
 };
 

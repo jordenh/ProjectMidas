@@ -1,3 +1,22 @@
+/*
+    Copyright (C) 2015 Midas
+
+    This library is free software; you can redistribute it and/or
+    modify it under the terms of the GNU Lesser General Public
+    License as published by the Free Software Foundation; either
+    version 2.1 of the License, or (at your option) any later version.
+
+    This library is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+    Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public
+    License along with this library; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
+    USA
+*/
+
 #include "MouseCtrl.h"
 #include "BaseMeasurements.h"
 #include <iostream>
@@ -11,7 +30,7 @@ MouseCtrl::MouseCtrl()
     lastMouseScroll = lastMouseMoveX;
     minMoveXTimeDelta = DEFAULT_MIN_MOVE_TIME;
     minMoveYTimeDelta = DEFAULT_MIN_MOVE_TIME;
-    scrollRate = DEFAULT_SCROLL_RATE;
+    scrollRate = WHEEL_DELTA;
     currHeld = 0;
 }
 
@@ -23,7 +42,7 @@ void MouseCtrl::setScrollRate(int rate)
 {
     if (rate < -WHEEL_DELTA || rate > WHEEL_DELTA)
     {
-        scrollRate = DEFAULT_SCROLL_RATE; 
+        scrollRate = WHEEL_DELTA;
     } 
     else
     {
@@ -263,11 +282,11 @@ void MouseCtrl::setMouseInputVars(mouseCmds mouseCmd, double& mouseRateIfMove, d
         break;
     case mouseCmds::SCROLL_UP:
         mi.dwFlags = MOUSEEVENTF_WHEEL;
-        mi.mouseData = scrollRate; // RANGE IS FROM -120 to +120 : WHEEL_DELTA = 120, which is one "wheel click"
+        mi.mouseData = abs(scrollRate); // RANGE IS FROM -120 to +120 : WHEEL_DELTA = 120, which is one "wheel click"
         break;
     case mouseCmds::SCROLL_DOWN:
         mi.dwFlags = MOUSEEVENTF_WHEEL;
-        mi.mouseData = -scrollRate; // RANGE IS FROM -120 to +120 : WHEEL_DELTA = 120, which is one "wheel click"
+        mi.mouseData = -abs(scrollRate); // RANGE IS FROM -120 to +120 : WHEEL_DELTA = 120, which is one "wheel click"
         break;
 	case mouseCmds::MOVE_ABSOLUTE:
 		if (!BaseMeasurements::getInstance().areCurrentValuesValid())

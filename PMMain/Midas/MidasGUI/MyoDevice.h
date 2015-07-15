@@ -1,6 +1,27 @@
+/*
+    Copyright (C) 2015 Midas
+
+    This library is free software; you can redistribute it and/or
+    modify it under the terms of the GNU Lesser General Public
+    License as published by the Free Software Foundation; either
+    version 2.1 of the License, or (at your option) any later version.
+
+    This library is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+    Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public
+    License along with this library; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
+    USA
+*/
+
 #pragma once
 #include "WearableDevice.h"
-#include "FilterPipeline.h"
+#include "GestureFilter.h"
+#include "EMGImpulseFilter.h"
+#include "AdvancedFilterPipeline.h"
 #include "myo\myo.hpp"
 #include "ProfileSignaller.h"
 
@@ -23,6 +44,9 @@ class ControlState;
 class MyoState;
 class MainGUI;
 class ProfileManager;
+class GenericAveragingFilter;
+class GenericBypassFilter;
+class MyoTranslationFilter;
 
 /**
  * Handles the Myo device, collecting the data using the Myo API, and converting the data
@@ -92,6 +116,12 @@ public:
     void vibrateMyos(myo::Myo::VibrationType vibType, int numReps = 1) const;
 
 private:
+    void setupPosePipeline(GestureFilter *gf);
+    void setupOrientationPipeline();
+    void setupRSSIPipeline();
+
+    void setArmAndX(Myo* myo, Arm arm, XDirection xDirection);
+
     /**
      * This class implements all of the callback functions from the Myo DeviceListener
      * class. The methods in this class are called when Myo events occur.
@@ -134,20 +164,53 @@ private:
         int8_t lastEMGData[8];
     };
 
-    std::vector<myo::Myo*> connectedMyos;
+    struct MyoWithData {
+        MyoWithData(Myo* myo) { this->myo = myo; arm = Arm::armUnknown; xDirection = XDirection::xDirectionUnknown; }
+
+        Myo* myo;
+        Arm arm;
+        XDirection xDirection;
+    };
+
+    std::vector<MyoWithData> connectedMyos; // not owned
         unsigned int myoFindTimeout;
     unsigned int durationInMilliseconds;
     std::string appIdentifier;
-    ControlState* state;
-	MyoState* myoState;
-    FilterPipeline posePipeline, orientationPipeline, rssiPipeline,
-        connectPipeline, emgImpulsePipeline;
-    MainGUI *mainGui;
+
+    ControlState* state; // not owned
+    MyoState* myoState; // not owned
+    AdvancedFilterPipeline advancedPosePipeline, advancedOrientationPipeline,
+        advancedRssiPipeline, advancedConnectPipeline, advancedSyncPipeline, emgImpulsePipeline; // todo upgrade emgImpulsePipeline to use advancedFilterPipeline
+    MainGUI *mainGui; // not owned
+
     std::string prevProfileName;
 
-    Arm arm;
-    XDirection xDirection;
+//    Arm arm;
+//    XDirection xDirection;
     static ProfileSignaller profileSignaller;
-    ProfileManager *profileManager;
+    ProfileManager *profileManager; // not owned
+
+    GestureFilter gestureFilter;
+    EMGImpulseFilter emgImpulseFilter;
+    // owned filters
+    GenericAveragingFilter *genAvgFilterRSSI;
+
+    GenericAveragingFilter *genAvgFilterQX;
+    GenericAveragingFilter *genAvgFilterQY;
+    GenericAveragingFilter *genAvgFilterQZ;
+    GenericAveragingFilter *genAvgFilterQW;
+
+    GenericAveragingFilter *genAvgFilterAY;
+    GenericAveragingFilter *genAvgFilterAZ;
+    GenericAveragingFilter *genAvgFilterAW;
+
+    GenericAveragingFilter *genAvgFilterGY;
+    GenericAveragingFilter *genAvgFilterGZ;
+    GenericAveragingFilter *genAvgFilterGW;
+
+    GenericBypassFilter *genBypassFilterArm;
+    GenericBypassFilter *genBypassFilterXDir;
+
+    MyoTranslationFilter *translationFilter;
 };
 

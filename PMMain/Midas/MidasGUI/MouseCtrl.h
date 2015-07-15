@@ -1,3 +1,22 @@
+/*
+    Copyright (C) 2015 Midas
+
+    This library is free software; you can redistribute it and/or
+    modify it under the terms of the GNU Lesser General Public
+    License as published by the Free Software Foundation; either
+    version 2.1 of the License, or (at your option) any later version.
+
+    This library is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+    Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public
+    License along with this library; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
+    USA
+*/
+
 #ifndef _MOUSE_CONTROLLER_H
 #define _MOUSE_CONTROLLER_H
 
@@ -7,7 +26,6 @@
 #include "MidasCommon.h"
 
 #define DEFAULT_MIN_MOVE_TIME 10
-#define DEFAULT_SCROLL_RATE 1 //Default to slow rate.
 #define SCROLL_MIN_TIME 5
 #define MAX_MOVE_TIME_DELTA 40 //large enough ms delay between moving a pixel is pretty slow.
 #define MIN_MOVE_TIME_DELTA 1 //small enough ms delay between moving a pixel is fast, but not uncontrolled..

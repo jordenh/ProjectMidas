@@ -1,8 +1,28 @@
+/*
+    Copyright (C) 2015 Midas
+
+    This library is free software; you can redistribute it and/or
+    modify it under the terms of the GNU Lesser General Public
+    License as published by the Free Software Foundation; either
+    version 2.1 of the License, or (at your option) any later version.
+
+    This library is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+    Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public
+    License along with this library; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
+    USA
+*/
+
 #ifndef FILTER_H
 #define FILTER_H
 
 #include <string>
 #include <map>
+#include <mutex>
 #include <boost/any.hpp>
 
 class ProfileManager;
@@ -108,6 +128,15 @@ public:
      */
     static filterDataMap joinFilterDataMaps(filterDataMap map0, filterDataMap map1);
 
+    /**
+     * Find if two maps have a collision of keys. True if collision exists.
+     *
+     * @param map0 first filterDataMap. 
+     * @param map1 sencond map.
+     * @return True if collision exists. False otherwise.
+     */
+    static bool mapCollision(filterDataMap map0, filterDataMap map1);
+
 protected:
     /**
      * Retrieve the input to the filter. Only a subclass of Filter can access
@@ -123,6 +152,13 @@ protected:
      * @param output The map of name-value pairs.
      */
     void setOutput(filterDataMap output);
+
+    /**
+    * Add to the output of the filter. Current values persist if conflict.
+    *
+    * @param output The map of name-value pairs.
+    */
+    void addToOutput(filterDataMap output);
 
     /**
     * Clear the output of the filter.
@@ -148,6 +184,8 @@ private:
     filterDataMap outputData;
     filterStatus status;
     filterError error;
+
+    std::mutex filterMutex;
 };
 
 #endif FILTER_H

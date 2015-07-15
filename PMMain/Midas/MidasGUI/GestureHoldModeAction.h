@@ -1,8 +1,31 @@
+/*
+    Copyright (C) 2015 Midas
+
+    This library is free software; you can redistribute it and/or
+    modify it under the terms of the GNU Lesser General Public
+    License as published by the Free Software Foundation; either
+    version 2.1 of the License, or (at your option) any later version.
+
+    This library is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+    Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public
+    License along with this library; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
+    USA
+*/
+
 #ifndef GESTURE_HOLD_MODE_ACTION_HPP
 #define GESTURE_HOLD_MODE_ACTION_HPP
 
 #include "MidasCommon.h"
 #include <unordered_map>
+
+#define DEFAULT_SENSITIVITY 1
+#define DEFAULT_INTERVAL_LEN 100
+#define DEFAULT_ACTION_TYPE HoldModeActionType::ABS_DELTA_FINITE
 
 typedef struct angleData {
     bool operator==(const angleData& ad)
@@ -28,6 +51,18 @@ typedef struct angleData {
         PITCH,
         YAW
     };
+
+    angleData()
+    {
+        angleType = ROLL;
+        anglePositive = true;
+    }
+    angleData(AngleType type, bool positive)
+    {
+        angleType = type;
+        anglePositive = positive;
+    }
+
     AngleType angleType;
     bool anglePositive;
 } angleData;
@@ -35,26 +70,48 @@ typedef struct angleData {
 class GestureHoldModeAction {
 public:
     GestureHoldModeAction();
-    GestureHoldModeAction(unsigned int minIntervalLen);
+    GestureHoldModeAction(float rollSensitivity, float pitchSensitivity, float yawSensitivity);
 
-    void clearMap();
+    void clean();
 
     bool addToActionMap(angleData ad, kybdCmds command);
 
     kybdCmds getAction(angleData ad);
 
+    void setRollSensitivity(float sensitivity) { rollSensitivity = sensitivity; }
+    float getRollSensitivity() { return rollSensitivity; }
+
+    void setPitchSensitivity(float sensitivity) { pitchSensitivity = sensitivity; }
+    float getPitchSensitivity() { return pitchSensitivity; }
+
+    void setYawSensitivity(float sensitivity) { yawSensitivity = sensitivity; }
+    float getYawSensitivity() { return yawSensitivity; }
+
+    void setActionType(HoldModeActionType type) { actionType = type; }
+    HoldModeActionType getActionType() { return actionType; }
+
+    void setIntervalLen(unsigned int len) { intervalLen = len; }
+    unsigned int getIntervalLen() { return intervalLen; }
+
+    void setVelocityIntervalLen(unsigned int len) { velocityIntervalLen = len; }
+    unsigned int getVelocityIntervalLen() { return velocityIntervalLen; }
+
 private:
-    // TODO - actually care about this type. In the meantime, coding Interval_delta since it's easiest.
-    // enum holdModeActionType {
-    //     INTERVAL_DELTA, // if in a given interval a signal is +/-, an action will ensue
-    //     ABSOLUTE_DELTA_NUM_SIGS, // Based on the delta, ensure the number of +/- actions is at a certain value (repeatable change)
-    //     ABSOLUTE_DELTA_VELOCITY // Based on delta, continue spewing actions
-    // };
+    // Sensitivities indicate how many DEGREES are required to trigger ONE action
+    // (stored in the actionMap)
+    float rollSensitivity;
+    float pitchSensitivity;
+    float yawSensitivity;
 
-    std::unordered_map<int, kybdCmds> actionMap;
+    // defines functionality for observer
+    HoldModeActionType actionType;
 
-    unsigned int minIntervalLen; // between sampling signals and sending actions // TODO - make this useful
-    
+    // Vars required for INTERVAL_DELTA mode
+    unsigned int intervalLen;
+    // Vars required for ABS_DELTA_VELOCITY mode
+    unsigned int velocityIntervalLen;
+
+    std::unordered_map<int, kybdCmds> actionMap;    
 };
 
 #endif /* GESTURE_HOLD_MODE_ACTION_HPP */
