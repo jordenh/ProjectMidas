@@ -53,12 +53,17 @@
 					</command>
 				</commands>
             </sequence>
-						
+			
 			<sequence state="mouseMode" name="Middle Button">
                 <gestures>
-					<gesture type="immediate">fist</gesture>
+                    <gesture type="hold">fist</gesture>
                 </gestures>
                 <commands>
+					<command type="stateChange">
+						<actions>
+							<action>mouseMode2</action>
+						</actions>
+					</command>
 					<command type="mouse">
 						<actions>
 							<action>middleHold</action>
@@ -71,6 +76,11 @@
 					<gesture type="immediate">fingersSpread</gesture>
                 </gestures>
                 <commands>
+					<command type="stateChange">
+						<actions>
+							<action>mouseMode2</action>
+						</actions>
+					</command>
 					<command type="mouse">
 						<actions>
 							<action>leftHold</action>
@@ -89,21 +99,24 @@
 						</actions>
 					</command>
 				</commands>
-            </sequence>
-			<sequence state="mouseMode" name="Release Button">
+            </sequence>		
+			<sequence state="mouseMode2" name="Release Button">
                 <gestures>
-					<gesture type="immediate">rest</gesture>
+                    <gesture type="immediate">rest</gesture>
                 </gestures>
                 <commands>
-					<command type="mouse">
-						<actions>
-							<action>releaseLrmButs</action>
-						</actions>
-					</command>
+				<command type="stateChange">
+                    <actions>
+                        <action>mouseMode</action>
+                    </actions>
+                </command>
+				<command type="mouse">
+                    <actions>
+                        <action>releaseLrmButs</action>
+                    </actions>
+                </command>
 				</commands>
             </sequence>
-			
-			
 		</sequences>
         <holds>
         </holds>
