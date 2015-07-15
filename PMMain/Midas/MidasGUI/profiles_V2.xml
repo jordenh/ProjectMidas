@@ -56,7 +56,7 @@
 			
 			<sequence state="mouseMode" name="Middle Button">
                 <gestures>
-                    <gesture type="hold">fist</gesture>
+                    <gesture type="immediate">fist</gesture>
                 </gestures>
                 <commands>
 					<command type="stateChange">
