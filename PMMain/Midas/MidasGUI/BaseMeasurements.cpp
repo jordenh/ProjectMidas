@@ -38,6 +38,39 @@ void BaseMeasurements::setBaseCursor(unsigned int x, unsigned int y)
 	accessMutex.unlock();
 }
 
+void BaseMeasurements::modifyBaseCursor(int xDelta, int yDelta)
+{
+    accessMutex.lock();
+
+    if ((int)baseCursorX + xDelta < 0)
+    {
+        baseCursorX = 0;
+    }
+    else if ((int)baseCursorX + xDelta > 5000)
+    {
+        // TODO - handle max screen size as well!!!
+        int a = 1;
+    }
+    else
+    {
+        baseCursorX = (int)baseCursorX + xDelta;
+    }
+    if ((int)baseCursorY + yDelta < 0)
+    {
+        baseCursorY = 0;
+    } 
+    else if ((int)baseCursorY + yDelta > 5000)
+    {
+        // TODO - handle max screen size as well!!!
+        int a = 1;
+    }
+    else
+    {
+        baseCursorY = (int)baseCursorY + yDelta;
+    }
+    accessMutex.unlock();
+}
+
 // use Windows API to update cursor position
 void BaseMeasurements::updateBaseCursor()
 {
@@ -49,6 +82,11 @@ void BaseMeasurements::updateBaseCursor()
 		baseCursorX = cursorPoint.x;
 		baseCursorY = cursorPoint.y;
 	}
+
+    if (baseCursorX > 5000 || baseCursorY > 5000)
+    {
+        int a = 1;
+    }
 	accessMutex.unlock();
 }
 
