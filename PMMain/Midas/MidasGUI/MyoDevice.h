@@ -39,10 +39,6 @@ using namespace myo;
 #define DEFAULT_MYO_ARM Arm::armUnknown
 #define DEFAULT_MYO_XDIR XDirection::xDirectionUnknown
 
-// in output analysis of gyro data, 1000 was the max abs value when shaking the Myo
-// to a reasonable extent
-#define GYRO_SCALE_DOWN 1
-
 class ControlState;
 class MyoState;
 class MainGUI;

@@ -316,12 +316,9 @@ void MyoDevice::MyoCallbacks::onGyroscopeData(Myo* myo, uint64_t timestamp, cons
     myoGyroDataFile << gyro.x() << "," << gyro.y() << "," << gyro.z() << std::endl;
 
     filterDataMap input;
-    float gyroXScaled = gyro.x() / GYRO_SCALE_DOWN;
-    float gyroYScaled = gyro.y() / GYRO_SCALE_DOWN;
-    float gyroZScaled = gyro.z() / GYRO_SCALE_DOWN;
-    input[GYRO_DATA_X] = gyroXScaled;
-    input[GYRO_DATA_Y] = gyroYScaled;
-    input[GYRO_DATA_Z] = gyroZScaled;
+    input[GYRO_DATA_X] = gyro.x();
+    input[GYRO_DATA_Y] = gyro.y();
+    input[GYRO_DATA_Z] = gyro.z();
 
     // For now, advancedOrientationPipeline doesnt use this data, so not going
     // to bother starting pipeline. Uncomment (and it will work fine) if data

@@ -209,6 +209,8 @@ void MyoTranslationFilter::handleGyroData(filterDataMap input, filterDataMap out
     float gyroZ;
     float quatW;
 
+#ifdef USE_GYRO_DATA
+
     // Require an entire quaternion in one input to process
     if (input.find(GYRO_DATA_X) != input.end() &&
         input.find(GYRO_DATA_Y) != input.end() &&
@@ -253,6 +255,7 @@ void MyoTranslationFilter::handleGyroData(filterDataMap input, filterDataMap out
             }
         }
     }
+#endif
 }
 
 void MyoTranslationFilter::handleArmData(filterDataMap input, filterDataMap output)
