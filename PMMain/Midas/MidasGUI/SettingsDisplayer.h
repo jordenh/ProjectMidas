@@ -31,8 +31,8 @@ class QHBoxLayout;
 class QSlider;
 class QPushButton;
 
-#define MIN_SLIDER_ANGLE 1
-#define MAX_SLIDER_ANGLE 50
+#define MIN_SLIDER_ANGLE 15
+#define MAX_SLIDER_ANGLE 100
 
 class SettingsDisplayer : public QWidget
 {

@@ -686,15 +686,6 @@ filterError GestureFilter::updateBasedOnProfile(ProfileManager& pm, std::string 
         ss |= (int)gestSeqRecorder->registerSequence(startState, seq, response, it->name);
     }
 
-	// Jorden TODO - add this back in proper way <-- Need a "submit action on transition" for this and for entering mouse mode.
-//    sequence clickSeq;
-//    CommandData clickResp;
-//    clickResp.action.mouse = mouseCmds::RELEASE_LRM_BUTS;
-//    clickResp.name = "Release Mouse";
-//    clickResp.type = commandType::MOUSE_CMD;
-//    clickSeq.push_back(SeqElement(Pose::rest, PoseLength::IMMEDIATE));
-//    ss |= (int)gestSeqRecorder->registerSequence(midasMode::MOUSE_MODE, clickSeq, clickResp, "Release Mouse");
-
 #ifdef BUILD_WITH_HOLD_MODES
     // Register sequence from Gesture Mode to Gesture Hold Modes
     sequence toHoldGestSeq;

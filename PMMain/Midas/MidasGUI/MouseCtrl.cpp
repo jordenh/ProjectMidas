@@ -312,11 +312,6 @@ void MouseCtrl::setMouseInputVars(mouseCmds mouseCmd, double& mouseRateIfMove, d
 //		mi.dx = max(min(mi.dx, monitorSizeWeight), 0);
 //		mi.dy = max(min(mi.dy, monitorSizeWeight), 0);
 
-		if (mi.dx < 10 && mi.dy < 10)
-		{
-			int a = 1;
-		}
-
 		break;
     }
 }
