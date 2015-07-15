@@ -313,17 +313,20 @@ void MyoDevice::MyoCallbacks::onAccelerometerData(Myo* myo, uint64_t timestamp, 
 
 void MyoDevice::MyoCallbacks::onGyroscopeData(Myo* myo, uint64_t timestamp, const Vector3<float>& gyro) 
 {
-    filterDataMap input;
-    input[GYRO_DATA_X] = gyro.x();
-    input[GYRO_DATA_Y] = gyro.y();
-    input[GYRO_DATA_Z] = gyro.z();
-
     myoGyroDataFile << gyro.x() << "," << gyro.y() << "," << gyro.z() << std::endl;
+
+    filterDataMap input;
+    float gyroXScaled = gyro.x() / GYRO_SCALE_DOWN;
+    float gyroYScaled = gyro.y() / GYRO_SCALE_DOWN;
+    float gyroZScaled = gyro.z() / GYRO_SCALE_DOWN;
+    input[GYRO_DATA_X] = gyroXScaled;
+    input[GYRO_DATA_Y] = gyroYScaled;
+    input[GYRO_DATA_Z] = gyroZScaled;
 
     // For now, advancedOrientationPipeline doesnt use this data, so not going
     // to bother starting pipeline. Uncomment (and it will work fine) if data
     // is handled in the future.
-    //parent.advancedOrientationPipeline.startPipeline(input);
+    parent.advancedOrientationPipeline.startPipeline(input);
 }
 
 void MyoDevice::MyoCallbacks::onPair(Myo* myo, uint64_t timestamp, FirmwareVersion firmwareVersion) { 

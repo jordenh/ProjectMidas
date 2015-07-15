@@ -52,6 +52,8 @@ class HoldModeObserver;
 #define GESTURE_WAVE_IN 3
 #define GESTURE_WAVE_OUT 4
 
+#define CURSOR_GYRO_ACCEL_RATE 200
+
 /**
  * Consult Filter.h for concepts regarding Filters.
  * Handles translating from Myo orientation data to mouse movement information.
@@ -99,6 +101,8 @@ public:
 
 private:
     void handleQuatData(filterDataMap input, filterDataMap output);
+
+    void handleGyroData(filterDataMap input, filterDataMap output);
 
     void handleArmData(filterDataMap input, filterDataMap output);
 

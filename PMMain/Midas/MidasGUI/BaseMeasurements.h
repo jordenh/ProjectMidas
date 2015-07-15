@@ -38,6 +38,8 @@ public:
 
 	void setBaseCursor(unsigned int x, unsigned int y);
 
+    void modifyBaseCursor(int xDelta, int yDelta);
+
 	// use Windows API to update cursor position
 	void updateBaseCursor();
 

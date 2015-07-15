@@ -40,3 +40,11 @@ scaledGyroY = gyroY/SCALE;
 scaledGyroZ = gyroZ/SCALE;
 plot(x, scaledGyroX, x, scaledGyroY, x, scaledGyroZ);
 title('Gyro Data Scaled by 1000');
+
+figure
+SCALE = 1000;
+scaledGyroX = power(gyroX,2).*sign(gyroX)/SCALE;
+scaledGyroY = power(gyroY,2).*sign(gyroY)/SCALE;
+scaledGyroZ = power(gyroZ,2).*sign(gyroZ)/SCALE;
+plot(x, scaledGyroX, x, scaledGyroY, x, scaledGyroZ);
+title('Gyro Data power of 2 Scaled down by 1000');
