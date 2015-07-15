@@ -259,10 +259,11 @@ MyoDevice::MyoCallbacks::MyoCallbacks(MyoDevice& parentDevice)
     : parent(parentDevice)
 {
     myoDataFile.open("myoDataFile.csv");
+    myoGyroDataFile.open("myoGyroData.csv");
     lastPose = Pose::rest;
 }
 
-MyoDevice::MyoCallbacks::~MyoCallbacks() { myoDataFile.close(); }
+MyoDevice::MyoCallbacks::~MyoCallbacks() { myoDataFile.close(); myoGyroDataFile.close(); }
 
 // Overridden functions from DeviceListener
 void MyoDevice::MyoCallbacks::onPose(Myo* myo, uint64_t timestamp, Pose pose) 
@@ -316,6 +317,8 @@ void MyoDevice::MyoCallbacks::onGyroscopeData(Myo* myo, uint64_t timestamp, cons
     input[GYRO_DATA_X] = gyro.x();
     input[GYRO_DATA_Y] = gyro.y();
     input[GYRO_DATA_Z] = gyro.z();
+
+    myoGyroDataFile << gyro.x() << "," << gyro.y() << "," << gyro.z() << std::endl;
 
     // For now, advancedOrientationPipeline doesnt use this data, so not going
     // to bother starting pipeline. Uncomment (and it will work fine) if data
