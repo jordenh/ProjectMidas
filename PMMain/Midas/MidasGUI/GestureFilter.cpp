@@ -40,15 +40,15 @@ GestureFilter::GestureFilter(ControlState* controlState, MyoState* myoState, clo
     : timeDelta(timeDel), lastPoseType(Pose::rest),
 	lastTime(0), mainGui(mainGuiHandle)
 {
+    controlStateHandle = controlState;
+    myoStateHandle = myoState;
+
     imageManager.loadImages();
     gestSeqRecorder = new GestureSeqRecorder(controlState, mainGuiHandle, imageManager);
 
     defaultMouseSequences();
     defaultKeyboardSequences();
     defaultStateSequences();
-
-    controlStateHandle = controlState;
-	myoStateHandle = myoState;
 
     setupCallbackThread(this);
 
@@ -218,7 +218,7 @@ void GestureFilter::defaultKeyboardSequences(void)
     kybrdGUIResponse.name = "Swap Ring Focus";
     kybrdGUIResponse.type = commandType::KYBRD_GUI_CMD;
     kybrdGUIResponse.action.kybdGUI = kybdGUICmds::SWAP_RING_FOCUS;
-    if (this->myoStateHandle->getArm() == Arm::armLeft)
+    if (myoStateHandle->getArm() == Arm::armLeft)
     {
         kybrdGUISequence.push_back(SeqElement(Pose::Type::waveIn));
     }
@@ -230,7 +230,7 @@ void GestureFilter::defaultKeyboardSequences(void)
     kybrdGUIResponse.name = "Backspace";
     kybrdGUIResponse.type = commandType::KYBRD_CMD;
     kybrdGUIResponse.action.kybd = kybdCmds::BACKSPACE;
-    if (this->myoStateHandle->getArm() == Arm::armLeft)
+    if (myoStateHandle->getArm() == Arm::armLeft)
     {
         kybrdGUISequence[0] = (SeqElement(Pose::Type::waveOut));
     }
