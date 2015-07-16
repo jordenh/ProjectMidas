@@ -173,7 +173,7 @@ void MouseCtrl::sendCommand(mouseCmds mouseCmd, double mouseRateIfMove, double m
             goto done;
         }
 
-        Sleep(10);
+        Sleep(2);
         in->type = INPUT_MOUSE;
         in->mi = mi;
         SendInput(1, in, sizeof(INPUT));
