@@ -271,12 +271,12 @@ void MouseCtrl::setMouseInputVars(mouseCmds mouseCmd, double& mouseRateIfMove, d
         mi.dy = 1;
         break;
     case mouseCmds::SCROLL_LEFT:
-        //TODO - Not working
+        // Doesnt work without elevated privelages...
         mi.dwFlags = MOUSEEVENTF_HWHEEL;
         mi.mouseData = -scrollRate;
         break;
     case mouseCmds::SCROLL_RIGHT:
-        //TODO - Not working
+        // Doesnt work without elevated privelages...
         mi.dwFlags = MOUSEEVENTF_HWHEEL;
         mi.mouseData = scrollRate;
         break;
@@ -296,21 +296,34 @@ void MouseCtrl::setMouseInputVars(mouseCmds mouseCmd, double& mouseRateIfMove, d
 
 		mi.dwFlags = MOUSEEVENTF_MOVE | MOUSEEVENTF_ABSOLUTE;
 		int monitorSizeWeight = 65535; // size of a single monitor as represented by windows API
-		float monitorWidth = 1920.0; // TEMP TODO - make variable perhaps? For now, this is size of expected monitors
-		float monitorHeight = 1080.0;
+        float monitorWidth = BaseMeasurements::getInstance().getSingleMonitorSizeX();
+        float monitorHeight = BaseMeasurements::getInstance().getSingleMonitorSizeY();
 
 		float baseCursorX = BaseMeasurements::getInstance().getBaseCursorX();
         float baseCursorY = BaseMeasurements::getInstance().getBaseCursorY();
         float baseWindowsLocX = (baseCursorX / monitorWidth) * monitorSizeWeight;
         float baseWindowsLocY = (baseCursorY / monitorHeight) * monitorSizeWeight;
 
-		//mi.dy = monitorSizeWeight / 2 + (mouseRateIfMoveY_hack / 100.0 * monitorSizeWeight / 2);
-		//mi.dx = monitorSizeWeight / 2 + (mouseRateIfMove / 100.0 * monitorSizeWeight / 2);
 		mi.dx = baseWindowsLocX + (mouseRateIfMove / 100.0 * monitorSizeWeight / 2);
 		mi.dy = baseWindowsLocY + (mouseRateIfMoveY_hack / 100.0 * monitorSizeWeight / 2);
 
-//		mi.dx = max(min(mi.dx, monitorSizeWeight), 0);
-//		mi.dy = max(min(mi.dy, monitorSizeWeight), 0);
+        int maxDx = monitorSizeWeight * (BaseMeasurements::getInstance().getScreenSizeX() / monitorWidth);
+        int maxDy = monitorSizeWeight * (BaseMeasurements::getInstance().getScreenSizeY() / monitorHeight);
+        mi.dx = max(min(mi.dx, maxDx), 0);
+        mi.dy = max(min(mi.dy, maxDy), 0);
+
+        if (mi.dx <= 0 || 
+            mi.dx >= maxDx)
+        {
+            BaseMeasurements::getInstance().setCurrentAnglesAsBase(YAW_ID);
+            BaseMeasurements::getInstance().updateBaseCursor(X_ID);
+        }
+        if (mi.dy <= 0 ||
+            mi.dy >= maxDy)
+        {
+            BaseMeasurements::getInstance().setCurrentAnglesAsBase(PITCH_ID);
+            BaseMeasurements::getInstance().updateBaseCursor(Y_ID);
+        }
 
 		break;
     }

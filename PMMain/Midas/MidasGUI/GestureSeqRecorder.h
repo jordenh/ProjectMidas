@@ -163,9 +163,6 @@ public:
     *
     * @param verbose If true, prints progress and next gesture in sequence on top
     * of active status.
-    *
-    * TODO: This is the beginning of the code which overlays graphically action
-    * data to the user. Just using printing temporarily.
     */
     void printStatus(bool verbose = false);
 

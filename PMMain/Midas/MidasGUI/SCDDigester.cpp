@@ -73,31 +73,30 @@ void SCDDigester::digest()
 
     bool consumed = scdHandle->consumeCommand(nextCmd);
 
-    switch (nextCmd.type)
+    if (consumed)
     {
-    case KYBRD_CMD:
-        digestKybdCmd(nextCmd);
-        break;
-    case KYBRD_GUI_CMD:
-        break;
-    case MOUSE_CMD:
-        break;
-    case STATE_CHANGE:
-        break;
-	case PROFILE_CHANGE:
-		digestProfileChange(nextCmd);
-		break;
-    case NONE:
-        break;
-    case UNKNOWN_COMMAND:
-        break;
-    default:
-        break;
-    }
-
-    if (consumed && nextCmd.type == commandType::MOUSE_CMD)
-    {
-        mouseCtrl->sendCommand(nextCmd.action.mouse); // TODO - move into switch statement, and likewise wrap switch with condition on consumed?
+        switch (nextCmd.type)
+        {
+        case KYBRD_CMD:
+            digestKybdCmd(nextCmd);
+            break;
+        case KYBRD_GUI_CMD:
+            break;
+        case MOUSE_CMD:
+            mouseCtrl->sendCommand(nextCmd.action.mouse);
+            break;
+        case STATE_CHANGE:
+            break;
+        case PROFILE_CHANGE:
+            digestProfileChange(nextCmd);
+            break;
+        case NONE:
+            break;
+        case UNKNOWN_COMMAND:
+            break;
+        default:
+            break;
+        }
     }
 
 	vector2D mouseDelta = scdHandle->getDelta();
@@ -120,7 +119,6 @@ void SCDDigester::digest()
 	    mouseCtrl->sendCommand(mouseCmds::MOVE_VERT, unitVelocity.y);
 	}
 
-	// Jorden TODO - deal with this - temp removing emitVeloc to see if CPU usage reduces.
     if (count % 1000 == 0)
     {
         threadHandle->emitVeloc(unitVelocity.x, unitVelocity.y);
@@ -155,7 +153,7 @@ void SCDDigester::digest()
             double angleAsDouble = (double)currKeyAngle.angle;
             threadHandle->emitUpdateKeyboard(kybdGUISel, angleAsDouble, currKeyAngle.ringThreshReached, false); // todo kybrd fix test.
 		
-            // // TEMP TODO for debug only
+            // for debug only
             // int x = currKeyAngle.x;
             // int y = currKeyAngle.y;
             // threadHandle->emitDebugInfo(x, y);
@@ -288,7 +286,7 @@ void SCDDigester::digestKybdCmd(CommandData nextCommand)
 	{
 		KeyboardVector vec = KeyboardVector::createFromCommand(nextCommand.action.kybd);
 		keyboardController->setKiVector(vec);
-		keyboardController->sendDataDelayed(10); // TODO - modify to try a lower value to see if lag can be reduced. Or change how 'sending delayed' works.
+		keyboardController->sendDataDelayed(2); // TODO - modify to try a lower value to see if lag can be reduced. Or change how 'sending delayed' works.
 	}
 }
 

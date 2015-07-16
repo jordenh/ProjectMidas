@@ -487,7 +487,7 @@ void MyoTranslationFilter::performeKybdModeFunc(filterDataMap& outputToSharedCom
         myoAngle.ringThreshReached = true;
     }
 	
-    // TEMP TODO for debug only
+    // for debug only
     myoAngle.x = myoAnglePoint.x;
     myoAngle.y = myoAnglePoint.y;
 	

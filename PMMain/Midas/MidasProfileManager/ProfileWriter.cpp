@@ -138,14 +138,22 @@ std::vector<Profile> ProfileWriter::loadProfilesFromFile(std::string fileName)
     std::ifstream profileFile(fileName.c_str());
 
     ptree tr;
-    read_xml(profileFile, tr);
+    try
+    {
+        read_xml(profileFile, tr);
 
-    BOOST_FOREACH(const ptree::value_type & vt, tr.get_child("profiles")) {
-        if (vt.first == "profile")
-        {
-            std::string profileName = vt.second.get<std::string>("<xmlattr>.name");
-            profiles.push_back(extractProfileInformation(vt, profileName));
+        BOOST_FOREACH(const ptree::value_type & vt, tr.get_child("profiles")) {
+            if (vt.first == "profile")
+            {
+                std::string profileName = vt.second.get<std::string>("<xmlattr>.name");
+                profiles.push_back(extractProfileInformation(vt, profileName));
+            }
         }
+    }
+    catch (...)
+    {
+        std::vector<Profile> empty;
+        return empty;
     }
 
     profileFile.close();
