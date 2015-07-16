@@ -246,10 +246,7 @@ void MyoTranslationFilter::handleGyroData(filterDataMap input, filterDataMap out
 
                 // attempt 2
                 float cursorBaseHorizontalChange = pow(gyroZ, CURSOR_GYRO_POW) / CURSOR_GYRO_SCALE_DOWN * -sign(gyroZ);
-                //cursorBaseHorizontalChange = std::max(std::min(cursorBaseHorizontalChange, 100.0f), -100.0f);
                 float cursorBaseVerticalChange = pow(gyroY, CURSOR_GYRO_POW) / CURSOR_GYRO_SCALE_DOWN * sign(gyroY);
-                //cursorBaseVerticalChange = std::max(std::min(cursorBaseVerticalChange, 100.0f), -100.0f);
-
 
                 BaseMeasurements::getInstance().modifyBaseCursor(cursorBaseHorizontalChange, cursorBaseVerticalChange);
             }
