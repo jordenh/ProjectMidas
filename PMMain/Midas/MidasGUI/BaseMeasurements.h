@@ -27,6 +27,8 @@
 #define ROLL_ID 1
 #define PITCH_ID 2
 #define YAW_ID 3
+#define X_ID 1
+#define Y_ID 2
 
 /* Singleton */
 
@@ -72,6 +74,8 @@ public:
 	float getBaseCursorY() { accessMutex.lock();   float retVal = baseCursorY;  accessMutex.unlock(); return retVal; }
 	float getScreenSizeX() { accessMutex.lock();   float retVal = screenSizeX;  accessMutex.unlock(); return retVal; }
 	float getScreenSizeY() { accessMutex.lock();   float retVal = screenSizeY;  accessMutex.unlock(); return retVal; }
+    float getSingleMonitorSizeX() { accessMutex.lock();   float retVal = singleMonitorSizeX;  accessMutex.unlock(); return retVal; }
+    float getSingleMonitorSizeY() { accessMutex.lock();   float retVal = singleMonitorSizeY;  accessMutex.unlock(); return retVal; }
     myo::Pose BaseMeasurements::getCurrentPose() { accessMutex.lock(); myo::Pose retVal = currentPose;  accessMutex.unlock(); return retVal; }
     midasMode BaseMeasurements::getCurrentState() { accessMutex.lock(); midasMode retVal = currentState; accessMutex.unlock(); return retVal; }
 
@@ -102,6 +106,9 @@ private:
 	unsigned int baseCursorX;
 	unsigned int baseCursorY;
 
+    // ASSUMPTION : ALL MONITORS ARE THE SAME AS THE PRIMARY MONITOR. If not true, Midas will not work properly
+    unsigned int singleMonitorSizeX;
+    unsigned int singleMonitorSizeY;
 	unsigned int screenSizeX;
 	unsigned int screenSizeY;
 

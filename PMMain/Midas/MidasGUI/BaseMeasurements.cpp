@@ -82,11 +82,11 @@ void BaseMeasurements::updateBaseCursor(int xyID)
             baseCursorX = cursorPoint.x;
             baseCursorY = cursorPoint.y;
         }
-        else if (xyID == 1)
+        else if (xyID == X_ID)
         {
             baseCursorX = cursorPoint.x;
         }
-        else if (xyID == 2)
+        else if (xyID == Y_ID)
         {
             baseCursorY = cursorPoint.y;
         }
@@ -99,14 +99,17 @@ void BaseMeasurements::updateScreenSize()
 {
 	accessMutex.lock();
 
-	//int xPixelsPrimScreen = GetSystemMetrics(SM_CXSCREEN);
-	//int yPixelsPrimScreen = GetSystemMetrics(SM_CYSCREEN);
+	int xPixelsPrimScreen = GetSystemMetrics(SM_CXSCREEN);
+	int yPixelsPrimScreen = GetSystemMetrics(SM_CYSCREEN);
 
 	int xPixelsAllScreens = GetSystemMetrics(SM_CXVIRTUALSCREEN);
 	int yPixelsAllScreens = GetSystemMetrics(SM_CYVIRTUALSCREEN);
 
 	//int x3 = GetSystemMetrics(SM_XVIRTUALSCREEN);
 	//int y3 = GetSystemMetrics(SM_YVIRTUALSCREEN);
+
+    singleMonitorSizeX = xPixelsPrimScreen > 0 ? xPixelsPrimScreen : 1;
+    singleMonitorSizeY = yPixelsPrimScreen > 0 ? yPixelsPrimScreen : 1;
 
     screenSizeX = xPixelsAllScreens > 0 ? xPixelsAllScreens : 1;
     screenSizeY = yPixelsAllScreens > 0 ? yPixelsAllScreens : 1;
