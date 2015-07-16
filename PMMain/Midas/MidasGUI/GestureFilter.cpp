@@ -218,11 +218,11 @@ void GestureFilter::defaultKeyboardSequences(void)
     kybrdGUIResponse.name = "Swap Ring Focus";
     kybrdGUIResponse.type = commandType::KYBRD_GUI_CMD;
     kybrdGUIResponse.action.kybdGUI = kybdGUICmds::SWAP_RING_FOCUS;
-    //if (left arm) // Todo, figure out an elegent way to access arm data here.
-    //{
-    //    kybrdGUISequence.push_back(SeqElement(Pose::Type::waveIn));
-    //}
-    //else
+    if (this->myoStateHandle->getArm() == Arm::armLeft)
+    {
+        kybrdGUISequence.push_back(SeqElement(Pose::Type::waveIn));
+    }
+    else
     {
         kybrdGUISequence.push_back(SeqElement(Pose::Type::waveOut));
     }
@@ -230,11 +230,11 @@ void GestureFilter::defaultKeyboardSequences(void)
     kybrdGUIResponse.name = "Backspace";
     kybrdGUIResponse.type = commandType::KYBRD_CMD;
     kybrdGUIResponse.action.kybd = kybdCmds::BACKSPACE;
-    //if (left arm) // Todo, figure out an elegent way to access arm data here.
-    //{
-    //    kybrdGUISequence[0] = (SeqElement(Pose::Type::waveOut));
-    //}
-    //else
+    if (this->myoStateHandle->getArm() == Arm::armLeft)
+    {
+        kybrdGUISequence[0] = (SeqElement(Pose::Type::waveOut));
+    }
+    else
     {
         kybrdGUISequence[0] = (SeqElement(Pose::Type::waveIn));
     }

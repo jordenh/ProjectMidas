@@ -271,12 +271,12 @@ void MouseCtrl::setMouseInputVars(mouseCmds mouseCmd, double& mouseRateIfMove, d
         mi.dy = 1;
         break;
     case mouseCmds::SCROLL_LEFT:
-        //TODO - Not working
+        // Doesnt work without elevated privelages...
         mi.dwFlags = MOUSEEVENTF_HWHEEL;
         mi.mouseData = -scrollRate;
         break;
     case mouseCmds::SCROLL_RIGHT:
-        //TODO - Not working
+        // Doesnt work without elevated privelages...
         mi.dwFlags = MOUSEEVENTF_HWHEEL;
         mi.mouseData = scrollRate;
         break;

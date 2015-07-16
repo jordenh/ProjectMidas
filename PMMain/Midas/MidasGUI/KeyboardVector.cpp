@@ -187,7 +187,7 @@ KeyboardVector KeyboardVector::createFromCommand(kybdCmds cmd)
 			keyboardVector.inputVKDown(0x44); // 'D' key
 			break;
 		case LOCK_DESKTOP:
-			// THIS ONE IS NOT WORKING TODO
+			// Doesnt work without elevated privelages...
 			keyboardVector.inputVKDown(VK_LWIN);
 			keyboardVector.inputVKDown(0x4C); // 'L' key
 			break;

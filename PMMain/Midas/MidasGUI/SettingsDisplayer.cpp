@@ -58,7 +58,7 @@ SettingsDisplayer::SettingsDisplayer(int widgetWidth, int widgetHeight, QWidget 
     connect(yawSlider, SIGNAL(sliderReleased()), this, SLOT(handleSliders()));
     connect(pitchSlider, SIGNAL(sliderReleased()), this, SLOT(handleSliders()));
 
-    // this slot is not working. TODO - fix so that it updates even when slider moves from click on slider bar.
+    // TODO - fix so that it updates even when slider moves from click on slider bar.
     connect(yawSlider, SIGNAL(sliderMoved(int)), this, SLOT(handleSlidersChange(int)));
     connect(pitchSlider, SIGNAL(sliderMoved(int)), this, SLOT(handleSlidersChange(int)));
 

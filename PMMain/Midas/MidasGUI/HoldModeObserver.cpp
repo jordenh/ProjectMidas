@@ -61,7 +61,7 @@ void HoldModeObserver::observerThread()
         
         if (commitSuicide)
             break;
-        // TODO do stuff
+        
         switch (actions->getActionType())
         {
         case INTERVAL_DELTA:

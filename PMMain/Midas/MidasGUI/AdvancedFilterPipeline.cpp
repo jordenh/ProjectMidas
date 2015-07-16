@@ -106,14 +106,12 @@ void AdvancedFilterPipeline::startPipeline(filterDataMap input)
             }
             else if (currentFilter->getFilterStatus() == filterStatus::FILTER_ERROR)
             {
-                // TODO - handle error
-                //throw("AdvancedFilterPipeline Filter Error.");
+                throw new std::exception("AdvancedFilterPipeline Filter Error.");
             }
 
             if (Filter::mapCollision(levelOutput, currentFilter->getOutput()))
             {
-                // TODO - handle error
-                //throw("AdvancedFilterPipeline Map Output Error. Collision Detected");
+                throw new std::exception("AdvancedFilterPipeline Map Output Error. Collision Detected");
             }
 
             levelOutput = Filter::joinFilterDataMaps(levelOutput, currentFilter->getOutput());
