@@ -47,12 +47,9 @@ MyoDevice::MyoDevice(SharedCommandData* sharedCommandData, ControlState* control
 {
     prevProfileName = "";
 
-    setupPosePipeline(&gestureFilter);
-
-    //setupEmgImpusePipeline(&emgI) // TODO - modularize this and also change setupPosePipeline to be without arguments... its redundant...(member variable)
-
+    setupPosePipeline();
+    setupEmgImpusePipeline();
     setupOrientationPipeline();
-
     setupRSSIPipeline();
 }
 
@@ -103,9 +100,6 @@ void MyoDevice::runDeviceLoop()
         state->setProfile(profileManager->getProfiles()->at(0).profileName);
     }
 	mainGui->connectSignallerToProfileWidgets(&profileSignaller); 
-
-    emgImpulsePipeline.registerFilterAtDeepestLevel(&emgImpulseFilter);
-    emgImpulsePipeline.registerFilterAtNewLevel(WearableDevice::sharedData);
 
     std::chrono::milliseconds rssi_start =
         std::chrono::duration_cast<std::chrono::milliseconds>(
@@ -183,9 +177,9 @@ void MyoDevice::runDeviceLoop()
     WearableDevice::setDeviceStatus(deviceStatus::DONE);
 }
 
-void MyoDevice::setupPosePipeline(GestureFilter *gf)
+void MyoDevice::setupPosePipeline()
 {
-    advancedPosePipeline.registerFilterAtDeepestLevel(gf);
+    advancedPosePipeline.registerFilterAtDeepestLevel(&gestureFilter);
 
     advancedPosePipeline.registerFilterAtNewLevel(WearableDevice::sharedData);
 }
@@ -238,6 +232,12 @@ void MyoDevice::setupRSSIPipeline()
     advancedRssiPipeline.registerFilterAtDeepestLevel(genAvgFilterRSSI);
 
     advancedRssiPipeline.registerFilterAtNewLevel(WearableDevice::sharedData);
+}
+
+void MyoDevice::setupEmgImpusePipeline()
+{
+    emgImpulsePipeline.registerFilterAtDeepestLevel(&emgImpulseFilter);
+    emgImpulsePipeline.registerFilterAtNewLevel(WearableDevice::sharedData);
 }
 
 int MyoDevice::getDeviceError()

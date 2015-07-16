@@ -116,9 +116,10 @@ public:
     void vibrateMyos(myo::Myo::VibrationType vibType, int numReps = 1) const;
 
 private:
-    void setupPosePipeline(GestureFilter *gf);
+    void setupPosePipeline();
     void setupOrientationPipeline();
     void setupRSSIPipeline();
+    void setupEmgImpusePipeline();
 
     void setArmAndX(Myo* myo, Arm arm, XDirection xDirection);
 

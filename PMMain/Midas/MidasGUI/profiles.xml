@@ -1,123 +1,149 @@
 <?-- holdModeActionType absDeltaFinite holdModeActionType -->
 <?xml version="1.0" encoding="utf-8"?>
 <profiles>
-	<profile name="Simple Mode">
+	<profile name="EMG Simple Mode">
         <sequences>
-            <sequence state="lockMode" name="Unlock">
+			<sequence state="lockMode" name="Unlock">
                 <gestures>
-                    <gesture type="tap">doubleTap</gesture>
-                    <gesture type="immediate">doubleTap</gesture>
+					<gesture type="tap">doubleTap</gesture>
+					<gesture type="immediate">doubleTap</gesture>
                 </gestures>
                 <commands>
-                    <command type="stateChange">
-                        <actions>
-                            <action>mouseMode</action>
-                        </actions>
-                    </command>
-                </commands>
+				<command type="stateChange">
+                    <actions>
+                        <action>mouseMode</action>
+                    </actions>
+                </command>
+				</commands>
             </sequence>
-            <sequence state="mouseMode" name="Lock">
+			<sequence state="mouseMode" name="Stop">
                 <gestures>
-                    <gesture type="tap">doubleTap</gesture>
-                    <gesture type="immediate">doubleTap</gesture>
+					<gesture type="immediate">fingersSpread</gesture>
                 </gestures>
                 <commands>
-                    <command type="stateChange">
-                        <actions>
-                            <action>lockMode</action>
-                        </actions>
-                    </command>
-                </commands>
+					<command type="stateChange">
+						<actions>
+							<action>gestureMode</action>
+						</actions>
+					</command>
+				</commands>
             </sequence>
-            <sequence state="mouseMode" name="Calibrate">
+			<sequence state="gestureMode" name="Start">
                 <gestures>
-                    <gesture type="immediate">waveIn</gesture>
+					<gesture type="immediate">fingersSpread</gesture>
                 </gestures>
                 <commands>
-                    <command type="stateChange">
-                        <actions>
-                            <action>gestureMode</action>
-                        </actions>
-                    </command>
-                </commands>
+					<command type="stateChange">
+						<actions>
+							<action>mouseMode</action>
+						</actions>
+					</command>
+				</commands>
             </sequence>
-            <sequence state="gestureMode" name="Finish Calibrate">
+			
+			<sequence state="mouseMode" name="Middle Hold">
                 <gestures>
-                    <gesture type="immediate">rest</gesture>
+					<gesture type="immediate">fist</gesture>
                 </gestures>
                 <commands>
-                    <command type="stateChange">
-                        <actions>
-                            <action>mouseMode</action>
-                        </actions>
-                    </command>
-                </commands>
+					<command type="mouse">
+						<actions>
+							<action>middleHold</action>
+						</actions>
+					</command>
+				</commands>
             </sequence>
-            <sequence state="mouseMode" name="Middle Button">
+			<sequence state="mouseMode" name="Left Hold">
                 <gestures>
-                    <gesture type="immediate">fist</gesture>
+					<gesture type="immediate">waveIn</gesture>
                 </gestures>
                 <commands>
-                    <command type="stateChange">
-                        <actions>
-                            <action>mouseMode2</action>
-                        </actions>
-                    </command>
-                    <command type="mouse">
-                        <actions>
-                            <action>middleHold</action>
-                        </actions>
-                    </command>
-                </commands>
+					<command type="mouse">
+						<actions>
+							<action>leftHold</action>
+						</actions>
+					</command>
+				</commands>
             </sequence>
-            <sequence state="mouseMode" name="Left Button">
+			<sequence state="mouseMode" name="Right Click">
                 <gestures>
-                    <gesture type="immediate">fingersSpread</gesture>
+					<gesture type="immediate">waveOut</gesture>
                 </gestures>
                 <commands>
-                    <command type="stateChange">
-                        <actions>
-                            <action>mouseMode2</action>
-                        </actions>
-                    </command>
-                    <command type="mouse">
-                        <actions>
-                            <action>leftHold</action>
-                        </actions>
-                    </command>
-                </commands>
+					<command type="mouse">
+						<actions>
+							<action>rightClick</action>
+						</actions>
+					</command>
+				</commands>
             </sequence>
-            <sequence state="mouseMode" name="Right Click">
+			<sequence state="mouseMode" name="Release Button">
                 <gestures>
-                    <gesture type="immediate">waveOut</gesture>
+					<gesture type="immediate">rest</gesture>
                 </gestures>
                 <commands>
-                    <command type="mouse">
-                        <actions>
-                            <action>rightClick</action>
-                        </actions>
-                    </command>
-                </commands>
+					<command type="mouse">
+						<actions>
+							<action>releaseLrmButs</action>
+						</actions>
+					</command>
+				</commands>
             </sequence>
-            <sequence state="mouseMode2" name="Release Button">
+			
+			<sequence state="gestureMode" name="Left Click">
                 <gestures>
-                    <gesture type="immediate">rest</gesture>
+					<gesture type="immediate">waveIn</gesture>
                 </gestures>
                 <commands>
-                    <command type="stateChange">
-                        <actions>
-                            <action>mouseMode</action>
-                        </actions>
-                    </command>
-                    <command type="mouse">
-                        <actions>
-                            <action>releaseLrmButs</action>
-                        </actions>
-                    </command>
-                </commands>
+					<command type="mouse">
+						<actions>
+							<action>leftClick</action>
+						</actions>
+					</command>
+				</commands>
             </sequence>
-        </sequences>
-        <holds/>
+			<sequence state="gestureMode" name="Right Click">
+                <gestures>
+					<gesture type="immediate">waveOut</gesture>
+                </gestures>
+                <commands>
+					<command type="mouse">
+						<actions>
+							<action>rightClick</action>
+						</actions>
+					</command>
+				</commands>
+            </sequence>
+			
+			<sequence state="mouseMode" name="Lock">
+                <gestures>
+					<gesture type="tap">doubleTap</gesture>
+					<gesture type="immediate">doubleTap</gesture>
+                </gestures>
+                <commands>
+					<command type="stateChange">
+						<actions>
+							<action>lockMode</action>
+						</actions>
+					</command>
+				</commands>
+            </sequence>
+			<sequence state="gestureMode" name="Lock">
+                <gestures>
+					<gesture type="tap">doubleTap</gesture>
+					<gesture type="immediate">doubleTap</gesture>
+                </gestures>
+                <commands>
+					<command type="stateChange">
+						<actions>
+							<action>lockMode</action>
+						</actions>
+					</command>
+				</commands>
+            </sequence>
+		</sequences>
+        <holds>
+        </holds>
     </profile>
 	<profile name="Advanced Profile">
         <sequences>
@@ -299,6 +325,124 @@
                     <command type="stateChange">
                         <actions>
                             <action>lockMode</action>
+                        </actions>
+                    </command>
+                </commands>
+            </sequence>
+        </sequences>
+        <holds/>
+    </profile>
+    <profile name="Simple Mode">
+        <sequences>
+            <sequence state="lockMode" name="Unlock">
+                <gestures>
+                    <gesture type="tap">doubleTap</gesture>
+                    <gesture type="immediate">doubleTap</gesture>
+                </gestures>
+                <commands>
+                    <command type="stateChange">
+                        <actions>
+                            <action>mouseMode</action>
+                        </actions>
+                    </command>
+                </commands>
+            </sequence>
+            <sequence state="mouseMode" name="Lock">
+                <gestures>
+                    <gesture type="tap">doubleTap</gesture>
+                    <gesture type="immediate">doubleTap</gesture>
+                </gestures>
+                <commands>
+                    <command type="stateChange">
+                        <actions>
+                            <action>lockMode</action>
+                        </actions>
+                    </command>
+                </commands>
+            </sequence>
+            <sequence state="mouseMode" name="Calibrate">
+                <gestures>
+                    <gesture type="immediate">waveIn</gesture>
+                </gestures>
+                <commands>
+                    <command type="stateChange">
+                        <actions>
+                            <action>gestureMode</action>
+                        </actions>
+                    </command>
+                </commands>
+            </sequence>
+            <sequence state="gestureMode" name="Finish Calibrate">
+                <gestures>
+                    <gesture type="immediate">rest</gesture>
+                </gestures>
+                <commands>
+                    <command type="stateChange">
+                        <actions>
+                            <action>mouseMode</action>
+                        </actions>
+                    </command>
+                </commands>
+            </sequence>
+            <sequence state="mouseMode" name="Middle Button">
+                <gestures>
+                    <gesture type="immediate">fist</gesture>
+                </gestures>
+                <commands>
+                    <command type="stateChange">
+                        <actions>
+                            <action>mouseMode2</action>
+                        </actions>
+                    </command>
+                    <command type="mouse">
+                        <actions>
+                            <action>middleHold</action>
+                        </actions>
+                    </command>
+                </commands>
+            </sequence>
+            <sequence state="mouseMode" name="Left Button">
+                <gestures>
+                    <gesture type="immediate">fingersSpread</gesture>
+                </gestures>
+                <commands>
+                    <command type="stateChange">
+                        <actions>
+                            <action>mouseMode2</action>
+                        </actions>
+                    </command>
+                    <command type="mouse">
+                        <actions>
+                            <action>leftHold</action>
+                        </actions>
+                    </command>
+                </commands>
+            </sequence>
+            <sequence state="mouseMode" name="Right Click">
+                <gestures>
+                    <gesture type="immediate">waveOut</gesture>
+                </gestures>
+                <commands>
+                    <command type="mouse">
+                        <actions>
+                            <action>rightClick</action>
+                        </actions>
+                    </command>
+                </commands>
+            </sequence>
+            <sequence state="mouseMode2" name="Release Button">
+                <gestures>
+                    <gesture type="immediate">rest</gesture>
+                </gestures>
+                <commands>
+                    <command type="stateChange">
+                        <actions>
+                            <action>mouseMode</action>
+                        </actions>
+                    </command>
+                    <command type="mouse">
+                        <actions>
+                            <action>releaseLrmButs</action>
                         </actions>
                     </command>
                 </commands>
