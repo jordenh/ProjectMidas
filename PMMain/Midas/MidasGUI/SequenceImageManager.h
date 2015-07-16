@@ -45,7 +45,7 @@
 #define LEFT_WAVE_IN_NEXT_PATH           "Resources\\assets\\gesture_icons\\blue_outline_LH_wave_right.png"           //"Resources\\Post200PxImgs\\LHwaveIn.jpg" 
 #define LEFT_WAVE_OUT_LATER_PATH         "Resources\\assets\\gesture_icons\\solid_grey_LH_wave_left.png"              //"Resources\\BW200PxImgs\\LHwaveOut.jpg"
 #define LEFT_WAVE_OUT_NEXT_PATH          "Resources\\assets\\gesture_icons\\blue_outline_LH_wave_left.png"            //"Resources\\Post200PxImgs\\RHwaveOut.jpg"
-#define NO_HAND_LATER_PATH               "Resources\\assets\\gesture_icons\\grey.png"                                 //"Resources\\Post200PxImgs\\noHand.jpg"
+#define NO_HAND_LATER_PATH               "Resources\\assets\\gesture_icons\\grey.png"                                 //"Resources\\BW200PxImgs\\noHand.jpg"
 #define NO_HAND_NEXT_PATH                "Resources\\assets\\gesture_icons\\blue.png"                                 //"Resources\\Post200PxImgs\\noHand.jpg"
 
 #define POSE_LENGTH_IMMEDIATE_PATH "Resources\\icons\\PoseLenImmediate.png"
