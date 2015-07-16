@@ -309,8 +309,21 @@ void MouseCtrl::setMouseInputVars(mouseCmds mouseCmd, double& mouseRateIfMove, d
 		mi.dx = baseWindowsLocX + (mouseRateIfMove / 100.0 * monitorSizeWeight / 2);
 		mi.dy = baseWindowsLocY + (mouseRateIfMoveY_hack / 100.0 * monitorSizeWeight / 2);
 
-//		mi.dx = max(min(mi.dx, monitorSizeWeight), 0);
-//		mi.dy = max(min(mi.dy, monitorSizeWeight), 0);
+        if (mi.dx <= 0 || 
+            baseCursorX + mouseRateIfMove > BaseMeasurements::getInstance().getScreenSizeX())
+        {
+            BaseMeasurements::getInstance().setCurrentAnglesAsBase(YAW_ID);
+            BaseMeasurements::getInstance().updateBaseCursor(1);
+        }
+        if (mi.dy <= 0 ||
+            baseCursorY + mouseRateIfMoveY_hack > BaseMeasurements::getInstance().getScreenSizeY())
+        {
+            BaseMeasurements::getInstance().setCurrentAnglesAsBase(PITCH_ID);
+            BaseMeasurements::getInstance().updateBaseCursor(2);
+        }
+
+		//mi.dx = max(min(mi.dx, monitorSizeWeight), 0);
+		//mi.dy = max(min(mi.dy, monitorSizeWeight), 0);
 
 		break;
     }

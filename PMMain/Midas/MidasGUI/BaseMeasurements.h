@@ -24,6 +24,10 @@
 #include "MyoState.h"
 #include "ControlState.h"
 
+#define ROLL_ID 1
+#define PITCH_ID 2
+#define YAW_ID 3
+
 /* Singleton */
 
 class BaseMeasurements {
@@ -41,13 +45,14 @@ public:
     void modifyBaseCursor(int xDelta, int yDelta);
 
 	// use Windows API to update cursor position
-	void updateBaseCursor();
+	void updateBaseCursor(int xyID = 0);
 
-	void setScreenSize(unsigned int x, unsigned int y);
+	void updateScreenSize();
 
 	void setCurrentAngles(float roll, float pitch, float yaw);
 
-	void setCurrentAnglesAsBase();
+    // <= 0 for all angles, ROLL_ID for just roll, PITCH_ID for pitch, YAW_ID for yaw
+	void setCurrentAnglesAsBase(int angleID = 0);
 
 	void setCurrentPose(myo::Pose pose);
 	
@@ -77,7 +82,7 @@ private:
 	BaseMeasurements() { 
         baseRoll = 0; basePitch = 0; baseYaw = 0;
         baseCursorX = 0; baseCursorY = 0; 
-        screenSizeX = 0; screenSizeY = 0;
+        updateScreenSize();
         currentRoll = 0; currentPitch = 0; currentYaw = 0;
         myoStateHandle = NULL;
         controlStateHandle = NULL;

@@ -118,7 +118,9 @@ void GestureFilter::process()
 
 		BaseMeasurements::getInstance().setCurrentPose(gesture);
 		
-		BaseMeasurements::getInstance().setScreenSize(0,0); // dont actually need to do. TODO - remove
+        // Update screen size every time there is a new pose, as to ensure it is up to date 
+        // for possible mouse calculations.
+		BaseMeasurements::getInstance().updateScreenSize();
 	}
 
     CommandData response;

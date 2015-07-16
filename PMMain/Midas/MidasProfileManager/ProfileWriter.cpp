@@ -150,7 +150,7 @@ std::vector<Profile> ProfileWriter::loadProfilesFromFile(std::string fileName)
             }
         }
     }
-    catch (const std::exception& e)
+    catch (...)
     {
         std::vector<Profile> empty;
         return empty;
