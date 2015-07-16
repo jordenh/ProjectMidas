@@ -2,8 +2,6 @@
 
 A wearable interface for the Windows OS, replacing the functionality of a mouse (and optionally keyboard). Currently interacts with the Myo armband from Thalmic Labs.
 
-NOTE: To function properly, the resolution of all connected monitors must be set the same. Otherwise, cursor functionality will be unpredictable.
-
 ## Quick start
 
 Two quick start options are available:
