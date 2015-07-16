@@ -40,15 +40,15 @@ GestureFilter::GestureFilter(ControlState* controlState, MyoState* myoState, clo
     : timeDelta(timeDel), lastPoseType(Pose::rest),
 	lastTime(0), mainGui(mainGuiHandle)
 {
+    controlStateHandle = controlState;
+    myoStateHandle = myoState;
+
     imageManager.loadImages();
     gestSeqRecorder = new GestureSeqRecorder(controlState, mainGuiHandle, imageManager);
 
     defaultMouseSequences();
     defaultKeyboardSequences();
     defaultStateSequences();
-
-    controlStateHandle = controlState;
-	myoStateHandle = myoState;
 
     setupCallbackThread(this);
 
@@ -118,7 +118,9 @@ void GestureFilter::process()
 
 		BaseMeasurements::getInstance().setCurrentPose(gesture);
 		
-		BaseMeasurements::getInstance().setScreenSize(0,0); // dont actually need to do. TODO - remove
+        // Update screen size every time there is a new pose, as to ensure it is up to date 
+        // for possible mouse calculations.
+		BaseMeasurements::getInstance().updateScreenSize();
 	}
 
     CommandData response;
@@ -216,11 +218,11 @@ void GestureFilter::defaultKeyboardSequences(void)
     kybrdGUIResponse.name = "Swap Ring Focus";
     kybrdGUIResponse.type = commandType::KYBRD_GUI_CMD;
     kybrdGUIResponse.action.kybdGUI = kybdGUICmds::SWAP_RING_FOCUS;
-    //if (left arm) // Todo, figure out an elegent way to access arm data here.
-    //{
-    //    kybrdGUISequence.push_back(SeqElement(Pose::Type::waveIn));
-    //}
-    //else
+    if (myoStateHandle->getArm() == Arm::armLeft)
+    {
+        kybrdGUISequence.push_back(SeqElement(Pose::Type::waveIn));
+    }
+    else
     {
         kybrdGUISequence.push_back(SeqElement(Pose::Type::waveOut));
     }
@@ -228,11 +230,11 @@ void GestureFilter::defaultKeyboardSequences(void)
     kybrdGUIResponse.name = "Backspace";
     kybrdGUIResponse.type = commandType::KYBRD_CMD;
     kybrdGUIResponse.action.kybd = kybdCmds::BACKSPACE;
-    //if (left arm) // Todo, figure out an elegent way to access arm data here.
-    //{
-    //    kybrdGUISequence[0] = (SeqElement(Pose::Type::waveOut));
-    //}
-    //else
+    if (myoStateHandle->getArm() == Arm::armLeft)
+    {
+        kybrdGUISequence[0] = (SeqElement(Pose::Type::waveOut));
+    }
+    else
     {
         kybrdGUISequence[0] = (SeqElement(Pose::Type::waveIn));
     }
@@ -685,15 +687,6 @@ filterError GestureFilter::updateBasedOnProfile(ProfileManager& pm, std::string 
         midasMode startState = profileActionToStateChange[it->state];
         ss |= (int)gestSeqRecorder->registerSequence(startState, seq, response, it->name);
     }
-
-	// Jorden TODO - add this back in proper way <-- Need a "submit action on transition" for this and for entering mouse mode.
-//    sequence clickSeq;
-//    CommandData clickResp;
-//    clickResp.action.mouse = mouseCmds::RELEASE_LRM_BUTS;
-//    clickResp.name = "Release Mouse";
-//    clickResp.type = commandType::MOUSE_CMD;
-//    clickSeq.push_back(SeqElement(Pose::rest, PoseLength::IMMEDIATE));
-//    ss |= (int)gestSeqRecorder->registerSequence(midasMode::MOUSE_MODE, clickSeq, clickResp, "Release Mouse");
 
 #ifdef BUILD_WITH_HOLD_MODES
     // Register sequence from Gesture Mode to Gesture Hold Modes

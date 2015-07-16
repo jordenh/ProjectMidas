@@ -160,6 +160,7 @@ private:
 
         void printToDataFile();
         std::ofstream myoDataFile;
+        std::ofstream myoGyroDataFile;
         Pose::Type lastPose;
         int8_t lastEMGData[8];
     };

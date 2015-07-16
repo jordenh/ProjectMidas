@@ -94,6 +94,7 @@ void ProfileCreatorGUI::save()
 
 void ProfileCreatorGUI::loadProfiles(std::string filename)
 {
+    profileWidgets.clear();
     ProfileWriter writer;
     std::vector<Profile> profiles = writer.loadProfilesFromFile(filename);
 
@@ -107,6 +108,11 @@ void ProfileCreatorGUI::loadProfiles(std::string filename)
         ProfileWidget* profileWidget = new ProfileWidget(*it);
         profileWidgets.push_back(profileWidget);
         tabWidget->addTab(profileWidget, QString(it->profileName.c_str()));
+    }
+    if (profileWidgets.size() == 0)
+    {
+        setWindowTitle("Project Midas Profile Manager - couldnt open file");
+        newFile();
     }
 }
 

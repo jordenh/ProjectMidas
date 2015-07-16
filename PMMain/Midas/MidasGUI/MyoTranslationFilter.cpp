@@ -32,6 +32,18 @@
 
 SettingsSignaller MyoTranslationFilter::settingsSignaller;
 
+int sign(float val)
+{
+    if (val >= 0)
+    {
+        return 1;
+    }
+    else
+    {
+        return -1;
+    }
+}
+
 MyoTranslationFilter::MyoTranslationFilter(ControlState* controlState, MyoState* myoState, MainGUI *mainGuiHandle)
     : controlStateHandle(controlState), myoStateHandle(myoState), previousMode(LOCK_MODE),
     pitch(0), prevPitch(0), deltaPitchDeg(0),
@@ -68,6 +80,8 @@ void MyoTranslationFilter::process()
     filterDataMap output;
 
     handleQuatData(input, output);
+
+    handleGyroData(input, output);
 
     handleArmData(input, output);
 
@@ -186,6 +200,62 @@ void MyoTranslationFilter::handleQuatData(filterDataMap input, filterDataMap out
             previousMode = controlStateHandle->getMode();
         }
     }
+}
+
+void MyoTranslationFilter::handleGyroData(filterDataMap input, filterDataMap output)
+{
+    float gyroX;
+    float gyroY;
+    float gyroZ;
+    float quatW;
+
+#ifdef USE_GYRO_DATA
+
+    // Require an entire quaternion in one input to process
+    if (input.find(GYRO_DATA_X) != input.end() &&
+        input.find(GYRO_DATA_Y) != input.end() &&
+        input.find(GYRO_DATA_Z) != input.end())
+    {
+        boost::any valueX = input[GYRO_DATA_X];
+        boost::any valueY = input[GYRO_DATA_Y];
+        boost::any valueZ = input[GYRO_DATA_Z];
+        if (valueX.type() != typeid(float) ||
+            valueY.type() != typeid(float) ||
+            valueZ.type() != typeid(float))
+        {
+            Filter::setFilterError(filterError::INVALID_INPUT);
+            Filter::setFilterStatus(filterStatus::FILTER_ERROR);
+        }
+        else
+        {
+            gyroX = boost::any_cast<float>(valueX);
+            gyroY = boost::any_cast<float>(valueY);
+            gyroZ = boost::any_cast<float>(valueZ);
+
+            midasMode currMode = controlStateHandle->getMode();
+
+            if (currMode == MOUSE_MODE || currMode == MOUSE_MODE2)
+            {
+                // attempt 1
+                // update base angles for each new mode
+                //float gyroThresh = 0.075;
+                //float cursorBaseVerticalChange = abs(gyroY) > gyroThresh ? gyroY * CURSOR_GYRO_ACCEL_RATE : 0;// TODO - getBaseYChange(float gyroY) // gyroY axis correspon
+                //float cursorBaseHorizontalChange = abs(gyroZ) > gyroThresh ? -gyroZ * CURSOR_GYRO_ACCEL_RATE : 0;// TODO - getBaseXChange(float gyroZ)
+                //cursorBaseVerticalChange = pow(cursorBaseVerticalChange, 2);
+                //cursorBaseHorizontalChange = pow(cursorBaseHorizontalChange, 2);
+
+                // attempt 2
+                float cursorBaseHorizontalChange = pow(gyroZ, CURSOR_GYRO_POW) / CURSOR_GYRO_SCALE_DOWN * -sign(gyroZ);
+                //cursorBaseHorizontalChange = std::max(std::min(cursorBaseHorizontalChange, 100.0f), -100.0f);
+                float cursorBaseVerticalChange = pow(gyroY, CURSOR_GYRO_POW) / CURSOR_GYRO_SCALE_DOWN * sign(gyroY);
+                //cursorBaseVerticalChange = std::max(std::min(cursorBaseVerticalChange, 100.0f), -100.0f);
+
+
+                BaseMeasurements::getInstance().modifyBaseCursor(cursorBaseHorizontalChange, cursorBaseVerticalChange);
+            }
+        }
+    }
+#endif
 }
 
 void MyoTranslationFilter::handleArmData(filterDataMap input, filterDataMap output)
@@ -417,7 +487,7 @@ void MyoTranslationFilter::performeKybdModeFunc(filterDataMap& outputToSharedCom
         myoAngle.ringThreshReached = true;
     }
 	
-    // TEMP TODO for debug only
+    // for debug only
     myoAngle.x = myoAnglePoint.x;
     myoAngle.y = myoAnglePoint.y;
 	

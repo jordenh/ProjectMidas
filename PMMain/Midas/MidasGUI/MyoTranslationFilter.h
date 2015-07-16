@@ -40,9 +40,6 @@ class ControlState;
 class MainGUI;
 class HoldModeObserver;
 
-#define MAX_PITCH_ANGLE 25.0f /* Maximum delta angle in degrees */
-#define MAX_YAW_ANGLE 30.0f /* Maximum delta angle in degrees */
-
 #define KEYBOARD_THRESH_MAG 30
 
 #define NUM_GESTURES 5
@@ -51,6 +48,10 @@ class HoldModeObserver;
 #define GESTURE_FIST 2
 #define GESTURE_WAVE_IN 3
 #define GESTURE_WAVE_OUT 4
+
+#define CURSOR_GYRO_ACCEL_RATE 200
+#define CURSOR_GYRO_POW 2
+#define CURSOR_GYRO_SCALE_DOWN 100
 
 /**
  * Consult Filter.h for concepts regarding Filters.
@@ -99,6 +100,8 @@ public:
 
 private:
     void handleQuatData(filterDataMap input, filterDataMap output);
+
+    void handleGyroData(filterDataMap input, filterDataMap output);
 
     void handleArmData(filterDataMap input, filterDataMap output);
 

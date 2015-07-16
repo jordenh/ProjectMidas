@@ -38,25 +38,66 @@ void BaseMeasurements::setBaseCursor(unsigned int x, unsigned int y)
 	accessMutex.unlock();
 }
 
+void BaseMeasurements::modifyBaseCursor(int xDelta, int yDelta)
+{
+    accessMutex.lock();
+
+    if ((int)baseCursorX + xDelta < 0)
+    {
+        baseCursorX = 0;
+    }
+    else if ((int)baseCursorX + xDelta > screenSizeX)
+    {
+        baseCursorX = screenSizeX;
+    }
+    else
+    {
+        baseCursorX = (int)baseCursorX + xDelta;
+    }
+    if ((int)baseCursorY + yDelta < 0)
+    {
+        baseCursorY = 0;
+    } 
+    else if ((int)baseCursorY + yDelta > screenSizeY)
+    {
+        baseCursorY = screenSizeY;
+    }
+    else
+    {
+        baseCursorY = (int)baseCursorY + yDelta;
+    }
+    accessMutex.unlock();
+}
+
 // use Windows API to update cursor position
-void BaseMeasurements::updateBaseCursor()
+void BaseMeasurements::updateBaseCursor(int xyID)
 {
 	accessMutex.lock();
 	POINT cursorPoint;
 	if (GetCursorPos(&cursorPoint))
 	{
 		// success
-		baseCursorX = cursorPoint.x;
-		baseCursorY = cursorPoint.y;
+        if (xyID <= 0)
+        {
+            baseCursorX = cursorPoint.x;
+            baseCursorY = cursorPoint.y;
+        }
+        else if (xyID == X_ID)
+        {
+            baseCursorX = cursorPoint.x;
+        }
+        else if (xyID == Y_ID)
+        {
+            baseCursorY = cursorPoint.y;
+        }
 	}
+
 	accessMutex.unlock();
 }
 
-void BaseMeasurements::setScreenSize(unsigned int x, unsigned int y)
+void BaseMeasurements::updateScreenSize()
 {
 	accessMutex.lock();
-	screenSizeX = x;
-	screenSizeY = y;
 
 	int xPixelsPrimScreen = GetSystemMetrics(SM_CXSCREEN);
 	int yPixelsPrimScreen = GetSystemMetrics(SM_CYSCREEN);
@@ -64,8 +105,14 @@ void BaseMeasurements::setScreenSize(unsigned int x, unsigned int y)
 	int xPixelsAllScreens = GetSystemMetrics(SM_CXVIRTUALSCREEN);
 	int yPixelsAllScreens = GetSystemMetrics(SM_CYVIRTUALSCREEN);
 
-	int x3 = GetSystemMetrics(SM_XVIRTUALSCREEN);
-	int y3 = GetSystemMetrics(SM_YVIRTUALSCREEN);
+	//int x3 = GetSystemMetrics(SM_XVIRTUALSCREEN);
+	//int y3 = GetSystemMetrics(SM_YVIRTUALSCREEN);
+
+    singleMonitorSizeX = xPixelsPrimScreen > 0 ? xPixelsPrimScreen : 1;
+    singleMonitorSizeY = yPixelsPrimScreen > 0 ? yPixelsPrimScreen : 1;
+
+    screenSizeX = xPixelsAllScreens > 0 ? xPixelsAllScreens : 1;
+    screenSizeY = yPixelsAllScreens > 0 ? yPixelsAllScreens : 1;
 	accessMutex.unlock();
 }
 
@@ -78,12 +125,27 @@ void BaseMeasurements::setCurrentAngles(float roll, float pitch, float yaw)
 	accessMutex.unlock();
 }
 
-void BaseMeasurements::setCurrentAnglesAsBase()
+void BaseMeasurements::setCurrentAnglesAsBase(int angleID)
 {
 	accessMutex.lock();
-	baseRoll = currentRoll;
-	basePitch = currentPitch;
-	baseYaw = currentYaw;
+    if (angleID <= 0)
+    {
+        baseRoll = currentRoll;
+        basePitch = currentPitch;
+        baseYaw = currentYaw;
+    }
+    else if (angleID == ROLL_ID)
+    {
+        baseRoll = currentRoll;
+    }
+    else if (angleID == PITCH_ID)
+    {
+        basePitch = currentPitch;
+    }
+    else if (angleID == YAW_ID)
+    {
+        baseYaw = currentYaw;
+    }
 	accessMutex.unlock();
 }
 
