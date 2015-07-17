@@ -52,7 +52,7 @@
 	<summary>
 		<codepage>1252</codepage>
 		<title>Installation Database</title>
-		<subject>Midas_UserTest3_Variant3</subject>
+		<subject>Midas_UserTest2_Variant3B</subject>
 		<author>##ID_STRING3##</author>
 		<keywords>Installer,MSI,Database</keywords>
 		<comments>Contact:  Your local administrator</comments>
@@ -382,7 +382,7 @@
 		<row><td>icudt53.dll2</td><td>{7B914486-D5FA-4527-A3E8-F17A5FFC0C07}</td><td>INSTALLDIR</td><td>2</td><td/><td>icudt53.dll2</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>icuin53.dll2</td><td>{6E435FF2-A505-4F94-B841-4373CD840413}</td><td>INSTALLDIR</td><td>2</td><td/><td>icuin53.dll2</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>icuuc53.dll2</td><td>{C6E9B97E-8D42-4C27-AA9B-DDECDA98FC71}</td><td>INSTALLDIR</td><td>2</td><td/><td>icuuc53.dll2</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>myo32.dll</td><td>{CE5A83CC-A337-4CA6-993E-2C39DEC0C985}</td><td>INSTALLDIR</td><td>2</td><td/><td>myo32.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>myo32.dll</td><td>{B744F670-6628-4503-8C78-C0FCF33621D6}</td><td>INSTALLDIR</td><td>2</td><td/><td>myo32.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>qminimal.dll</td><td>{A106B459-1C5D-40A6-8AB7-98647A7F3ACF}</td><td>PLATFORMS</td><td>2</td><td/><td>qminimal.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>qminimald.dll</td><td>{E1F5A4AA-6C69-45A4-9622-40644642876D}</td><td>PLATFORMS</td><td>2</td><td/><td>qminimald.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>qoffscreen.dll</td><td>{6A80EF4D-8120-42DB-93DE-88426EF5EE9C}</td><td>PLATFORMS</td><td>2</td><td/><td>qoffscreen.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
@@ -2054,7 +2054,7 @@
 		<row><td>midasguiex1.psd</td><td>ISX_DEFAULTCOMPONENT12</td><td>MIDASG~1.PSD|MidasGUIEx1.psd</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\mockups\MidasGUIEx1.psd</td><td>1</td><td/></row>
 		<row><td>midasguiex1_copy.jpg</td><td>ISX_DEFAULTCOMPONENT12</td><td>MIDASG~1.JPG|MidasGUIEx1 copy.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\mockups\MidasGUIEx1 copy.jpg</td><td>1</td><td/></row>
 		<row><td>midasprofilemanager.primary_</td><td>MidasProfileManager.Primary_Output</td><td>MidasProfileManager.Primary Output</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;MidasProfileManager&gt;|Built</td><td>3</td><td/></row>
-		<row><td>myo32.dll</td><td>myo32.dll</td><td>myo32.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\Personal\ReleaseMidasTest\ReleaseMidasTest\myo\myo32.dll</td><td>1</td><td/></row>
+		<row><td>myo32.dll</td><td>myo32.dll</td><td>myo32.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\myo\myo32.dll</td><td>1</td><td/></row>
 		<row><td>myo_icon.png</td><td>ISX_DEFAULTCOMPONENT5</td><td>myo_icon.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\assets\myo_icon\myo_icon.png</td><td>1</td><td/></row>
 		<row><td>myo_icon_2x.png</td><td>ISX_DEFAULTCOMPONENT5</td><td>MYO_IC~1.PNG|myo_icon@2x.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\assets\myo_icon\myo_icon@2x.png</td><td>1</td><td/></row>
 		<row><td>myo_icon_blue_dot.png</td><td>ISX_DEFAULTCOMPONENT5</td><td>MYO_IC~1.PNG|myo_icon_blue_dot.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\assets\myo_icon\myo_icon_blue_dot.png</td><td>1</td><td/></row>
@@ -2082,8 +2082,8 @@
 		<row><td>pinkytothumb.jpg3</td><td>ISX_DEFAULTCOMPONENT13</td><td>PINKYT~1.JPG|pinkyToThumb.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\Post200PxImgs\pinkyToThumb.jpg</td><td>1</td><td/></row>
 		<row><td>poselenhold.png</td><td>ISX_DEFAULTCOMPONENT10</td><td>POSELE~1.PNG|PoseLenHold.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\icons\PoseLenHold.png</td><td>1</td><td/></row>
 		<row><td>poselenimmediate.png</td><td>ISX_DEFAULTCOMPONENT10</td><td>POSELE~1.PNG|PoseLenImmediate.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\icons\PoseLenImmediate.png</td><td>1</td><td/></row>
-		<row><td>profiles.xml</td><td>ISX_DEFAULTCOMPONENT1</td><td>profiles.xml</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\Personal\ReleaseMidasTest\ReleaseMidasTest\profiles.xml</td><td>1</td><td/></row>
-		<row><td>profiles_v2.xml</td><td>ISX_DEFAULTCOMPONENT1</td><td>PROFIL~1.XML|profiles_V2.xml</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\Personal\ReleaseMidasTest\ReleaseMidasTest\profiles_V2.xml</td><td>1</td><td/></row>
+		<row><td>profiles.xml</td><td>ISX_DEFAULTCOMPONENT1</td><td>profiles.xml</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\profiles.xml</td><td>1</td><td/></row>
+		<row><td>profiles_v2.xml</td><td>ISX_DEFAULTCOMPONENT1</td><td>PROFIL~1.XML|profiles_V2.xml</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\profiles_V2.xml</td><td>1</td><td/></row>
 		<row><td>projectmidaslogo.ico</td><td>ISX_DEFAULTCOMPONENT</td><td>PROJEC~1.ICO|ProjectMidasLogo.ico</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\ProjectMidasLogo.ico</td><td>1</td><td/></row>
 		<row><td>q_pid</td><td>ISX_DEFAULTCOMPONENT17</td><td>Q_PID</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\include\QtCore\Q_PID</td><td>1</td><td/></row>
 		<row><td>qabstractanimation</td><td>ISX_DEFAULTCOMPONENT17</td><td>QABSTR~1|QAbstractAnimation</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\include\QtCore\QAbstractAnimation</td><td>1</td><td/></row>
@@ -4025,7 +4025,7 @@
 		<row><td>icudt53.dll2</td><td/><td/><td>_C78125B6_A816_4E3A_BCA4_D058678D77A6_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>icuin53.dll2</td><td/><td/><td>_76929F1E_B08F_47E9_B173_BDE6B38F8797_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>icuuc53.dll2</td><td/><td/><td>_1B90AB27_3AAB_456A_BB4D_C6D57DF4D5DE_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>myo32.dll</td><td/><td/><td>_2BA4837B_1D14_4B75_BF65_7ACC3213335E_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>myo32.dll</td><td/><td/><td>_6CB0EDB2_E396_4B8D_81B6_11ECE9B549EE_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>qminimal.dll</td><td/><td/><td>_6A838F19_7B1A_4CB9_B3A3_222F082A7EF7_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>qminimald.dll</td><td/><td/><td>_A0FCBE53_9D27_4FFC_BACB_B5D5218264A7_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>qoffscreen.dll</td><td/><td/><td>_7900C094_B170_4016_9099_34440BB1D714_FILTER</td><td/><td/><td/><td/></row>
@@ -5755,7 +5755,7 @@
 		<row><td>IDS__TargetReq_DESC_RAM</td><td>1033</td><td>The amount of RAM is not adequate for running [ProductName].</td><td>0</td><td/><td>463721034</td></row>
 		<row><td>IDS__TargetReq_DESC_RESOLUTION</td><td>1033</td><td>The screen resolution is not adequate for running [ProductName].</td><td>0</td><td/><td>463721034</td></row>
 		<row><td>ID_STRING1</td><td>1033</td><td/><td>0</td><td/><td>463723082</td></row>
-		<row><td>ID_STRING2</td><td>1033</td><td>http://www.jordenh.com</td><td>0</td><td/><td>1403224971</td></row>
+		<row><td>ID_STRING2</td><td>1033</td><td>https://github.com/jordenh/ProjectMidas</td><td>0</td><td/><td>-2086421168</td></row>
 		<row><td>ID_STRING3</td><td>1033</td><td>jordenh</td><td>0</td><td/><td>1403224971</td></row>
 		<row><td>IIDS_UITEXT_FeatureUninstalled</td><td>1033</td><td>This feature will remain uninstalled.</td><td>0</td><td/><td>463721034</td></row>
 	</table>
