@@ -130,6 +130,8 @@ int midasMain(MidasThread *threadHandle, MainGUI *mainGui, ProfileManager *pm) {
 
     while (true)
     {
+        Sleep(2);
+
         if (myoDevice->getDeviceStatus() != deviceStatus::RUNNING) 
             break;
 

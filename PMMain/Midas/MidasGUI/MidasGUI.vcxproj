@@ -49,7 +49,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <PreprocessorDefinitions>DONT_USE_GYRO_DATA;DONT_SHOW_PROFILE_ICONS;SHOW_SETTINGS;BUILD_FOR_KARDIUM;DONT_BUILD_KEYBOARD;SHOW_PROFILE_BUTTONS;DONT_USE_SIMULATOR;UNICODE;WIN32;WIN64;QT_DLL;QT_CORE_LIB;QT_GUI_LIB;QT_WIDGETS_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>DONT_USE_GYRO_DATA;DONT_SHOW_PROFILE_ICONS;DONT_SHOW_SETTINGS;BUILD_FOR_KARDIUM;DONT_BUILD_KEYBOARD;SHOW_PROFILE_BUTTONS;DONT_USE_SIMULATOR;UNICODE;WIN32;WIN64;QT_DLL;QT_CORE_LIB;QT_GUI_LIB;QT_WIDGETS_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>.\GeneratedFiles;.;$(ProjectDir)\Qt\include;.\GeneratedFiles\$(ConfigurationName);$(ProjectDir)\Qt\include\QtCore;$(ProjectDir)\Qt\include\QtGui;$(ProjectDir)\Qt\include\QtWidgets;$(ProjectDir)\myoSim\include;$(ProjectDir)\myo\include;C:\Program Files\boost\boost_1_57_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Disabled</Optimization>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
