@@ -36,7 +36,7 @@ public:
     unsigned int getYawMaxAngle() { return yawMaxAngle; }
     unsigned int getPitchMaxAngle() { return pitchMaxAngle; }
     buzzFeedbackMode getBuzzFeedbackMode() { return buzzFeedback; }
-    float getCursorGyroPower() { return cursorGyroPower; }
+    int getCursorGyroPower() { return cursorGyroPower; }
     float getCursorGyroScaleDown() { return cursorGyroScaleDown; }
 private:
     unsigned int yawMaxAngle;
@@ -44,7 +44,7 @@ private:
 
     buzzFeedbackMode buzzFeedback;
 
-    float cursorGyroPower;
+    int cursorGyroPower;
     float cursorGyroScaleDown;
 
 public slots:
@@ -52,7 +52,7 @@ public slots:
 
     void handleBuzzFeedbackChange(unsigned int buzzMode);
 
-    void hanldeGyroPowerValueChanged(double val);
+    void hanldeGyroPowerValueChanged(int val);
 
     void hanldeGyroScaleDownValueChanged(double val);
 };

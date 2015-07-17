@@ -67,18 +67,17 @@ SettingsDisplayer::SettingsDisplayer(int widgetWidth, int widgetHeight, QWidget 
     connect(buzzFeedbackButton, SIGNAL(clicked(bool)), this, SLOT(handleClicked(bool)));
     mainLayout->addWidget(buzzFeedbackButton);
 
-    gyroPowerSpinBox = new QDoubleSpinBox(this);
+    gyroPowerSpinBox = new QSpinBox(this);
     gyroPowerSpinBox->setMinimum(MIN_GYRO_POW);
     gyroPowerSpinBox->setMaximum(MAX_GYRO_POW);
     gyroPowerSpinBox->setValue(DEFAULT_GYRO_POW);
-    gyroPowerSpinBox->setSingleStep(0.1);
     gyroScaleDownSpinBox = new QDoubleSpinBox(this);
     gyroScaleDownSpinBox->setMinimum(MIN_GYRO_SCALE_DOWN);
     gyroScaleDownSpinBox->setMaximum(MAX_GYRO_SCALE_DOWN);
     gyroScaleDownSpinBox->setValue(DEFAULT_GYRO_SCALE_DOWN);
-    gyroScaleDownSpinBox->setSingleStep(10);
+    gyroScaleDownSpinBox->setSingleStep(50);
 
-    connect(gyroPowerSpinBox, SIGNAL(valueChanged(double)), this, SLOT(gyroPowerValueChanged(double)));
+    connect(gyroPowerSpinBox, SIGNAL(valueChanged(int)), this, SLOT(gyroPowerValueChanged(int)));
     connect(gyroScaleDownSpinBox, SIGNAL(valueChanged(double)), this, SLOT(gyroScaledDownValueChanged(double)));
 
     QHBoxLayout* hlayout1 = new QHBoxLayout;
@@ -148,7 +147,7 @@ void SettingsDisplayer::handleClicked(bool checked)
     buzzFeedbackButton->setText(buzzFeedbackModeToString((buzzFeedbackMode)(currentBuzzModeCount)).c_str());
 }
 
-void SettingsDisplayer::gyroPowerValueChanged(double val)
+void SettingsDisplayer::gyroPowerValueChanged(int val)
 {
     emitGyroPowerValue(val);
 }

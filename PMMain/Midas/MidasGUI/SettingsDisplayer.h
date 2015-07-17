@@ -28,6 +28,7 @@
 class QLabel;
 class QSlider;
 class QPushButton;
+class QSpinBox;
 class QDoubleSpinBox;
 
 class SettingsDisplayer : public QWidget
@@ -54,7 +55,7 @@ private:
     QLabel *pitchValue;
 
     // SpinBoxs to update Gyro cursor control variables
-    QDoubleSpinBox *gyroPowerSpinBox;
+    QSpinBox *gyroPowerSpinBox;
     QDoubleSpinBox *gyroScaleDownSpinBox;
 
     // Button to change buzzFeedbackMode
@@ -64,14 +65,14 @@ private:
 signals:
     void emitSliderValues(unsigned int, unsigned int);
     void emitBuzzFeedbackChange(unsigned int);
-    void emitGyroPowerValue(double);
+    void emitGyroPowerValue(int);
     void emitGyroScaleDownValue(double);
 
 private slots:
     void handleSliders();
     void handleSlidersChange(int);
     void handleClicked(bool);
-    void gyroPowerValueChanged(double);
+    void gyroPowerValueChanged(int);
     void gyroScaledDownValueChanged(double);
 };
 

@@ -42,7 +42,7 @@ void SettingsSignaller::handleBuzzFeedbackChange(unsigned int buzzMode)
     this->buzzFeedback = (buzzFeedbackMode)buzzMode;
 }
 
-void SettingsSignaller::hanldeGyroPowerValueChanged(double val)
+void SettingsSignaller::hanldeGyroPowerValueChanged(int val)
 {
     this->cursorGyroPower = val;
 }

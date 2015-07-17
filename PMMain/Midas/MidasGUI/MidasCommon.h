@@ -33,7 +33,7 @@
 #define MIN_SLIDER_ANGLE 15
 #define MAX_SLIDER_ANGLE 100
 
-#define MIN_GYRO_POW 1.0
+#define MIN_GYRO_POW 1
 #define MAX_GYRO_POW 100
 #define DEFAULT_GYRO_POW 2
 

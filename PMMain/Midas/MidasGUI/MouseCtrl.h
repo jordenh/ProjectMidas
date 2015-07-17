@@ -120,6 +120,9 @@ private:
     // 2 = right held.
     // 4 = middle held.
     unsigned char currHeld;
+
+    unsigned int prevAbsMouseX;
+    unsigned int prevAbsMouseY;
 };
 
 #endif /* _MOUSE_CONTROLLER_H */

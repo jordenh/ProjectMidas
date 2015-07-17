@@ -210,8 +210,8 @@ void MainGUI::connectSignallerToSettingsDisplayer(SettingsSignaller *signaller)
         QObject::connect(settingsDisplayer, SIGNAL(emitBuzzFeedbackChange(unsigned int)),
             signaller, SLOT(handleBuzzFeedbackChange(unsigned int)));
 
-        QObject::connect(settingsDisplayer, SIGNAL(emitGyroPowerValue(double)),
-            signaller, SLOT(hanldeGyroPowerValueChanged(double)));
+        QObject::connect(settingsDisplayer, SIGNAL(emitGyroPowerValue(int)),
+            signaller, SLOT(hanldeGyroPowerValueChanged(int)));
         QObject::connect(settingsDisplayer, SIGNAL(emitGyroScaleDownValue(double)),
             signaller, SLOT(hanldeGyroScaleDownValueChanged(double)));
     }
