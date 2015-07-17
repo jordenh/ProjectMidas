@@ -90,7 +90,7 @@ MainGUI::MainGUI(MidasThread *mainThread, ProfileManager *pm, int deadZoneRad)
 #endif
 
 #ifdef SHOW_SETTINGS
-    settingsDisplayer = new SettingsDisplayer(PROF_INDICATOR_WIDTH, 2*INFO_INDICATOR_HEIGHT, this);
+    settingsDisplayer = new SettingsDisplayer(PROF_INDICATOR_WIDTH, 3*INFO_INDICATOR_HEIGHT, this);
     layout->addWidget(settingsDisplayer, 0, Qt::AlignRight);
 #else
     settingsDisplayer = NULL;
@@ -209,6 +209,11 @@ void MainGUI::connectSignallerToSettingsDisplayer(SettingsSignaller *signaller)
             signaller, SLOT(handleSliderValues(unsigned int, unsigned int)));
         QObject::connect(settingsDisplayer, SIGNAL(emitBuzzFeedbackChange(unsigned int)),
             signaller, SLOT(handleBuzzFeedbackChange(unsigned int)));
+
+        QObject::connect(settingsDisplayer, SIGNAL(emitGyroPowerValue(double)),
+            signaller, SLOT(hanldeGyroPowerValueChanged(double)));
+        QObject::connect(settingsDisplayer, SIGNAL(emitGyroScaleDownValue(double)),
+            signaller, SLOT(hanldeGyroScaleDownValueChanged(double)));
     }
 }
 

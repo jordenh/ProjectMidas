@@ -50,8 +50,6 @@ class HoldModeObserver;
 #define GESTURE_WAVE_OUT 4
 
 #define CURSOR_GYRO_ACCEL_RATE 200
-#define CURSOR_GYRO_POW 2
-#define CURSOR_GYRO_SCALE_DOWN 100
 
 /**
  * Consult Filter.h for concepts regarding Filters.

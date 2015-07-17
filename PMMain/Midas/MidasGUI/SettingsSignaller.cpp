@@ -19,8 +19,10 @@
 
 #include "SettingsSignaller.h"
 
-SettingsSignaller::SettingsSignaller(QObject *parent, unsigned int yawMaxAngle, unsigned int pitchMaxAngle, buzzFeedbackMode buzzFeedback)
-    : QObject(parent), yawMaxAngle(yawMaxAngle), pitchMaxAngle(pitchMaxAngle), buzzFeedback(buzzFeedback)
+SettingsSignaller::SettingsSignaller(QObject *parent, unsigned int yawMaxAngle, unsigned int pitchMaxAngle, buzzFeedbackMode buzzFeedback,
+    double cursorGyroPower, double cursorGyroScaleDown)
+    : QObject(parent), yawMaxAngle(yawMaxAngle), pitchMaxAngle(pitchMaxAngle), buzzFeedback(buzzFeedback),
+    cursorGyroPower(cursorGyroPower), cursorGyroScaleDown(cursorGyroScaleDown)
 {
 }
 
@@ -38,4 +40,14 @@ void SettingsSignaller::handleSliderValues(unsigned int yawMaxAngle, unsigned in
 void SettingsSignaller::handleBuzzFeedbackChange(unsigned int buzzMode)
 {
     this->buzzFeedback = (buzzFeedbackMode)buzzMode;
+}
+
+void SettingsSignaller::hanldeGyroPowerValueChanged(double val)
+{
+    this->cursorGyroPower = val;
+}
+
+void SettingsSignaller::hanldeGyroScaleDownValueChanged(double val)
+{
+    this->cursorGyroScaleDown = val;
 }

@@ -24,6 +24,7 @@
 #include <QFrame.h>
 #include <qlabel.h>
 #include <qpushbutton.h>
+#include <qspinbox.h>
 
 SettingsDisplayer::SettingsDisplayer(int widgetWidth, int widgetHeight, QWidget *parent)
     : QWidget(parent), indWidth(widgetWidth), indHeight(widgetHeight), currentBuzzModeCount(buzzFeedbackMode::MINIMAL)
@@ -40,7 +41,7 @@ SettingsDisplayer::SettingsDisplayer(int widgetWidth, int widgetHeight, QWidget 
     setPalette(pal);
     setWindowFlags(Qt::WindowStaysOnTopHint);
 
-    mainLayout = new QVBoxLayout;
+    QVBoxLayout *mainLayout = new QVBoxLayout;
     mainLayout->setSpacing(WIDGET_BUFFER);
     setLayout(mainLayout);
 
@@ -66,18 +67,40 @@ SettingsDisplayer::SettingsDisplayer(int widgetWidth, int widgetHeight, QWidget 
     connect(buzzFeedbackButton, SIGNAL(clicked(bool)), this, SLOT(handleClicked(bool)));
     mainLayout->addWidget(buzzFeedbackButton);
 
-    hlayout = new QHBoxLayout;
+    gyroPowerSpinBox = new QDoubleSpinBox(this);
+    gyroPowerSpinBox->setMinimum(MIN_GYRO_POW);
+    gyroPowerSpinBox->setMaximum(MAX_GYRO_POW);
+    gyroPowerSpinBox->setValue(DEFAULT_GYRO_POW);
+    gyroPowerSpinBox->setSingleStep(0.1);
+    gyroScaleDownSpinBox = new QDoubleSpinBox(this);
+    gyroScaleDownSpinBox->setMinimum(MIN_GYRO_SCALE_DOWN);
+    gyroScaleDownSpinBox->setMaximum(MAX_GYRO_SCALE_DOWN);
+    gyroScaleDownSpinBox->setValue(DEFAULT_GYRO_SCALE_DOWN);
+    gyroScaleDownSpinBox->setSingleStep(10);
 
-    hlayout->addWidget(new QLabel("Yaw: "));
-    hlayout->addWidget(yawSlider);
+    connect(gyroPowerSpinBox, SIGNAL(valueChanged(double)), this, SLOT(gyroPowerValueChanged(double)));
+    connect(gyroScaleDownSpinBox, SIGNAL(valueChanged(double)), this, SLOT(gyroScaledDownValueChanged(double)));
+
+    QHBoxLayout* hlayout1 = new QHBoxLayout;
+    hlayout1->addWidget(new QLabel("Gyro Exponent: "));
+    hlayout1->addWidget(gyroPowerSpinBox);
+    hlayout1->addWidget(new QLabel("Gyro Scale Down: "));
+    hlayout1->addWidget(gyroScaleDownSpinBox);
+    
+    mainLayout->addLayout(hlayout1);
+
+    QHBoxLayout* hlayout2 = new QHBoxLayout;
+
+    hlayout2->addWidget(new QLabel("Yaw: "));
+    hlayout2->addWidget(yawSlider);
     yawValue = new QLabel(QString::number(yawSlider->sliderPosition()));
-    hlayout->addWidget(yawValue);
-    hlayout->addWidget(new QLabel("Pitch: "));
-    hlayout->addWidget(pitchSlider);
+    hlayout2->addWidget(yawValue);
+    hlayout2->addWidget(new QLabel("Pitch: "));
+    hlayout2->addWidget(pitchSlider);
     pitchValue = new QLabel(QString::number(pitchSlider->sliderPosition()));
-    hlayout->addWidget(pitchValue);
+    hlayout2->addWidget(pitchValue);
 
-    mainLayout->addLayout(hlayout);
+    mainLayout->addLayout(hlayout2);
 
     setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     setMinimumSize(indWidth, indHeight);
@@ -85,14 +108,6 @@ SettingsDisplayer::SettingsDisplayer(int widgetWidth, int widgetHeight, QWidget 
 
 SettingsDisplayer::~SettingsDisplayer()
 {
-    delete mainLayout; mainLayout = NULL;
-    delete hlayout; hlayout = NULL;
-    delete stateLabel; stateLabel = NULL;
-    delete yawSlider; yawSlider = NULL;
-    delete pitchSlider; pitchSlider = NULL;
-    delete yawValue; yawValue = NULL;
-    delete pitchValue; pitchValue = NULL;
-    delete buzzFeedbackButton; buzzFeedbackButton = NULL;
 }
 
 QSize SettingsDisplayer::sizeHint() const
@@ -131,4 +146,14 @@ void SettingsDisplayer::handleClicked(bool checked)
     currentBuzzModeCount %= NUM_BUZZ_MODES;
     emitBuzzFeedbackChange(currentBuzzModeCount);
     buzzFeedbackButton->setText(buzzFeedbackModeToString((buzzFeedbackMode)(currentBuzzModeCount)).c_str());
+}
+
+void SettingsDisplayer::gyroPowerValueChanged(double val)
+{
+    emitGyroPowerValue(val);
+}
+
+void SettingsDisplayer::gyroScaledDownValueChanged(double val)
+{
+    emitGyroScaleDownValue(val);
 }

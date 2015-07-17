@@ -30,6 +30,16 @@
 #define INIT_PITCH_ANGLE 20.0f /* Maximum delta angle in degrees */
 #define INIT_YAW_ANGLE 25.0f /* Maximum delta angle in degrees */
 #endif
+#define MIN_SLIDER_ANGLE 15
+#define MAX_SLIDER_ANGLE 100
+
+#define MIN_GYRO_POW 1.0
+#define MAX_GYRO_POW 100
+#define DEFAULT_GYRO_POW 2
+
+#define MIN_GYRO_SCALE_DOWN 10
+#define MAX_GYRO_SCALE_DOWN 100000
+#define DEFAULT_GYRO_SCALE_DOWN 100
 
 #define GUI_OPACITY 0.70
 
