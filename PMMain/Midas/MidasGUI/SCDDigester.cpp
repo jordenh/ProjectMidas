@@ -32,7 +32,7 @@
 
 #ifdef BUILD_KEYBOARD
 SCDDigester::SCDDigester(SharedCommandData* scd, MidasThread *thread, ControlState *cntrlStateHandle, MyoState* myoStateHandle,
-    MouseCtrl *mouseCtrl, KeyboardController *keyboardController, ProfileManager* profileManagerHandle,  MainGUI *mainGui std::vector<ringData> *kybrdRingData)
+    MouseCtrl *mouseCtrl, KeyboardController *keyboardController, ProfileManager* profileManagerHandle,  MainGUI *mainGui, std::vector<ringData> *kybrdRingData)
 #else
 SCDDigester::SCDDigester(SharedCommandData* scd, MidasThread *thread, ControlState *cntrlStateHandle, MyoState* myoStateHandle,
     MouseCtrl *mouseCtrl, KeyboardController *keyboardController, ProfileManager* profileManagerHandle, MainGUI *mainGui)

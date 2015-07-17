@@ -79,10 +79,10 @@ private:
 	DistanceWidget* distanceDisplayer;
 
 private:
+    void hideAllWidgets();
 
 	void setupProfileIcons();
 
-    QVBoxLayout *layout;
     MouseIndicator *mouseIndicator;
     InfoIndicator *infoIndicator;
     SequenceDisplayer *sequenceDisplayer;
@@ -98,6 +98,8 @@ private:
 
 public slots:
     void handleChangeProfile(bool progressForward);
+
+    void handleToggleViewWidgets(int widgetSelection);
 
     void handleFocusMidas();
 };
