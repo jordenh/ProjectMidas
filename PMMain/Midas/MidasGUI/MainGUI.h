@@ -79,11 +79,11 @@ private:
 	DistanceWidget* distanceDisplayer;
 
 private:
-    void hideAllWidgets();
+    void hideAllNonEssentialWidgets();
 
 	void setupProfileIcons();
 
-    MouseIndicator *mouseIndicator;
+    //MouseIndicator *mouseIndicator;
     InfoIndicator *infoIndicator;
     SequenceDisplayer *sequenceDisplayer;
     PoseDisplayer *poseDisplayer;

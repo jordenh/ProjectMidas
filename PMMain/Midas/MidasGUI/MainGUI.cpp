@@ -117,7 +117,7 @@ MainGUI::MainGUI(MidasThread *mainThread, ProfileManager *pm, int deadZoneRad)
 	mainBoxLayout->addItem(leftBoxLayout);
 	mainBoxLayout->addWidget(poseDisplayer);
     mainBoxLayout->setSpacing(WIDGET_BUFFER);
-	mainBoxLayout->setAlignment(Qt::AlignRight);
+    mainBoxLayout->setAlignment(Qt::AlignRight | Qt::AlignBottom);
 
 	layout->addItem(mainBoxLayout);
      
@@ -146,6 +146,8 @@ MainGUI::MainGUI(MidasThread *mainThread, ProfileManager *pm, int deadZoneRad)
     setGeometry(screen.right() - totalWidth - SCREEN_RIGHT_BUFFER,
         screen.bottom() - totalHeight - SCREEN_BOTTOM_BUFFER,
         totalWidth, totalHeight);
+
+    handleToggleViewWidgets(2);
 }
 
 void MainGUI::toggleKeyboard()
@@ -164,8 +166,6 @@ void MainGUI::toggleKeyboard()
 
 MainGUI::~MainGUI()
 {
-    delete mouseIndicator;
-    mouseIndicator = NULL;
     delete infoIndicator;
     infoIndicator = NULL;
     delete sequenceDisplayer;
@@ -288,6 +288,9 @@ void MainGUI::setupProfileIcons()
     activeProfile = 0;
 	icon0 = new ProfileIcon(SPECIFIC_PROFILE_ICON_SIZE, SPECIFIC_PROFILE_ICON_SIZE, true, QPixmap::fromImage(icon0Active), QPixmap::fromImage(icon0Inactive), this);
 	icon1 = new ProfileIcon(SPECIFIC_PROFILE_ICON_SIZE, SPECIFIC_PROFILE_ICON_SIZE, false, QPixmap::fromImage(icon1Active), QPixmap::fromImage(icon1Inactive), this);
+#else
+    icon0 = NULL;
+    icon1 = NULL;
 #endif
 }
 
@@ -326,81 +329,64 @@ void MainGUI::handleChangeProfile(bool progressForward)
 #endif
 }
 
-void MainGUI::hideAllWidgets()
+void MainGUI::hideAllNonEssentialWidgets()
 {
-    if (mouseIndicator != NULL)
-        mouseIndicator->setVisible(false);
     if (icon0 != NULL)
-        icon0->setVisible(false);
+        icon0->setHidden(true);
     if (icon1 != NULL)
-        icon1->setVisible(false);
+        icon1->setHidden(true);
 
-    poseDisplayer->setVisible(false);
-    infoIndicator->setVisible(false);
-    sequenceDisplayer->setVisible(false);
-    settingsDisplayer->setVisible(false);
+    sequenceDisplayer->setHidden(true);
+    settingsDisplayer->setHidden(true);
 
     for (int i = 0; i < profileWidgets.size(); i++)
     {
-        profileWidgets[i]->setVisible(false);
+        profileWidgets[i]->setHidden(true);
     }
 }
 
 void MainGUI::handleToggleViewWidgets(int widgetSelection)
 {
-    hideAllWidgets();
+    hideAllNonEssentialWidgets();
     int i;
     switch (widgetSelection)
     {
     case 0:
-        // show ONLY essential widgets
-        poseDisplayer->setVisible(true);
-        infoIndicator->setVisible(true);
+        // ensure essential widgets are shown
+        poseDisplayer->setHidden(false);
+        infoIndicator->setHidden(false);
         break;
     case 1:
         // show essential and sequences
-        poseDisplayer->setVisible(true);
-        infoIndicator->setVisible(true);
-        sequenceDisplayer->setVisible(true);
+        poseDisplayer->setHidden(false);
+        infoIndicator->setHidden(false);
+        sequenceDisplayer->setHidden(false);
         break;
     case 2:
         // show essential, sequences, and settings
-        poseDisplayer->setVisible(true);
-        infoIndicator->setVisible(true);
-        sequenceDisplayer->setVisible(true);
-        settingsDisplayer->setVisible(true);
+        poseDisplayer->setHidden(false);
+        infoIndicator->setHidden(false);
+        sequenceDisplayer->setHidden(false);
+        settingsDisplayer->setHidden(false);
         break;
     case 3:
         // show essential, sequences, settings, and profiles
-        poseDisplayer->setVisible(true);
-        infoIndicator->setVisible(true);
-        sequenceDisplayer->setVisible(true);
-        settingsDisplayer->setVisible(true);
+        poseDisplayer->setHidden(false);
+        infoIndicator->setHidden(false);
+        sequenceDisplayer->setHidden(false);
+        settingsDisplayer->setHidden(false);
 
         for (i = 0; i < profileWidgets.size(); i++)
         {
-            profileWidgets[i]->setVisible(true);
+            profileWidgets[i]->setHidden(false);
         }
         break;
     default:
         // show essential widgets
-        poseDisplayer->setVisible(true);
-        infoIndicator->setVisible(true);
+        poseDisplayer->setHidden(false);
+        infoIndicator->setHidden(false);
         break;
     }
-    
-
-    /*
-    MouseIndicator *mouseIndicator;
-    InfoIndicator *infoIndicator;
-    SequenceDisplayer *sequenceDisplayer;
-    PoseDisplayer *poseDisplayer;
-    SettingsDisplayer *settingsDisplayer;
-	ProfileIcon *icon0;
-	ProfileIcon *icon1;
-	bool icon0IsActive;
-    std::vector<ProfileDisplayer*> profileWidgets;
-    */
 }
 
 void MainGUI::handleFocusMidas()
