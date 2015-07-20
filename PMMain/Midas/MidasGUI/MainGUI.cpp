@@ -207,6 +207,10 @@ MainGUI::~MainGUI()
 
     delete profilesWidget; profilesWidget = NULL;
 
+#ifdef BUILD_KEYBOARD
+    delete keyboard; keyboard = NULL;
+    delete distanceDisplayer; distanceDisplayer = NULL;
+#endif
 }
 
 #ifdef BUILD_KEYBOARD
