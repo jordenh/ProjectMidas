@@ -36,13 +36,6 @@ DistanceWidget::DistanceWidget(MidasThread* mainThread, int width, int height, Q
     bar = new distanceBar(0, 0, this, width, height);
     QVBoxLayout *layout = new QVBoxLayout;
 
-    // Temporarily allow a Quit
-    QAction *quitAction = new QAction(tr("E&xit"), this);
-    quitAction->setShortcut(tr("Ctrl-Q"));
-    connect(quitAction, SIGNAL(triggered()), qApp, SLOT(quit()));
-    addAction(quitAction);
-
-    setContextMenuPolicy(Qt::ActionsContextMenu);
     setToolTip(tr("Strong signal means the device is 0.5m or closer.\n"
         "Medium signal means the device is 4m or closer.\n"
         "Low signal means the device is beyond 4m.\n"

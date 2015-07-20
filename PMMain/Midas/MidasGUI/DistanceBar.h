@@ -70,7 +70,7 @@ private:
     const QString  *sImmediate = new QString("Strong Signal");
     const QColor OOS_colour = Qt::red;
     const QColor Far_colour = Qt::yellow;
-    const QColor Near_colour = QColor(0, 128, 255);
+    const QColor Near_colour = MYO_BLUE;
     const QColor Immediate_colour = Qt::green;
 
 

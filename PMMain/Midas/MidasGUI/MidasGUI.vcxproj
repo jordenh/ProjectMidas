@@ -49,7 +49,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <PreprocessorDefinitions>USE_GYRO_DATA;DONT_SHOW_PROFILE_ICONS;DONT_SHOW_SETTINGS;BUILD_FOR_KARDIUM;DONT_BUILD_KEYBOARD;DONT_SHOW_PROFILE_BUTTONS;DONT_USE_SIMULATOR;UNICODE;WIN32;WIN64;QT_DLL;QT_CORE_LIB;QT_GUI_LIB;QT_WIDGETS_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>USE_GYRO_DATA;DONT_SHOW_PROFILE_ICONS;SHOW_SETTINGS;BUILD_FOR_KARDIUM;BUILD_KEYBOARD;DONT_SHOW_PROFILE_BUTTONS;DONT_USE_SIMULATOR;UNICODE;WIN32;WIN64;QT_DLL;QT_CORE_LIB;QT_GUI_LIB;QT_WIDGETS_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>.\GeneratedFiles;.;$(ProjectDir)\Qt\include;.\GeneratedFiles\$(ConfigurationName);$(ProjectDir)\Qt\include\QtCore;$(ProjectDir)\Qt\include\QtGui;$(ProjectDir)\Qt\include\QtWidgets;$(ProjectDir)\myoSim\include;$(ProjectDir)\myo\include;C:\Program Files\boost\boost_1_57_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Disabled</Optimization>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -135,7 +135,13 @@ COPY "$(ProjectDir)Qt\Qt5Widgetsd.dll" "$(OutDir)"</Command>
     <ClCompile Include="GeneratedFiles\Debug\moc_ConnectionSignaller.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ProfilesDisplayer.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="GeneratedFiles\Release\moc_ConnectionSignaller.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ProfilesDisplayer.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="GenericBypassFilter.cpp" />
@@ -258,6 +264,7 @@ COPY "$(ProjectDir)Qt\Qt5Widgetsd.dll" "$(OutDir)"</Command>
     <ClCompile Include="ProfileDisplayer.cpp" />
     <ClCompile Include="ProfileIcon.cpp" />
     <ClCompile Include="ProfileManager.cpp" />
+    <ClCompile Include="ProfilesDisplayer.cpp" />
     <ClCompile Include="ProfileSignaller.cpp" />
     <ClCompile Include="PoseDisplayer.cpp" />
     <ClCompile Include="RingData.cpp" />
@@ -428,6 +435,16 @@ COPY "$(ProjectDir)Qt\Qt5Widgetsd.dll" "$(OutDir)"</Command>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing PoseDisplayer.h...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtWidgets"</Command>
+    </CustomBuild>
+    <CustomBuild Include="ProfilesDisplayer.h">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing ProfilesDisplayer.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUSE_GYRO_DATA -DDONT_SHOW_PROFILE_ICONS -DSHOW_SETTINGS -DBUILD_FOR_KARDIUM -DBUILD_KEYBOARD -DDONT_SHOW_PROFILE_BUTTONS -DDONT_USE_SIMULATOR -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -D_MBCS "-I.\GeneratedFiles" "-I." "-I$(ProjectDir)\Qt\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(ProjectDir)\Qt\include\QtCore" "-I$(ProjectDir)\Qt\include\QtGui" "-I$(ProjectDir)\Qt\include\QtWidgets" "-I$(ProjectDir)\myoSim\include" "-I$(ProjectDir)\myo\include" "-IC:\Program Files\boost\boost_1_57_0"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing ProfilesDisplayer.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUSE_GYRO_DATA -DDONT_SHOW_PROFILE_ICONS -DDONT_SHOW_SETTINGS -DBUILD_FOR_KARDIUM -DDONT_BUILD_KEYBOARD -DDONT_SHOW_PROFILE_BUTTONS -DDONT_USE_SIMULATOR -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -DQT_NO_DEBUG -DNDEBUG -D_MBCS "-I.\GeneratedFiles" "-I." "-I$(ProjectDir)\Qt\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(ProjectDir)\Qt\include\QtCore" "-I$(ProjectDir)\Qt\include\QtGui" "-I$(ProjectDir)\Qt\include\QtWidgets" "-I$(ProjectDir)\myoSim\include" "-I$(ProjectDir)\myo\include" "-IC:\Program Files\boost\boost_1_57_0"</Command>
     </CustomBuild>
     <ClInclude Include="RingData.h" />
     <ClInclude Include="SequenceImageManager.h" />

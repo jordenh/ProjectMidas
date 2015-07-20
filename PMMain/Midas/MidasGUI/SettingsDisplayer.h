@@ -20,26 +20,25 @@
 #ifndef SETTINGS_DISPLAYER_H
 #define SETTINGS_DISPLAYER_H
 
+#include "DraggableWidget.h"
+
 #include <QWidget>
 
 #include "MidasCommon.h"
 #include "MyoCommon.h"
 
 class QLabel;
-class QVBoxLayout;
-class QHBoxLayout;
 class QSlider;
 class QPushButton;
+class QSpinBox;
+class QDoubleSpinBox;
 
-#define MIN_SLIDER_ANGLE 15
-#define MAX_SLIDER_ANGLE 100
-
-class SettingsDisplayer : public QWidget
+class SettingsDisplayer : public DraggableWidget
 {
     Q_OBJECT
 
 public:
-    SettingsDisplayer(int widgetWidth = INFO_INDICATOR_WIDTH, int widgetHeight = 2*INFO_INDICATOR_HEIGHT, QWidget *parent = 0);
+    SettingsDisplayer(int widgetWidth = 2*INFO_INDICATOR_WIDTH, int widgetHeight = 3*INFO_INDICATOR_HEIGHT, QWidget *parent = 0);
     ~SettingsDisplayer();
     QSize sizeHint() const;
 
@@ -49,9 +48,6 @@ protected:
 private:
     QPoint position;
     int indWidth, indHeight;
-    QVBoxLayout *mainLayout;
-    QHBoxLayout *hlayout;
-    QLabel *stateLabel;
 
     // Sliders to update settings for how many degrees the arm has to move to 
     // cover an entire monitor.
@@ -60,6 +56,10 @@ private:
     QLabel *yawValue;
     QLabel *pitchValue;
 
+    // SpinBoxs to update Gyro cursor control variables
+    QSpinBox *gyroPowerSpinBox;
+    QDoubleSpinBox *gyroScaleDownSpinBox;
+
     // Button to change buzzFeedbackMode
     QPushButton *buzzFeedbackButton;
     unsigned int currentBuzzModeCount;
@@ -67,11 +67,15 @@ private:
 signals:
     void emitSliderValues(unsigned int, unsigned int);
     void emitBuzzFeedbackChange(unsigned int);
+    void emitGyroPowerValue(int);
+    void emitGyroScaleDownValue(double);
 
 private slots:
     void handleSliders();
     void handleSlidersChange(int);
     void handleClicked(bool);
+    void gyroPowerValueChanged(int);
+    void gyroScaledDownValueChanged(double);
 };
 
 #endif SETTINGS_DISPLAYER_H

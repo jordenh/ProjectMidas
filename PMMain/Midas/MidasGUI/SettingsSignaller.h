@@ -29,22 +29,32 @@ class SettingsSignaller : public QObject
     Q_OBJECT
 
 public:
-    SettingsSignaller(QObject *parent = 0, unsigned int yawMaxAngle = INIT_YAW_ANGLE, unsigned int pitchMaxAngle = INIT_PITCH_ANGLE, buzzFeedbackMode buzzFeedback = MINIMAL);
+    SettingsSignaller(QObject *parent = 0, unsigned int yawMaxAngle = INIT_YAW_ANGLE, unsigned int pitchMaxAngle = INIT_PITCH_ANGLE, 
+        buzzFeedbackMode buzzFeedback = MINIMAL, double cursorGyroPower = DEFAULT_GYRO_POW, double cursorGyroScaleDown = DEFAULT_GYRO_SCALE_DOWN);
     ~SettingsSignaller();
 
     unsigned int getYawMaxAngle() { return yawMaxAngle; }
     unsigned int getPitchMaxAngle() { return pitchMaxAngle; }
     buzzFeedbackMode getBuzzFeedbackMode() { return buzzFeedback; }
+    int getCursorGyroPower() { return cursorGyroPower; }
+    float getCursorGyroScaleDown() { return cursorGyroScaleDown; }
 private:
     unsigned int yawMaxAngle;
     unsigned int pitchMaxAngle;
 
     buzzFeedbackMode buzzFeedback;
 
+    int cursorGyroPower;
+    float cursorGyroScaleDown;
+
 public slots:
     void handleSliderValues(unsigned int yawMaxAngle, unsigned int pitchMaxAngle);
 
     void handleBuzzFeedbackChange(unsigned int buzzMode);
+
+    void hanldeGyroPowerValueChanged(int val);
+
+    void hanldeGyroScaleDownValueChanged(double val);
 };
 
 #endif // SETTINGS_SIGNALLER_H

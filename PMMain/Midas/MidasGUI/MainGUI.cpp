@@ -28,6 +28,7 @@
 #include <QEvent.h>
 #include <QDialog>
 #include <qlayout.h>
+#include <qmenu.h>
 #include "MouseIndicator.h"
 #include "SequenceDisplayer.h"
 #include "InfoIndicator.h"
@@ -41,6 +42,7 @@
 #include "ProfileManager.h"
 #include "SettingsDisplayer.h"
 #include "SettingsSignaller.h"
+#include "ProfilesDisplayer.h"
 #include "MidasThread.h"
 
 
@@ -59,8 +61,9 @@ MainGUI::MainGUI(MidasThread *mainThread, ProfileManager *pm, int deadZoneRad)
     sequenceDisplayer = new SequenceDisplayer(this);
 	poseDisplayer = new PoseDisplayer(MOUSE_INDICATOR_SIZE, MOUSE_INDICATOR_SIZE, this);
 #ifdef BUILD_KEYBOARD
-//	distanceDisplayer = new DistanceWidget(mainThread, INFO_INDICATOR_WIDTH,
-//		DISTANCE_DISPLAY_HEIGHT, this);
+	distanceDisplayer = new DistanceWidget(mainThread, INFO_INDICATOR_WIDTH,
+		DISTANCE_DISPLAY_HEIGHT, this);
+    distanceDisplayer->setVisible(false);
 #endif
 
     numProfiles = pm->getProfiles()->size();
@@ -72,29 +75,34 @@ MainGUI::MainGUI(MidasThread *mainThread, ProfileManager *pm, int deadZoneRad)
     setAttribute(Qt::WA_TranslucentBackground);
     setWindowOpacity(GUI_OPACITY);
 
+    // setup contextMenu
+    setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(this, SIGNAL(customContextMenuRequested(const QPoint&)),
+        this, SLOT(ShowContextMenu(const QPoint&)));
+    connect(infoIndicator, SIGNAL(customContextMenuRequested(const QPoint&)),
+        this, SLOT(ShowContextMenu(const QPoint&)));
+    connect(sequenceDisplayer, SIGNAL(customContextMenuRequested(const QPoint&)),
+        this, SLOT(ShowContextMenu(const QPoint&)));
+    connect(poseDisplayer, SIGNAL(customContextMenuRequested(const QPoint&)),
+        this, SLOT(ShowContextMenu(const QPoint&)));
+
 	// create main layout and add sequences (they are at the top and constantly go in/out of view)
-    layout = new QVBoxLayout;
+    QVBoxLayout *layout = new QVBoxLayout;
 	layout->addWidget(sequenceDisplayer);
 
-#ifdef SHOW_PROFILE_BUTTONS
+    profilesWidget = new ProfilesDisplayer();
     std::vector<profile>* profiles = pm->getProfiles();
     std::vector<profile>::iterator it;
     int profileHeights = 0;
     for (it = profiles->begin(); it != profiles->end(); it++)
     {
-        ProfileDisplayer* displayer = new ProfileDisplayer(it->profileName, PROF_INDICATOR_WIDTH, PROF_INDICATOR_HEIGHT, this);
-        profileHeights += displayer->height();
-        profileWidgets.push_back(displayer);
-        layout->addWidget(displayer, 0, Qt::AlignRight);
+        profilesWidget->addProfile(it->profileName);        
     }
-#endif
+    profileHeights = profilesWidget->height();
+    profilesWidget->setVisible(false);
 
-#ifdef SHOW_SETTINGS
-    settingsDisplayer = new SettingsDisplayer(PROF_INDICATOR_WIDTH, 2*INFO_INDICATOR_HEIGHT, this);
-    layout->addWidget(settingsDisplayer, 0, Qt::AlignRight);
-#else
-    settingsDisplayer = NULL;
-#endif
+    settingsDisplayer = new SettingsDisplayer(SETTINGS_WIDTH, SETTINGS_HEIGHT);
+    settingsDisplayer->setVisible(false);
 
     QVBoxLayout *leftBoxLayout = new QVBoxLayout;
     leftBoxLayout->addWidget(infoIndicator);
@@ -116,7 +124,7 @@ MainGUI::MainGUI(MidasThread *mainThread, ProfileManager *pm, int deadZoneRad)
 	mainBoxLayout->addItem(leftBoxLayout);
 	mainBoxLayout->addWidget(poseDisplayer);
     mainBoxLayout->setSpacing(WIDGET_BUFFER);
-	mainBoxLayout->setAlignment(Qt::AlignRight);
+    mainBoxLayout->setAlignment(Qt::AlignRight | Qt::AlignBottom);
 
 	layout->addItem(mainBoxLayout);
      
@@ -130,12 +138,6 @@ MainGUI::MainGUI(MidasThread *mainThread, ProfileManager *pm, int deadZoneRad)
     totalWidth = std::max(sequenceDisplayer->width(), 
                         (infoIndicator->width() + poseDisplayer->width()));
     totalHeight = sequenceDisplayer->height() + poseDisplayer->height()
-#ifdef SHOW_PROFILE_BUTTONS
-    + profileHeights
-#endif
-#ifdef SHOW_SETTINGS
-    + settingsDisplayer->height()
-#endif
 #ifndef SHOW_PROFILE_ICONS
     + infoIndicator->height()
 #endif
@@ -161,22 +163,41 @@ void MainGUI::toggleKeyboard()
 #endif
 }
 
+void MainGUI::toggleSettingsDisplayer()
+{
+    if (settingsDisplayer->isVisible())
+    {
+        settingsDisplayer->setVisible(false);
+    }
+    else
+    {
+        settingsDisplayer->setVisible(true);
+    }
+}
+
+void MainGUI::toggleProfileDisplayer()
+{
+    if (profilesWidget->isVisible())
+    {
+        profilesWidget->setVisible(false);
+    }
+    else
+    {
+        profilesWidget->setVisible(true);
+    }
+}
+
 MainGUI::~MainGUI()
 {
-    delete mouseIndicator;
-    mouseIndicator = NULL;
     delete infoIndicator;
     infoIndicator = NULL;
     delete sequenceDisplayer;
     sequenceDisplayer = NULL;
     delete poseDisplayer;
     poseDisplayer = NULL;
-#ifdef SHOW_SETTINGS
     delete settingsDisplayer;
     settingsDisplayer = NULL;
-#endif
-    delete layout;
-    layout = NULL;
+
 #ifdef SHOW_PROFILE_ICONS
 	delete icon0;
 	icon0 = NULL;
@@ -184,12 +205,11 @@ MainGUI::~MainGUI()
 	icon1 = NULL;
 #endif
 
-#ifdef SHOW_PROFILE_BUTTONS
-    for (int i = 0; i < profileWidgets.size(); i++)
-    {
-        delete profileWidgets.at(i); profileWidgets.at(i) = NULL;
-    }
-    profileWidgets.clear();
+    delete profilesWidget; profilesWidget = NULL;
+
+#ifdef BUILD_KEYBOARD
+    delete keyboard; keyboard = NULL;
+    delete distanceDisplayer; distanceDisplayer = NULL;
 #endif
 }
 
@@ -209,15 +229,20 @@ void MainGUI::connectSignallerToSettingsDisplayer(SettingsSignaller *signaller)
             signaller, SLOT(handleSliderValues(unsigned int, unsigned int)));
         QObject::connect(settingsDisplayer, SIGNAL(emitBuzzFeedbackChange(unsigned int)),
             signaller, SLOT(handleBuzzFeedbackChange(unsigned int)));
+
+        QObject::connect(settingsDisplayer, SIGNAL(emitGyroPowerValue(int)),
+            signaller, SLOT(hanldeGyroPowerValueChanged(int)));
+        QObject::connect(settingsDisplayer, SIGNAL(emitGyroScaleDownValue(double)),
+            signaller, SLOT(hanldeGyroScaleDownValueChanged(double)));
     }
 }
 
 void MainGUI::connectSignallerToProfileWidgets(ProfileSignaller* signaller)
 {
 	QMetaObject::Connection conn;
-    for (int i = 0; i < profileWidgets.size(); i++)
+    for (int i = 0; i < profilesWidget->getProfileWidgets()->size(); i++)
     {
-		conn = QObject::connect(profileWidgets[i], SIGNAL(emitChangeProfile(QString)), signaller, SLOT(handleProfilePress(QString)));
+        conn = QObject::connect(profilesWidget->getProfileWidgets()->at(i), SIGNAL(emitChangeProfile(QString)), signaller, SLOT(handleProfilePress(QString)));
     }
 }
 
@@ -284,6 +309,9 @@ void MainGUI::setupProfileIcons()
     activeProfile = 0;
 	icon0 = new ProfileIcon(SPECIFIC_PROFILE_ICON_SIZE, SPECIFIC_PROFILE_ICON_SIZE, true, QPixmap::fromImage(icon0Active), QPixmap::fromImage(icon0Inactive), this);
 	icon1 = new ProfileIcon(SPECIFIC_PROFILE_ICON_SIZE, SPECIFIC_PROFILE_ICON_SIZE, false, QPixmap::fromImage(icon1Active), QPixmap::fromImage(icon1Inactive), this);
+#else
+    icon0 = NULL;
+    icon1 = NULL;
 #endif
 }
 
@@ -325,4 +353,35 @@ void MainGUI::handleChangeProfile(bool progressForward)
 void MainGUI::handleFocusMidas()
 {
 
+}
+
+void MainGUI::ShowContextMenu(const QPoint& pos)
+{
+    // Function taken from http://www.setnode.com/blog/right-click-context-menus-with-qt/
+    QPoint globalPos = mapToGlobal(pos);
+
+    QMenu myMenu;
+    QString settingsStr = "Toggle Settings";
+    myMenu.addAction(settingsStr);
+    QString profileStr = "Toggle Profile Selection";
+    myMenu.addAction(profileStr);
+
+    QAction* selectedItem = myMenu.exec(globalPos);
+    if (selectedItem)
+    {
+        // something was chosen, do stuff
+        QString selStr = selectedItem->text();
+        if (selStr.compare(settingsStr) == 0)
+        {
+            toggleSettingsDisplayer();
+        }
+        else if (selStr.compare(profileStr) == 0)
+        {
+            toggleProfileDisplayer();
+        }
+    }
+    else
+    {
+        // nothing was chosen
+    }
 }

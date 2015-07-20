@@ -30,6 +30,16 @@
 #define INIT_PITCH_ANGLE 20.0f /* Maximum delta angle in degrees */
 #define INIT_YAW_ANGLE 25.0f /* Maximum delta angle in degrees */
 #endif
+#define MIN_SLIDER_ANGLE 15
+#define MAX_SLIDER_ANGLE 100
+
+#define MIN_GYRO_POW 1
+#define MAX_GYRO_POW 100
+#define DEFAULT_GYRO_POW 2
+
+#define MIN_GYRO_SCALE_DOWN 10
+#define MAX_GYRO_SCALE_DOWN 100000
+#define DEFAULT_GYRO_SCALE_DOWN 100
 
 #define GUI_OPACITY 0.70
 
@@ -45,6 +55,8 @@
 #define INFO_INDICATOR_HEIGHT  35
 #define PROF_INDICATOR_WIDTH   250
 #define PROF_INDICATOR_HEIGHT  35
+#define SETTINGS_HEIGHT 120
+#define SETTINGS_WIDTH 400
 #define WIDGET_BUFFER 5
 #define DISTANCE_DISPLAY_WIDTH 250
 #define DISTANCE_DISPLAY_HEIGHT 40
@@ -55,6 +67,10 @@
 #define PROFILE_ICON0_INACTIVE	"Resources\\icons\\RingBW2.png"		
 #define PROFILE_ICON1_ACTIVE	"Resources\\icons\\Pencil_Post.png"
 #define PROFILE_ICON1_INACTIVE	"Resources\\icons\\PencilBW.png"
+
+#define MIDAS_GREY QColor(205, 205, 193)
+#define MYO_BLUE QColor(0, 188, 223)
+#define KEYBOARD_SEL QColor(200, 0, 0)
 
 class KeyboardVector;
 
