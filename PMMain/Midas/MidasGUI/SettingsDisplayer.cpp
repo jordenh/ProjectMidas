@@ -27,20 +27,17 @@
 #include <qspinbox.h>
 
 SettingsDisplayer::SettingsDisplayer(int widgetWidth, int widgetHeight, QWidget *parent)
-    : DraggableWidget(parent, Qt::WindowSystemMenuHint | Qt::WindowStaysOnTopHint), 
+    : DraggableWidget(parent, Qt::WindowSystemMenuHint | Qt::WindowStaysOnTopHint),
     indWidth(widgetWidth), indHeight(widgetHeight), currentBuzzModeCount(buzzFeedbackMode::MINIMAL)
 {
-    setContextMenuPolicy(Qt::ActionsContextMenu);
-    setToolTip(tr("Drag the Settings Displayer with the left mouse button.\n"
-        "Use the right mouse button to open a context menu."));
+    setToolTip(tr("Drag the Settings Displayer with the left mouse button."));
     setWindowTitle(tr("Settings Displayer"));
 
-    setWindowOpacity(GUI_OPACITY);
+    setWindowOpacity(1);
     QPalette pal;
     pal.setColor(QPalette::Background, QColor(205, 205, 193));
     setAutoFillBackground(true);
     setPalette(pal);
-    setWindowFlags(Qt::WindowStaysOnTopHint);
 
     QVBoxLayout *mainLayout = new QVBoxLayout;
     mainLayout->setSpacing(WIDGET_BUFFER);

@@ -20,13 +20,13 @@
 #ifndef PROFILES_DISPLAYER_H
 #define PROFILES_DISPLAYER_H
 
-#include <qwidget.h>
+#include "DraggableWidget.h"
 #include "MidasCommon.h"
 
 class QVBoxLayout;
 class ProfileDisplayer;
 
-class ProfilesDisplayer : public QWidget
+class ProfilesDisplayer : public DraggableWidget
 {
     Q_OBJECT
 
@@ -44,6 +44,9 @@ public:
     std::vector<ProfileDisplayer*> *getProfileWidgets() { return &profileWidgets; }
 
     void updateActiveProfiles();
+
+protected:
+    void resizeEvent(QResizeEvent *event);
 
 private:
     void updateButtonsToHighlightActive();

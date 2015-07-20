@@ -24,9 +24,18 @@
 #include <qcolor.h> 
 #include <QEvent.h>
 
-ProfilesDisplayer::ProfilesDisplayer(int widgetWidth, int widgetHeight, QWidget *parent) : QWidget(parent), indWidth(widgetWidth), indHeight(widgetHeight),
-    currentlyActiveProfile(0)
+ProfilesDisplayer::ProfilesDisplayer(int widgetWidth, int widgetHeight, QWidget *parent) : 
+    DraggableWidget(parent, Qt::WindowSystemMenuHint | Qt::WindowStaysOnTopHint), indWidth(widgetWidth), indHeight(widgetHeight), currentlyActiveProfile(0)
 {
+    setToolTip(tr("Drag the Profiles Displayer with the left mouse button."));
+    setWindowTitle(tr("Profiles Displayer"));
+
+    setWindowOpacity(1);
+    QPalette pal;
+    pal.setColor(QPalette::Background, QColor(205, 205, 193));
+    setAutoFillBackground(true);
+    setPalette(pal);
+
     layout = new QVBoxLayout(this);
     this->setLayout(layout);
 }
@@ -39,6 +48,11 @@ ProfilesDisplayer::~ProfilesDisplayer()
         delete profileWidgets.at(i); profileWidgets.at(i) = NULL;
     }
     profileWidgets.clear();
+}
+
+QSize ProfilesDisplayer::sizeHint() const
+{
+    return QSize(indWidth, indHeight);
 }
 
 void ProfilesDisplayer::addProfile(std::string profileName)
@@ -63,9 +77,10 @@ void ProfilesDisplayer::clearProfiles()
     profileWidgets.clear();
 }
 
-QSize ProfilesDisplayer::sizeHint() const
+void ProfilesDisplayer::resizeEvent(QResizeEvent *event)
 {
-    return QSize(indWidth, indHeight);
+    QRegion maskedRegion(0, 0, width(), height(), QRegion::Rectangle);
+    setMask(maskedRegion);
 }
 
 void ProfilesDisplayer::updateActiveProfiles()
