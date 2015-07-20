@@ -23,8 +23,6 @@
 #include <qpushbutton.h>
 #include <qlabel.h>
 #include <QTimer.h>
-#include <QAction.h>
-#include <QApplication.h>
 #include <QEvent.h>
 #include <QPainter.h>
 #include <qstyle.h>
@@ -39,12 +37,6 @@ InfoIndicator::InfoIndicator(int widgetWidth, int widgetHeight, QWidget *parent)
     QTimer *timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(update()));
     timer->start(50);
-
-    // Temporarily allow a Quit
-    QAction *quitAction = new QAction(tr("E&xit"), this);
-    quitAction->setShortcut(tr("Ctrl-Q"));
-    connect(quitAction, SIGNAL(triggered()), qApp, SLOT(quit()));
-    addAction(quitAction);
 
     setContextMenuPolicy(Qt::ActionsContextMenu);
     setToolTip(tr("Drag the info indicator with the left mouse button.\n"

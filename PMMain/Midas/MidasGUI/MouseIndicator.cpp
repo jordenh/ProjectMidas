@@ -21,8 +21,6 @@
 
 #include "MidasThread.h"
 #include <QTimer.h>
-#include <QAction.h>
-#include <QApplication.h>
 #include <QEvent.h>
 #include <QPainter.h>
 #include <qdesktopwidget.h>
@@ -39,13 +37,6 @@ MouseIndicator::MouseIndicator(MidasThread *mainThread, int deadZoneRad, int wid
     connect(timer, SIGNAL(timeout()), this, SLOT(update()));
     timer->start(50);
 
-    // Temporarily allow a Quit
-    QAction *quitAction = new QAction(tr("E&xit"), this);
-    quitAction->setShortcut(tr("Ctrl-Q"));
-    connect(quitAction, SIGNAL(triggered()), qApp, SLOT(quit()));
-    addAction(quitAction);
-
-    setContextMenuPolicy(Qt::ActionsContextMenu);
     setToolTip(tr("Drag the mouse indicator with the left mouse button.\n"
                   "Use the right mouse button to open a context menu."));
     setWindowTitle(tr("Mouse Indicator"));

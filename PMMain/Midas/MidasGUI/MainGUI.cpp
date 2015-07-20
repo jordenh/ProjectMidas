@@ -72,19 +72,24 @@ MainGUI::MainGUI(MidasThread *mainThread, ProfileManager *pm, int deadZoneRad)
     // Ensure Midas stays on top even when other applications have popups, etc
     this->setFocus();
     //setWindowFlags(windowFlags() | Qt::Tool);
-//    setAttribute(Qt::WA_TranslucentBackground);
+    setAttribute(Qt::WA_TranslucentBackground);
     setWindowOpacity(GUI_OPACITY);
 
     // setup contextMenu
     setContextMenuPolicy(Qt::CustomContextMenu);
     connect(this, SIGNAL(customContextMenuRequested(const QPoint&)),
         this, SLOT(ShowContextMenu(const QPoint&)));
+    connect(infoIndicator, SIGNAL(customContextMenuRequested(const QPoint&)),
+        this, SLOT(ShowContextMenu(const QPoint&)));
+    connect(sequenceDisplayer, SIGNAL(customContextMenuRequested(const QPoint&)),
+        this, SLOT(ShowContextMenu(const QPoint&)));
+    connect(poseDisplayer, SIGNAL(customContextMenuRequested(const QPoint&)),
+        this, SLOT(ShowContextMenu(const QPoint&)));
 
 	// create main layout and add sequences (they are at the top and constantly go in/out of view)
     QVBoxLayout *layout = new QVBoxLayout;
 	layout->addWidget(sequenceDisplayer);
 
-//#ifdef SHOW_PROFILE_BUTTONS
     profilesWidget = new ProfilesDisplayer();
     std::vector<profile>* profiles = pm->getProfiles();
     std::vector<profile>::iterator it;
@@ -95,14 +100,9 @@ MainGUI::MainGUI(MidasThread *mainThread, ProfileManager *pm, int deadZoneRad)
     }
     profileHeights = profilesWidget->height();
     profilesWidget->setVisible(false);
-//#endif
 
-//#ifdef SHOW_SETTINGS
     settingsDisplayer = new SettingsDisplayer(SETTINGS_WIDTH, SETTINGS_HEIGHT);
     settingsDisplayer->setVisible(false);
-//#else
-//    settingsDisplayer = NULL;
-//#endif
 
     QVBoxLayout *leftBoxLayout = new QVBoxLayout;
     leftBoxLayout->addWidget(infoIndicator);
@@ -138,12 +138,6 @@ MainGUI::MainGUI(MidasThread *mainThread, ProfileManager *pm, int deadZoneRad)
     totalWidth = std::max(sequenceDisplayer->width(), 
                         (infoIndicator->width() + poseDisplayer->width()));
     totalHeight = sequenceDisplayer->height() + poseDisplayer->height()
-#ifdef SHOW_PROFILE_BUTTONS
-    + profileHeights
-#endif
-//#ifdef SHOW_SETTINGS
-//    + settingsDisplayer->height()
-//#endif
 #ifndef SHOW_PROFILE_ICONS
     + infoIndicator->height()
 #endif
@@ -186,18 +180,10 @@ void MainGUI::toggleProfileDisplayer()
     if (profilesWidget->isVisible())
     {
         profilesWidget->setVisible(false);
-        //for (int i = 0; i < profileWidgets.size(); i++)
-        //{
-        //    profileWidgets[i]->setVisible(false);
-        //}
     }
     else
     {
         profilesWidget->setVisible(true);
-        //for (int i = 0; i < profileWidgets.size(); i++)
-        //{
-        //    profileWidgets[i]->setVisible(true);
-        //}
     }
 }
 
@@ -209,10 +195,9 @@ MainGUI::~MainGUI()
     sequenceDisplayer = NULL;
     delete poseDisplayer;
     poseDisplayer = NULL;
-#ifdef SHOW_SETTINGS
     delete settingsDisplayer;
     settingsDisplayer = NULL;
-#endif
+
 #ifdef SHOW_PROFILE_ICONS
 	delete icon0;
 	icon0 = NULL;
@@ -220,14 +205,8 @@ MainGUI::~MainGUI()
 	icon1 = NULL;
 #endif
 
-//#ifdef SHOW_PROFILE_BUTTONS
-//    for (int i = 0; i < profileWidgets.size(); i++)
-//    {
-//        delete profileWidgets.at(i); profileWidgets.at(i) = NULL;
-//    }
-//    profileWidgets.clear();
     delete profilesWidget; profilesWidget = NULL;
-//#endif
+
 }
 
 #ifdef BUILD_KEYBOARD
@@ -365,68 +344,6 @@ void MainGUI::handleChangeProfile(bool progressForward)
         icon1->setImgActiveSel(false);
     }
 #endif
-}
-
-void MainGUI::hideAllNonEssentialWidgets()
-{
-    if (icon0 != NULL)
-        icon0->setHidden(true);
-    if (icon1 != NULL)
-        icon1->setHidden(true);
-
-    sequenceDisplayer->setHidden(true);
-    settingsDisplayer->setHidden(true);
-
-    profilesWidget->setHidden(true);
-    //for (int i = 0; i < profileWidgets.size(); i++)
-    //{
-    //    profileWidgets[i]->setHidden(true);
-    //}
-}
-
-void MainGUI::handleToggleViewWidgets(int widgetSelection)
-{
-    hideAllNonEssentialWidgets();
-    int i;
-    switch (widgetSelection)
-    {
-    case 0:
-        // ensure essential widgets are shown
-        poseDisplayer->setHidden(false);
-        infoIndicator->setHidden(false);
-        break;
-    case 1:
-        // show essential and sequences
-        poseDisplayer->setHidden(false);
-        infoIndicator->setHidden(false);
-        sequenceDisplayer->setHidden(false);
-        break;
-    case 2:
-        // show essential, sequences, and settings
-        poseDisplayer->setHidden(false);
-        infoIndicator->setHidden(false);
-        sequenceDisplayer->setHidden(false);
-        settingsDisplayer->setHidden(false);
-        break;
-    case 3:
-        // show essential, sequences, settings, and profiles
-        poseDisplayer->setHidden(false);
-        infoIndicator->setHidden(false);
-        sequenceDisplayer->setHidden(false);
-        settingsDisplayer->setHidden(false);
-
-        profilesWidget->setHidden(false);
-        //for (i = 0; i < profileWidgets.size(); i++)
-        //{
-        //    profileWidgets[i]->setHidden(false);
-        //}
-        break;
-    default:
-        // show essential widgets
-        poseDisplayer->setHidden(false);
-        infoIndicator->setHidden(false);
-        break;
-    }
 }
 
 void MainGUI::handleFocusMidas()

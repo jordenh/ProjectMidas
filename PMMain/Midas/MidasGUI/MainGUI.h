@@ -103,8 +103,6 @@ public slots:
 
     void handleChangeProfile(bool progressForward);
 
-    void handleToggleViewWidgets(int widgetSelection);
-
     void handleFocusMidas();
 
 private slots:
