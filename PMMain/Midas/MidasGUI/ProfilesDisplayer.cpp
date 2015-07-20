@@ -20,6 +20,7 @@
 #include "ProfilesDisplayer.h"
 #include "ProfileDisplayer.h"
 #include <qboxlayout.h>
+#include <qlabel.h>
 #include <qpalette.h>
 #include <qcolor.h> 
 #include <QEvent.h>
@@ -32,12 +33,17 @@ ProfilesDisplayer::ProfilesDisplayer(int widgetWidth, int widgetHeight, QWidget 
 
     setWindowOpacity(1);
     QPalette pal;
-    pal.setColor(QPalette::Background, QColor(205, 205, 193));
+    pal.setColor(QPalette::Background, MIDAS_GREY);
     setAutoFillBackground(true);
     setPalette(pal);
 
     layout = new QVBoxLayout(this);
     this->setLayout(layout);
+
+    QFont timesFont("Times", 11, QFont::Bold, true);
+    QLabel *title = new QLabel("Profiles");
+    title->setFont(timesFont);
+    layout->addWidget(title, 0, Qt::AlignCenter);
 }
     
 
@@ -103,11 +109,11 @@ void ProfilesDisplayer::updateButtonsToHighlightActive()
     {
         if (i == currentlyActiveProfile)
         {
-            profileWidgets.at(i)->setPalette(QPalette(QColor(0, 188, 223)));
+            profileWidgets.at(i)->setPalette(QPalette(MYO_BLUE));
         }
         else
         {
-            profileWidgets.at(i)->setPalette(QPalette(QColor(205, 205, 193)));
+            profileWidgets.at(i)->setPalette(QPalette(MIDAS_GREY));
             //profileWidgets.at(i)->setPalette(QPalette(this->parent.getPalette().getColor()));
         }
     }

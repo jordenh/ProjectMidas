@@ -30,7 +30,7 @@ ProfileDisplayer::ProfileDisplayer(std::string name, int widgetWidth, int widget
   //  setStyleSheet(QString("background-color: rgba(205, 205, 193, 191); \
    //                       border: 1px solid red; min-width: %1; min-height: %2").arg(QString::number(indWidth),  QString::number(indHeight)));
     QPalette pal;
-    pal.setColor(QPalette::Background, QColor(205, 205, 193));
+    pal.setColor(QPalette::Background, MIDAS_GREY);
     setAutoFillBackground(true);
     setPalette(pal);
     setWindowFlags(Qt::WindowStaysOnTopHint);

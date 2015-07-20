@@ -45,7 +45,7 @@ InfoIndicator::InfoIndicator(int widgetWidth, int widgetHeight, QWidget *parent)
 
     setWindowOpacity(GUI_OPACITY);
     QPalette pal;
-    pal.setColor(QPalette::Background, QColor(205, 205, 193));
+    pal.setColor(QPalette::Background, MIDAS_GREY);
     setAutoFillBackground(true);
     setPalette(pal);
     setWindowFlags(Qt::WindowStaysOnTopHint);

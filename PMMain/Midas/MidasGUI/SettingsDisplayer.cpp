@@ -35,13 +35,18 @@ SettingsDisplayer::SettingsDisplayer(int widgetWidth, int widgetHeight, QWidget 
 
     setWindowOpacity(1);
     QPalette pal;
-    pal.setColor(QPalette::Background, QColor(205, 205, 193));
+    pal.setColor(QPalette::Background, MIDAS_GREY);
     setAutoFillBackground(true);
     setPalette(pal);
 
     QVBoxLayout *mainLayout = new QVBoxLayout;
     mainLayout->setSpacing(WIDGET_BUFFER);
     setLayout(mainLayout);
+
+    QFont timesFont("Times", 11, QFont::Bold, true);
+    QLabel* title = new QLabel(QString("Settings"));
+    title->setFont(timesFont);
+    mainLayout->addWidget(title, 0, Qt::AlignCenter);
 
     yawSlider = new QSlider(Qt::Orientation::Horizontal, this);
     yawSlider->setTracking(true);

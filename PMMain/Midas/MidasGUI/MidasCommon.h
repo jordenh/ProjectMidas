@@ -68,6 +68,10 @@
 #define PROFILE_ICON1_ACTIVE	"Resources\\icons\\Pencil_Post.png"
 #define PROFILE_ICON1_INACTIVE	"Resources\\icons\\PencilBW.png"
 
+#define MIDAS_GREY QColor(205, 205, 193)
+#define MYO_BLUE QColor(0, 188, 223)
+#define KEYBOARD_SEL QColor(200, 0, 0)
+
 class KeyboardVector;
 
 /**

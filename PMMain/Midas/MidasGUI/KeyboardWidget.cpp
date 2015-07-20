@@ -134,9 +134,9 @@ void KeyboardWidget::paintEvent(QPaintEvent *event)
     int innerRingBorderRadius = outerRingBorderRadius - ringWidth;
     int innerRingBorderDiam = innerRingBorderRadius * 2;
 
-    QBrush centerSelectBrush(QColor(200, 0, 0));
+    QBrush centerSelectBrush(KEYBOARD_SEL);
     QPen selectPen(centerSelectBrush, penWidth);
-    QBrush fillCenterBrush(QColor(205, 205, 193));
+    QBrush fillCenterBrush(MIDAS_GREY);
 
     painter.setBrush(fillCenterBrush);
     if (!centerSelected)

@@ -43,7 +43,7 @@ MouseIndicator::MouseIndicator(MidasThread *mainThread, int deadZoneRad, int wid
 
     setWindowOpacity(GUI_OPACITY);
     QPalette pal;
-    pal.setColor(QPalette::Background, QColor(205, 205, 193));
+    pal.setColor(QPalette::Background, MIDAS_GREY);
     setAutoFillBackground(true);
     setPalette(pal);
 
