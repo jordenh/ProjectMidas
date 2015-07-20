@@ -28,6 +28,7 @@
 #include <QEvent.h>
 #include <QDialog>
 #include <qlayout.h>
+#include <qmenu.h>
 #include "MouseIndicator.h"
 #include "SequenceDisplayer.h"
 #include "InfoIndicator.h"
@@ -70,33 +71,41 @@ MainGUI::MainGUI(MidasThread *mainThread, ProfileManager *pm, int deadZoneRad)
     // Ensure Midas stays on top even when other applications have popups, etc
     this->setFocus();
     //setWindowFlags(windowFlags() | Qt::Tool);
-    setAttribute(Qt::WA_TranslucentBackground);
+//    setAttribute(Qt::WA_TranslucentBackground);
     setWindowOpacity(GUI_OPACITY);
+
+    // setup contextMenu
+    setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(this, SIGNAL(customContextMenuRequested(const QPoint&)),
+        this, SLOT(ShowContextMenu(const QPoint&)));
 
 	// create main layout and add sequences (they are at the top and constantly go in/out of view)
     QVBoxLayout *layout = new QVBoxLayout;
 	layout->addWidget(sequenceDisplayer);
 
-#ifdef SHOW_PROFILE_BUTTONS
+//#ifdef SHOW_PROFILE_BUTTONS
+    profilesWidget = new QWidget();
+    QLayout *profilesWidgetLayout = new QVBoxLayout();
     std::vector<profile>* profiles = pm->getProfiles();
     std::vector<profile>::iterator it;
     int profileHeights = 0;
     for (it = profiles->begin(); it != profiles->end(); it++)
     {
-        ProfileDisplayer* displayer = new ProfileDisplayer(it->profileName, PROF_INDICATOR_WIDTH, PROF_INDICATOR_HEIGHT, this);
+        ProfileDisplayer* displayer = new ProfileDisplayer(it->profileName, PROF_INDICATOR_WIDTH, PROF_INDICATOR_HEIGHT);
         profileHeights += displayer->height();
         profileWidgets.push_back(displayer);
-        layout->addWidget(displayer, 0, Qt::AlignRight);
+        profilesWidgetLayout->addWidget(displayer);
     }
-#endif
+    profilesWidget->setLayout(profilesWidgetLayout);
+    profilesWidget->setVisible(false);
+//#endif
 
-#ifdef SHOW_SETTINGS
-    settingsDisplayer = new SettingsDisplayer(PROF_INDICATOR_WIDTH, 3*INFO_INDICATOR_HEIGHT);
-    settingsDisplayer->setVisible(true);
-    //layout->addWidget(settingsDisplayer, 0, Qt::AlignRight);
-#else
-    settingsDisplayer = NULL;
-#endif
+//#ifdef SHOW_SETTINGS
+    settingsDisplayer = new SettingsDisplayer(SETTINGS_WIDTH, SETTINGS_HEIGHT);
+    settingsDisplayer->setVisible(false);
+//#else
+//    settingsDisplayer = NULL;
+//#endif
 
     QVBoxLayout *leftBoxLayout = new QVBoxLayout;
     leftBoxLayout->addWidget(infoIndicator);
@@ -163,6 +172,38 @@ void MainGUI::toggleKeyboard()
 #endif
 }
 
+void MainGUI::toggleSettingsDisplayer()
+{
+    if (settingsDisplayer->isVisible())
+    {
+        settingsDisplayer->setVisible(false);
+    }
+    else
+    {
+        settingsDisplayer->setVisible(true);
+    }
+}
+
+void MainGUI::toggleProfileDisplayer()
+{
+    if (profilesWidget->isVisible())
+    {
+        profilesWidget->setVisible(false);
+        //for (int i = 0; i < profileWidgets.size(); i++)
+        //{
+        //    profileWidgets[i]->setVisible(false);
+        //}
+    }
+    else
+    {
+        profilesWidget->setVisible(true);
+        //for (int i = 0; i < profileWidgets.size(); i++)
+        //{
+        //    profileWidgets[i]->setVisible(true);
+        //}
+    }
+}
+
 MainGUI::~MainGUI()
 {
     delete infoIndicator;
@@ -182,13 +223,14 @@ MainGUI::~MainGUI()
 	icon1 = NULL;
 #endif
 
-#ifdef SHOW_PROFILE_BUTTONS
+//#ifdef SHOW_PROFILE_BUTTONS
     for (int i = 0; i < profileWidgets.size(); i++)
     {
         delete profileWidgets.at(i); profileWidgets.at(i) = NULL;
     }
     profileWidgets.clear();
-#endif
+    delete profilesWidget; profilesWidget = NULL;
+//#endif
 }
 
 #ifdef BUILD_KEYBOARD
@@ -391,4 +433,35 @@ void MainGUI::handleToggleViewWidgets(int widgetSelection)
 void MainGUI::handleFocusMidas()
 {
 
+}
+
+void MainGUI::ShowContextMenu(const QPoint& pos)
+{
+    // Function taken from http://www.setnode.com/blog/right-click-context-menus-with-qt/
+    QPoint globalPos = mapToGlobal(pos);
+
+    QMenu myMenu;
+    QString settingsStr = "Toggle Settings";
+    myMenu.addAction(settingsStr);
+    QString profileStr = "Toggle Profile Selection";
+    myMenu.addAction(profileStr);
+
+    QAction* selectedItem = myMenu.exec(globalPos);
+    if (selectedItem)
+    {
+        // something was chosen, do stuff
+        QString selStr = selectedItem->text();
+        if (selStr.compare(settingsStr) == 0)
+        {
+            toggleSettingsDisplayer();
+        }
+        else if (selStr.compare(profileStr) == 0)
+        {
+            toggleProfileDisplayer();
+        }
+    }
+    else
+    {
+        // nothing was chosen
+    }
 }

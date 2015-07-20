@@ -23,6 +23,7 @@
 #include "DraggableWidget.h"
 
 class QVBoxLayout;
+class QFrame;
 class MidasThread;
 class MouseIndicator;
 class SequenceDisplayer;
@@ -77,6 +78,9 @@ private:
 
     void setupProfileIcons();
 
+    void toggleSettingsDisplayer();
+    void toggleProfileDisplayer();
+
 	KeyboardWidget* keyboard;
 	DistanceWidget* distanceDisplayer;
 
@@ -88,6 +92,7 @@ private:
 	ProfileIcon *icon0;
 	ProfileIcon *icon1;
 	bool icon0IsActive;
+    QWidget *profilesWidget;
     std::vector<ProfileDisplayer*> profileWidgets;
     int totalWidth, totalHeight;
     unsigned int numProfiles;
@@ -101,6 +106,10 @@ public slots:
     void handleToggleViewWidgets(int widgetSelection);
 
     void handleFocusMidas();
+
+private slots:
+    void ShowContextMenu(const QPoint& pos);
+
 };
 
 #endif
