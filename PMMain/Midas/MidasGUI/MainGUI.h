@@ -39,6 +39,7 @@ class SettingsDisplayer;
 class SettingsSignaller;
 class KeyboardWidget;
 class DistanceWidget;
+class ProfilesDisplayer;
 
 /**
  * The MainGUI class is the parent GUI of all the widgets used in Midas. It contains the mouse
@@ -92,8 +93,7 @@ private:
 	ProfileIcon *icon0;
 	ProfileIcon *icon1;
 	bool icon0IsActive;
-    QWidget *profilesWidget;
-    std::vector<ProfileDisplayer*> profileWidgets;
+    ProfilesDisplayer *profilesWidget;
     int totalWidth, totalHeight;
     unsigned int numProfiles;
     unsigned int activeProfile;

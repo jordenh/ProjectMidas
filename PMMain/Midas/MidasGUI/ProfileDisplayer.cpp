@@ -18,12 +18,13 @@
 */
 
 #include "ProfileDisplayer.h"
+#include "ProfilesDisplayer.h"
 #include <QLabel.h>
 #include <QEvent.h>
 #include <QGridLayout.h>
 
 ProfileDisplayer::ProfileDisplayer(std::string name, int widgetWidth, int widgetHeight, QWidget *parent)
-    : QFrame(parent), indWidth(widgetWidth), indHeight(widgetHeight), profileName(name)
+    : QFrame(parent), owner((ProfilesDisplayer*)parent), indWidth(widgetWidth), indHeight(widgetHeight), profileName(name), activeProfile(false)
 {
     setWindowOpacity(GUI_OPACITY);
   //  setStyleSheet(QString("background-color: rgba(205, 205, 193, 191); \
@@ -80,6 +81,8 @@ void ProfileDisplayer::mouseReleaseEvent(QMouseEvent *event)
     {
         setFrameShadow(QFrame::Shadow::Raised);
         emitChangeProfile(QString(profileName.c_str()));
+        setActiveProfile(true);
+        owner->updateActiveProfiles();
         event->accept();
     }
 }

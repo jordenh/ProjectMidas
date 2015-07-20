@@ -42,6 +42,7 @@
 #include "ProfileManager.h"
 #include "SettingsDisplayer.h"
 #include "SettingsSignaller.h"
+#include "ProfilesDisplayer.h"
 #include "MidasThread.h"
 
 
@@ -84,19 +85,15 @@ MainGUI::MainGUI(MidasThread *mainThread, ProfileManager *pm, int deadZoneRad)
 	layout->addWidget(sequenceDisplayer);
 
 //#ifdef SHOW_PROFILE_BUTTONS
-    profilesWidget = new QWidget();
-    QLayout *profilesWidgetLayout = new QVBoxLayout();
+    profilesWidget = new ProfilesDisplayer();
     std::vector<profile>* profiles = pm->getProfiles();
     std::vector<profile>::iterator it;
     int profileHeights = 0;
     for (it = profiles->begin(); it != profiles->end(); it++)
     {
-        ProfileDisplayer* displayer = new ProfileDisplayer(it->profileName, PROF_INDICATOR_WIDTH, PROF_INDICATOR_HEIGHT);
-        profileHeights += displayer->height();
-        profileWidgets.push_back(displayer);
-        profilesWidgetLayout->addWidget(displayer);
+        profilesWidget->addProfile(it->profileName);        
     }
-    profilesWidget->setLayout(profilesWidgetLayout);
+    profileHeights = profilesWidget->height();
     profilesWidget->setVisible(false);
 //#endif
 
@@ -224,11 +221,11 @@ MainGUI::~MainGUI()
 #endif
 
 //#ifdef SHOW_PROFILE_BUTTONS
-    for (int i = 0; i < profileWidgets.size(); i++)
-    {
-        delete profileWidgets.at(i); profileWidgets.at(i) = NULL;
-    }
-    profileWidgets.clear();
+//    for (int i = 0; i < profileWidgets.size(); i++)
+//    {
+//        delete profileWidgets.at(i); profileWidgets.at(i) = NULL;
+//    }
+//    profileWidgets.clear();
     delete profilesWidget; profilesWidget = NULL;
 //#endif
 }
@@ -260,9 +257,9 @@ void MainGUI::connectSignallerToSettingsDisplayer(SettingsSignaller *signaller)
 void MainGUI::connectSignallerToProfileWidgets(ProfileSignaller* signaller)
 {
 	QMetaObject::Connection conn;
-    for (int i = 0; i < profileWidgets.size(); i++)
+    for (int i = 0; i < profilesWidget->getProfileWidgets()->size(); i++)
     {
-		conn = QObject::connect(profileWidgets[i], SIGNAL(emitChangeProfile(QString)), signaller, SLOT(handleProfilePress(QString)));
+        conn = QObject::connect(profilesWidget->getProfileWidgets()->at(i), SIGNAL(emitChangeProfile(QString)), signaller, SLOT(handleProfilePress(QString)));
     }
 }
 
@@ -380,10 +377,11 @@ void MainGUI::hideAllNonEssentialWidgets()
     sequenceDisplayer->setHidden(true);
     settingsDisplayer->setHidden(true);
 
-    for (int i = 0; i < profileWidgets.size(); i++)
-    {
-        profileWidgets[i]->setHidden(true);
-    }
+    profilesWidget->setHidden(true);
+    //for (int i = 0; i < profileWidgets.size(); i++)
+    //{
+    //    profileWidgets[i]->setHidden(true);
+    //}
 }
 
 void MainGUI::handleToggleViewWidgets(int widgetSelection)
@@ -417,10 +415,11 @@ void MainGUI::handleToggleViewWidgets(int widgetSelection)
         sequenceDisplayer->setHidden(false);
         settingsDisplayer->setHidden(false);
 
-        for (i = 0; i < profileWidgets.size(); i++)
-        {
-            profileWidgets[i]->setHidden(false);
-        }
+        profilesWidget->setHidden(false);
+        //for (i = 0; i < profileWidgets.size(); i++)
+        //{
+        //    profileWidgets[i]->setHidden(false);
+        //}
         break;
     default:
         // show essential widgets
