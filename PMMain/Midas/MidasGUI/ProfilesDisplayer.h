@@ -44,22 +44,6 @@ public:
     std::vector<ProfileDisplayer*> *getProfileWidgets() { return &profileWidgets; }
 
     void updateActiveProfiles();
-protected:
-    /**
-    * The event handler function that is called when the widget is clicked on by the mouse.
-    *
-    * @param event The mouse event structure, with information about the mouse press.
-    */
-    virtual void mousePressEvent(QMouseEvent *event);
-
-    /**
-    * The event handler function that is called when the widget is released by the mouse.
-    *
-    * @param event The mouse event structure, with information about the mouse release.
-    */
-    virtual void mouseReleaseEvent(QMouseEvent *event);
-
-    virtual void mouseMoveEvent(QMouseEvent *event);
 
 private:
     void updateButtonsToHighlightActive();

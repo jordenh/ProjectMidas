@@ -68,38 +68,6 @@ QSize ProfilesDisplayer::sizeHint() const
     return QSize(indWidth, indHeight);
 }
 
-void ProfilesDisplayer::mousePressEvent(QMouseEvent *event)
-{
-    if (event->button() == Qt::LeftButton)
-    {
-        //setFrameShadow(QFrame::Shadow::Sunken);
-        //event->accept();
-        int a = 1;
-    }
-}
-
-void ProfilesDisplayer::mouseReleaseEvent(QMouseEvent *event)
-{
-    if (event->button() == Qt::LeftButton)
-    {
-        //setFrameShadow(QFrame::Shadow::Raised);
-        //emitChangeProfile(QString(profileName.c_str()));
-        //event->accept();
-        int a = 1;
-    }
-}
-
-void ProfilesDisplayer::mouseMoveEvent(QMouseEvent *event)
-{
-    if (event->buttons() & Qt::LeftButton)
-    {
-        // Override so that the profile buttons cannot drag the main GUI (since main GUI
-        // is a draggable widget).
-    //    event->accept();
-        int a = 1;
-    }
-}
-
 void ProfilesDisplayer::updateActiveProfiles()
 {
     for (int i = 0; i < profileWidgets.size(); i++)
