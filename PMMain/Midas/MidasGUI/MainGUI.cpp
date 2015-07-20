@@ -91,8 +91,9 @@ MainGUI::MainGUI(MidasThread *mainThread, ProfileManager *pm, int deadZoneRad)
 #endif
 
 #ifdef SHOW_SETTINGS
-    settingsDisplayer = new SettingsDisplayer(PROF_INDICATOR_WIDTH, 3*INFO_INDICATOR_HEIGHT, this);
-    layout->addWidget(settingsDisplayer, 0, Qt::AlignRight);
+    settingsDisplayer = new SettingsDisplayer(PROF_INDICATOR_WIDTH, 3*INFO_INDICATOR_HEIGHT);
+    settingsDisplayer->setVisible(true);
+    //layout->addWidget(settingsDisplayer, 0, Qt::AlignRight);
 #else
     settingsDisplayer = NULL;
 #endif
@@ -134,9 +135,9 @@ MainGUI::MainGUI(MidasThread *mainThread, ProfileManager *pm, int deadZoneRad)
 #ifdef SHOW_PROFILE_BUTTONS
     + profileHeights
 #endif
-#ifdef SHOW_SETTINGS
-    + settingsDisplayer->height()
-#endif
+//#ifdef SHOW_SETTINGS
+//    + settingsDisplayer->height()
+//#endif
 #ifndef SHOW_PROFILE_ICONS
     + infoIndicator->height()
 #endif
@@ -146,8 +147,6 @@ MainGUI::MainGUI(MidasThread *mainThread, ProfileManager *pm, int deadZoneRad)
     setGeometry(screen.right() - totalWidth - SCREEN_RIGHT_BUFFER,
         screen.bottom() - totalHeight - SCREEN_BOTTOM_BUFFER,
         totalWidth, totalHeight);
-
-    handleToggleViewWidgets(2);
 }
 
 void MainGUI::toggleKeyboard()

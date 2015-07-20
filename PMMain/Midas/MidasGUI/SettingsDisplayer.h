@@ -20,6 +20,8 @@
 #ifndef SETTINGS_DISPLAYER_H
 #define SETTINGS_DISPLAYER_H
 
+#include "DraggableWidget.h"
+
 #include <QWidget>
 
 #include "MidasCommon.h"
@@ -31,7 +33,7 @@ class QPushButton;
 class QSpinBox;
 class QDoubleSpinBox;
 
-class SettingsDisplayer : public QWidget
+class SettingsDisplayer : public DraggableWidget
 {
     Q_OBJECT
 

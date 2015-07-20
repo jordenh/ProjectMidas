@@ -70,18 +70,15 @@ public:
 
     void connectSignallerToSettingsDisplayer(SettingsSignaller *signaller);
 
-public:
 	void connectSignallerToKeyboardToggle(GestureSignaller *signaller);
-public slots:
-	void toggleKeyboard();
-private:
-	KeyboardWidget* keyboard;
-	DistanceWidget* distanceDisplayer;
-
+	
 private:
     void hideAllNonEssentialWidgets();
 
-	void setupProfileIcons();
+    void setupProfileIcons();
+
+	KeyboardWidget* keyboard;
+	DistanceWidget* distanceDisplayer;
 
     //MouseIndicator *mouseIndicator;
     InfoIndicator *infoIndicator;
@@ -97,6 +94,8 @@ private:
     unsigned int activeProfile;
 
 public slots:
+    void toggleKeyboard();
+
     void handleChangeProfile(bool progressForward);
 
     void handleToggleViewWidgets(int widgetSelection);

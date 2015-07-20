@@ -27,7 +27,8 @@
 #include <qspinbox.h>
 
 SettingsDisplayer::SettingsDisplayer(int widgetWidth, int widgetHeight, QWidget *parent)
-    : QWidget(parent), indWidth(widgetWidth), indHeight(widgetHeight), currentBuzzModeCount(buzzFeedbackMode::MINIMAL)
+    : DraggableWidget(parent, Qt::WindowSystemMenuHint | Qt::WindowStaysOnTopHint), 
+    indWidth(widgetWidth), indHeight(widgetHeight), currentBuzzModeCount(buzzFeedbackMode::MINIMAL)
 {
     setContextMenuPolicy(Qt::ActionsContextMenu);
     setToolTip(tr("Drag the Settings Displayer with the left mouse button.\n"
