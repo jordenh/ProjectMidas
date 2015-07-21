@@ -23,6 +23,7 @@
 #include "DraggableWidget.h"
 
 class QVBoxLayout;
+class QFrame;
 class MidasThread;
 class MouseIndicator;
 class SequenceDisplayer;
@@ -38,6 +39,7 @@ class SettingsDisplayer;
 class SettingsSignaller;
 class KeyboardWidget;
 class DistanceWidget;
+class ProfilesDisplayer;
 
 /**
  * The MainGUI class is the parent GUI of all the widgets used in Midas. It contains the mouse
@@ -70,20 +72,20 @@ public:
 
     void connectSignallerToSettingsDisplayer(SettingsSignaller *signaller);
 
-public:
 	void connectSignallerToKeyboardToggle(GestureSignaller *signaller);
-public slots:
-	void toggleKeyboard();
+	
 private:
+    void hideAllNonEssentialWidgets();
+
+    void setupProfileIcons();
+
+    void toggleSettingsDisplayer();
+    void toggleProfileDisplayer();
+
 	KeyboardWidget* keyboard;
 	DistanceWidget* distanceDisplayer;
 
-private:
-
-	void setupProfileIcons();
-
-    QVBoxLayout *layout;
-    MouseIndicator *mouseIndicator;
+    //MouseIndicator *mouseIndicator;
     InfoIndicator *infoIndicator;
     SequenceDisplayer *sequenceDisplayer;
     PoseDisplayer *poseDisplayer;
@@ -91,15 +93,21 @@ private:
 	ProfileIcon *icon0;
 	ProfileIcon *icon1;
 	bool icon0IsActive;
-    std::vector<ProfileDisplayer*> profileWidgets;
+    ProfilesDisplayer *profilesWidget;
     int totalWidth, totalHeight;
     unsigned int numProfiles;
     unsigned int activeProfile;
 
 public slots:
+    void toggleKeyboard();
+
     void handleChangeProfile(bool progressForward);
 
     void handleFocusMidas();
+
+private slots:
+    void ShowContextMenu(const QPoint& pos);
+
 };
 
 #endif
