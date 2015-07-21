@@ -27,7 +27,7 @@
 
 #include "ProfileManager.h"
 
-#define DEFAULT_PROFILES "profiles.xml"
+#define DEFAULT_PROFILES "profiles_Build3.xml"
 
 #ifdef BUILD_KEYBOARD
 #include "KeyboardWidget.h"
