@@ -478,7 +478,6 @@ void MyoTranslationFilter::performMouseModeFunc(filterDataMap& outputToSharedCom
 
 void MyoTranslationFilter::performeKybdModeFunc(filterDataMap& outputToSharedCommandData)
 {
-#ifdef BUILD_KEYBOARD
     keyboardAngle myoAngle;
 	
     point myoAnglePoint = getMouseUnitVelocity(pitch, yaw);
@@ -504,7 +503,6 @@ void MyoTranslationFilter::performeKybdModeFunc(filterDataMap& outputToSharedCom
     myoAngle.angle = myoAngleDegree;
 	
     outputToSharedCommandData[ANGLE_INPUT] = myoAngle;
-#endif
 }
 
 

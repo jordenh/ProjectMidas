@@ -36,11 +36,7 @@
 class SharedCommandData : public Filter
 {
 public:
-#ifdef BUILD_KEYBOARD
     SharedCommandData(unsigned int maxKybdGuiSel) : Filter(), mouseVelocity(), impulseStatus(false), kybdGuiSel(0), isSynched(true), isConnected(true) { this->maxKybdGuiSel = maxKybdGuiSel; }
-#else
-    SharedCommandData() : Filter(), mouseVelocity(), impulseStatus(false), isSynched(false), isConnected(false) {}
-#endif
 
     /**
      * Adds a command to the queue of commands. If another thread is modifying the command queue, 
@@ -117,7 +113,6 @@ public:
     */
     bool tryGetVelocity(point& outVelocity);
 
-#ifdef BUILD_KEYBOARD
 	void setKeySelectAngle(keyboardAngle angle);
 	bool trySetKeySelectAngle(keyboardAngle angle);
 	keyboardAngle getKeySelectAngle();
@@ -146,7 +141,6 @@ public:
 	* @param float rssi
 	*/
 	void setRssi(float rssi);
-#endif
 
 	void setDelta(vector2D delta);
 
@@ -252,12 +246,10 @@ private:
 	void extractVector2D(boost::any value);
     void extractImpulseStatus(boost::any value);
 
-#ifdef BUILD_KEYBOARD
 	unsigned int maxKybdGuiSel;
 	unsigned int kybdGuiSel;
 	void extractKeySelectAngle(boost::any value);
 	void extractRssi(boost::any value);
-#endif
 };
 
 #endif /* _SHARED_COMMAND_DATA_H */

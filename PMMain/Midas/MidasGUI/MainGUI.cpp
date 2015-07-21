@@ -46,10 +46,8 @@
 #include "MidasThread.h"
 
 
-#ifdef BUILD_KEYBOARD
 #include "KeyboardWidget.h"
 #include "DistanceWidget.h"
-#endif
 
 #define SCREEN_RIGHT_BUFFER    25 
 #define SCREEN_BOTTOM_BUFFER   30
@@ -60,11 +58,9 @@ MainGUI::MainGUI(MidasThread *mainThread, ProfileManager *pm, int deadZoneRad)
     infoIndicator = new InfoIndicator(INFO_INDICATOR_WIDTH, INFO_INDICATOR_HEIGHT, this);
     sequenceDisplayer = new SequenceDisplayer(this);
 	poseDisplayer = new PoseDisplayer(MOUSE_INDICATOR_SIZE, MOUSE_INDICATOR_SIZE, this);
-#ifdef BUILD_KEYBOARD
 	distanceDisplayer = new DistanceWidget(mainThread, INFO_INDICATOR_WIDTH,
 		DISTANCE_DISPLAY_HEIGHT, this);
     distanceDisplayer->setVisible(false);
-#endif
 
     numProfiles = pm->getProfiles()->size();
 	setupProfileIcons();
@@ -130,10 +126,8 @@ MainGUI::MainGUI(MidasThread *mainThread, ProfileManager *pm, int deadZoneRad)
      
     setLayout(layout);
 
-#ifdef BUILD_KEYBOARD
 	keyboard = new KeyboardWidget(mainThread);
 	keyboard->addWheels(mainThread->getKybrdRingData());
-#endif
 
     totalWidth = std::max(sequenceDisplayer->width(), 
                         (infoIndicator->width() + poseDisplayer->width()));
@@ -151,7 +145,6 @@ MainGUI::MainGUI(MidasThread *mainThread, ProfileManager *pm, int deadZoneRad)
 
 void MainGUI::toggleKeyboard()
 {
-#ifdef BUILD_KEYBOARD
 	if (keyboard->isVisible())
 	{
 		keyboard->setVisible(false);
@@ -160,7 +153,6 @@ void MainGUI::toggleKeyboard()
 	{
 		keyboard->setVisible(true);
 	}
-#endif
 }
 
 void MainGUI::toggleSettingsDisplayer()
@@ -207,19 +199,15 @@ MainGUI::~MainGUI()
 
     delete profilesWidget; profilesWidget = NULL;
 
-#ifdef BUILD_KEYBOARD
     delete keyboard; keyboard = NULL;
     delete distanceDisplayer; distanceDisplayer = NULL;
-#endif
 }
 
-#ifdef BUILD_KEYBOARD
 void MainGUI::connectSignallerToKeyboardToggle(GestureSignaller *signaller)
 {
 	QObject::connect(signaller, SIGNAL(emitToggleKeyboard()),
 			this, SLOT(toggleKeyboard()));
 }
-#endif
 
 void MainGUI::connectSignallerToSettingsDisplayer(SettingsSignaller *signaller)
 {

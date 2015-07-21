@@ -20,9 +20,7 @@
 #ifndef _SCD_DIGESTER_H
 #define _SCD_DIGESTER_H
 
-#ifdef BUILD_KEYBOARD
 #include "RingData.h"
-#endif
 
 #ifdef USE_SIMULATOR
 #include "MyoSimIncludes.hpp"
@@ -47,13 +45,9 @@ class MainGUI;
 class SCDDigester
 {
 public:
-#ifdef BUILD_KEYBOARD
 	SCDDigester(SharedCommandData* scd, MidasThread *thread, ControlState *cntrlStateHandle, MyoState *myoStateHandle,
         MouseCtrl *mouseCtrl, KeyboardController *keyboardController, ProfileManager* profileManagerHandle, MainGUI *mainGui, std::vector<ringData> *kybrdRingData);
-#else
-	SCDDigester(SharedCommandData* scd, MidasThread *thread, ControlState *cntrlStateHandle, MyoState *myoStateHandle,
-        MouseCtrl *mouseCtrl, KeyboardController *keyboardController, ProfileManager* profileManagerHandle, MainGUI *mainGui);
-#endif
+
     ~SCDDigester();
 
     void digest();
@@ -65,13 +59,11 @@ private:
 
     void handleConnectionData();
 
-#ifdef BUILD_KEYBOARD
     void digestKeyboardGUIData(CommandData nextCommand);
 
 	int getSelectedKeyFromAngle(double angle, std::vector<ringData::keyboardValue> *ring);
 
 	std::vector<ringData> *kybrdRingData;
-#endif
 
 	KeyboardController *keyboardController; // not owned
     SharedCommandData *scdHandle; // not owned

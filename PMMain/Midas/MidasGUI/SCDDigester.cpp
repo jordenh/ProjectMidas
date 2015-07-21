@@ -34,13 +34,8 @@
 
 SettingsSignaller SCDDigester::settingsSignaller;
 
-#ifdef BUILD_KEYBOARD
 SCDDigester::SCDDigester(SharedCommandData* scd, MidasThread *thread, ControlState *cntrlStateHandle, MyoState* myoStateHandle,
     MouseCtrl *mouseCtrl, KeyboardController *keyboardController, ProfileManager* profileManagerHandle,  MainGUI *mainGui, std::vector<ringData> *kybrdRingData)
-#else
-SCDDigester::SCDDigester(SharedCommandData* scd, MidasThread *thread, ControlState *cntrlStateHandle, MyoState* myoStateHandle,
-    MouseCtrl *mouseCtrl, KeyboardController *keyboardController, ProfileManager* profileManagerHandle, MainGUI *mainGui)
-#endif
 {
     this->scdHandle = scd;
     this->threadHandle = thread;
@@ -53,9 +48,7 @@ SCDDigester::SCDDigester(SharedCommandData* scd, MidasThread *thread, ControlSta
 	this->pm = profileManagerHandle;
     this->count = 0;
 
-#ifdef BUILD_KEYBOARD
 	this->kybrdRingData = kybrdRingData;
-#endif
     connSignaller = new ConnectionSignaller();
     connSignaller->setCurrentlyConnected(false);
     connSignaller->setCurrentlySynched(false);
@@ -157,7 +150,6 @@ void SCDDigester::digest()
         }
     }
 #endif /* JOYSTICK_CURSOR */
-#ifdef BUILD_KEYBOARD
     if (cntrlStateHandle->getMode() == midasMode::KEYBOARD_MODE)
     {
         unsigned int kybdGUISel = scdHandle->getKybdGuiSel();
@@ -176,12 +168,10 @@ void SCDDigester::digest()
 		
         digestKeyboardGUIData(nextCmd);
     }
-#endif 
 
     count++;
 }
 
-#ifdef BUILD_KEYBOARD
 // MAKE SURE THIS FUNCTION MATCHES THE SAME FUNCTION IN SCDDigester.
 int SCDDigester::getSelectedKeyFromAngle(double angle, std::vector<ringData::keyboardValue> *ring)
 {
@@ -286,7 +276,6 @@ void SCDDigester::digestKeyboardGUIData(CommandData nextCommand)
         }
     }
 }
-#endif
 
 void SCDDigester::digestKybdCmd(CommandData nextCommand)
 {

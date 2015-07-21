@@ -56,9 +56,7 @@ GestureFilter::GestureFilter(ControlState* controlState, MyoState* myoState, clo
     {
         mainGui->connectSignallerToInfoIndicator(&gestureSignaller);
         mainGui->connectSignallerToPoseDisplayer(&gestureSignaller);
-#ifdef BUILD_KEYBOARD
 		mainGui->connectSignallerToKeyboardToggle(&gestureSignaller);
-#endif
 		mainGui->connectSignallerToProfileIcons(&gestureSignaller);
         mainGui->connectSignallerToSettingsDisplayer(&settingsSignaller);
     }

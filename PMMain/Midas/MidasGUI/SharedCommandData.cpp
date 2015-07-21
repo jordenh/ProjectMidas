@@ -100,7 +100,6 @@ bool SharedCommandData::tryGetVelocity(point& outVelocity)
     return locked;
 }
 
-#ifdef BUILD_KEYBOARD
 void SharedCommandData::setKybdGuiSel(unsigned int kybdGuiSel)
 {
 	kybdGuiSelMutex.lock();
@@ -217,7 +216,6 @@ void SharedCommandData::setRssi(float rssi)
 	rssiAVG = rssi;
 	rssiMutex.unlock();
 }
-#endif
 
 bool SharedCommandData::getIsConnected()
 {
@@ -295,19 +293,17 @@ void SharedCommandData::process()
         extractIsSynched(value);
     }
 
-#ifdef BUILD_KEYBOARD
-if (input.find(ANGLE_INPUT) != input.end())
-{
-	boost::any value = input[ANGLE_INPUT];
-	extractKeySelectAngle(value);
-}
+    if (input.find(ANGLE_INPUT) != input.end())
+    {
+	    boost::any value = input[ANGLE_INPUT];
+	    extractKeySelectAngle(value);
+    }
 	
-if (input.find(RSSI_INPUT) != input.end())
-{
-	boost::any value = input[RSSI_INPUT];
-	extractRssi(value);
-}
-#endif
+    if (input.find(RSSI_INPUT) != input.end())
+    {
+	    boost::any value = input[RSSI_INPUT];
+	    extractRssi(value);
+    }
 }
 
 void SharedCommandData::empty()
@@ -358,7 +354,6 @@ void SharedCommandData::extractPoint(boost::any value)
     }
 }
 
-#ifdef BUILD_KEYBOARD
 void SharedCommandData::extractKeySelectAngle(boost::any value)
 {
 	if (value.type() != typeid(keyboardAngle))
@@ -386,7 +381,6 @@ void SharedCommandData::extractRssi(boost::any value)
 		setRssi(rssi);
 	}
 }
-#endif
 
 void SharedCommandData::extractIsConnected(boost::any value)
 {

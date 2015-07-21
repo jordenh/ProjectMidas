@@ -23,13 +23,8 @@
 #include <string>
 #include <map>
 
-#ifdef USE_GYRO_DATA
-#define INIT_PITCH_ANGLE 100.0f /* Maximum delta angle in degrees */
-#define INIT_YAW_ANGLE 100.0f /* Maximum delta angle in degrees */
-#else
 #define INIT_PITCH_ANGLE 20.0f /* Maximum delta angle in degrees */
 #define INIT_YAW_ANGLE 25.0f /* Maximum delta angle in degrees */
-#endif
 #define MIN_SLIDER_ANGLE 15
 #define MAX_SLIDER_ANGLE 100
 
