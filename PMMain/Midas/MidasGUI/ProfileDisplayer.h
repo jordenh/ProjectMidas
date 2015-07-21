@@ -23,6 +23,7 @@
 #include <QFrame.h>
 #include "MidasCommon.h"
 
+class ProfilesDisplayer;
 class QGridLayout;
 
 
@@ -34,6 +35,9 @@ public:
     ProfileDisplayer(std::string name, int widgetWidth = PROF_INDICATOR_WIDTH, 
         int widgetHeight = PROF_INDICATOR_HEIGHT, QWidget *parent = 0);
     ~ProfileDisplayer();
+
+    void setActiveProfile(bool active) { activeProfile = active; }
+    bool getActiveProfile() { return activeProfile; }
 
     QSize sizeHint() const;
 
@@ -58,6 +62,8 @@ private:
     int indWidth, indHeight;
     QGridLayout *layout;
     std::string profileName;
+    bool activeProfile;
+    ProfilesDisplayer *owner;
 
 signals:
     void emitChangeProfile(QString);

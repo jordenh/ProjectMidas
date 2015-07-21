@@ -99,9 +99,6 @@ int midasMain(MidasThread *threadHandle, MainGUI *mainGui, ProfileManager *pm) {
 
 #endif
 
-#ifdef MYO_POSE_FILTER_TEST
-#endif
-
 #ifdef MAIN_MODE
 #ifdef BUILD_KEYBOARD
 	SharedCommandData sharedData(kybrdRingData->size() * 2);
@@ -130,10 +127,14 @@ int midasMain(MidasThread *threadHandle, MainGUI *mainGui, ProfileManager *pm) {
 
     while (true)
     {
-        if (myoDevice->getDeviceStatus() != deviceStatus::RUNNING) 
-            break;
+        // Improve performance by a tremendous amount by sleeping in this loop for a short
+        // period of time (ie 15% CPU down to 2% on an i7).
+       Sleep(2);
 
-        scdDigester.digest();
+       if (myoDevice->getDeviceStatus() != deviceStatus::RUNNING) 
+           break;
+
+       scdDigester.digest();
     }
 
 	delete myoDevice;

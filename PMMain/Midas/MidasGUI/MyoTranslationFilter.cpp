@@ -209,50 +209,55 @@ void MyoTranslationFilter::handleGyroData(filterDataMap input, filterDataMap out
     float gyroZ;
     float quatW;
 
-#ifdef USE_GYRO_DATA
-
-    // Require an entire quaternion in one input to process
-    if (input.find(GYRO_DATA_X) != input.end() &&
-        input.find(GYRO_DATA_Y) != input.end() &&
-        input.find(GYRO_DATA_Z) != input.end())
+    if (settingsSignaller.getUseGyroForCursorAccel())
     {
-        boost::any valueX = input[GYRO_DATA_X];
-        boost::any valueY = input[GYRO_DATA_Y];
-        boost::any valueZ = input[GYRO_DATA_Z];
-        if (valueX.type() != typeid(float) ||
-            valueY.type() != typeid(float) ||
-            valueZ.type() != typeid(float))
-        {
-            Filter::setFilterError(filterError::INVALID_INPUT);
-            Filter::setFilterStatus(filterStatus::FILTER_ERROR);
-        }
-        else
-        {
-            gyroX = boost::any_cast<float>(valueX);
-            gyroY = boost::any_cast<float>(valueY);
-            gyroZ = boost::any_cast<float>(valueZ);
 
-            midasMode currMode = controlStateHandle->getMode();
-
-            if (currMode == MOUSE_MODE || currMode == MOUSE_MODE2)
+        // Require an entire quaternion in one input to process
+        if (input.find(GYRO_DATA_X) != input.end() &&
+            input.find(GYRO_DATA_Y) != input.end() &&
+            input.find(GYRO_DATA_Z) != input.end())
+        {
+            boost::any valueX = input[GYRO_DATA_X];
+            boost::any valueY = input[GYRO_DATA_Y];
+            boost::any valueZ = input[GYRO_DATA_Z];
+            if (valueX.type() != typeid(float) ||
+                valueY.type() != typeid(float) ||
+                valueZ.type() != typeid(float))
             {
-                // attempt 1
-                // update base angles for each new mode
-                //float gyroThresh = 0.075;
-                //float cursorBaseVerticalChange = abs(gyroY) > gyroThresh ? gyroY * CURSOR_GYRO_ACCEL_RATE : 0;// TODO - getBaseYChange(float gyroY) // gyroY axis correspon
-                //float cursorBaseHorizontalChange = abs(gyroZ) > gyroThresh ? -gyroZ * CURSOR_GYRO_ACCEL_RATE : 0;// TODO - getBaseXChange(float gyroZ)
-                //cursorBaseVerticalChange = pow(cursorBaseVerticalChange, 2);
-                //cursorBaseHorizontalChange = pow(cursorBaseHorizontalChange, 2);
+                Filter::setFilterError(filterError::INVALID_INPUT);
+                Filter::setFilterStatus(filterStatus::FILTER_ERROR);
+            }
+            else
+            {
+                gyroX = boost::any_cast<float>(valueX);
+                gyroY = boost::any_cast<float>(valueY);
+                gyroZ = boost::any_cast<float>(valueZ);
 
-                // attempt 2
-                float cursorBaseHorizontalChange = pow(gyroZ, CURSOR_GYRO_POW) / CURSOR_GYRO_SCALE_DOWN * -sign(gyroZ);
-                float cursorBaseVerticalChange = pow(gyroY, CURSOR_GYRO_POW) / CURSOR_GYRO_SCALE_DOWN * sign(gyroY);
+                midasMode currMode = controlStateHandle->getMode();
 
-                BaseMeasurements::getInstance().modifyBaseCursor(cursorBaseHorizontalChange, cursorBaseVerticalChange);
+                if (currMode == MOUSE_MODE || currMode == MOUSE_MODE2)
+                {
+                    // attempt 1
+                    // update base angles for each new mode
+                    //float gyroThresh = 0.075;
+                    //float cursorBaseVerticalChange = abs(gyroY) > gyroThresh ? gyroY * CURSOR_GYRO_ACCEL_RATE : 0;// TODO - getBaseYChange(float gyroY) // gyroY axis correspon
+                    //float cursorBaseHorizontalChange = abs(gyroZ) > gyroThresh ? -gyroZ * CURSOR_GYRO_ACCEL_RATE : 0;// TODO - getBaseXChange(float gyroZ)
+                    //cursorBaseVerticalChange = pow(cursorBaseVerticalChange, 2);
+                    //cursorBaseHorizontalChange = pow(cursorBaseHorizontalChange, 2);
+
+                    // attempt 2
+                    int cursorGyroPower = settingsSignaller.getCursorGyroPower();
+                    float cursorGyroScaleDown = settingsSignaller.getCursorGyroScaleDown();
+                    float cursorBaseHorizontalChange = abs(pow(gyroZ, cursorGyroPower)) / cursorGyroScaleDown * -sign(gyroZ);
+                    //cursorBaseHorizontalChange = std::min(cursorBaseHorizontalChange, 200.0f);
+                    float cursorBaseVerticalChange = abs(pow(gyroY, cursorGyroPower)) / cursorGyroScaleDown * sign(gyroY);
+                    //cursorBaseVerticalChange = std::min(cursorBaseVerticalChange, 200.0f);
+
+                    BaseMeasurements::getInstance().modifyBaseCursor(cursorBaseHorizontalChange, cursorBaseVerticalChange);
+                }
             }
         }
     }
-#endif
 }
 
 void MyoTranslationFilter::handleArmData(filterDataMap input, filterDataMap output)

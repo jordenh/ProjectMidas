@@ -530,14 +530,6 @@ SequenceStatus GestureSeqRecorder::findActivation(Pose::Type gesture, ControlSta
 
 void GestureSeqRecorder::updateGuiSequences()
 {
-//#ifdef BUILD_FOR_KARDIUM
-//    if (controlStateHandle->getMode() == MOUSE_MODE)
-//    {
-//        // don't update the GUI sequence for this build, as the idea is to have the entire sequence list shown.
-//        return;
-//    }
-//#endif
-
     std::vector<sequenceProgressData> progressDataVec;
     if (signaller.getShowAll())
     {

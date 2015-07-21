@@ -32,7 +32,7 @@ ProfileIcon::ProfileIcon(int widgetWidth, int widgetHeight, bool active, QPixmap
 
 	setWindowOpacity(GUI_OPACITY);
 	QPalette pal;
-	pal.setColor(QPalette::Background, QColor(205, 205, 193));
+	pal.setColor(QPalette::Background, MIDAS_GREY);
 	setAutoFillBackground(true);
 	setPalette(pal);
 	setWindowFlags(Qt::WindowStaysOnTopHint);

@@ -24,25 +24,30 @@
 #include <QFrame.h>
 #include <qlabel.h>
 #include <qpushbutton.h>
+#include <qspinbox.h>
+#include <qradiobutton.h>
 
 SettingsDisplayer::SettingsDisplayer(int widgetWidth, int widgetHeight, QWidget *parent)
-    : QWidget(parent), indWidth(widgetWidth), indHeight(widgetHeight), currentBuzzModeCount(buzzFeedbackMode::MINIMAL)
+    : DraggableWidget(parent, Qt::WindowSystemMenuHint | Qt::WindowStaysOnTopHint),
+    indWidth(widgetWidth), indHeight(widgetHeight), currentBuzzModeCount(buzzFeedbackMode::MINIMAL)
 {
-    setContextMenuPolicy(Qt::ActionsContextMenu);
-    setToolTip(tr("Drag the Settings Displayer with the left mouse button.\n"
-        "Use the right mouse button to open a context menu."));
+    setToolTip(tr("Drag the Settings Displayer with the left mouse button."));
     setWindowTitle(tr("Settings Displayer"));
 
-    setWindowOpacity(GUI_OPACITY);
+    setWindowOpacity(1);
     QPalette pal;
-    pal.setColor(QPalette::Background, QColor(205, 205, 193));
+    pal.setColor(QPalette::Background, MIDAS_GREY);
     setAutoFillBackground(true);
     setPalette(pal);
-    setWindowFlags(Qt::WindowStaysOnTopHint);
 
-    mainLayout = new QVBoxLayout;
+    QVBoxLayout *mainLayout = new QVBoxLayout;
     mainLayout->setSpacing(WIDGET_BUFFER);
     setLayout(mainLayout);
+
+    QFont timesFont("Times", 11, QFont::Bold, true);
+    QLabel* title = new QLabel(QString("Settings"));
+    title->setFont(timesFont);
+    mainLayout->addWidget(title, 0, Qt::AlignCenter);
 
     yawSlider = new QSlider(Qt::Orientation::Horizontal, this);
     yawSlider->setTracking(true);
@@ -66,18 +71,49 @@ SettingsDisplayer::SettingsDisplayer(int widgetWidth, int widgetHeight, QWidget 
     connect(buzzFeedbackButton, SIGNAL(clicked(bool)), this, SLOT(handleClicked(bool)));
     mainLayout->addWidget(buzzFeedbackButton);
 
-    hlayout = new QHBoxLayout;
+    
 
-    hlayout->addWidget(new QLabel("Yaw: "));
-    hlayout->addWidget(yawSlider);
+    useGyroForCursorAccelButton = new QRadioButton("Apply acceleration to cursor?", this);
+    connect(useGyroForCursorAccelButton, SIGNAL(clicked()), this, SLOT(handleUseGyroForCursorAccelButton()));
+    mainLayout->addWidget(useGyroForCursorAccelButton);
+
+    QHBoxLayout* hlayout1 = new QHBoxLayout;
+    gyroPowerSpinBox = new QSpinBox(this);
+    gyroPowerSpinBox->setMinimum(MIN_GYRO_POW);
+    gyroPowerSpinBox->setMaximum(MAX_GYRO_POW);
+    gyroPowerSpinBox->setValue(DEFAULT_GYRO_POW);
+    gyroPowerSpinBox->setEnabled(false);
+    gyroScaleDownSpinBox = new QDoubleSpinBox(this);
+    gyroScaleDownSpinBox->setMinimum(MIN_GYRO_SCALE_DOWN);
+    gyroScaleDownSpinBox->setMaximum(MAX_GYRO_SCALE_DOWN);
+    gyroScaleDownSpinBox->setValue(DEFAULT_GYRO_SCALE_DOWN);
+    gyroScaleDownSpinBox->setSingleStep(50);
+    gyroScaleDownSpinBox->setEnabled(false);
+
+    connect(gyroPowerSpinBox, SIGNAL(valueChanged(int)), this, SLOT(gyroPowerValueChanged(int)));
+    connect(gyroScaleDownSpinBox, SIGNAL(valueChanged(double)), this, SLOT(gyroScaledDownValueChanged(double)));
+
+    hlayout1->addWidget(new QLabel("Accel = Gyro\^exp / scaleDown. "));
+    hlayout1->addWidget(new QLabel("Exponent: "));
+    hlayout1->addWidget(gyroPowerSpinBox);
+    hlayout1->addWidget(new QLabel("Scale Down: "));
+    hlayout1->addWidget(gyroScaleDownSpinBox);
+    
+    mainLayout->addLayout(hlayout1);
+
+    QHBoxLayout* hlayout2 = new QHBoxLayout;
+
+    mainLayout->addWidget(new QLabel("Angular Sensitivity (Degree per Screen):"));
+    hlayout2->addWidget(new QLabel("Horizontal: "));
+    hlayout2->addWidget(yawSlider);
     yawValue = new QLabel(QString::number(yawSlider->sliderPosition()));
-    hlayout->addWidget(yawValue);
-    hlayout->addWidget(new QLabel("Pitch: "));
-    hlayout->addWidget(pitchSlider);
+    hlayout2->addWidget(yawValue);
+    hlayout2->addWidget(new QLabel("Vertical: "));
+    hlayout2->addWidget(pitchSlider);
     pitchValue = new QLabel(QString::number(pitchSlider->sliderPosition()));
-    hlayout->addWidget(pitchValue);
+    hlayout2->addWidget(pitchValue);
 
-    mainLayout->addLayout(hlayout);
+    mainLayout->addLayout(hlayout2);
 
     setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     setMinimumSize(indWidth, indHeight);
@@ -85,14 +121,6 @@ SettingsDisplayer::SettingsDisplayer(int widgetWidth, int widgetHeight, QWidget 
 
 SettingsDisplayer::~SettingsDisplayer()
 {
-    delete mainLayout; mainLayout = NULL;
-    delete hlayout; hlayout = NULL;
-    delete stateLabel; stateLabel = NULL;
-    delete yawSlider; yawSlider = NULL;
-    delete pitchSlider; pitchSlider = NULL;
-    delete yawValue; yawValue = NULL;
-    delete pitchValue; pitchValue = NULL;
-    delete buzzFeedbackButton; buzzFeedbackButton = NULL;
 }
 
 QSize SettingsDisplayer::sizeHint() const
@@ -132,3 +160,37 @@ void SettingsDisplayer::handleClicked(bool checked)
     emitBuzzFeedbackChange(currentBuzzModeCount);
     buzzFeedbackButton->setText(buzzFeedbackModeToString((buzzFeedbackMode)(currentBuzzModeCount)).c_str());
 }
+
+void SettingsDisplayer::handleUseGyroForCursorAccelButton()
+{
+    emitUseGyroForCursorAccelButton(useGyroForCursorAccelButton->isChecked());
+    if (useGyroForCursorAccelButton->isChecked())
+    {
+        gyroPowerSpinBox->setEnabled(true);
+        gyroScaleDownSpinBox->setEnabled(true);
+
+        // assign defaults for pitch/yaw limitations
+        yawSlider->setValue(MAX_SLIDER_ANGLE);
+        pitchSlider->setValue(MAX_SLIDER_ANGLE);
+        handleSlidersChange(0);
+    }
+    else
+    {
+        gyroPowerSpinBox->setEnabled(false);
+        gyroScaleDownSpinBox->setEnabled(false);
+        yawSlider->setValue(INIT_YAW_ANGLE);
+        pitchSlider->setValue(INIT_PITCH_ANGLE);
+        handleSlidersChange(0);
+    }
+}
+
+void SettingsDisplayer::gyroPowerValueChanged(int val)
+{
+    emitGyroPowerValue(val);
+}
+
+void SettingsDisplayer::gyroScaledDownValueChanged(double val)
+{
+    emitGyroScaleDownValue(val);
+}
+

@@ -32,6 +32,7 @@ MouseCtrl::MouseCtrl()
     minMoveYTimeDelta = DEFAULT_MIN_MOVE_TIME;
     scrollRate = WHEEL_DELTA;
     currHeld = 0;
+    prevAbsMouseX = 0; prevAbsMouseY = 0;
 }
 
 MouseCtrl::~MouseCtrl()
@@ -117,11 +118,12 @@ void MouseCtrl::sendCommand(mouseCmds mouseCmd, double mouseRateIfMove, double m
     }
     else
     {
+#ifdef JOYSTICK_CURSOR        
         // Update time stamps
         if (mi.dx != 0)
         {
             if (mouseRateIfMove >= 0)
-                setMinMoveXTimeDelta(mouseRateIfMove);
+                setMinMoveXTimeDelta(mouseRateIfMove); // July 17, 2015: I think  this is wrong, but not using joystick and dont remember purpose of this line so.. leaving in.
             lastMouseMoveX = currentTime;
         }
         if (mi.dy != 0)
@@ -130,6 +132,18 @@ void MouseCtrl::sendCommand(mouseCmds mouseCmd, double mouseRateIfMove, double m
                 setMinMoveYTimeDelta(mouseRateIfMove);
             lastMouseMoveY = currentTime;
         }
+#else
+        if (mi.dx != prevAbsMouseX)
+        {
+            lastMouseMoveX = currentTime;
+            prevAbsMouseX = mi.dx;
+        }
+        if (mi.dy != prevAbsMouseY)
+        {
+            lastMouseMoveY = currentTime;
+            prevAbsMouseY = mi.dy;
+        }
+#endif
     }
 
     // Handle early exit cases if scrolling mouse
@@ -173,7 +187,7 @@ void MouseCtrl::sendCommand(mouseCmds mouseCmd, double mouseRateIfMove, double m
             goto done;
         }
 
-        Sleep(10);
+        Sleep(2);
         in->type = INPUT_MOUSE;
         in->mi = mi;
         SendInput(1, in, sizeof(INPUT));

@@ -19,8 +19,6 @@
 
 #include "PoseDisplayer.h"
 #include "SequenceImageManager.h"
-#include <QAction.h>
-#include <QApplication.h>
 #include <QPainter.h>
 #include <qstyle.h>
 #include <qdesktopwidget.h>
@@ -35,13 +33,6 @@
 PoseDisplayer::PoseDisplayer(int widgetWidth, int widgetHeight, QWidget *parent)
     : QWidget(parent), indWidth(widgetWidth), indHeight(widgetHeight), connected(false), synched(false), isRightHand(true)
 {
-    // Temporarily allow a Quit
-    QAction *quitAction = new QAction(tr("E&xit"), this);
-    quitAction->setShortcut(tr("Ctrl-Q"));
-    connect(quitAction, SIGNAL(triggered()), qApp, SLOT(quit()));
-    addAction(quitAction);
-
-    setContextMenuPolicy(Qt::ActionsContextMenu);
     setToolTip(tr("Drag the Pose Displayer with the left mouse button.\n"
         "Use the right mouse button to open a context menu."));
     setWindowTitle(tr("Pose Displayer"));

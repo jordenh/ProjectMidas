@@ -186,18 +186,18 @@ void MyoDevice::setupPosePipeline(GestureFilter *gf)
 
 void MyoDevice::setupOrientationPipeline()
 {
-    genAvgFilterQX = new GenericAveragingFilter(5, QUAT_DATA_X);
-    genAvgFilterQY = new GenericAveragingFilter(5, QUAT_DATA_Y);
-    genAvgFilterQZ = new GenericAveragingFilter(5, QUAT_DATA_Z);
-    genAvgFilterQW = new GenericAveragingFilter(5, QUAT_DATA_W);
+    genAvgFilterQX = new GenericAveragingFilter(3, QUAT_DATA_X);
+    genAvgFilterQY = new GenericAveragingFilter(3, QUAT_DATA_Y);
+    genAvgFilterQZ = new GenericAveragingFilter(3, QUAT_DATA_Z);
+    genAvgFilterQW = new GenericAveragingFilter(3, QUAT_DATA_W);
 
-    genAvgFilterAY = new GenericAveragingFilter(5, ACCEL_DATA_X);
-    genAvgFilterAZ = new GenericAveragingFilter(5, ACCEL_DATA_Y);
-    genAvgFilterAW = new GenericAveragingFilter(5, ACCEL_DATA_Z);
+    genAvgFilterAY = new GenericAveragingFilter(3, ACCEL_DATA_X);
+    genAvgFilterAZ = new GenericAveragingFilter(3, ACCEL_DATA_Y);
+    genAvgFilterAW = new GenericAveragingFilter(3, ACCEL_DATA_Z);
 
-    genAvgFilterGY = new GenericAveragingFilter(5, GYRO_DATA_X);
-    genAvgFilterGZ = new GenericAveragingFilter(5, GYRO_DATA_Y);
-    genAvgFilterGW = new GenericAveragingFilter(5, GYRO_DATA_Z);
+    genAvgFilterGY = new GenericAveragingFilter(3, GYRO_DATA_X);
+    genAvgFilterGZ = new GenericAveragingFilter(3, GYRO_DATA_Y);
+    genAvgFilterGW = new GenericAveragingFilter(3, GYRO_DATA_Z);
 
     genBypassFilterArm = new GenericBypassFilter(INPUT_ARM);
     genBypassFilterXDir = new GenericBypassFilter(INPUT_X_DIRECTION);
