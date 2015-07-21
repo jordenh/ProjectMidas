@@ -68,12 +68,13 @@ SettingsDisplayer::SettingsDisplayer(int widgetWidth, int widgetHeight, QWidget 
     connect(yawSlider, SIGNAL(sliderMoved(int)), this, SLOT(handleSlidersChange(int)));
     connect(pitchSlider, SIGNAL(sliderMoved(int)), this, SLOT(handleSlidersChange(int)));
 
+    QHBoxLayout* hlayout0 = new QHBoxLayout;
     buzzFeedbackButton = new QPushButton(buzzFeedbackModeToString((buzzFeedbackMode)(currentBuzzModeCount)).c_str(), this);
     connect(buzzFeedbackButton, SIGNAL(clicked(bool)), this, SLOT(handleClicked(bool)));
-    mainLayout->addWidget(buzzFeedbackButton);
-
+    hlayout0->addWidget(new QLabel("Myo Vibration Level: "));
+    hlayout0->addWidget(buzzFeedbackButton);
+    mainLayout->addLayout(hlayout0);
     
-
     useGyroForCursorAccelButton = new QCheckBox("Apply acceleration to cursor?", this);
     connect(useGyroForCursorAccelButton, SIGNAL(clicked()), this, SLOT(handleUseGyroForCursorAccelButton()));
     mainLayout->addWidget(useGyroForCursorAccelButton);

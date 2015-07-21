@@ -535,7 +535,19 @@
 	
 	<profile name="Midas OLD (lordy)">
         <sequences>
-            <sequence state="mouseMode" name="Left Click">
+			<sequence state="mouseMode" name="Release Cursor">
+                <gestures>
+                    <gesture type="immediate">rest</gesture>
+                </gestures>
+                <commands>
+                    <command type="mouse">
+                        <actions>
+                            <action>releaseLrmButs</action>
+                        </actions>
+                    </command>
+                </commands>
+            </sequence>
+            <sequence state="mouseMode" name="Left Button">
                 <gestures>
                     <gesture type="immediate">fist</gesture>
                 </gestures>
@@ -547,7 +559,7 @@
                 </command>
 				</commands>
             </sequence>
-            <sequence state="mouseMode" name="Right Click">
+            <sequence state="mouseMode" name="Right Button">
                 <gestures>
                     <gesture type="immediate">fingersSpread</gesture>
                 </gestures>
@@ -659,7 +671,7 @@
             </sequence>
             <sequence state="gestureMode" name="Gesture to Mouse">
                 <gestures>
-                    <gesture type="tap">doubleTap</gesture>
+                    <gesture type="immediate">doubleTap</gesture>
                 </gestures>
                 <commands>
 				<command type="stateChange">
@@ -742,6 +754,55 @@
 				<command type="keyboardGui">
                     <actions>
                         <action>backspace</action>
+                    </actions>
+                </command>
+				</commands>
+            </sequence>
+			
+			<sequence state="gestureMode" name="Volume">
+                <gestures>
+                    <gesture type="hold">fist</gesture>
+                </gestures>
+                <commands>
+				<command type="stateChange">
+                    <actions>
+                        <action>gestureHoldThree</action>
+                    </actions>
+                </command>
+				</commands>
+            </sequence>
+			<sequence state="gestureMode" name="Arrow Keys">
+                <gestures>
+                    <gesture type="hold">fingersSpread</gesture>
+                </gestures>
+                <commands>
+				<command type="stateChange">
+                    <actions>
+                        <action>gestureHoldTwo</action>
+                    </actions>
+                </command>
+				</commands>
+            </sequence>
+			<sequence state="gestureHoldThree" name="Volume">
+                <gestures>
+                    <gesture type="immediate">rest</gesture>
+                </gestures>
+                <commands>
+				<command type="stateChange">
+                    <actions>
+                        <action>gestureMode</action>
+                    </actions>
+                </command>
+				</commands>
+            </sequence>
+			<sequence state="gestureHoldTwo" name="Arrow Keys">
+                <gestures>
+                    <gesture type="immediate">rest</gesture>
+                </gestures>
+                <commands>
+				<command type="stateChange">
+                    <actions>
+                        <action>gestureMode</action>
                     </actions>
                 </command>
 				</commands>

@@ -38,7 +38,7 @@ MouseIndicator::MouseIndicator(MidasThread *mainThread, int deadZoneRad, int wid
     timer->start(50);
 
     setToolTip(tr("Drag the mouse indicator with the left mouse button.\n"
-                  "Use the right mouse button to open a context menu."));
+                  "Use the right mouse button to open the Settings and Profile Widgets."));
     setWindowTitle(tr("Mouse Indicator"));
 
     setWindowOpacity(GUI_OPACITY);

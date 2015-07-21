@@ -40,7 +40,7 @@ InfoIndicator::InfoIndicator(int widgetWidth, int widgetHeight, QWidget *parent)
 
     setContextMenuPolicy(Qt::ActionsContextMenu);
     setToolTip(tr("Drag the info indicator with the left mouse button.\n"
-        "Use the right mouse button to open a context menu."));
+        "Use the right mouse button to open the Settings and Profile Widgets."));
     setWindowTitle(tr("Info Indicator"));
 
     setWindowOpacity(GUI_OPACITY);

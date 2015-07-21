@@ -34,7 +34,7 @@ PoseDisplayer::PoseDisplayer(int widgetWidth, int widgetHeight, QWidget *parent)
     : QWidget(parent), indWidth(widgetWidth), indHeight(widgetHeight), connected(false), synched(false), isRightHand(true)
 {
     setToolTip(tr("Drag the Pose Displayer with the left mouse button.\n"
-        "Use the right mouse button to open a context menu."));
+        "Use the right mouse button to open the Settings and Profile Widgets."));
     setWindowTitle(tr("Pose Displayer"));
 
     setWindowOpacity(GUI_OPACITY);

@@ -27,7 +27,7 @@ ProfileIcon::ProfileIcon(int widgetWidth, int widgetHeight, bool active, QPixmap
 {
 	setContextMenuPolicy(Qt::ActionsContextMenu);
 	setToolTip(tr("Drag the profile icon with the left mouse button.\n"
-		"Use the right mouse button to open a context menu."));
+		"Use the right mouse button to open the Settings and Profile Widgets."));
 	setWindowTitle(tr("Profile Icon"));
 
 	setWindowOpacity(GUI_OPACITY);
