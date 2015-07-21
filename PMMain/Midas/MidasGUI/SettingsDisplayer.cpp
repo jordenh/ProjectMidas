@@ -25,7 +25,8 @@
 #include <qlabel.h>
 #include <qpushbutton.h>
 #include <qspinbox.h>
-#include <qradiobutton.h>
+#include <QCheckBox.h>
+#include <qline.h>
 
 SettingsDisplayer::SettingsDisplayer(int widgetWidth, int widgetHeight, QWidget *parent)
     : DraggableWidget(parent, Qt::WindowSystemMenuHint | Qt::WindowStaysOnTopHint),
@@ -73,7 +74,7 @@ SettingsDisplayer::SettingsDisplayer(int widgetWidth, int widgetHeight, QWidget 
 
     
 
-    useGyroForCursorAccelButton = new QRadioButton("Apply acceleration to cursor?", this);
+    useGyroForCursorAccelButton = new QCheckBox("Apply acceleration to cursor?", this);
     connect(useGyroForCursorAccelButton, SIGNAL(clicked()), this, SLOT(handleUseGyroForCursorAccelButton()));
     mainLayout->addWidget(useGyroForCursorAccelButton);
 
@@ -114,6 +115,12 @@ SettingsDisplayer::SettingsDisplayer(int widgetWidth, int widgetHeight, QWidget 
     hlayout2->addWidget(pitchValue);
 
     mainLayout->addLayout(hlayout2);
+
+    QHBoxLayout* hlayout3 = new QHBoxLayout;
+
+    useEmgImpulseButton = new QCheckBox("Stop Motion on EMG Impulse?", this);
+    connect(useEmgImpulseButton, SIGNAL(clicked()), this, SLOT(handleUseEmgImpulseButton()));
+    mainLayout->addWidget(useEmgImpulseButton);
 
     setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     setMinimumSize(indWidth, indHeight);
@@ -194,3 +201,7 @@ void SettingsDisplayer::gyroScaledDownValueChanged(double val)
     emitGyroScaleDownValue(val);
 }
 
+void SettingsDisplayer::handleUseEmgImpulseButton()
+{
+    emitUseEmgImpulseButton(useEmgImpulseButton->isChecked());
+}

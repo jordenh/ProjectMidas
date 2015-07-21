@@ -19,6 +19,8 @@
 
 #include "SCDDigester.h"
 
+#include "ConnectionSignaller.h"
+#include "SettingsSignaller.h"
 #include "BaseMeasurements.h"
 #include "CommandData.h"
 #include "KeyboardContoller.h"
@@ -29,6 +31,8 @@
 #include "MouseCtrl.h"
 #include "ProfileManager.h"
 #include "MainGUI.h"
+
+SettingsSignaller SCDDigester::settingsSignaller;
 
 #ifdef BUILD_KEYBOARD
 SCDDigester::SCDDigester(SharedCommandData* scd, MidasThread *thread, ControlState *cntrlStateHandle, MyoState* myoStateHandle,
@@ -57,6 +61,8 @@ SCDDigester::SCDDigester(SharedCommandData* scd, MidasThread *thread, ControlSta
     connSignaller->setCurrentlySynched(false);
     mainGUI->connectSignallerToPoseDisplayer(connSignaller);
     mainGUI->connectSignallerToSequenceDisplayer(connSignaller);
+
+    mainGUI->connectSignallerToSettingsDisplayer(&settingsSignaller);
 }
 
 
@@ -104,7 +110,7 @@ void SCDDigester::digest()
         cntrlStateHandle->getMode() == midasMode::MOUSE_MODE2)
 	{
         bool muscleImpulse = scdHandle->getImpulseStatus();
-        if (muscleImpulse)
+        if (settingsSignaller.getUseEMGImpulse() && muscleImpulse)
         {
             BaseMeasurements::getInstance().updateBaseCursor();
             BaseMeasurements::getInstance().setCurrentAnglesAsBase();

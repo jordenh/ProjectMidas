@@ -428,12 +428,12 @@ void MyoDevice::MyoCallbacks::onEmgData(myo::Myo* myo, uint64_t timestamp, const
     // This data is streaming at 200Hz - print data for post mortem analysis
 	std::cout << "onEmgData." << std::endl;
 
-#ifdef USE_EMG_FILTER
+//#ifdef USE_EMG_FILTER
     for (int emgIdx = 0; emgIdx < 8; emgIdx++)
     {
         lastEMGData[emgIdx] = emg[emgIdx];
     }
-    printToDataFile(); // uncomment to printout data for post mortem analysis
+    //printToDataFile(); // uncomment to printout data for post mortem analysis
 
     // Actual processing
     std::array<int8_t, 8> emgSamples;
@@ -445,7 +445,7 @@ void MyoDevice::MyoCallbacks::onEmgData(myo::Myo* myo, uint64_t timestamp, const
     input[EMG_VECTOR] = emgSamples;
 
     parent.emgImpulsePipeline.startPipeline(input);
-#endif
+//#endif
 }
 
 void MyoDevice::MyoCallbacks::onWarmupCompleted(myo::Myo* myo, uint64_t timestamp, WarmupResult warmupResult)

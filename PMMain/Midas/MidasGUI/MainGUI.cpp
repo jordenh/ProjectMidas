@@ -230,13 +230,15 @@ void MainGUI::connectSignallerToSettingsDisplayer(SettingsSignaller *signaller)
         QObject::connect(settingsDisplayer, SIGNAL(emitBuzzFeedbackChange(unsigned int)),
             signaller, SLOT(handleBuzzFeedbackChange(unsigned int)));
 
+        QObject::connect(settingsDisplayer, SIGNAL(emitUseGyroForCursorAccelButton(bool)),
+            signaller, SLOT(handleUseGyroForCursorAccelChanged(bool)));
         QObject::connect(settingsDisplayer, SIGNAL(emitGyroPowerValue(int)),
             signaller, SLOT(hanldeGyroPowerValueChanged(int)));
         QObject::connect(settingsDisplayer, SIGNAL(emitGyroScaleDownValue(double)),
             signaller, SLOT(hanldeGyroScaleDownValueChanged(double)));
 
-        QObject::connect(settingsDisplayer, SIGNAL(emitUseGyroForCursorAccelButton(bool)),
-            signaller, SLOT(handleUseGyroForCursorAccelChanged(bool)));
+        QObject::connect(settingsDisplayer, SIGNAL(emitUseEmgImpulseButton(bool)),
+            signaller, SLOT(handleUseEmgImpulse(bool)));
     }
 }
 

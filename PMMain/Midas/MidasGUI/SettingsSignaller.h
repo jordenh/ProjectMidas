@@ -39,6 +39,7 @@ public:
     int getCursorGyroPower() { return cursorGyroPower; }
     float getCursorGyroScaleDown() { return cursorGyroScaleDown; }
     bool getUseGyroForCursorAccel() { return useGyroForCursorAccel; }
+    bool getUseEMGImpulse() { return useEMGImpulse; }
 private:
     unsigned int yawMaxAngle;
     unsigned int pitchMaxAngle;
@@ -49,6 +50,7 @@ private:
     int cursorGyroPower;
     float cursorGyroScaleDown;
 
+    bool useEMGImpulse;
 public slots:
     void handleSliderValues(unsigned int yawMaxAngle, unsigned int pitchMaxAngle);
 
@@ -59,6 +61,8 @@ public slots:
     void hanldeGyroScaleDownValueChanged(double val);
 
     void handleUseGyroForCursorAccelChanged(bool val);
+
+    void handleUseEmgImpulse(bool val);
 };
 
 #endif // SETTINGS_SIGNALLER_H
