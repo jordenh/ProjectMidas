@@ -155,16 +155,13 @@ void SCDDigester::digest()
         unsigned int kybdGUISel = scdHandle->getKybdGuiSel();
         keyboardAngle currKeyAngle = scdHandle->getKeySelectAngle();
 		
-        if (count % 1000 == 0)
-        {
-            double angleAsDouble = (double)currKeyAngle.angle;
-            threadHandle->emitUpdateKeyboard(kybdGUISel, angleAsDouble, currKeyAngle.ringThreshReached, false); // todo kybrd fix test.
+        double angleAsDouble = (double)currKeyAngle.angle;
+        threadHandle->emitUpdateKeyboard(kybdGUISel, angleAsDouble, currKeyAngle.ringThreshReached, false); // todo kybrd fix test.
 		
-            // for debug only
-            // int x = currKeyAngle.x;
-            // int y = currKeyAngle.y;
-            // threadHandle->emitDebugInfo(x, y);
-        }
+        // for debug only
+        // int x = currKeyAngle.x;
+        // int y = currKeyAngle.y;
+        // threadHandle->emitDebugInfo(x, y);
 		
         digestKeyboardGUIData(nextCmd);
     }
