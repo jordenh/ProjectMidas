@@ -23,6 +23,8 @@
 #define ISCONNECTED_INPUT "isConnected"
 #define SYNCHED_INPUT "isSynched"
 #define DELTA_INPUT "deltaInput"
+#define EMG_VECTOR "emgVector"
+#define IMPULSE_STATUS "impStatus"
 #define ANGLE_INPUT "angle"
 #define RSSI_INPUT "rssi"
 

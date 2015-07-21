@@ -103,7 +103,16 @@ void SCDDigester::digest()
 	if (cntrlStateHandle->getMode() == midasMode::MOUSE_MODE ||
         cntrlStateHandle->getMode() == midasMode::MOUSE_MODE2)
 	{
-		mouseCtrl->sendCommand(mouseCmds::MOVE_ABSOLUTE, mouseDelta.x, -mouseDelta.y);
+        bool muscleImpulse = scdHandle->getImpulseStatus();
+        if (muscleImpulse)
+        {
+            BaseMeasurements::getInstance().updateBaseCursor();
+            BaseMeasurements::getInstance().setCurrentAnglesAsBase();
+        }
+        else 
+        {
+            mouseCtrl->sendCommand(mouseCmds::MOVE_ABSOLUTE, mouseDelta.x, -mouseDelta.y);
+        }
 	}
 
     handleConnectionData();

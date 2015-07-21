@@ -131,6 +131,7 @@ COPY "$(ProjectDir)Qt\Qt5Widgetsd.dll" "$(OutDir)"</Command>
     <ClCompile Include="distanceBar.cpp" />
     <ClCompile Include="DistanceWidget.cpp" />
     <ClCompile Include="DraggableWidget.cpp" />
+    <ClCompile Include="EMGImpulseFilter.cpp" />
     <ClCompile Include="Filter.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_ConnectionSignaller.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
@@ -321,6 +322,7 @@ COPY "$(ProjectDir)Qt\Qt5Widgetsd.dll" "$(OutDir)"</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtWidgets" "-I$(ProjectDir)\myoSim\include" "-I$(ProjectDir)\myo\include" "-IC:\Program Files\boost\boost_1_57_0"</Command>
     </CustomBuild>
+    <ClInclude Include="EMGImpulseFilter.h" />
     <ClInclude Include="Filter.h" />
     <ClInclude Include="FilterKeys.h" />
     <ClInclude Include="GenericBypassFilter.h" />

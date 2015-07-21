@@ -37,9 +37,9 @@ class SharedCommandData : public Filter
 {
 public:
 #ifdef BUILD_KEYBOARD
-    SharedCommandData(unsigned int maxKybdGuiSel) : Filter(), mouseVelocity(), kybdGuiSel(0), isSynched(true), isConnected(true) { this->maxKybdGuiSel = maxKybdGuiSel; }
+    SharedCommandData(unsigned int maxKybdGuiSel) : Filter(), mouseVelocity(), impulseStatus(false), kybdGuiSel(0), isSynched(true), isConnected(true) { this->maxKybdGuiSel = maxKybdGuiSel; }
 #else
-    SharedCommandData() : Filter(), mouseVelocity(), isSynched(false), isConnected(false) {}
+    SharedCommandData() : Filter(), mouseVelocity(), impulseStatus(false), isSynched(false), isConnected(false) {}
 #endif
 
     /**
@@ -148,13 +148,13 @@ public:
 	void setRssi(float rssi);
 #endif
 
-	void SharedCommandData::setDelta(vector2D delta);
+	void setDelta(vector2D delta);
 
-	bool SharedCommandData::trySetDelta(vector2D delta);
+	bool trySetDelta(vector2D delta);
 
-	vector2D SharedCommandData::getDelta();
+	vector2D getDelta();
 
-	bool SharedCommandData::tryGetDelta(vector2D& outDelta);
+	bool tryGetDelta(vector2D& outDelta);
 
     /**
      * Returns whether the device is connected or not
@@ -169,6 +169,15 @@ public:
      * @param bool isConnected
      */
     void setIsConnected(bool connected);
+
+    // Impulse Status thread safe accesors/mutators
+    void setImpulseStatus(bool impulseStatus);
+
+    bool trySetImpulseStatus(bool impulseStatus);
+
+    bool getImpulseStatus();
+
+    bool tryGetImpulseStatus(bool& impulseStatus);
 
     /**
     * Returns whether the device is synched or not
@@ -221,6 +230,8 @@ private:
 	// point to indicate offset from current mouse position, while a pose is being held 
 	vector2D mouseDelta;
 	std::mutex mouseDeltaMutex;
+
+    bool impulseStatus;
    
     // together, these 2 vars define which wheel/RingData the keyboard should show on the GUI
     std::queue<CommandData> commandQueue;
@@ -231,6 +242,7 @@ private:
     std::mutex keySelectAngleMutex;
     std::mutex rssiMutex;
     std::mutex isConnectedMutex;
+    std::mutex impulseStatusMutex;
     std::mutex isSynchedMutex;
 
     void extractCommand(boost::any value);
@@ -238,6 +250,7 @@ private:
     void extractIsConnected(boost::any value);
     void extractIsSynched(boost::any value);
 	void extractVector2D(boost::any value);
+    void extractImpulseStatus(boost::any value);
 
 #ifdef BUILD_KEYBOARD
 	unsigned int maxKybdGuiSel;
