@@ -118,11 +118,11 @@ SettingsDisplayer::SettingsDisplayer(int widgetWidth, int widgetHeight, QWidget 
 
     QHBoxLayout* hlayout3 = new QHBoxLayout;
 
-    useEmgImpulseButton = new QCheckBox("Stop Motion on EMG Impulse?", this);
+    useEmgImpulseButton = new QCheckBox("Stop Motion on EMG Impulse? (WIP)", this);
     connect(useEmgImpulseButton, SIGNAL(clicked()), this, SLOT(handleUseEmgImpulseButton()));
     mainLayout->addWidget(useEmgImpulseButton);
 
-    setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
     setMinimumSize(indWidth, indHeight);
 }
 
