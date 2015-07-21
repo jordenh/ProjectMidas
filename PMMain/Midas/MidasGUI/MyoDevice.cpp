@@ -289,7 +289,7 @@ void MyoDevice::MyoCallbacks::onPose(Myo* myo, uint64_t timestamp, Pose pose)
     parent.advancedPosePipeline.startPipeline(input);
 
     lastPose = pose.type();
-    printToDataFile();
+//    printToDataFile();
 }
 
 void MyoDevice::MyoCallbacks::onOrientationData(Myo* myo, uint64_t timestamp, const Quaternion<float>& rotation) 
