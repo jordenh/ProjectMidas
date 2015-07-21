@@ -32,8 +32,8 @@ using namespace myoSim;
 using namespace myo;
 #endif
 
-#include "ConnectionSignaller.h"
-
+class ConnectionSignaller;
+class SettingsSignaller;
 class CommandData;
 class KeyboardController;
 class SharedCommandData;
@@ -83,6 +83,7 @@ private:
     int count;
 
     ConnectionSignaller *connSignaller; // owned
+    static SettingsSignaller settingsSignaller;
 
     ProfileManager *pm; // not owned
 };

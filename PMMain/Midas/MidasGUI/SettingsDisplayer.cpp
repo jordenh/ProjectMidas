@@ -25,7 +25,8 @@
 #include <qlabel.h>
 #include <qpushbutton.h>
 #include <qspinbox.h>
-#include <qradiobutton.h>
+#include <QCheckBox.h>
+#include <qline.h>
 
 SettingsDisplayer::SettingsDisplayer(int widgetWidth, int widgetHeight, QWidget *parent)
     : DraggableWidget(parent, Qt::WindowSystemMenuHint | Qt::WindowStaysOnTopHint),
@@ -73,7 +74,7 @@ SettingsDisplayer::SettingsDisplayer(int widgetWidth, int widgetHeight, QWidget 
 
     
 
-    useGyroForCursorAccelButton = new QRadioButton("Apply acceleration to cursor?", this);
+    useGyroForCursorAccelButton = new QCheckBox("Apply acceleration to cursor?", this);
     connect(useGyroForCursorAccelButton, SIGNAL(clicked()), this, SLOT(handleUseGyroForCursorAccelButton()));
     mainLayout->addWidget(useGyroForCursorAccelButton);
 
@@ -93,7 +94,7 @@ SettingsDisplayer::SettingsDisplayer(int widgetWidth, int widgetHeight, QWidget 
     connect(gyroPowerSpinBox, SIGNAL(valueChanged(int)), this, SLOT(gyroPowerValueChanged(int)));
     connect(gyroScaleDownSpinBox, SIGNAL(valueChanged(double)), this, SLOT(gyroScaledDownValueChanged(double)));
 
-    hlayout1->addWidget(new QLabel("Accel = Gyro\^exp / scaleDown. "));
+    hlayout1->addWidget(new QLabel("Accel = Gyro\^exp / scaleDown. "), 1);
     hlayout1->addWidget(new QLabel("Exponent: "));
     hlayout1->addWidget(gyroPowerSpinBox);
     hlayout1->addWidget(new QLabel("Scale Down: "));
@@ -115,7 +116,13 @@ SettingsDisplayer::SettingsDisplayer(int widgetWidth, int widgetHeight, QWidget 
 
     mainLayout->addLayout(hlayout2);
 
-    setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    QHBoxLayout* hlayout3 = new QHBoxLayout;
+
+    useEmgImpulseButton = new QCheckBox("Stop Motion on EMG Impulse? (WIP)", this);
+    connect(useEmgImpulseButton, SIGNAL(clicked()), this, SLOT(handleUseEmgImpulseButton()));
+    mainLayout->addWidget(useEmgImpulseButton);
+
+    setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
     setMinimumSize(indWidth, indHeight);
 }
 
@@ -194,3 +201,7 @@ void SettingsDisplayer::gyroScaledDownValueChanged(double val)
     emitGyroScaleDownValue(val);
 }
 
+void SettingsDisplayer::handleUseEmgImpulseButton()
+{
+    emitUseEmgImpulseButton(useEmgImpulseButton->isChecked());
+}

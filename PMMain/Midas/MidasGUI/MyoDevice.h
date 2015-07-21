@@ -20,6 +20,7 @@
 #pragma once
 #include "WearableDevice.h"
 #include "GestureFilter.h"
+#include "EMGImpulseFilter.h"
 #include "AdvancedFilterPipeline.h"
 #include "myo\myo.hpp"
 #include "ProfileSignaller.h"
@@ -115,9 +116,10 @@ public:
     void vibrateMyos(myo::Myo::VibrationType vibType, int numReps = 1) const;
 
 private:
-    void setupPosePipeline(GestureFilter *gf);
+    void setupPosePipeline();
     void setupOrientationPipeline();
     void setupRSSIPipeline();
+    void setupEmgImpusePipeline();
 
     void setArmAndX(Myo* myo, Arm arm, XDirection xDirection);
 
@@ -176,11 +178,13 @@ private:
         unsigned int myoFindTimeout;
     unsigned int durationInMilliseconds;
     std::string appIdentifier;
+
     ControlState* state; // not owned
     MyoState* myoState; // not owned
     AdvancedFilterPipeline advancedPosePipeline, advancedOrientationPipeline,
-        advancedRssiPipeline, advancedConnectPipeline, advancedSyncPipeline;
+        advancedRssiPipeline, advancedConnectPipeline, advancedSyncPipeline, emgImpulsePipeline; // todo upgrade emgImpulsePipeline to use advancedFilterPipeline
     MainGUI *mainGui; // not owned
+
     std::string prevProfileName;
 
 //    Arm arm;
@@ -189,6 +193,7 @@ private:
     ProfileManager *profileManager; // not owned
 
     GestureFilter gestureFilter;
+    EMGImpulseFilter emgImpulseFilter;
     // owned filters
     GenericAveragingFilter *genAvgFilterRSSI;
 

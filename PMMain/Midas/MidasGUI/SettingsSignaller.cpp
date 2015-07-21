@@ -22,7 +22,7 @@
 SettingsSignaller::SettingsSignaller(QObject *parent, unsigned int yawMaxAngle, unsigned int pitchMaxAngle, buzzFeedbackMode buzzFeedback,
     double cursorGyroPower, double cursorGyroScaleDown)
     : QObject(parent), yawMaxAngle(yawMaxAngle), pitchMaxAngle(pitchMaxAngle), buzzFeedback(buzzFeedback),
-    useGyroForCursorAccel(false), cursorGyroPower(cursorGyroPower), cursorGyroScaleDown(cursorGyroScaleDown)
+    useGyroForCursorAccel(false), cursorGyroPower(cursorGyroPower), cursorGyroScaleDown(cursorGyroScaleDown), useEMGImpulse(false)
 {
 }
 
@@ -55,4 +55,9 @@ void SettingsSignaller::hanldeGyroScaleDownValueChanged(double val)
 void SettingsSignaller::handleUseGyroForCursorAccelChanged(bool val)
 {
     this->useGyroForCursorAccel = val;
+}
+
+void SettingsSignaller::handleUseEmgImpulse(bool val)
+{
+    this->useEMGImpulse = val;
 }

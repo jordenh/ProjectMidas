@@ -34,19 +34,19 @@ public:
 	void setPoseHistLen(int poseHistLen);
 
 	void pushRotation(myo::Quaternion<float> rotation);
-	myo::Quaternion<float> popRotation();
+	myo::Quaternion<float> peakFrontRotation();
 	std::deque<myo::Quaternion<float>> getRotationHistory();
 
 	void pushAccel(myo::Vector3<float> accel);
-	myo::Vector3<float> popAccel();
+	myo::Vector3<float> peakFrontAccel();
 	std::deque<myo::Vector3<float>> getAccelHistory();
 
 	void pushGyro(myo::Vector3<float> gyro);
-	myo::Vector3<float> popGryo();
+	myo::Vector3<float> peakFrontGryo();
 	std::deque<myo::Vector3<float>> getGyroHistory();
 
 	void pushPose(myo::Pose pose);
-	myo::Pose popPose();
+	myo::Pose peakFrontPose();
 	std::deque<myo::Pose> getPoseHistory();
     myo::Pose mostRecentPose();
 

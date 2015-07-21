@@ -32,7 +32,7 @@ class QSlider;
 class QPushButton;
 class QSpinBox;
 class QDoubleSpinBox;
-class QRadioButton;
+class QCheckBox;
 
 class SettingsDisplayer : public DraggableWidget
 {
@@ -57,7 +57,7 @@ private:
     QLabel *yawValue;
     QLabel *pitchValue;
 
-    QRadioButton *useGyroForCursorAccelButton;
+    QCheckBox *useGyroForCursorAccelButton;
     // SpinBoxs to update Gyro cursor control variables
     QSpinBox *gyroPowerSpinBox;
     QDoubleSpinBox *gyroScaleDownSpinBox;
@@ -66,13 +66,16 @@ private:
     QPushButton *buzzFeedbackButton;
     unsigned int currentBuzzModeCount;
 
+    QCheckBox *useEmgImpulseButton;
+
 signals:
     void emitSliderValues(unsigned int, unsigned int);
     void emitBuzzFeedbackChange(unsigned int);
     void emitUseGyroForCursorAccelButton(bool);
     void emitGyroPowerValue(int);
     void emitGyroScaleDownValue(double);
-    
+    void emitUseEmgImpulseButton(bool);
+
 private slots:
     void handleSliders();
     void handleSlidersChange(int);
@@ -80,6 +83,7 @@ private slots:
     void handleUseGyroForCursorAccelButton();
     void gyroPowerValueChanged(int);
     void gyroScaledDownValueChanged(double);
+    void handleUseEmgImpulseButton();
 };
 
 #endif SETTINGS_DISPLAYER_H

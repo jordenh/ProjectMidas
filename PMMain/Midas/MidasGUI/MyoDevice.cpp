@@ -24,6 +24,7 @@
 #include "GenericAveragingFilter.h"
 #include "GenericBypassFilter.h"
 #include "SharedCommandData.h"
+#include "EMGImpulseFilter.h"
 #include "ControlState.h"
 #include "MyoState.h"
 #include "MainGUI.h"
@@ -42,14 +43,13 @@ MyoDevice::MyoDevice(SharedCommandData* sharedCommandData, ControlState* control
     std::string applicationIdentifier, MainGUI *mainGuiHandle, ProfileManager *profileManagerHandle)
     : WearableDevice(sharedCommandData), appIdentifier(applicationIdentifier), myoFindTimeout(DEFAULT_FIND_MYO_TIMEOUT),
     durationInMilliseconds(DEFAULT_MYO_DURATION_MS), state(controlState), myoState(myoState),
-    mainGui(mainGuiHandle), profileManager(profileManagerHandle), gestureFilter(controlState, myoState, 0, mainGuiHandle)
+    mainGui(mainGuiHandle), profileManager(profileManagerHandle), gestureFilter(controlState, myoState, 0, mainGuiHandle), emgImpulseFilter(myoState)
 {
     prevProfileName = "";
 
-    setupPosePipeline(&gestureFilter);
-
+    setupPosePipeline();
+    setupEmgImpusePipeline();
     setupOrientationPipeline();
-
     setupRSSIPipeline();
 }
 
@@ -177,9 +177,9 @@ void MyoDevice::runDeviceLoop()
     WearableDevice::setDeviceStatus(deviceStatus::DONE);
 }
 
-void MyoDevice::setupPosePipeline(GestureFilter *gf)
+void MyoDevice::setupPosePipeline()
 {
-    advancedPosePipeline.registerFilterAtDeepestLevel(gf);
+    advancedPosePipeline.registerFilterAtDeepestLevel(&gestureFilter);
 
     advancedPosePipeline.registerFilterAtNewLevel(WearableDevice::sharedData);
 }
@@ -234,6 +234,12 @@ void MyoDevice::setupRSSIPipeline()
     advancedRssiPipeline.registerFilterAtNewLevel(WearableDevice::sharedData);
 }
 
+void MyoDevice::setupEmgImpusePipeline()
+{
+    emgImpulsePipeline.registerFilterAtDeepestLevel(&emgImpulseFilter);
+    emgImpulsePipeline.registerFilterAtNewLevel(WearableDevice::sharedData);
+}
+
 int MyoDevice::getDeviceError()
 {
     // TODO: Add error codes.
@@ -283,7 +289,7 @@ void MyoDevice::MyoCallbacks::onPose(Myo* myo, uint64_t timestamp, Pose pose)
     parent.advancedPosePipeline.startPipeline(input);
 
     lastPose = pose.type();
-    printToDataFile();
+//    printToDataFile();
 }
 
 void MyoDevice::MyoCallbacks::onOrientationData(Myo* myo, uint64_t timestamp, const Quaternion<float>& rotation) 
@@ -419,14 +425,27 @@ void MyoDevice::MyoCallbacks::onBatteryLevelReceived(myo::Myo* myo, uint64_t tim
 
 void MyoDevice::MyoCallbacks::onEmgData(myo::Myo* myo, uint64_t timestamp, const int8_t* emg)
 {
-    // This data is streaming at 200Hz
+    // This data is streaming at 200Hz - print data for post mortem analysis
 	std::cout << "onEmgData." << std::endl;
 
+//#ifdef USE_EMG_FILTER
     for (int emgIdx = 0; emgIdx < 8; emgIdx++)
     {
         lastEMGData[emgIdx] = emg[emgIdx];
     }
-    printToDataFile();
+    //printToDataFile(); // uncomment to printout data for post mortem analysis
+
+    // Actual processing
+    std::array<int8_t, 8> emgSamples;
+    for (int i = 0; i < 8; i++) {
+        emgSamples[i] = emg[i];
+    }
+
+    filterDataMap input;
+    input[EMG_VECTOR] = emgSamples;
+
+    parent.emgImpulsePipeline.startPipeline(input);
+//#endif
 }
 
 void MyoDevice::MyoCallbacks::onWarmupCompleted(myo::Myo* myo, uint64_t timestamp, WarmupResult warmupResult)
@@ -464,7 +483,7 @@ void MyoDevice::MyoCallbacks::printToDataFile()
     {
         myoDataFile << static_cast<int>(lastEMGData[emgIdx]) << ",";
     }
-    myoDataFile << ((int)lastPose) << std::endl;
+    myoDataFile << ((int)lastPose) << "," << (int)(EMGImpulseFilter::getImpulseStatus()) << std::endl;
 }
 
 void MyoDevice::setArmAndX(Myo* myo, Arm arm, XDirection xDirection)
