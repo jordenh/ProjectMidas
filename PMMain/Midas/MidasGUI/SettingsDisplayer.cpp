@@ -93,7 +93,7 @@ SettingsDisplayer::SettingsDisplayer(int widgetWidth, int widgetHeight, QWidget 
     connect(gyroPowerSpinBox, SIGNAL(valueChanged(int)), this, SLOT(gyroPowerValueChanged(int)));
     connect(gyroScaleDownSpinBox, SIGNAL(valueChanged(double)), this, SLOT(gyroScaledDownValueChanged(double)));
 
-    hlayout1->addWidget(new QLabel("Accel = Gyro\^exp / scaleDown. "));
+    hlayout1->addWidget(new QLabel("Accel = Gyro\^exp / scaleDown. "), 1);
     hlayout1->addWidget(new QLabel("Exponent: "));
     hlayout1->addWidget(gyroPowerSpinBox);
     hlayout1->addWidget(new QLabel("Scale Down: "));
