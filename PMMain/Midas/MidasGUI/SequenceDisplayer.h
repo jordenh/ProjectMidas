@@ -23,12 +23,14 @@
 #include <qwidget.h>
 
 #include "MyoCommon.h"
+#include "SettingsSignaller.h"
 
 #include <map>
 #include <vector>
 
 class QGridLayout;
 class QLabel;
+class MainGUI;
 
 #define NUM_COLUMNS 5
 
@@ -50,7 +52,7 @@ public:
      *
      * @param parent The parent widget.
      */
-    SequenceDisplayer(QWidget *parent = 0);
+    SequenceDisplayer(MainGUI *mainGuiHandle, QWidget *parent = 0);
 
     ~SequenceDisplayer();
 
@@ -80,7 +82,7 @@ public slots:
     void showSequences(std::vector<sequenceProgressData>);
 
     void handleIsRightHand(bool);
- 
+     
 private:
     /**
      * Clear the widgets in the grid layout.
@@ -118,6 +120,8 @@ private:
 
     bool isRightHand;
 
+    MainGUI *mainGuiHandle;
+    static SettingsSignaller settingsSignaller;
     std::map<int, sequenceData> sequenceIdToDataMap;
     std::map<int, sequenceData> activeSequencesIdToDataMap;
     QGridLayout *gridLayout;

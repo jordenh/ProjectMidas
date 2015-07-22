@@ -50,7 +50,7 @@
 #define INFO_INDICATOR_HEIGHT  35
 #define PROF_INDICATOR_WIDTH   250
 #define PROF_INDICATOR_HEIGHT  35
-#define SETTINGS_HEIGHT 170
+#define SETTINGS_HEIGHT 250
 #define SETTINGS_WIDTH 400
 #define WIDGET_BUFFER 5
 #define DISTANCE_DISPLAY_WIDTH 250
@@ -66,6 +66,10 @@
 #define MIDAS_GREY QColor(205, 205, 193)
 #define MYO_BLUE QColor(0, 188, 223)
 #define KEYBOARD_SEL QColor(200, 0, 0)
+#define MIDAS_GREEN QColor(00, 235, 52)
+
+#define LOCKED_TEXT "LOCKED"
+#define UNLOCKED_TEXT "UNLOCKED"
 
 class KeyboardVector;
 
@@ -186,25 +190,30 @@ enum midasMode {
     GESTURE_HOLD_FIVE    
 };
 
+#define ALL_LVL "All"
+#define COMPLEX_LVL "Complex Only"
+#define LOCKS_LVL "Lock/Unlock Only"
+enum class helpLevel {
+    MINIMAL, // only show lock/unlock help
+    COMPLEX, // show anything with >= 2 poses in a sequence
+    ALL // show all registered sequences
+};
+
 static std::string modeToString(midasMode mm)
 {
     switch (mm)
     {
     case LOCK_MODE:   
-#ifdef BUILD_FOR_KARDIUM
-        return "LOCKED";
-#else
-        return "Locked";
-#endif
+        return LOCKED_TEXT;
     case MOUSE_MODE:  
 #ifdef BUILD_FOR_KARDIUM
-        return "UNLOCKED";
+        return UNLOCKED_TEXT;
 #else
         return "Mouse Mouse";
 #endif
     case MOUSE_MODE2:
 #ifdef BUILD_FOR_KARDIUM
-        return "UNLOCKED";
+        return UNLOCKED_TEXT;
 #else
         return "Mouse Mode2";
 #endif

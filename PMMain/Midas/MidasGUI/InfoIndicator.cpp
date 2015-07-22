@@ -53,14 +53,6 @@ InfoIndicator::InfoIndicator(int widgetWidth, int widgetHeight, QWidget *parent)
     layout = new QHBoxLayout;
     layout->setSpacing(WIDGET_BUFFER);
     setLayout(layout);
-    
-    // attempt 2
-    //setStyleSheet("border: 1px solid black");
-    //
-    // attempt 1
-    //QFrame *frame = new QFrame;
-    //frame->setFrameShape(QFrame::Shape::Box);
-    //layout->addWidget(frame);
 
     QFont timesFont("Times", 9, QFont::Bold);
     stateLabel = new QLabel();
@@ -108,6 +100,19 @@ QSize InfoIndicator::sizeHint() const
 void InfoIndicator::handleUpdateState(QString stateString)
 {
     stateLabel->setText(stateString);
+
+    // Update colour of Icon
+    QPalette pal;
+    if (stateString.compare(LOCKED_TEXT) == 0)
+    {
+        pal.setColor(QPalette::Background, MIDAS_GREY);
+    }
+    else
+    {
+        pal.setColor(QPalette::Background, MIDAS_GREEN);
+    }
+    setAutoFillBackground(true);
+    setPalette(pal);
 }
 
 QString InfoIndicator::getShowAllString()

@@ -55,8 +55,11 @@
 MainGUI::MainGUI(MidasThread *mainThread, ProfileManager *pm, int deadZoneRad)
     : DraggableWidget(NULL, Qt::FramelessWindowHint | Qt::WindowSystemMenuHint | Qt::WindowStaysOnTopHint | Qt::X11BypassWindowManagerHint)
 {
+    // tried to put X11BypassWindowManagerHint as a windows hint due to reference: http://doc.qt.io/qt-5/qt.html#WindowType-enum which suggested it might help. Has not.
+    settingsDisplayer = new SettingsDisplayer(SETTINGS_WIDTH, SETTINGS_HEIGHT);
+    settingsDisplayer->setVisible(false);
     infoIndicator = new InfoIndicator(INFO_INDICATOR_WIDTH, INFO_INDICATOR_HEIGHT, this);
-    sequenceDisplayer = new SequenceDisplayer(this);
+    sequenceDisplayer = new SequenceDisplayer(this, this);
 	poseDisplayer = new PoseDisplayer(MOUSE_INDICATOR_SIZE, MOUSE_INDICATOR_SIZE, this);
 	distanceDisplayer = new DistanceWidget(mainThread, INFO_INDICATOR_WIDTH,
 		DISTANCE_DISPLAY_HEIGHT, this);
@@ -96,9 +99,6 @@ MainGUI::MainGUI(MidasThread *mainThread, ProfileManager *pm, int deadZoneRad)
     }
     profileHeights = profilesWidget->height();
     profilesWidget->setVisible(false);
-
-    settingsDisplayer = new SettingsDisplayer(SETTINGS_WIDTH, SETTINGS_HEIGHT);
-    settingsDisplayer->setVisible(false);
 
     QVBoxLayout *leftBoxLayout = new QVBoxLayout;
     leftBoxLayout->addWidget(infoIndicator);
@@ -229,6 +229,9 @@ void MainGUI::connectSignallerToSettingsDisplayer(SettingsSignaller *signaller)
 
         QObject::connect(settingsDisplayer, SIGNAL(emitUseEmgImpulseButton(bool)),
             signaller, SLOT(handleUseEmgImpulse(bool)));
+
+        QObject::connect(settingsDisplayer, SIGNAL(emitHelpLevelChanged(int)),
+            signaller, SLOT(handleHelpLevelChanged(int)));
     }
 }
 

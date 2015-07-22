@@ -21,6 +21,7 @@
 
 #include "MidasCommon.h"
 #include "DraggableWidget.h"
+#include "MainGUI.h"
 #include <QImage.h>
 #include <qevent.h>
 #include <qapplication.h>
@@ -37,8 +38,10 @@
 #define GUI_WIDTH_BUFFER 1
 #define MAX_NUM_SEQUENCES_DISPLAYED 15
 
-SequenceDisplayer::SequenceDisplayer(QWidget *parent)
-    : QWidget(parent), isRightHand(true)
+SettingsSignaller SequenceDisplayer::settingsSignaller;
+
+SequenceDisplayer::SequenceDisplayer(MainGUI *mainGuiHandle, QWidget *parent)
+    : QWidget(parent), mainGuiHandle(mainGuiHandle), isRightHand(true)
 {
     gridLayout = new QGridLayout;
     gridLayout->setAlignment(Qt::AlignRight | Qt::AlignBottom);
@@ -54,6 +57,8 @@ SequenceDisplayer::SequenceDisplayer(QWidget *parent)
     maxWidth = GRID_ELEMENT_SIZE * (NUM_COLS + GUI_WIDTH_BUFFER);
 
     setFixedSize(maxWidth, maxHeight);
+
+    mainGuiHandle->connectSignallerToSettingsDisplayer(&settingsSignaller);
 }
 
 SequenceDisplayer::~SequenceDisplayer()
@@ -190,6 +195,36 @@ void SequenceDisplayer::updateSequences()
     for (it = activeSequencesIdToDataMap.begin(); it != activeSequencesIdToDataMap.end(); it++)
     {
         sequenceData seq = it->second;
+
+        switch (settingsSignaller.getMidasHelpLevel())
+        {
+        case helpLevel::MINIMAL:
+            if (seq.seqLabel->text().compare("Lock", Qt::CaseInsensitive) == 0 ||
+                seq.seqLabel->text().compare("Unlock", Qt::CaseInsensitive) == 0)
+            {
+                break;
+            }
+            else
+            {
+                // go to displaying next sequence
+                continue;
+            }
+        case helpLevel::COMPLEX:
+            if (seq.sequenceImages.size() >= 2)
+            {
+                break;
+            }
+            else
+            {
+                // go to displaying next sequence
+                continue;
+            }
+        case helpLevel::ALL:
+            break;
+        default:
+            break;
+        }
+
         int currCol = 0;
         seq.seqLabel->setHidden(false);
         gridLayout->addWidget(seq.seqLabel, currRow, currCol, LABEL_NUM_ROWS, LABEL_NUM_COLS);

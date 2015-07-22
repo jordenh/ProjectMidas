@@ -1,6 +1,189 @@
 <?xml version="1.0" encoding="utf-8"?>
 <profiles>
-	<profile name="Advanced Profile - Trial 3">
+	<profile name="Advanced Profile - Trial 3 - a">
+        <sequences>
+            <sequence state="lockMode" name="Unlock">
+                <gestures>
+                    <gesture type="tap">doubleTap</gesture>
+                    <gesture type="immediate">doubleTap</gesture>
+                </gestures>
+                <commands>
+                    <command type="stateChange">
+                        <actions>
+                            <action>gestureMode</action>
+                        </actions>
+                    </command>
+                </commands>
+            </sequence>
+            <sequence state="gestureMode" name="Left Click">
+                <gestures>
+                    <gesture type="tap">fist</gesture>
+                </gestures>
+                <commands>
+                    <command type="mouse">
+                        <actions>
+                            <action>leftClick</action>
+                        </actions>
+                    </command>
+                </commands>
+            </sequence>
+			<sequence state="gestureMode" name="Left Click">
+                <gestures>
+                    <gesture type="tap">waveIn</gesture>
+                </gestures>
+                <commands>
+                    <command type="mouse">
+                        <actions>
+                            <action>leftClick</action>
+                        </actions>
+                    </command>
+                </commands>
+            </sequence>
+            <sequence state="gestureMode" name="Left Hold">
+                <gestures>
+                    <gesture type="hold">fist</gesture>
+                </gestures>
+                <commands>
+                    <command type="stateChange">
+                        <actions>
+                            <action>mouseMode</action>
+                        </actions>
+                    </command>
+                    <command type="mouse">
+                        <actions>
+                            <action>leftHold</action>
+                        </actions>
+                    </command>
+                </commands>
+            </sequence>
+			
+            <sequence state="gestureMode" name="Middle Hold">
+                <gestures>
+                    <gesture type="hold">waveIn</gesture>
+                </gestures>
+                <commands>
+                    <command type="stateChange">
+                        <actions>
+                            <action>mouseMode</action>
+                        </actions>
+                    </command>
+                    <command type="mouse">
+                        <actions>
+                            <action>middleHold</action>
+                        </actions>
+                    </command>
+                </commands>
+            </sequence>
+            <sequence state="gestureMode" name="Right Click">
+                <gestures>
+                    <gesture type="immediate">waveOut</gesture>
+                </gestures>
+                <commands>
+                    <command type="mouse">
+                        <actions>
+                            <action>rightClick</action>
+                        </actions>
+                    </command>
+                </commands>
+            </sequence>
+			<sequence state="gestureMode" name="Move Cursor">
+                <gestures>
+                    <gesture type="immediate">fingersSpread</gesture>
+                </gestures>
+                <commands>
+                    <command type="stateChange">
+                        <actions>
+                            <action>mouseMode</action>
+                        </actions>
+                    </command>
+                </commands>
+            </sequence>
+            <sequence state="mouseMode" name="Release Cursor">
+                <gestures>
+                    <gesture type="immediate">rest</gesture>
+                </gestures>
+                <commands>
+                    <command type="stateChange">
+                        <actions>
+                            <action>gestureMode</action>
+                        </actions>
+                    </command>
+                    <command type="mouse">
+                        <actions>
+                            <action>releaseLrmButs</action>
+                        </actions>
+                    </command>
+                </commands>
+            </sequence>
+            <sequence state="gestureMode" name="Flow Map">
+                <gestures>
+                    <gesture type="tap">doubleTap</gesture>
+                    <gesture type="immediate">waveOut</gesture>
+                </gestures>
+                <commands>
+                    <command type="keyboard">
+                        <actions>
+                            <action>inputVector,f</action>
+                        </actions>
+                    </command>
+                </commands>
+            </sequence>
+            <sequence state="gestureMode" name="Impedance Map">
+                <gestures>
+                    <gesture type="tap">doubleTap</gesture>
+                    <gesture type="immediate">waveIn</gesture>
+                </gestures>
+                <commands>
+                    <command type="keyboard">
+                        <actions>
+                            <action>inputVector,i</action>
+                        </actions>
+                    </command>
+                </commands>
+            </sequence>
+            <sequence state="gestureMode" name="3D">
+                <gestures>
+                    <gesture type="tap">doubleTap</gesture>
+                    <gesture type="immediate">fist</gesture>
+                </gestures>
+                <commands>
+                    <command type="keyboard">
+                        <actions>
+                            <action>inputVector,M</action>
+                        </actions>
+                    </command>
+                </commands>
+            </sequence>
+            <sequence state="gestureMode" name="2D">
+                <gestures>
+                    <gesture type="tap">doubleTap</gesture>
+                    <gesture type="immediate">fingersSpread</gesture>
+                </gestures>
+                <commands>
+                    <command type="keyboard">
+                        <actions>
+                            <action>inputVector,Z</action>
+                        </actions>
+                    </command>
+                </commands>
+            </sequence>
+            <sequence state="gestureMode" name="Lock">
+                <gestures>
+                    <gesture type="tap">doubleTap</gesture>
+                    <gesture type="immediate">doubleTap</gesture>
+                </gestures>
+                <commands>
+                    <command type="stateChange">
+                        <actions>
+                            <action>lockMode</action>
+                        </actions>
+                    </command>
+                </commands>
+            </sequence>
+        </sequences>
+        <holds/>
+    </profile>
+	<profile name="Advanced Profile - Trial 3 - b">
         <sequences>
             <sequence state="lockMode" name="Unlock">
                 <gestures>
@@ -70,6 +253,18 @@
                     <command type="mouse">
                         <actions>
                             <action>rightClick</action>
+                        </actions>
+                    </command>
+                </commands>
+            </sequence>
+			<sequence state="gestureMode" name="Move Cursor">
+                <gestures>
+                    <gesture type="immediate">fingersSpread</gesture>
+                </gestures>
+                <commands>
+                    <command type="stateChange">
+                        <actions>
+                            <action>mouseMode</action>
                         </actions>
                     </command>
                 </commands>

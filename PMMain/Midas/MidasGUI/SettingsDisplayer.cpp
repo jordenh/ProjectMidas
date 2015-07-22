@@ -21,12 +21,13 @@
 #include <QEvent.h>
 #include <qgridlayout.h>
 #include <qslider.h>
+#include <qcombobox.h>
 #include <QFrame.h>
 #include <qlabel.h>
 #include <qpushbutton.h>
 #include <qspinbox.h>
 #include <QCheckBox.h>
-#include <qline.h>
+#include <qaction.h>
 
 SettingsDisplayer::SettingsDisplayer(int widgetWidth, int widgetHeight, QWidget *parent)
     : DraggableWidget(parent, Qt::WindowSystemMenuHint | Qt::WindowStaysOnTopHint),
@@ -68,18 +69,21 @@ SettingsDisplayer::SettingsDisplayer(int widgetWidth, int widgetHeight, QWidget 
     connect(yawSlider, SIGNAL(sliderMoved(int)), this, SLOT(handleSlidersChange(int)));
     connect(pitchSlider, SIGNAL(sliderMoved(int)), this, SLOT(handleSlidersChange(int)));
 
-    QHBoxLayout* hlayout0 = new QHBoxLayout;
+    
     buzzFeedbackButton = new QPushButton(buzzFeedbackModeToString((buzzFeedbackMode)(currentBuzzModeCount)).c_str(), this);
     connect(buzzFeedbackButton, SIGNAL(clicked(bool)), this, SLOT(handleClicked(bool)));
-    hlayout0->addWidget(new QLabel("Myo Vibration Level: "));
-    hlayout0->addWidget(buzzFeedbackButton);
-    mainLayout->addLayout(hlayout0);
     
+    helpLevelComboBox = new QComboBox(this);
+    helpLevelComboBox->addItem(ALL_LVL);
+    helpLevelComboBox->addItem(COMPLEX_LVL);
+    helpLevelComboBox->addItem(LOCKS_LVL);
+    connect(helpLevelComboBox, SIGNAL(activated(QString)), this, SLOT(handleHelpLevelChanged(QString)));
+
     useGyroForCursorAccelButton = new QCheckBox("Apply acceleration to cursor?", this);
     connect(useGyroForCursorAccelButton, SIGNAL(clicked()), this, SLOT(handleUseGyroForCursorAccelButton()));
     mainLayout->addWidget(useGyroForCursorAccelButton);
 
-    QHBoxLayout* hlayout1 = new QHBoxLayout;
+    
     gyroPowerSpinBox = new QSpinBox(this);
     gyroPowerSpinBox->setMinimum(MIN_GYRO_POW);
     gyroPowerSpinBox->setMaximum(MAX_GYRO_POW);
@@ -95,12 +99,22 @@ SettingsDisplayer::SettingsDisplayer(int widgetWidth, int widgetHeight, QWidget 
     connect(gyroPowerSpinBox, SIGNAL(valueChanged(int)), this, SLOT(gyroPowerValueChanged(int)));
     connect(gyroScaleDownSpinBox, SIGNAL(valueChanged(double)), this, SLOT(gyroScaledDownValueChanged(double)));
 
+    QHBoxLayout* hlayout0 = new QHBoxLayout;
+    hlayout0->addWidget(new QLabel("Myo Vibration Level: "));
+    hlayout0->addWidget(buzzFeedbackButton);
+    mainLayout->addLayout(hlayout0);
+    
+    QHBoxLayout* hlayout0b = new QHBoxLayout;
+    hlayout0b->addWidget(new QLabel("Help Level (when active): "));
+    hlayout0b->addWidget(helpLevelComboBox);
+    mainLayout->addLayout(hlayout0b);
+
+    QHBoxLayout* hlayout1 = new QHBoxLayout;
     hlayout1->addWidget(new QLabel("Accel = Gyro\^exp / scaleDown. "), 1);
     hlayout1->addWidget(new QLabel("Exponent: "));
     hlayout1->addWidget(gyroPowerSpinBox);
     hlayout1->addWidget(new QLabel("Scale Down: "));
     hlayout1->addWidget(gyroScaleDownSpinBox);
-    
     mainLayout->addLayout(hlayout1);
 
     QHBoxLayout* hlayout2 = new QHBoxLayout;
@@ -114,10 +128,7 @@ SettingsDisplayer::SettingsDisplayer(int widgetWidth, int widgetHeight, QWidget 
     hlayout2->addWidget(pitchSlider);
     pitchValue = new QLabel(QString::number(pitchSlider->sliderPosition()));
     hlayout2->addWidget(pitchValue);
-
     mainLayout->addLayout(hlayout2);
-
-    QHBoxLayout* hlayout3 = new QHBoxLayout;
 
     useEmgImpulseButton = new QCheckBox("Stop Motion on EMG Impulse? (WIP)", this);
     connect(useEmgImpulseButton, SIGNAL(clicked()), this, SLOT(handleUseEmgImpulseButton()));
@@ -205,4 +216,21 @@ void SettingsDisplayer::gyroScaledDownValueChanged(double val)
 void SettingsDisplayer::handleUseEmgImpulseButton()
 {
     emitUseEmgImpulseButton(useEmgImpulseButton->isChecked());
+}
+
+void SettingsDisplayer::handleHelpLevelChanged(QString val)
+{
+    int a = 1; // TODO
+    if (val.compare(ALL_LVL) == 0)
+    {
+        emitHelpLevelChanged(int(helpLevel::ALL));
+    }
+    else if (val.compare(COMPLEX_LVL) == 0)
+    {
+        emitHelpLevelChanged(int(helpLevel::COMPLEX));
+    }
+    else if (val.compare(LOCKS_LVL) == 0)
+    {
+        emitHelpLevelChanged(int(helpLevel::MINIMAL));
+    }
 }
