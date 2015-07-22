@@ -48,7 +48,7 @@ InfoIndicator::InfoIndicator(int widgetWidth, int widgetHeight, QWidget *parent)
     pal.setColor(QPalette::Background, MIDAS_GREY);
     setAutoFillBackground(true);
     setPalette(pal);
-    setWindowFlags(Qt::WindowStaysOnTopHint);
+    setWindowFlags(Qt::WindowStaysOnTopHint  | Qt::X11BypassWindowManagerHint);
 
     layout = new QHBoxLayout;
     layout->setSpacing(WIDGET_BUFFER);

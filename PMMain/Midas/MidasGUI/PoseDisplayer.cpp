@@ -38,7 +38,7 @@ PoseDisplayer::PoseDisplayer(int widgetWidth, int widgetHeight, QWidget *parent)
     setWindowTitle(tr("Pose Displayer"));
 
     setWindowOpacity(GUI_OPACITY);
-    setWindowFlags(Qt::WindowStaysOnTopHint);
+    setWindowFlags(Qt::WindowStaysOnTopHint  | Qt::X11BypassWindowManagerHint);
 
     layout = new QGridLayout;
     layout->setMargin(0);
