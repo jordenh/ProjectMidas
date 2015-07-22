@@ -1070,15 +1070,15 @@
                 <angle type="pitch">
                     <anglePositive>upArrow</anglePositive>
                     <angleNegative>downArrow</angleNegative>
-					<sensitivity>5</sensitivity>
+					<sensitivity>1</sensitivity>
                 </angle>
 				<angle type="yaw">
                     <anglePositive>rightArrow</anglePositive>
                     <angleNegative>leftArrow</angleNegative>
-					<sensitivity>5</sensitivity>
+					<sensitivity>1</sensitivity>
                 </angle>
 				<holdModeActionType>absDeltaVelocity</holdModeActionType>
-				<intervalLength>100</intervalLength>
+				<intervalLength>20</intervalLength>
             </hold>
             <hold gesture="fist">
                 <angle type="roll">

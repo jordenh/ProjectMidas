@@ -22,7 +22,7 @@
 
 #include "MidasCommon.h"
 
-#define DEFAULT_CALLBACK_PER 50
+#define DEFAULT_CALLBACK_PER 20
 
 class MyoState;
 class GestureHoldModeAction;

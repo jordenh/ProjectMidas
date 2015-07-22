@@ -81,8 +81,6 @@ SettingsDisplayer::SettingsDisplayer(int widgetWidth, int widgetHeight, QWidget 
 
     useGyroForCursorAccelButton = new QCheckBox("Apply acceleration to cursor?", this);
     connect(useGyroForCursorAccelButton, SIGNAL(clicked()), this, SLOT(handleUseGyroForCursorAccelButton()));
-    mainLayout->addWidget(useGyroForCursorAccelButton);
-
     
     gyroPowerSpinBox = new QSpinBox(this);
     gyroPowerSpinBox->setMinimum(MIN_GYRO_POW);
@@ -108,6 +106,8 @@ SettingsDisplayer::SettingsDisplayer(int widgetWidth, int widgetHeight, QWidget 
     hlayout0b->addWidget(new QLabel("Help Level (when active): "));
     hlayout0b->addWidget(helpLevelComboBox);
     mainLayout->addLayout(hlayout0b);
+
+    mainLayout->addWidget(useGyroForCursorAccelButton);
 
     QHBoxLayout* hlayout1 = new QHBoxLayout;
     hlayout1->addWidget(new QLabel("Accel = Gyro\^exp / scaleDown. "), 1);
