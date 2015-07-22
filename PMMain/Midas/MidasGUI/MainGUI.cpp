@@ -59,7 +59,7 @@ MainGUI::MainGUI(MidasThread *mainThread, ProfileManager *pm, int deadZoneRad)
     settingsDisplayer = new SettingsDisplayer(SETTINGS_WIDTH, SETTINGS_HEIGHT);
     settingsDisplayer->setVisible(false);
     infoIndicator = new InfoIndicator(INFO_INDICATOR_WIDTH, INFO_INDICATOR_HEIGHT, this);
-    sequenceDisplayer = new SequenceDisplayer(this, this);
+    sequenceDisplayer = new SequenceDisplayer(this);
 	poseDisplayer = new PoseDisplayer(MOUSE_INDICATOR_SIZE, MOUSE_INDICATOR_SIZE, this);
 	distanceDisplayer = new DistanceWidget(mainThread, INFO_INDICATOR_WIDTH,
 		DISTANCE_DISPLAY_HEIGHT, this);
@@ -142,6 +142,7 @@ MainGUI::MainGUI(MidasThread *mainThread, ProfileManager *pm, int deadZoneRad)
         screen.bottom() - totalHeight - SCREEN_BOTTOM_BUFFER,
         totalWidth, totalHeight);
 
+    connectSeqDisplayerToSettingsDisplayer();
     startShowGuiThread();
 }
 
@@ -229,10 +230,14 @@ void MainGUI::connectSignallerToSettingsDisplayer(SettingsSignaller *signaller)
 
         QObject::connect(settingsDisplayer, SIGNAL(emitUseEmgImpulseButton(bool)),
             signaller, SLOT(handleUseEmgImpulse(bool)));
-
-        QObject::connect(settingsDisplayer, SIGNAL(emitHelpLevelChanged(int)),
-            signaller, SLOT(handleHelpLevelChanged(int)));
     }
+}
+
+void MainGUI::connectSeqDisplayerToSettingsDisplayer()
+{
+    // bypass the settingsSignaller only because this message is passing across GUI elements only.
+    QObject::connect(settingsDisplayer, SIGNAL(emitHelpLevelChanged(int)),
+        sequenceDisplayer, SLOT(handleHelpLevelChanged(int)));
 }
 
 void MainGUI::connectSignallerToProfileWidgets(ProfileSignaller* signaller)

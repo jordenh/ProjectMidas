@@ -52,7 +52,7 @@ public:
      *
      * @param parent The parent widget.
      */
-    SequenceDisplayer(MainGUI *mainGuiHandle, QWidget *parent = 0);
+    SequenceDisplayer(QWidget *parent = 0);
 
     ~SequenceDisplayer();
 
@@ -82,6 +82,8 @@ public slots:
     void showSequences(std::vector<sequenceProgressData>);
 
     void handleIsRightHand(bool);
+
+    void handleHelpLevelChanged(int);
      
 private:
     /**
@@ -120,13 +122,12 @@ private:
 
     bool isRightHand;
 
-    MainGUI *mainGuiHandle;
-    static SettingsSignaller settingsSignaller;
     std::map<int, sequenceData> sequenceIdToDataMap;
     std::map<int, sequenceData> activeSequencesIdToDataMap;
     QGridLayout *gridLayout;
     int maxWidth, maxHeight;
     int maxNumSequences;
+    helpLevel midasHelpLevel;
 };
 
 #endif SEQUENCE_DISPLAYER_H

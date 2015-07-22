@@ -73,6 +73,8 @@ public:
     void connectSignallerToSettingsDisplayer(SettingsSignaller *signaller);
 
 	void connectSignallerToKeyboardToggle(GestureSignaller *signaller);
+
+    void connectSeqDisplayerToSettingsDisplayer();
 	
     void startShowGuiThread();
 

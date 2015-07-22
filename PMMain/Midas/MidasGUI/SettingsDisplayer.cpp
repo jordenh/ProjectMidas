@@ -220,7 +220,6 @@ void SettingsDisplayer::handleUseEmgImpulseButton()
 
 void SettingsDisplayer::handleHelpLevelChanged(QString val)
 {
-    int a = 1; // TODO
     if (val.compare(ALL_LVL) == 0)
     {
         emitHelpLevelChanged(int(helpLevel::ALL));

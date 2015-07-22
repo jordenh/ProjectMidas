@@ -38,10 +38,8 @@
 #define GUI_WIDTH_BUFFER 1
 #define MAX_NUM_SEQUENCES_DISPLAYED 15
 
-SettingsSignaller SequenceDisplayer::settingsSignaller;
-
-SequenceDisplayer::SequenceDisplayer(MainGUI *mainGuiHandle, QWidget *parent)
-    : QWidget(parent), mainGuiHandle(mainGuiHandle), isRightHand(true)
+SequenceDisplayer::SequenceDisplayer(QWidget *parent)
+    : QWidget(parent), isRightHand(true)
 {
     gridLayout = new QGridLayout;
     gridLayout->setAlignment(Qt::AlignRight | Qt::AlignBottom);
@@ -57,8 +55,6 @@ SequenceDisplayer::SequenceDisplayer(MainGUI *mainGuiHandle, QWidget *parent)
     maxWidth = GRID_ELEMENT_SIZE * (NUM_COLS + GUI_WIDTH_BUFFER);
 
     setFixedSize(maxWidth, maxHeight);
-
-    mainGuiHandle->connectSignallerToSettingsDisplayer(&settingsSignaller);
 }
 
 SequenceDisplayer::~SequenceDisplayer()
@@ -196,7 +192,7 @@ void SequenceDisplayer::updateSequences()
     {
         sequenceData seq = it->second;
 
-        switch (settingsSignaller.getMidasHelpLevel())
+        switch (midasHelpLevel)
         {
         case helpLevel::MINIMAL:
             if (seq.seqLabel->text().compare("Lock", Qt::CaseInsensitive) == 0 ||
@@ -268,5 +264,12 @@ void SequenceDisplayer::updateSequences()
 void SequenceDisplayer::handleIsRightHand(bool isRightHand)
 {
     this->isRightHand = isRightHand;
+    updateSequences();
+}
+
+void SequenceDisplayer::handleHelpLevelChanged(int lvl)
+{
+    midasHelpLevel = helpLevel(lvl);
+    clearWidgets();
     updateSequences();
 }
