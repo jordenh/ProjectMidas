@@ -32,6 +32,9 @@
 class CommandData
 {
 public:
+    /* 
+     * Basic constructors/destructor
+     */
 	CommandData()
 	{
 		this->type = commandType::NONE;
@@ -48,10 +51,25 @@ public:
 	~CommandData();
 
 	/*
-	* Return 0 for success, positive otherwise
+    * Used to append a command into the vector of changeStateActions.
+    * These are used to execute commands immediately after a state change
+    * which can be usedful (ex: click a mouse immediately when entering mouse mode)
+    *
+    * @param cmd The command to execute on statechange
+	* @return 0 for success, positive otherwise
 	*/
 	int addChangeStateAction(CommandData cmd);
+
+    /* 
+     * Clears the vecotr of actions
+     */
 	void clearChangeStateActions();
+
+    /* 
+     * Accessor
+     *
+     * @return std::vector<CommandData> the vector of actions to perform when a state is changed
+     */
 	std::vector<CommandData> getChangeStateActions() { return changeStateActions; }
 
 	commandType type;

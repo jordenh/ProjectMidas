@@ -29,6 +29,10 @@ class KeyboardWidget;
 class MainGUI;
 class ProfileManager;
 
+/* 
+ * The main thread of Midas created seperatly so that Qt can create a main
+ * GUI application and a main MidasThread which communicate via signals/slots
+ */
 class MidasThread : public QThread
 {
     Q_OBJECT

@@ -22,6 +22,10 @@
 
 class MyoState;
 
+/* 
+ * Filter for EMG data to find impulses in EMG levels on both rising and falling
+ * edges.
+ */
 class EMGImpulseFilter : public Filter
 {
 public:

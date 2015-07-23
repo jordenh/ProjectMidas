@@ -42,6 +42,10 @@ class MouseCtrl;
 class ProfileManager;
 class MainGUI;
 
+/* 
+ * Used to continually poll the Shared Command Data and pass the command data 
+ * to handling functions
+ */
 class SCDDigester
 {
 public:

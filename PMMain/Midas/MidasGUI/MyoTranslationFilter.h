@@ -84,25 +84,46 @@ public:
     */
     static float calcRingDelta(float current, float base);
 
+    /* 
+     * convert radians to degrees
+     */
     static float radToDeg(float rad)
     {
         return rad * (180.0 / M_PI);
     }
 
+    /* 
+     * convert degrees to radians
+     */
     static float degToRad(float deg)
     {
         return (deg / 180.0) * M_PI;
     }
 
+    /* 
+     * Virtual
+     */
     filterError updateBasedOnProfile(ProfileManager& pm, std::string name);
 
 private:
+    /* 
+     * filter quaternion data
+     */
     void handleQuatData(filterDataMap input, filterDataMap output);
 
+    /* 
+     * filter Gyro data
+     */
     void handleGyroData(filterDataMap input, filterDataMap output);
 
+    /* 
+     * filter Arm data
+     */
     void handleArmData(filterDataMap input, filterDataMap output);
 
+    /* 
+     * filter xDirection data
+     */
     void handleXDirectionData(filterDataMap input, filterDataMap output);
 
     /**
@@ -154,6 +175,9 @@ private:
     */
     point getMouseUnitVelocity(float pitch, float yaw);
 
+    /* 
+     * Same as getMouseUnitVelocity, except more general to 2D vectors
+     */
 	vector2D getMouseDelta(float pitch, float yaw);
 
     void performHoldModeFunc(unsigned int holdNum, filterDataMap& outputToSharedCommandData);
@@ -164,7 +188,7 @@ private:
     void unregisterHoldModeActions(void);
 
     void updateHoldModeObserver(midasMode currMode);
-
+    
     ControlState* controlStateHandle; // not owned
     MyoState* myoStateHandle; // not owned
     midasMode previousMode;

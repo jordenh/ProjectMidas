@@ -52,6 +52,9 @@
 #define POSE_LENGTH_HOLD_PATH "Resources\\icons\\PoseLenHold.png"
 #define POSE_LEN_SCALEDOWN_ICON 3
 
+/* 
+ * Manage the images used to indicate a user's hand
+ */
 class SequenceImageManager
 {
 public:
