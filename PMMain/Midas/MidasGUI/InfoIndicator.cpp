@@ -22,7 +22,6 @@
 #include <QGridLayout.h>
 #include <qpushbutton.h>
 #include <qlabel.h>
-#include <QTimer.h>
 #include <QEvent.h>
 #include <QPainter.h>
 #include <qstyle.h>
@@ -34,10 +33,6 @@
 InfoIndicator::InfoIndicator(int widgetWidth, int widgetHeight, QWidget *parent)
     : QWidget(parent), indWidth(widgetWidth), indHeight(widgetHeight), showAll(false)
 {
-    QTimer *timer = new QTimer(this);
-    connect(timer, SIGNAL(timeout()), this, SLOT(update()));
-    timer->start(50);
-
     setContextMenuPolicy(Qt::ActionsContextMenu);
     setToolTip(tr("Drag the info indicator with the left mouse button.\n"
         "Use the right mouse button to open the Settings and Profile Widgets."));
@@ -59,9 +54,9 @@ InfoIndicator::InfoIndicator(int widgetWidth, int widgetHeight, QWidget *parent)
     stateLabel->setFont(timesFont);
     layout->addWidget(stateLabel, 1, Qt::AlignLeft);
 
-    button = new QPushButton("?", this);
+    button = new QPushButton("+", this);
     button->setText(getShowAllString());
-	button->setFixedWidth(20); // Remove this line if getShowAllString has more than just a "?"
+	button->setFixedWidth(20); // Remove this line if getShowAllString has more than just a single character
     QFont timesSmall("Times", 8, QFont::DemiBold);
     button->setFont(timesSmall);
     connect(button, SIGNAL(released()), this, SLOT(handleButton()));
@@ -119,11 +114,11 @@ QString InfoIndicator::getShowAllString()
 {
     if (showAll)
     {
-        return tr("?");
+        return tr("-");
     }
     else
     {
-        return tr("?");
+        return tr("+");
     }
 
 }
