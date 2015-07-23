@@ -25,22 +25,45 @@ class MyoState;
 class EMGImpulseFilter : public Filter
 {
 public:
-    /* Basic Construction/Destruction */
+    /* 
+     * Basic Construction/Destruction 
+     */
     EMGImpulseFilter(MyoState* myoState);
     ~EMGImpulseFilter();
 
-    /**
-    *
-    */
+    /* 
+     * Main filter function. Where data processing occurs.
+     */
     void process();
 
+    /* 
+     * Accessor
+     *
+     * @return True if an impulse in EMG activity is detected, false otherwise
+     */
     static bool getImpulseStatus() { return impulseStatus; }
 
 private:
 
+    /**
+    * Main filter logic. This filter is used to analyze EMG data to find
+    * positive slope and negative slope impulses, with the goal of stopping
+    * unintentional cursor movement.
+    */
     void updateImpulseStatus();
 
+    /* 
+     * Logic to find rising edge impulses
+     *
+     * @return True if impulse found, false otherwise
+     */
     bool risingEdgeImpulseLogic();
+
+    /* 
+     * Logic to find falling edge impulses
+     *
+     * @return True if impulse found, false otherwise
+     */
     bool fallingEdgeImpulseLogic();
 
     /**

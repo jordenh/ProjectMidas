@@ -52,7 +52,7 @@
 	<summary>
 		<codepage>1252</codepage>
 		<title>Installation Database</title>
-		<subject>Midas_UserTest2_Variant3B</subject>
+		<subject>Midas</subject>
 		<author>##ID_STRING3##</author>
 		<keywords>Installer,MSI,Database</keywords>
 		<comments>Contact:  Your local administrator</comments>
@@ -339,19 +339,19 @@
 		<col def="S0">ISDotNetInstallerArgsCommit</col>
 		<col def="S0">ISDotNetInstallerArgsUninstall</col>
 		<col def="S0">ISDotNetInstallerArgsRollback</col>
-		<row><td>ISX_DEFAULTCOMPONENT</td><td>{3BE53447-D2F7-4799-AE59-936F3F16A98A}</td><td>RESOURCES</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>ISX_DEFAULTCOMPONENT</td><td>{693C151A-055F-495D-B599-A3DA63B9CAB1}</td><td>RESOURCES</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>ISX_DEFAULTCOMPONENT1</td><td>{1E9DC3B5-F62D-4C0B-9604-9EFBBED95D9E}</td><td>INSTALLDIR</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>ISX_DEFAULTCOMPONENT10</td><td>{74D4786E-EFE8-4D16-B350-F276FD4283BB}</td><td>ICONS</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>ISX_DEFAULTCOMPONENT11</td><td>{9C6401BD-FA8F-457B-A412-AA8F1577D112}</td><td>MAINIMGS</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>ISX_DEFAULTCOMPONENT12</td><td>{30AB7A3E-EF74-4495-81CB-3FF964AC1819}</td><td>MOCKUPS</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>ISX_DEFAULTCOMPONENT13</td><td>{CC0FD6E0-A09F-407C-9255-46F04FF2C5FA}</td><td>POST200PXIMGS</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>ISX_DEFAULTCOMPONENT14</td><td>{A6334AE2-30EC-444B-9A3D-D8586D331A04}</td><td>TEMP</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>ISX_DEFAULTCOMPONENT10</td><td>{D213529E-F84C-4B68-8C39-B3D4F7FC72E0}</td><td>ICONS</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>ISX_DEFAULTCOMPONENT11</td><td>{838CDDA1-9643-40FB-AD3B-49E7BC7508E4}</td><td>MAINIMGS</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>ISX_DEFAULTCOMPONENT12</td><td>{6F84EAAD-DC8E-4B04-A3C9-9A5CC8ED909A}</td><td>MOCKUPS</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>ISX_DEFAULTCOMPONENT13</td><td>{82D88775-D543-4F8D-9F11-68DFF4618810}</td><td>POST200PXIMGS</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>ISX_DEFAULTCOMPONENT14</td><td>{292D3477-8347-4076-93F0-3EC3072419DD}</td><td>TEMP</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>ISX_DEFAULTCOMPONENT15</td><td>{87C0F617-1EDA-4D91-A245-D15FCE1552D8}</td><td>QT</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>ISX_DEFAULTCOMPONENT16</td><td>{DD8AC259-3992-46AD-A6D6-CDA1DCB7747B}</td><td>INCLUDE</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>ISX_DEFAULTCOMPONENT17</td><td>{3EE419A0-5ED8-45B0-952C-D49ABAFE2FEE}</td><td>QTCORE</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>ISX_DEFAULTCOMPONENT18</td><td>{CCB154C5-ECA4-4EAF-A490-12BB6968D000}</td><td>_.4.0</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>ISX_DEFAULTCOMPONENT19</td><td>{765F258D-D560-4484-A94F-26D25A7F9AD9}</td><td>QTCORE1</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>ISX_DEFAULTCOMPONENT2</td><td>{4C0B1DC2-7BD4-49A1-BF9B-0C772E003959}</td><td>_00PXIMGS</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>ISX_DEFAULTCOMPONENT2</td><td>{72CAB9B4-A421-4779-82DD-AF6786AFADE6}</td><td>_00PXIMGS</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>ISX_DEFAULTCOMPONENT20</td><td>{6FA32647-05D5-4045-8E69-5E6E11E04F27}</td><td>PRIVATE</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>ISX_DEFAULTCOMPONENT21</td><td>{E15D5F77-3DC8-4C62-9167-E3871F9C658F}</td><td>QTGUI</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>ISX_DEFAULTCOMPONENT22</td><td>{FDED0B95-75C5-4EFB-B3A8-22475312E82D}</td><td>_.4.01</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
@@ -362,14 +362,14 @@
 		<row><td>ISX_DEFAULTCOMPONENT27</td><td>{35DE39D1-94D6-4272-80EE-660158EE0B7A}</td><td>_.4.02</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>ISX_DEFAULTCOMPONENT28</td><td>{C6BD477E-6880-4FAA-9E20-6C661093D0F5}</td><td>QTWIDGETS1</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>ISX_DEFAULTCOMPONENT29</td><td>{46F1031A-B7C5-4B99-BEE9-642FC9ACFDE8}</td><td>PRIVATE2</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>ISX_DEFAULTCOMPONENT3</td><td>{D69AE8EF-8004-4563-A5E2-4E331A2EF3FC}</td><td>ASSETS</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>ISX_DEFAULTCOMPONENT3</td><td>{F4D40FFB-7672-4889-9A5C-F55238B4CB34}</td><td>ASSETS</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>ISX_DEFAULTCOMPONENT30</td><td>{5F80A1AD-9EF8-47AB-9BFE-74601A41107C}</td><td>LIB</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>ISX_DEFAULTCOMPONENT31</td><td>{2CA15363-DB29-4AF5-A536-451A735414E3}</td><td>PLATFORMS</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>ISX_DEFAULTCOMPONENT4</td><td>{C0BD414F-9B09-48B5-AF4F-5C7279FA7E7D}</td><td>GESTURE_ICONS</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>ISX_DEFAULTCOMPONENT5</td><td>{78F99D08-ECBC-4214-A15B-425D968E5DE5}</td><td>MYO_ICON</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>ISX_DEFAULTCOMPONENT6</td><td>{7BBB8207-5A16-4DAB-AC70-DA477D6F1DDF}</td><td>MYO_LOGO</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>ISX_DEFAULTCOMPONENT7</td><td>{9E2E35DB-32E0-4B27-B1AD-7E361C914132}</td><td>MYO_MARKET_BADGE</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>ISX_DEFAULTCOMPONENT8</td><td>{0BCF1E1A-73AE-4AA0-A98E-A76BC606F7FD}</td><td>BW200PXIMGS</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>ISX_DEFAULTCOMPONENT4</td><td>{6C1E53EE-18AA-469E-ADC3-BF9C410EA743}</td><td>GESTURE_ICONS</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>ISX_DEFAULTCOMPONENT5</td><td>{62EDA4F6-46EF-44E8-9B05-69D20258B364}</td><td>MYO_ICON</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>ISX_DEFAULTCOMPONENT6</td><td>{654B2E1F-45D1-40E5-A4C6-AAD45B73A29B}</td><td>MYO_LOGO</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>ISX_DEFAULTCOMPONENT7</td><td>{7D963F27-6AF5-47A8-A5CE-36133AAA8989}</td><td>MYO_MARKET_BADGE</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>ISX_DEFAULTCOMPONENT8</td><td>{9A98BFF3-C7FF-44B9-853A-84CD76EEBC70}</td><td>BW200PXIMGS</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>ISX_DEFAULTCOMPONENT9</td><td>{D85C656C-90B7-4505-889F-C562C8AA48CE}</td><td>LICENSE</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>MidasGUI.Primary_Output</td><td>{D2675582-083B-412D-B96F-EFF640045AD6}</td><td>INSTALLDIR</td><td>2</td><td/><td>midasgui.primary_output</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>MidasProfileManager.Primary_Output</td><td>{DEAEB11C-26BD-42B6-A437-CC8F156D8ACA}</td><td>INSTALLDIR</td><td>2</td><td/><td>midasprofilemanager.primary_</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
@@ -1200,7 +1200,7 @@
 		<row><td>GlobalAssemblyCache</td><td>TARGETDIR</td><td>.:Global~1|GlobalAssemblyCache</td><td/><td>0</td><td/></row>
 		<row><td>ICONS</td><td>RESOURCES</td><td>icons</td><td/><td>0</td><td/></row>
 		<row><td>INCLUDE</td><td>QT</td><td>include</td><td/><td>0</td><td/></row>
-		<row><td>INSTALLDIR</td><td>MIDAS_USERTEST2_VARIANT3B</td><td>.</td><td/><td>0</td><td/></row>
+		<row><td>INSTALLDIR</td><td>MIDAS1</td><td>.</td><td/><td>0</td><td/></row>
 		<row><td>ISCommonFilesFolder</td><td>CommonFilesFolder</td><td>Instal~1|InstallShield</td><td/><td>0</td><td/></row>
 		<row><td>ISMyCompanyDir</td><td>ProgramFilesFolder</td><td>MYCOMP~1|My Company Name</td><td/><td>0</td><td/></row>
 		<row><td>ISMyProductDir</td><td>ISMyCompanyDir</td><td>MYPROD~1|My Product Name</td><td/><td>0</td><td/></row>
@@ -1216,6 +1216,7 @@
 		<row><td>MIDAS_USERTEST2_VARIANT1</td><td>JORDENH</td><td>MIDAS_~1|Midas_UserTest2_Variant1</td><td/><td>0</td><td/></row>
 		<row><td>MIDAS_USERTEST2_VARIANT2</td><td>JORDENH</td><td>MIDAS_~1|Midas_UserTest2_Variant2</td><td/><td>0</td><td/></row>
 		<row><td>MIDAS_USERTEST2_VARIANT3B</td><td>JORDENH</td><td>MIDAS_~1|Midas_UserTest2_Variant3B</td><td/><td>0</td><td/></row>
+		<row><td>MIDAS_USERTEST3</td><td>JORDENH</td><td>MIDAS_~1|Midas_UserTest3</td><td/><td>0</td><td/></row>
 		<row><td>MIDAS_USERTEST3_VARIANT3</td><td>JORDENH</td><td>MIDAS_~1|Midas_UserTest3_Variant3</td><td/><td>0</td><td/></row>
 		<row><td>MOCKUPS</td><td>RESOURCES</td><td>mockups</td><td/><td>0</td><td/></row>
 		<row><td>MYO_ICON</td><td>ASSETS</td><td>myo_icon</td><td/><td>0</td><td/></row>
@@ -2033,22 +2034,28 @@
 		<row><td>complexwidgets.h</td><td>ISX_DEFAULTCOMPONENT26</td><td>COMPLE~1.H|complexwidgets.h</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\include\QtWidgets\complexwidgets.h</td><td>1</td><td/></row>
 		<row><td>cp949codetbl_p.h</td><td>ISX_DEFAULTCOMPONENT20</td><td>CP949C~1.H|cp949codetbl_p.h</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\include\QtCore\5.4.0\QtCore\private\cp949codetbl_p.h</td><td>1</td><td/></row>
 		<row><td>doubletap.jpg</td><td>ISX_DEFAULTCOMPONENT2</td><td>DOUBLE~1.JPG|doubleTap.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\200PxImgs\doubleTap.jpg</td><td>1</td><td/></row>
-		<row><td>doubletap.jpg1</td><td>ISX_DEFAULTCOMPONENT8</td><td>DOUBLE~1.JPG|doubleTap.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\BW200PxImgs\doubleTap.jpg</td><td>1</td><td/></row>
-		<row><td>doubletap.jpg2</td><td>ISX_DEFAULTCOMPONENT11</td><td>DOUBLE~1.JPG|doubleTap.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\MainImgs\doubleTap.jpg</td><td>1</td><td/></row>
-		<row><td>doubletap.jpg3</td><td>ISX_DEFAULTCOMPONENT13</td><td>DOUBLE~1.JPG|doubleTap.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\Post200PxImgs\doubleTap.jpg</td><td>1</td><td/></row>
+		<row><td>doubletap.jpg1</td><td>ISX_DEFAULTCOMPONENT11</td><td>DOUBLE~1.JPG|doubleTap.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\MainImgs\doubleTap.jpg</td><td>1</td><td/></row>
 		<row><td>fingerspread.jpg</td><td>ISX_DEFAULTCOMPONENT2</td><td>FINGER~1.JPG|fingerSpread.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\200PxImgs\fingerSpread.jpg</td><td>1</td><td/></row>
-		<row><td>fingerspread.jpg1</td><td>ISX_DEFAULTCOMPONENT8</td><td>FINGER~1.JPG|fingerSpread.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\BW200PxImgs\fingerSpread.jpg</td><td>1</td><td/></row>
-		<row><td>fingerspread.jpg2</td><td>ISX_DEFAULTCOMPONENT11</td><td>FINGER~1.JPG|fingerSpread.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\MainImgs\fingerSpread.jpg</td><td>1</td><td/></row>
-		<row><td>fingerspread.jpg3</td><td>ISX_DEFAULTCOMPONENT13</td><td>FINGER~1.JPG|fingerSpread.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\Post200PxImgs\fingerSpread.jpg</td><td>1</td><td/></row>
+		<row><td>fingerspread.jpg1</td><td>ISX_DEFAULTCOMPONENT11</td><td>FINGER~1.JPG|fingerSpread.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\MainImgs\fingerSpread.jpg</td><td>1</td><td/></row>
 		<row><td>fist.jpg</td><td>ISX_DEFAULTCOMPONENT2</td><td>fist.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\200PxImgs\fist.jpg</td><td>1</td><td/></row>
-		<row><td>fist.jpg1</td><td>ISX_DEFAULTCOMPONENT8</td><td>fist.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\BW200PxImgs\fist.jpg</td><td>1</td><td/></row>
-		<row><td>fist.jpg2</td><td>ISX_DEFAULTCOMPONENT11</td><td>fist.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\MainImgs\fist.jpg</td><td>1</td><td/></row>
-		<row><td>fist.jpg3</td><td>ISX_DEFAULTCOMPONENT13</td><td>fist.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\Post200PxImgs\fist.jpg</td><td>1</td><td/></row>
+		<row><td>fist.jpg1</td><td>ISX_DEFAULTCOMPONENT11</td><td>fist.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\MainImgs\fist.jpg</td><td>1</td><td/></row>
 		<row><td>grey.png</td><td>ISX_DEFAULTCOMPONENT4</td><td>grey.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\assets\gesture_icons\grey.png</td><td>1</td><td/></row>
 		<row><td>icudt53.dll2</td><td>icudt53.dll2</td><td>icudt53.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\icudt53.dll</td><td>1</td><td/></row>
 		<row><td>icuin53.dll2</td><td>icuin53.dll2</td><td>icuin53.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\icuin53.dll</td><td>1</td><td/></row>
 		<row><td>icuuc53.dll2</td><td>icuuc53.dll2</td><td>icuuc53.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\icuuc53.dll</td><td>1</td><td/></row>
 		<row><td>itemviews.h</td><td>ISX_DEFAULTCOMPONENT26</td><td>ITEMVI~1.H|itemviews.h</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\include\QtWidgets\itemviews.h</td><td>1</td><td/></row>
+		<row><td>lhdoubletap.jpg</td><td>ISX_DEFAULTCOMPONENT8</td><td>LHDOUB~1.JPG|LHdoubleTap.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\BW200PxImgs\LHdoubleTap.jpg</td><td>1</td><td/></row>
+		<row><td>lhdoubletap.jpg1</td><td>ISX_DEFAULTCOMPONENT13</td><td>LHDOUB~1.JPG|LHdoubleTap.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\Post200PxImgs\LHdoubleTap.jpg</td><td>1</td><td/></row>
+		<row><td>lhfingerspread.jpg</td><td>ISX_DEFAULTCOMPONENT8</td><td>LHFING~1.JPG|LHfingerSpread.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\BW200PxImgs\LHfingerSpread.jpg</td><td>1</td><td/></row>
+		<row><td>lhfingerspread.jpg1</td><td>ISX_DEFAULTCOMPONENT13</td><td>LHFING~1.JPG|LHfingerSpread.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\Post200PxImgs\LHfingerSpread.jpg</td><td>1</td><td/></row>
+		<row><td>lhfist.jpg</td><td>ISX_DEFAULTCOMPONENT8</td><td>LHfist.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\BW200PxImgs\LHfist.jpg</td><td>1</td><td/></row>
+		<row><td>lhfist.jpg1</td><td>ISX_DEFAULTCOMPONENT13</td><td>LHfist.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\Post200PxImgs\LHfist.jpg</td><td>1</td><td/></row>
+		<row><td>lhpinkytothumb.jpg</td><td>ISX_DEFAULTCOMPONENT8</td><td>LHPINK~1.JPG|LHpinkyToThumb.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\BW200PxImgs\LHpinkyToThumb.jpg</td><td>1</td><td/></row>
+		<row><td>lhpinkytothumb.jpg1</td><td>ISX_DEFAULTCOMPONENT13</td><td>LHPINK~1.JPG|LHpinkyToThumb.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\Post200PxImgs\LHpinkyToThumb.jpg</td><td>1</td><td/></row>
+		<row><td>lhwavein.jpg</td><td>ISX_DEFAULTCOMPONENT8</td><td>LHwaveIn.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\BW200PxImgs\LHwaveIn.jpg</td><td>1</td><td/></row>
+		<row><td>lhwavein.jpg1</td><td>ISX_DEFAULTCOMPONENT13</td><td>LHwaveIn.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\Post200PxImgs\LHwaveIn.jpg</td><td>1</td><td/></row>
+		<row><td>lhwaveout.jpg</td><td>ISX_DEFAULTCOMPONENT8</td><td>LHWAVE~1.JPG|LHwaveOut.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\BW200PxImgs\LHwaveOut.jpg</td><td>1</td><td/></row>
+		<row><td>lhwaveout.jpg1</td><td>ISX_DEFAULTCOMPONENT13</td><td>LHWAVE~1.JPG|LHwaveOut.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\Post200PxImgs\LHwaveOut.jpg</td><td>1</td><td/></row>
 		<row><td>license.rtf</td><td>ISX_DEFAULTCOMPONENT9</td><td>LICENSE.rtf</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\LICENSE\LICENSE.rtf</td><td>1</td><td/></row>
 		<row><td>midasgui.primary_output</td><td>MidasGUI.Primary_Output</td><td>MidasGUI.Primary Output</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;MidasGUI&gt;|Built</td><td>3</td><td/></row>
 		<row><td>midasguiex1.psd</td><td>ISX_DEFAULTCOMPONENT12</td><td>MIDASG~1.PSD|MidasGUIEx1.psd</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\mockups\MidasGUIEx1.psd</td><td>1</td><td/></row>
@@ -2077,9 +2084,7 @@
 		<row><td>pencil_post.png</td><td>ISX_DEFAULTCOMPONENT10</td><td>PENCIL~1.PNG|Pencil_Post.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\icons\Pencil_Post.png</td><td>1</td><td/></row>
 		<row><td>pencilbw.png</td><td>ISX_DEFAULTCOMPONENT10</td><td>PencilBW.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\icons\PencilBW.png</td><td>1</td><td/></row>
 		<row><td>pinkytothumb.jpg</td><td>ISX_DEFAULTCOMPONENT2</td><td>PINKYT~1.JPG|pinkyToThumb.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\200PxImgs\pinkyToThumb.jpg</td><td>1</td><td/></row>
-		<row><td>pinkytothumb.jpg1</td><td>ISX_DEFAULTCOMPONENT8</td><td>PINKYT~1.JPG|pinkyToThumb.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\BW200PxImgs\pinkyToThumb.jpg</td><td>1</td><td/></row>
-		<row><td>pinkytothumb.jpg2</td><td>ISX_DEFAULTCOMPONENT11</td><td>PINKYT~1.JPG|pinkyToThumb.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\MainImgs\pinkyToThumb.jpg</td><td>1</td><td/></row>
-		<row><td>pinkytothumb.jpg3</td><td>ISX_DEFAULTCOMPONENT13</td><td>PINKYT~1.JPG|pinkyToThumb.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\Post200PxImgs\pinkyToThumb.jpg</td><td>1</td><td/></row>
+		<row><td>pinkytothumb.jpg1</td><td>ISX_DEFAULTCOMPONENT11</td><td>PINKYT~1.JPG|pinkyToThumb.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\MainImgs\pinkyToThumb.jpg</td><td>1</td><td/></row>
 		<row><td>poselenhold.png</td><td>ISX_DEFAULTCOMPONENT10</td><td>POSELE~1.PNG|PoseLenHold.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\icons\PoseLenHold.png</td><td>1</td><td/></row>
 		<row><td>poselenimmediate.png</td><td>ISX_DEFAULTCOMPONENT10</td><td>POSELE~1.PNG|PoseLenImmediate.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\icons\PoseLenImmediate.png</td><td>1</td><td/></row>
 		<row><td>profiles.xml</td><td>ISX_DEFAULTCOMPONENT1</td><td>profiles.xml</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\profiles.xml</td><td>1</td><td/></row>
@@ -3811,6 +3816,18 @@
 		<row><td>rangecontrols.h</td><td>ISX_DEFAULTCOMPONENT26</td><td>RANGEC~1.H|rangecontrols.h</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\include\QtWidgets\rangecontrols.h</td><td>1</td><td/></row>
 		<row><td>reconnect.png</td><td>ISX_DEFAULTCOMPONENT4</td><td>RECONN~1.PNG|reConnect.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\assets\gesture_icons\reConnect.png</td><td>1</td><td/></row>
 		<row><td>resync.png</td><td>ISX_DEFAULTCOMPONENT4</td><td>reSync.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\assets\gesture_icons\reSync.png</td><td>1</td><td/></row>
+		<row><td>rhdoubletap.jpg</td><td>ISX_DEFAULTCOMPONENT8</td><td>RHDOUB~1.JPG|RHdoubleTap.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\BW200PxImgs\RHdoubleTap.jpg</td><td>1</td><td/></row>
+		<row><td>rhdoubletap.jpg1</td><td>ISX_DEFAULTCOMPONENT13</td><td>RHDOUB~1.JPG|RHdoubleTap.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\Post200PxImgs\RHdoubleTap.jpg</td><td>1</td><td/></row>
+		<row><td>rhfingerspread.jpg</td><td>ISX_DEFAULTCOMPONENT8</td><td>RHFING~1.JPG|RHfingerSpread.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\BW200PxImgs\RHfingerSpread.jpg</td><td>1</td><td/></row>
+		<row><td>rhfingerspread.jpg1</td><td>ISX_DEFAULTCOMPONENT13</td><td>RHFING~1.JPG|RHfingerSpread.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\Post200PxImgs\RHfingerSpread.jpg</td><td>1</td><td/></row>
+		<row><td>rhfist.jpg</td><td>ISX_DEFAULTCOMPONENT8</td><td>RHfist.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\BW200PxImgs\RHfist.jpg</td><td>1</td><td/></row>
+		<row><td>rhfist.jpg1</td><td>ISX_DEFAULTCOMPONENT13</td><td>RHfist.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\Post200PxImgs\RHfist.jpg</td><td>1</td><td/></row>
+		<row><td>rhpinkytothumb.jpg</td><td>ISX_DEFAULTCOMPONENT8</td><td>RHPINK~1.JPG|RHpinkyToThumb.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\BW200PxImgs\RHpinkyToThumb.jpg</td><td>1</td><td/></row>
+		<row><td>rhpinkytothumb.jpg1</td><td>ISX_DEFAULTCOMPONENT13</td><td>RHPINK~1.JPG|RHpinkyToThumb.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\Post200PxImgs\RHpinkyToThumb.jpg</td><td>1</td><td/></row>
+		<row><td>rhwavein.jpg</td><td>ISX_DEFAULTCOMPONENT8</td><td>RHwaveIn.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\BW200PxImgs\RHwaveIn.jpg</td><td>1</td><td/></row>
+		<row><td>rhwavein.jpg1</td><td>ISX_DEFAULTCOMPONENT13</td><td>RHwaveIn.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\Post200PxImgs\RHwaveIn.jpg</td><td>1</td><td/></row>
+		<row><td>rhwaveout.jpg</td><td>ISX_DEFAULTCOMPONENT8</td><td>RHWAVE~1.JPG|RHwaveOut.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\BW200PxImgs\RHwaveOut.jpg</td><td>1</td><td/></row>
+		<row><td>rhwaveout.jpg1</td><td>ISX_DEFAULTCOMPONENT13</td><td>RHWAVE~1.JPG|RHwaveOut.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\Post200PxImgs\RHwaveOut.jpg</td><td>1</td><td/></row>
 		<row><td>ring_post.png</td><td>ISX_DEFAULTCOMPONENT10</td><td>RING_P~1.PNG|Ring_Post.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\icons\Ring_Post.png</td><td>1</td><td/></row>
 		<row><td>ring_post2.png</td><td>ISX_DEFAULTCOMPONENT10</td><td>RING_P~1.PNG|Ring_Post2.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\icons\Ring_Post2.png</td><td>1</td><td/></row>
 		<row><td>ringbw.png</td><td>ISX_DEFAULTCOMPONENT10</td><td>RingBW.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\icons\RingBW.png</td><td>1</td><td/></row>
@@ -3832,13 +3849,10 @@
 		<row><td>thumbs.db3</td><td>ISX_DEFAULTCOMPONENT13</td><td>Thumbs.db</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\Post200PxImgs\Thumbs.db</td><td>1</td><td/></row>
 		<row><td>thumbs.db4</td><td>ISX_DEFAULTCOMPONENT14</td><td>Thumbs.db</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\temp\Thumbs.db</td><td>1</td><td/></row>
 		<row><td>wavein.jpg</td><td>ISX_DEFAULTCOMPONENT2</td><td>waveIn.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\200PxImgs\waveIn.jpg</td><td>1</td><td/></row>
-		<row><td>wavein.jpg1</td><td>ISX_DEFAULTCOMPONENT8</td><td>waveIn.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\BW200PxImgs\waveIn.jpg</td><td>1</td><td/></row>
-		<row><td>wavein.jpg2</td><td>ISX_DEFAULTCOMPONENT11</td><td>waveIn.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\MainImgs\waveIn.jpg</td><td>1</td><td/></row>
-		<row><td>wavein.jpg3</td><td>ISX_DEFAULTCOMPONENT13</td><td>waveIn.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\Post200PxImgs\waveIn.jpg</td><td>1</td><td/></row>
+		<row><td>wavein.jpg1</td><td>ISX_DEFAULTCOMPONENT11</td><td>waveIn.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\MainImgs\waveIn.jpg</td><td>1</td><td/></row>
 		<row><td>waveout.jpg</td><td>ISX_DEFAULTCOMPONENT2</td><td>waveOut.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\200PxImgs\waveOut.jpg</td><td>1</td><td/></row>
 		<row><td>waveout.jpg1</td><td>ISX_DEFAULTCOMPONENT8</td><td>waveOut.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\BW200PxImgs\waveOut.jpg</td><td>1</td><td/></row>
 		<row><td>waveout.jpg2</td><td>ISX_DEFAULTCOMPONENT11</td><td>waveOut.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\MainImgs\waveOut.jpg</td><td>1</td><td/></row>
-		<row><td>waveout.jpg3</td><td>ISX_DEFAULTCOMPONENT13</td><td>waveOut.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Resources\Post200PxImgs\waveOut.jpg</td><td>1</td><td/></row>
 	</table>
 
 	<table name="FileSFPCatalog">
@@ -3982,19 +3996,19 @@
 		<col def="S0">FTPLocation</col>
 		<col def="S0">HTTPLocation</col>
 		<col def="S0">Miscellaneous</col>
-		<row><td>ISX_DEFAULTCOMPONENT</td><td/><td/><td>_B6245032_237C_4D5C_9020_6CD522E08BAA_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>ISX_DEFAULTCOMPONENT</td><td/><td/><td>_3479937E_6813_40E0_89D0_7243A19EA4EE_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>ISX_DEFAULTCOMPONENT1</td><td/><td/><td>_E5CCF691_FB54_4796_8F8D_EC0ED2F4B747_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>ISX_DEFAULTCOMPONENT10</td><td/><td/><td>_D561C3C9_1CB4_4C85_9167_AD3BAB2CEF6E_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>ISX_DEFAULTCOMPONENT11</td><td/><td/><td>_BD0F329C_B8D1_46D4_898D_92A5E2315069_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>ISX_DEFAULTCOMPONENT12</td><td/><td/><td>_C73B5166_5F92_4994_9BE3_39177B849634_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>ISX_DEFAULTCOMPONENT13</td><td/><td/><td>_0E691D32_88C9_4B8D_8CE9_5941CE8F1466_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>ISX_DEFAULTCOMPONENT14</td><td/><td/><td>_DE63B576_E7DA_4370_A1C2_14A04485A64B_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>ISX_DEFAULTCOMPONENT10</td><td/><td/><td>_12F9B68E_2C05_4094_A7AD_F73EC854C728_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>ISX_DEFAULTCOMPONENT11</td><td/><td/><td>_B0AF3867_801F_47B2_BF7A_1BDF339DAEFA_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>ISX_DEFAULTCOMPONENT12</td><td/><td/><td>_1C76BCB0_BFE2_452A_AE9E_845328243B2A_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>ISX_DEFAULTCOMPONENT13</td><td/><td/><td>_B97A47F9_B881_49EB_B839_D9455D068D92_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>ISX_DEFAULTCOMPONENT14</td><td/><td/><td>_C0D6E05B_3D39_4021_8BBE_4F2C24D5B95F_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>ISX_DEFAULTCOMPONENT15</td><td/><td/><td>_28C0AB9C_8E6F_4A80_B6F4_DD2F3F9C53BA_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>ISX_DEFAULTCOMPONENT16</td><td/><td/><td>_6179051C_95C1_41A9_A8AC_DDCE56259CB6_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>ISX_DEFAULTCOMPONENT17</td><td/><td/><td>_1CF3C696_2E2C_4FBA_B1DC_F3C2E9303675_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>ISX_DEFAULTCOMPONENT18</td><td/><td/><td>_DA4690D8_B4EE_489F_9358_08FEE7B77467_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>ISX_DEFAULTCOMPONENT19</td><td/><td/><td>_30F2142F_1B60_4E89_B7AC_459DA6872BF5_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>ISX_DEFAULTCOMPONENT2</td><td/><td/><td>_E56B8828_BE00_4AE9_8031_0A977A41CECB_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>ISX_DEFAULTCOMPONENT2</td><td/><td/><td>_19E53184_4173_4B21_83F5_38CE59FB8DBB_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>ISX_DEFAULTCOMPONENT20</td><td/><td/><td>_DA3FEC38_C022_4EDF_80F5_1EF893A69610_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>ISX_DEFAULTCOMPONENT21</td><td/><td/><td>_B2895910_5B3B_4E58_BCAB_9BF995D20BC5_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>ISX_DEFAULTCOMPONENT22</td><td/><td/><td>_A6F4CD38_F4E8_4122_93FD_30F278750C5A_FILTER</td><td/><td/><td/><td/></row>
@@ -4005,14 +4019,14 @@
 		<row><td>ISX_DEFAULTCOMPONENT27</td><td/><td/><td>_3CFC5A99_9DFD_432C_89E6_91D4A959BA87_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>ISX_DEFAULTCOMPONENT28</td><td/><td/><td>_1BCC38B6_4F39_497B_9AC4_86E4977DDCCA_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>ISX_DEFAULTCOMPONENT29</td><td/><td/><td>_1747A5AB_0F7E_4F07_AC12_E0521EBCEADE_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>ISX_DEFAULTCOMPONENT3</td><td/><td/><td>_5EC492CD_1C20_49CF_87BB_56A78A178BC7_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>ISX_DEFAULTCOMPONENT3</td><td/><td/><td>_7750F1E1_C6B5_43ED_B63F_661C1FB3FE19_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>ISX_DEFAULTCOMPONENT30</td><td/><td/><td>_197B278E_6E77_414B_9A75_FC5341639FAE_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>ISX_DEFAULTCOMPONENT31</td><td/><td/><td>_8771D229_B9BD_41E1_A039_5AEA9996AF84_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>ISX_DEFAULTCOMPONENT4</td><td/><td/><td>_89D8E88B_3A5F_4886_BFD0_89C7DA24D36B_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>ISX_DEFAULTCOMPONENT5</td><td/><td/><td>_005ED6E9_EC7E_496A_A86E_AE3B60F13D3E_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>ISX_DEFAULTCOMPONENT6</td><td/><td/><td>_4421CFA5_F529_4863_9935_A3559717B52F_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>ISX_DEFAULTCOMPONENT7</td><td/><td/><td>_2CFB1C36_892A_45BB_B567_31D2D6A9BADB_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>ISX_DEFAULTCOMPONENT8</td><td/><td/><td>_07F74058_20F1_4C94_9D27_F4F2F6CCCB6C_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>ISX_DEFAULTCOMPONENT4</td><td/><td/><td>_34FF3DFF_6D0E_4C8E_B92C_8FD45B43446F_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>ISX_DEFAULTCOMPONENT5</td><td/><td/><td>_AF577D74_DD71_4400_8CC3_887F2F1338BA_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>ISX_DEFAULTCOMPONENT6</td><td/><td/><td>_707516CD_F61E_4FEF_A951_D505549CEE3F_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>ISX_DEFAULTCOMPONENT7</td><td/><td/><td>_DB00DB3F_7DA4_4BC6_8E85_A0BC644493FF_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>ISX_DEFAULTCOMPONENT8</td><td/><td/><td>_85A3DC2B_4C38_45D7_9BFD_1C120A14399F_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>ISX_DEFAULTCOMPONENT9</td><td/><td/><td>_E9265C8C_0B9C_4114_A218_3907C0C33FB3_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>MidasGUI.Primary_Output</td><td/><td/><td>_D70EAE3F_DD82_4E29_BD55_29F30C970CE3_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>MidasProfileManager.Primary_Output</td><td/><td/><td>_088EF78A_90DA_4EF9_96C1_D323FDB32707_FILTER</td><td/><td/><td/><td/></row>
@@ -6369,8 +6383,8 @@ QwBEAF8AUgBPAE0AAQBFAHgAcAByAGUAcwBzAA==
 		<row><td>PROGMSG_IIS_ROLLBACKAPPPOOLS</td><td>##IDS_PROGMSG_IIS_ROLLBACKAPPPOOLS##</td><td/></row>
 		<row><td>PROGMSG_IIS_ROLLBACKVROOTS</td><td>##IDS_PROGMSG_IIS_ROLLBACKVROOTS##</td><td/></row>
 		<row><td>PROGMSG_IIS_ROLLBACKWEBSERVICEEXTENSIONS</td><td>##IDS_PROGMSG_IIS_ROLLBACKWEBSERVICEEXTENSIONS##</td><td/></row>
-		<row><td>ProductCode</td><td>{7598C0E2-A244-4C59-A985-222D02B8BE59}</td><td/></row>
-		<row><td>ProductName</td><td>Midas_UserTest2_Variant3B</td><td/></row>
+		<row><td>ProductCode</td><td>{A246D86D-76E2-47D4-B31E-0B879AC0AFCD}</td><td/></row>
+		<row><td>ProductName</td><td>Midas</td><td/></row>
 		<row><td>ProductVersion</td><td>1.00.0000</td><td/></row>
 		<row><td>ProgressType0</td><td>install</td><td/></row>
 		<row><td>ProgressType1</td><td>Installing</td><td/></row>

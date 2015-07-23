@@ -26,6 +26,9 @@ class ProfileManager;
 class ringData;
 #include <vector>
 
+/**
+ * Constructor
+ */
 int midasMain(MidasThread *threadHandle, MainGUI *mainGui, ProfileManager *pm, std::vector<ringData> *kybrdRingData);
 
 #endif /* MIDAS_MAIN_H */

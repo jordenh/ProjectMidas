@@ -39,7 +39,7 @@
 #define MAX_NUM_SEQUENCES_DISPLAYED 15
 
 SequenceDisplayer::SequenceDisplayer(QWidget *parent)
-    : QWidget(parent), isRightHand(true)
+    : QWidget(parent), isRightHand(true), midasHelpLevel(helpLevel::ALL)
 {
     gridLayout = new QGridLayout;
     gridLayout->setAlignment(Qt::AlignRight | Qt::AlignBottom);

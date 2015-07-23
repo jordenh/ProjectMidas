@@ -55,10 +55,24 @@
 class SequenceImageManager
 {
 public:
+    /*
+     * Basic Constructor/Destrcutor
+     */
     SequenceImageManager();
     ~SequenceImageManager();
 
+    /*
+     * Load images from assets
+     */
     void loadImages();
+
+    /*
+     * Given the ids and hold times of certain images, create a vector of sequenceImageSets
+     * 
+     * @param ids The ids of the images
+     * @param lengths The hold lengths of the images
+     * @return std::vector<sequenceImageSet> A vector of the corresponding images
+     */
     std::vector<sequenceImageSet> formSequenceSetFromIds(std::vector<int> ids, std::vector<PoseLength> lengths);
 
 private:
