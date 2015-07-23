@@ -367,6 +367,13 @@ void MyoDevice::MyoCallbacks::onDisconnect(Myo* myo, uint64_t timestamp) {
         input[ISCONNECTED_INPUT] = false;
 
         parent.advancedConnectPipeline.startPipeline(input);
+
+        // Start each profile in a locked state
+        AdvancedFilterPipeline lockPipe;
+        lockPipe.registerFilterAtDeepestLevel(&(parent.gestureFilter));
+        filterDataMap input2;
+        input2[GESTURE_FILTER_STATE_CHANGE] = midasMode::LOCK_MODE;
+        lockPipe.startPipeline(input2);
     }
 }
 
@@ -406,6 +413,13 @@ void MyoDevice::MyoCallbacks::onArmUnsync(Myo* myo, uint64_t timestamp) {
     filterDataMap input;
     input[SYNCHED_INPUT] = false;
     parent.advancedSyncPipeline.startPipeline(input);
+
+    // Start each profile in a locked state
+    AdvancedFilterPipeline lockPipe;
+    lockPipe.registerFilterAtDeepestLevel(&(parent.gestureFilter));
+    filterDataMap input2;
+    input2[GESTURE_FILTER_STATE_CHANGE] = midasMode::LOCK_MODE;
+    lockPipe.startPipeline(input2);
 }
 
 void MyoDevice::MyoCallbacks::onUnlock(Myo* myo, uint64_t timestamp)
