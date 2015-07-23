@@ -578,26 +578,9 @@
 				</commands>
             </sequence>
 			
-			<sequence state="mouseMode" name="Middle Button">
-                <gestures>
-                    <gesture type="immediate">fist</gesture>
-                </gestures>
-                <commands>
-					<command type="stateChange">
-						<actions>
-							<action>mouseMode2</action>
-						</actions>
-					</command>
-					<command type="mouse">
-						<actions>
-							<action>middleHold</action>
-						</actions>
-					</command>
-				</commands>
-            </sequence>
 			<sequence state="mouseMode" name="Left Button">
                 <gestures>
-					<gesture type="immediate">fingersSpread</gesture>
+					<gesture type="immediate">fist</gesture>
                 </gestures>
                 <commands>
 					<command type="stateChange">
@@ -608,6 +591,23 @@
 					<command type="mouse">
 						<actions>
 							<action>leftHold</action>
+						</actions>
+					</command>
+				</commands>
+            </sequence>
+			<sequence state="mouseMode" name="Middle Button">
+                <gestures>
+                    <gesture type="immediate">fingersSpread</gesture>
+                </gestures>
+                <commands>
+					<command type="stateChange">
+						<actions>
+							<action>mouseMode2</action>
+						</actions>
+					</command>
+					<command type="mouse">
+						<actions>
+							<action>middleHold</action>
 						</actions>
 					</command>
 				</commands>

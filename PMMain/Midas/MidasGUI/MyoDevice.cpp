@@ -428,7 +428,6 @@ void MyoDevice::MyoCallbacks::onEmgData(myo::Myo* myo, uint64_t timestamp, const
     // This data is streaming at 200Hz - print data for post mortem analysis
 	std::cout << "onEmgData." << std::endl;
 
-//#ifdef USE_EMG_FILTER
     for (int emgIdx = 0; emgIdx < 8; emgIdx++)
     {
         lastEMGData[emgIdx] = emg[emgIdx];
@@ -445,7 +444,6 @@ void MyoDevice::MyoCallbacks::onEmgData(myo::Myo* myo, uint64_t timestamp, const
     input[EMG_VECTOR] = emgSamples;
 
     parent.emgImpulsePipeline.startPipeline(input);
-//#endif
 }
 
 void MyoDevice::MyoCallbacks::onWarmupCompleted(myo::Myo* myo, uint64_t timestamp, WarmupResult warmupResult)
@@ -471,7 +469,7 @@ void MyoDevice::updateProfiles(void)
 	
     error |= (int)advancedOrientationPipeline.updateFiltersBasedOnProfile(*profileManager, state->getProfile());
 
-
+    // Start each profile in a locked state
     AdvancedFilterPipeline lockPipe;
     lockPipe.registerFilterAtDeepestLevel(&gestureFilter);
     filterDataMap input;
