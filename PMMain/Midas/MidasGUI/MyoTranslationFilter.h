@@ -188,6 +188,9 @@ private:
     void unregisterHoldModeActions(void);
 
     void updateHoldModeObserver(midasMode currMode);
+
+    float calcBaseHorizontalChange(float gyroZ);
+    float calcBaseVerticalChange(float gyroY);
     
     ControlState* controlStateHandle; // not owned
     MyoState* myoStateHandle; // not owned

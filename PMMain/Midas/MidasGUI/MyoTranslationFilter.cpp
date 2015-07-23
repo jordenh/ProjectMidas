@@ -246,18 +246,44 @@ void MyoTranslationFilter::handleGyroData(filterDataMap input, filterDataMap out
                     //cursorBaseHorizontalChange = pow(cursorBaseHorizontalChange, 2);
 
                     // attempt 2
-                    int cursorGyroPower = settingsSignaller.getCursorGyroPower();
-                    float cursorGyroScaleDown = settingsSignaller.getCursorGyroScaleDown();
-                    float cursorBaseHorizontalChange = abs(pow(gyroZ, cursorGyroPower)) / cursorGyroScaleDown * -sign(gyroZ);
-                    //cursorBaseHorizontalChange = std::min(cursorBaseHorizontalChange, 200.0f);
-                    float cursorBaseVerticalChange = abs(pow(gyroY, cursorGyroPower)) / cursorGyroScaleDown * sign(gyroY);
-                    //cursorBaseVerticalChange = std::min(cursorBaseVerticalChange, 200.0f);
+                    
+                    float cursorBaseHorizontalChange = calcBaseHorizontalChange(gyroZ); 
+                    
+                    float cursorBaseVerticalChange = calcBaseVerticalChange(gyroY); 
+                    
 
                     BaseMeasurements::getInstance().modifyBaseCursor(cursorBaseHorizontalChange, cursorBaseVerticalChange);
                 }
             }
         }
     }
+}
+
+float MyoTranslationFilter::calcBaseHorizontalChange(float gyroZ)
+{
+    int cursorGyroPower = settingsSignaller.getCursorGyroPower();
+    float cursorGyroScaleDown = settingsSignaller.getCursorGyroScaleDown();
+
+
+    float horChange = abs(pow(gyroZ, cursorGyroPower)) / cursorGyroScaleDown * -sign(gyroZ);
+    //horChange = std::min(horChange, 200.0f);
+
+    return horChange;
+}
+
+float MyoTranslationFilter::calcBaseVerticalChange(float gyroY)
+{
+    int cursorGyroPower = settingsSignaller.getCursorGyroPower();
+    float cursorGyroScaleDown = settingsSignaller.getCursorGyroScaleDown();
+
+    float vertChange = abs(pow(gyroY, cursorGyroPower)) / cursorGyroScaleDown * sign(gyroY);
+    //vertChange = std::min(vertChange, 200.0f);
+
+    if (myoStateHandle->getXDirection() == XDirection::xDirectionTowardElbow)
+    {
+        vertChange = -vertChange;
+    }
+    return vertChange;
 }
 
 void MyoTranslationFilter::handleArmData(filterDataMap input, filterDataMap output)
