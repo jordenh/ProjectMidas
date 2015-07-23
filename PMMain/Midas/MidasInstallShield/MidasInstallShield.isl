@@ -365,6 +365,7 @@
 		<row><td>ISX_DEFAULTCOMPONENT3</td><td>{F4D40FFB-7672-4889-9A5C-F55238B4CB34}</td><td>ASSETS</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>ISX_DEFAULTCOMPONENT30</td><td>{5F80A1AD-9EF8-47AB-9BFE-74601A41107C}</td><td>LIB</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>ISX_DEFAULTCOMPONENT31</td><td>{2CA15363-DB29-4AF5-A536-451A735414E3}</td><td>PLATFORMS</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>ISX_DEFAULTCOMPONENT32</td><td>{F966E73C-0717-426B-A8B0-793570E0ADE9}</td><td>IMAGEFORMATS</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>ISX_DEFAULTCOMPONENT4</td><td>{6C1E53EE-18AA-469E-ADC3-BF9C410EA743}</td><td>GESTURE_ICONS</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>ISX_DEFAULTCOMPONENT5</td><td>{62EDA4F6-46EF-44E8-9B05-69D20258B364}</td><td>MYO_ICON</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>ISX_DEFAULTCOMPONENT6</td><td>{654B2E1F-45D1-40E5-A4C6-AAD45B73A29B}</td><td>MYO_LOGO</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
@@ -383,10 +384,34 @@
 		<row><td>icuin53.dll2</td><td>{6E435FF2-A505-4F94-B841-4373CD840413}</td><td>INSTALLDIR</td><td>2</td><td/><td>icuin53.dll2</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>icuuc53.dll2</td><td>{C6E9B97E-8D42-4C27-AA9B-DDECDA98FC71}</td><td>INSTALLDIR</td><td>2</td><td/><td>icuuc53.dll2</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>myo32.dll</td><td>{B744F670-6628-4503-8C78-C0FCF33621D6}</td><td>INSTALLDIR</td><td>2</td><td/><td>myo32.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>qdds.dll</td><td>{87CF4664-97CD-4E3D-839E-982F4DB1D97B}</td><td>IMAGEFORMATS</td><td>2</td><td/><td>qdds.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>qddsd.dll</td><td>{1D7600FB-5A3B-4447-A888-E65D39A355D9}</td><td>IMAGEFORMATS</td><td>2</td><td/><td>qddsd.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>qgif.dll</td><td>{A0E71CB1-9FEB-4ED6-9988-3951E610E0C0}</td><td>IMAGEFORMATS</td><td>2</td><td/><td>qgif.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>qgifd.dll</td><td>{420C72DE-8DCF-4001-88FA-7A6D1D18A18E}</td><td>IMAGEFORMATS</td><td>2</td><td/><td>qgifd.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>qicns.dll</td><td>{87671EF3-64C4-4212-8E78-E4E10C5040CD}</td><td>IMAGEFORMATS</td><td>2</td><td/><td>qicns.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>qicnsd.dll</td><td>{DAB9D299-BAFB-4F80-9A5C-31312533A133}</td><td>IMAGEFORMATS</td><td>2</td><td/><td>qicnsd.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>qico.dll</td><td>{CCCE8754-5F07-438D-8969-941ABEDB24D0}</td><td>IMAGEFORMATS</td><td>2</td><td/><td>qico.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>qicod.dll</td><td>{6B4FD0C6-15ED-49D6-B669-A225EFDB031F}</td><td>IMAGEFORMATS</td><td>2</td><td/><td>qicod.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>qjp2.dll</td><td>{B546D206-2F61-493B-87AA-DBDF01CE94C2}</td><td>IMAGEFORMATS</td><td>2</td><td/><td>qjp2.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>qjp2d.dll</td><td>{C5A6DAAF-3EED-49A3-9DA3-51FF9038D5A4}</td><td>IMAGEFORMATS</td><td>2</td><td/><td>qjp2d.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>qjpeg.dll</td><td>{595554A8-5DE4-443B-828F-740696BB2B5D}</td><td>IMAGEFORMATS</td><td>2</td><td/><td>qjpeg.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>qjpegd.dll</td><td>{9730BC1F-6426-4B60-AB8D-10A16D36E02C}</td><td>IMAGEFORMATS</td><td>2</td><td/><td>qjpegd.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>qminimal.dll</td><td>{A106B459-1C5D-40A6-8AB7-98647A7F3ACF}</td><td>PLATFORMS</td><td>2</td><td/><td>qminimal.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>qminimald.dll</td><td>{E1F5A4AA-6C69-45A4-9622-40644642876D}</td><td>PLATFORMS</td><td>2</td><td/><td>qminimald.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>qmng.dll</td><td>{93A81B54-14E2-4526-A8E8-430493EF1445}</td><td>IMAGEFORMATS</td><td>2</td><td/><td>qmng.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>qmngd.dll</td><td>{C516644C-9039-4CB9-BAB8-42B09FF1041C}</td><td>IMAGEFORMATS</td><td>2</td><td/><td>qmngd.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>qoffscreen.dll</td><td>{6A80EF4D-8120-42DB-93DE-88426EF5EE9C}</td><td>PLATFORMS</td><td>2</td><td/><td>qoffscreen.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>qoffscreend.dll</td><td>{022B82C9-06FB-4555-BD49-9E6FEDD7DA3C}</td><td>PLATFORMS</td><td>2</td><td/><td>qoffscreend.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>qsvg.dll</td><td>{4596EA9A-6688-42A5-A7FF-E1591938966F}</td><td>IMAGEFORMATS</td><td>2</td><td/><td>qsvg.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>qsvgd.dll</td><td>{41AF66F1-F011-4CF6-9DF5-A6771E8BDD6F}</td><td>IMAGEFORMATS</td><td>2</td><td/><td>qsvgd.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>qtga.dll</td><td>{990FC707-4CFD-43B8-A2B3-B9A71518D685}</td><td>IMAGEFORMATS</td><td>2</td><td/><td>qtga.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>qtgad.dll</td><td>{05BE64EA-13BD-417D-8534-A71C0040D204}</td><td>IMAGEFORMATS</td><td>2</td><td/><td>qtgad.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>qtiff.dll</td><td>{BE962716-665B-4D3F-A20D-DD281217C037}</td><td>IMAGEFORMATS</td><td>2</td><td/><td>qtiff.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>qtiffd.dll</td><td>{7513E42D-8570-4B11-B7E2-751D3CD15654}</td><td>IMAGEFORMATS</td><td>2</td><td/><td>qtiffd.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>qwbmp.dll</td><td>{49471165-0506-46CA-B21C-622773B03290}</td><td>IMAGEFORMATS</td><td>2</td><td/><td>qwbmp.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>qwbmpd.dll</td><td>{DAFF8E0F-CFB1-4BA5-8E36-32559E4E2318}</td><td>IMAGEFORMATS</td><td>2</td><td/><td>qwbmpd.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>qwebp.dll</td><td>{93B031F4-FBF1-4242-9D9D-9C137AAC842D}</td><td>IMAGEFORMATS</td><td>2</td><td/><td>qwebp.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>qwebpd.dll</td><td>{C4EC8BF5-45FA-4267-8714-3AD6D1A80A3D}</td><td>IMAGEFORMATS</td><td>2</td><td/><td>qwebpd.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>qwindows.dll</td><td>{A1A377D8-4EFD-4733-90A6-4EB48B501825}</td><td>PLATFORMS</td><td>2</td><td/><td>qwindows.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>qwindowsd.dll</td><td>{6DF568A6-83CE-48B2-BB93-B19B4E3B5A4C}</td><td>PLATFORMS</td><td>2</td><td/><td>qwindowsd.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 	</table>
@@ -1199,6 +1224,7 @@
 		<row><td>GESTURE_ICONS</td><td>ASSETS</td><td>GESTUR~1|gesture_icons</td><td/><td>0</td><td/></row>
 		<row><td>GlobalAssemblyCache</td><td>TARGETDIR</td><td>.:Global~1|GlobalAssemblyCache</td><td/><td>0</td><td/></row>
 		<row><td>ICONS</td><td>RESOURCES</td><td>icons</td><td/><td>0</td><td/></row>
+		<row><td>IMAGEFORMATS</td><td>INSTALLDIR</td><td>IMAGEF~1|imageformats</td><td/><td>0</td><td/></row>
 		<row><td>INCLUDE</td><td>QT</td><td>include</td><td/><td>0</td><td/></row>
 		<row><td>INSTALLDIR</td><td>MIDAS1</td><td>.</td><td/><td>0</td><td/></row>
 		<row><td>ISCommonFilesFolder</td><td>CommonFilesFolder</td><td>Instal~1|InstallShield</td><td/><td>0</td><td/></row>
@@ -1980,6 +2006,7 @@
 		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT3</td></row>
 		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT30</td></row>
 		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT31</td></row>
+		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT32</td></row>
 		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT4</td></row>
 		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT5</td></row>
 		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT6</td></row>
@@ -1998,10 +2025,34 @@
 		<row><td>AlwaysInstall</td><td>icuin53.dll2</td></row>
 		<row><td>AlwaysInstall</td><td>icuuc53.dll2</td></row>
 		<row><td>AlwaysInstall</td><td>myo32.dll</td></row>
+		<row><td>AlwaysInstall</td><td>qdds.dll</td></row>
+		<row><td>AlwaysInstall</td><td>qddsd.dll</td></row>
+		<row><td>AlwaysInstall</td><td>qgif.dll</td></row>
+		<row><td>AlwaysInstall</td><td>qgifd.dll</td></row>
+		<row><td>AlwaysInstall</td><td>qicns.dll</td></row>
+		<row><td>AlwaysInstall</td><td>qicnsd.dll</td></row>
+		<row><td>AlwaysInstall</td><td>qico.dll</td></row>
+		<row><td>AlwaysInstall</td><td>qicod.dll</td></row>
+		<row><td>AlwaysInstall</td><td>qjp2.dll</td></row>
+		<row><td>AlwaysInstall</td><td>qjp2d.dll</td></row>
+		<row><td>AlwaysInstall</td><td>qjpeg.dll</td></row>
+		<row><td>AlwaysInstall</td><td>qjpegd.dll</td></row>
 		<row><td>AlwaysInstall</td><td>qminimal.dll</td></row>
 		<row><td>AlwaysInstall</td><td>qminimald.dll</td></row>
+		<row><td>AlwaysInstall</td><td>qmng.dll</td></row>
+		<row><td>AlwaysInstall</td><td>qmngd.dll</td></row>
 		<row><td>AlwaysInstall</td><td>qoffscreen.dll</td></row>
 		<row><td>AlwaysInstall</td><td>qoffscreend.dll</td></row>
+		<row><td>AlwaysInstall</td><td>qsvg.dll</td></row>
+		<row><td>AlwaysInstall</td><td>qsvgd.dll</td></row>
+		<row><td>AlwaysInstall</td><td>qtga.dll</td></row>
+		<row><td>AlwaysInstall</td><td>qtgad.dll</td></row>
+		<row><td>AlwaysInstall</td><td>qtiff.dll</td></row>
+		<row><td>AlwaysInstall</td><td>qtiffd.dll</td></row>
+		<row><td>AlwaysInstall</td><td>qwbmp.dll</td></row>
+		<row><td>AlwaysInstall</td><td>qwbmpd.dll</td></row>
+		<row><td>AlwaysInstall</td><td>qwebp.dll</td></row>
+		<row><td>AlwaysInstall</td><td>qwebpd.dll</td></row>
 		<row><td>AlwaysInstall</td><td>qwindows.dll</td></row>
 		<row><td>AlwaysInstall</td><td>qwindowsd.dll</td></row>
 	</table>
@@ -2380,6 +2431,9 @@
 		<row><td>qdatetimeedit.h</td><td>ISX_DEFAULTCOMPONENT26</td><td>QDATET~1.H|qdatetimeedit.h</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\include\QtWidgets\qdatetimeedit.h</td><td>1</td><td/></row>
 		<row><td>qdatetimeedit_p.h</td><td>ISX_DEFAULTCOMPONENT29</td><td>QDATET~1.H|qdatetimeedit_p.h</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\include\QtWidgets\5.4.0\QtWidgets\private\qdatetimeedit_p.h</td><td>1</td><td/></row>
 		<row><td>qdatetimeparser_p.h</td><td>ISX_DEFAULTCOMPONENT20</td><td>QDATET~1.H|qdatetimeparser_p.h</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\include\QtCore\5.4.0\QtCore\private\qdatetimeparser_p.h</td><td>1</td><td/></row>
+		<row><td>qdds.dll</td><td>qdds.dll</td><td>qdds.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\imageformats\qdds.dll</td><td>1</td><td/></row>
+		<row><td>qddsd.dll</td><td>qddsd.dll</td><td>qddsd.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\imageformats\qddsd.dll</td><td>1</td><td/></row>
+		<row><td>qddsd.pdb</td><td>ISX_DEFAULTCOMPONENT32</td><td>qddsd.pdb</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\imageformats\qddsd.pdb</td><td>1</td><td/></row>
 		<row><td>qdebug</td><td>ISX_DEFAULTCOMPONENT17</td><td>QDebug</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\include\QtCore\QDebug</td><td>1</td><td/></row>
 		<row><td>qdebug.h</td><td>ISX_DEFAULTCOMPONENT17</td><td>qdebug.h</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\include\QtCore\qdebug.h</td><td>1</td><td/></row>
 		<row><td>qdebugstatesaver</td><td>ISX_DEFAULTCOMPONENT17</td><td>QDEBUG~1|QDebugStateSaver</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\include\QtCore\QDebugStateSaver</td><td>1</td><td/></row>
@@ -2577,6 +2631,9 @@
 		<row><td>qgesturemanager_p.h</td><td>ISX_DEFAULTCOMPONENT29</td><td>QGESTU~1.H|qgesturemanager_p.h</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\include\QtWidgets\5.4.0\QtWidgets\private\qgesturemanager_p.h</td><td>1</td><td/></row>
 		<row><td>qgesturerecognizer</td><td>ISX_DEFAULTCOMPONENT26</td><td>QGESTU~1|QGestureRecognizer</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\include\QtWidgets\QGestureRecognizer</td><td>1</td><td/></row>
 		<row><td>qgesturerecognizer.h</td><td>ISX_DEFAULTCOMPONENT26</td><td>QGESTU~1.H|qgesturerecognizer.h</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\include\QtWidgets\qgesturerecognizer.h</td><td>1</td><td/></row>
+		<row><td>qgif.dll</td><td>qgif.dll</td><td>qgif.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\imageformats\qgif.dll</td><td>1</td><td/></row>
+		<row><td>qgifd.dll</td><td>qgifd.dll</td><td>qgifd.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\imageformats\qgifd.dll</td><td>1</td><td/></row>
+		<row><td>qgifd.pdb</td><td>ISX_DEFAULTCOMPONENT32</td><td>qgifd.pdb</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\imageformats\qgifd.pdb</td><td>1</td><td/></row>
 		<row><td>qgifhandler_p.h</td><td>ISX_DEFAULTCOMPONENT24</td><td>QGIFHA~1.H|qgifhandler_p.h</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\include\QtGui\5.4.0\QtGui\private\qgifhandler_p.h</td><td>1</td><td/></row>
 		<row><td>qglobal.h</td><td>ISX_DEFAULTCOMPONENT17</td><td>qglobal.h</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\include\QtCore\qglobal.h</td><td>1</td><td/></row>
 		<row><td>qglobalstatic</td><td>ISX_DEFAULTCOMPONENT17</td><td>QGLOBA~1|QGlobalStatic</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\include\QtCore\QGlobalStatic</td><td>1</td><td/></row>
@@ -2691,6 +2748,12 @@
 		<row><td>qhistorystate_p.h</td><td>ISX_DEFAULTCOMPONENT20</td><td>QHISTO~1.H|qhistorystate_p.h</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\include\QtCore\5.4.0\QtCore\private\qhistorystate_p.h</td><td>1</td><td/></row>
 		<row><td>qhooks_p.h</td><td>ISX_DEFAULTCOMPONENT20</td><td>qhooks_p.h</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\include\QtCore\5.4.0\QtCore\private\qhooks_p.h</td><td>1</td><td/></row>
 		<row><td>qhoverevent</td><td>ISX_DEFAULTCOMPONENT21</td><td>QHOVER~1|QHoverEvent</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\include\QtGui\QHoverEvent</td><td>1</td><td/></row>
+		<row><td>qicns.dll</td><td>qicns.dll</td><td>qicns.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\imageformats\qicns.dll</td><td>1</td><td/></row>
+		<row><td>qicnsd.dll</td><td>qicnsd.dll</td><td>qicnsd.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\imageformats\qicnsd.dll</td><td>1</td><td/></row>
+		<row><td>qicnsd.pdb</td><td>ISX_DEFAULTCOMPONENT32</td><td>qicnsd.pdb</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\imageformats\qicnsd.pdb</td><td>1</td><td/></row>
+		<row><td>qico.dll</td><td>qico.dll</td><td>qico.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\imageformats\qico.dll</td><td>1</td><td/></row>
+		<row><td>qicod.dll</td><td>qicod.dll</td><td>qicod.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\imageformats\qicod.dll</td><td>1</td><td/></row>
+		<row><td>qicod.pdb</td><td>ISX_DEFAULTCOMPONENT32</td><td>qicod.pdb</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\imageformats\qicod.pdb</td><td>1</td><td/></row>
 		<row><td>qicon</td><td>ISX_DEFAULTCOMPONENT21</td><td>QIcon</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\include\QtGui\QIcon</td><td>1</td><td/></row>
 		<row><td>qicon.h</td><td>ISX_DEFAULTCOMPONENT21</td><td>qicon.h</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\include\QtGui\qicon.h</td><td>1</td><td/></row>
 		<row><td>qicon_p.h</td><td>ISX_DEFAULTCOMPONENT24</td><td>qicon_p.h</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\include\QtGui\5.4.0\QtGui\private\qicon_p.h</td><td>1</td><td/></row>
@@ -2753,6 +2816,12 @@
 		<row><td>qjiscodec_p.h</td><td>ISX_DEFAULTCOMPONENT20</td><td>QJISCO~1.H|qjiscodec_p.h</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\include\QtCore\5.4.0\QtCore\private\qjiscodec_p.h</td><td>1</td><td/></row>
 		<row><td>qjni_p.h</td><td>ISX_DEFAULTCOMPONENT20</td><td>qjni_p.h</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\include\QtCore\5.4.0\QtCore\private\qjni_p.h</td><td>1</td><td/></row>
 		<row><td>qjnihelpers_p.h</td><td>ISX_DEFAULTCOMPONENT20</td><td>QJNIHE~1.H|qjnihelpers_p.h</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\include\QtCore\5.4.0\QtCore\private\qjnihelpers_p.h</td><td>1</td><td/></row>
+		<row><td>qjp2.dll</td><td>qjp2.dll</td><td>qjp2.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\imageformats\qjp2.dll</td><td>1</td><td/></row>
+		<row><td>qjp2d.dll</td><td>qjp2d.dll</td><td>qjp2d.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\imageformats\qjp2d.dll</td><td>1</td><td/></row>
+		<row><td>qjp2d.pdb</td><td>ISX_DEFAULTCOMPONENT32</td><td>qjp2d.pdb</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\imageformats\qjp2d.pdb</td><td>1</td><td/></row>
+		<row><td>qjpeg.dll</td><td>qjpeg.dll</td><td>qjpeg.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\imageformats\qjpeg.dll</td><td>1</td><td/></row>
+		<row><td>qjpegd.dll</td><td>qjpegd.dll</td><td>qjpegd.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\imageformats\qjpegd.dll</td><td>1</td><td/></row>
+		<row><td>qjpegd.pdb</td><td>ISX_DEFAULTCOMPONENT32</td><td>qjpegd.pdb</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\imageformats\qjpegd.pdb</td><td>1</td><td/></row>
 		<row><td>qjpeghandler_p.h</td><td>ISX_DEFAULTCOMPONENT24</td><td>QJPEGH~1.H|qjpeghandler_p.h</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\include\QtGui\5.4.0\QtGui\private\qjpeghandler_p.h</td><td>1</td><td/></row>
 		<row><td>qjpunicode_p.h</td><td>ISX_DEFAULTCOMPONENT20</td><td>QJPUNI~1.H|qjpunicode_p.h</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\include\QtCore\5.4.0\QtCore\private\qjpunicode_p.h</td><td>1</td><td/></row>
 		<row><td>qjson_p.h</td><td>ISX_DEFAULTCOMPONENT20</td><td>qjson_p.h</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\include\QtCore\5.4.0\QtCore\private\qjson_p.h</td><td>1</td><td/></row>
@@ -2925,6 +2994,9 @@
 		<row><td>qminimal.dll</td><td>qminimal.dll</td><td>qminimal.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\plugins\platforms\qminimal.dll</td><td>1</td><td/></row>
 		<row><td>qminimald.dll</td><td>qminimald.dll</td><td>QMINIM~1.DLL|qminimald.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\plugins\platforms\qminimald.dll</td><td>1</td><td/></row>
 		<row><td>qminimald.pdb</td><td>ISX_DEFAULTCOMPONENT31</td><td>QMINIM~1.PDB|qminimald.pdb</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\plugins\platforms\qminimald.pdb</td><td>1</td><td/></row>
+		<row><td>qmng.dll</td><td>qmng.dll</td><td>qmng.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\imageformats\qmng.dll</td><td>1</td><td/></row>
+		<row><td>qmngd.dll</td><td>qmngd.dll</td><td>qmngd.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\imageformats\qmngd.dll</td><td>1</td><td/></row>
+		<row><td>qmngd.pdb</td><td>ISX_DEFAULTCOMPONENT32</td><td>qmngd.pdb</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\imageformats\qmngd.pdb</td><td>1</td><td/></row>
 		<row><td>qmodelindex</td><td>ISX_DEFAULTCOMPONENT17</td><td>QMODEL~1|QModelIndex</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\include\QtCore\QModelIndex</td><td>1</td><td/></row>
 		<row><td>qmodelindexlist</td><td>ISX_DEFAULTCOMPONENT17</td><td>QMODEL~1|QModelIndexList</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\include\QtCore\QModelIndexList</td><td>1</td><td/></row>
 		<row><td>qmouseevent</td><td>ISX_DEFAULTCOMPONENT21</td><td>QMOUSE~1|QMouseEvent</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\include\QtGui\QMouseEvent</td><td>1</td><td/></row>
@@ -3471,6 +3543,9 @@
 		<row><td>qsurface.h</td><td>ISX_DEFAULTCOMPONENT21</td><td>qsurface.h</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\include\QtGui\qsurface.h</td><td>1</td><td/></row>
 		<row><td>qsurfaceformat</td><td>ISX_DEFAULTCOMPONENT21</td><td>QSURFA~1|QSurfaceFormat</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\include\QtGui\QSurfaceFormat</td><td>1</td><td/></row>
 		<row><td>qsurfaceformat.h</td><td>ISX_DEFAULTCOMPONENT21</td><td>QSURFA~1.H|qsurfaceformat.h</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\include\QtGui\qsurfaceformat.h</td><td>1</td><td/></row>
+		<row><td>qsvg.dll</td><td>qsvg.dll</td><td>qsvg.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\imageformats\qsvg.dll</td><td>1</td><td/></row>
+		<row><td>qsvgd.dll</td><td>qsvgd.dll</td><td>qsvgd.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\imageformats\qsvgd.dll</td><td>1</td><td/></row>
+		<row><td>qsvgd.pdb</td><td>ISX_DEFAULTCOMPONENT32</td><td>qsvgd.pdb</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\imageformats\qsvgd.pdb</td><td>1</td><td/></row>
 		<row><td>qswipegesture</td><td>ISX_DEFAULTCOMPONENT26</td><td>QSWIPE~1|QSwipeGesture</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\include\QtWidgets\QSwipeGesture</td><td>1</td><td/></row>
 		<row><td>qsyntaxhighlighter</td><td>ISX_DEFAULTCOMPONENT21</td><td>QSYNTA~1|QSyntaxHighlighter</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\include\QtGui\QSyntaxHighlighter</td><td>1</td><td/></row>
 		<row><td>qsyntaxhighlighter.h</td><td>ISX_DEFAULTCOMPONENT21</td><td>QSYNTA~1.H|qsyntaxhighlighter.h</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\include\QtGui\qsyntaxhighlighter.h</td><td>1</td><td/></row>
@@ -3603,6 +3678,9 @@
 		<row><td>qtexttablecellformat</td><td>ISX_DEFAULTCOMPONENT21</td><td>QTEXTT~1|QTextTableCellFormat</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\include\QtGui\QTextTableCellFormat</td><td>1</td><td/></row>
 		<row><td>qtexttableformat</td><td>ISX_DEFAULTCOMPONENT21</td><td>QTEXTT~1|QTextTableFormat</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\include\QtGui\QTextTableFormat</td><td>1</td><td/></row>
 		<row><td>qtextureglyphcache_p.h</td><td>ISX_DEFAULTCOMPONENT24</td><td>QTEXTU~1.H|qtextureglyphcache_p.h</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\include\QtGui\5.4.0\QtGui\private\qtextureglyphcache_p.h</td><td>1</td><td/></row>
+		<row><td>qtga.dll</td><td>qtga.dll</td><td>qtga.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\imageformats\qtga.dll</td><td>1</td><td/></row>
+		<row><td>qtgad.dll</td><td>qtgad.dll</td><td>qtgad.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\imageformats\qtgad.dll</td><td>1</td><td/></row>
+		<row><td>qtgad.pdb</td><td>ISX_DEFAULTCOMPONENT32</td><td>qtgad.pdb</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\imageformats\qtgad.pdb</td><td>1</td><td/></row>
 		<row><td>qtglobal</td><td>ISX_DEFAULTCOMPONENT17</td><td>QtGlobal</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\include\QtCore\QtGlobal</td><td>1</td><td/></row>
 		<row><td>qtgui</td><td>ISX_DEFAULTCOMPONENT21</td><td>QtGui</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\include\QtGui\QtGui</td><td>1</td><td/></row>
 		<row><td>qtguidepends</td><td>ISX_DEFAULTCOMPONENT21</td><td>QTGUID~1|QtGuiDepends</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\include\QtGui\QtGuiDepends</td><td>1</td><td/></row>
@@ -3617,6 +3695,9 @@
 		<row><td>qthreadstorage</td><td>ISX_DEFAULTCOMPONENT17</td><td>QTHREA~1|QThreadStorage</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\include\QtCore\QThreadStorage</td><td>1</td><td/></row>
 		<row><td>qthreadstorage.h</td><td>ISX_DEFAULTCOMPONENT17</td><td>QTHREA~1.H|qthreadstorage.h</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\include\QtCore\qthreadstorage.h</td><td>1</td><td/></row>
 		<row><td>qthreadstoragedata</td><td>ISX_DEFAULTCOMPONENT17</td><td>QTHREA~1|QThreadStorageData</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\include\QtCore\QThreadStorageData</td><td>1</td><td/></row>
+		<row><td>qtiff.dll</td><td>qtiff.dll</td><td>qtiff.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\imageformats\qtiff.dll</td><td>1</td><td/></row>
+		<row><td>qtiffd.dll</td><td>qtiffd.dll</td><td>qtiffd.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\imageformats\qtiffd.dll</td><td>1</td><td/></row>
+		<row><td>qtiffd.pdb</td><td>ISX_DEFAULTCOMPONENT32</td><td>qtiffd.pdb</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\imageformats\qtiffd.pdb</td><td>1</td><td/></row>
 		<row><td>qtilerules</td><td>ISX_DEFAULTCOMPONENT26</td><td>QTILER~1|QTileRules</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\include\QtWidgets\QTileRules</td><td>1</td><td/></row>
 		<row><td>qtime</td><td>ISX_DEFAULTCOMPONENT17</td><td>QTime</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\include\QtCore\QTime</td><td>1</td><td/></row>
 		<row><td>qtimeedit</td><td>ISX_DEFAULTCOMPONENT26</td><td>QTIMEE~1|QTimeEdit</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\include\QtWidgets\QTimeEdit</td><td>1</td><td/></row>
@@ -3734,7 +3815,13 @@
 		<row><td>qversionnumber_p.h</td><td>ISX_DEFAULTCOMPONENT20</td><td>QVERSI~1.H|qversionnumber_p.h</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\include\QtCore\5.4.0\QtCore\private\qversionnumber_p.h</td><td>1</td><td/></row>
 		<row><td>qwaitcondition</td><td>ISX_DEFAULTCOMPONENT17</td><td>QWAITC~1|QWaitCondition</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\include\QtCore\QWaitCondition</td><td>1</td><td/></row>
 		<row><td>qwaitcondition.h</td><td>ISX_DEFAULTCOMPONENT17</td><td>QWAITC~1.H|qwaitcondition.h</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\include\QtCore\qwaitcondition.h</td><td>1</td><td/></row>
+		<row><td>qwbmp.dll</td><td>qwbmp.dll</td><td>qwbmp.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\imageformats\qwbmp.dll</td><td>1</td><td/></row>
+		<row><td>qwbmpd.dll</td><td>qwbmpd.dll</td><td>qwbmpd.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\imageformats\qwbmpd.dll</td><td>1</td><td/></row>
+		<row><td>qwbmpd.pdb</td><td>ISX_DEFAULTCOMPONENT32</td><td>qwbmpd.pdb</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\imageformats\qwbmpd.pdb</td><td>1</td><td/></row>
 		<row><td>qweakpointer</td><td>ISX_DEFAULTCOMPONENT17</td><td>QWEAKP~1|QWeakPointer</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\include\QtCore\QWeakPointer</td><td>1</td><td/></row>
+		<row><td>qwebp.dll</td><td>qwebp.dll</td><td>qwebp.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\imageformats\qwebp.dll</td><td>1</td><td/></row>
+		<row><td>qwebpd.dll</td><td>qwebpd.dll</td><td>qwebpd.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\imageformats\qwebpd.dll</td><td>1</td><td/></row>
+		<row><td>qwebpd.pdb</td><td>ISX_DEFAULTCOMPONENT32</td><td>qwebpd.pdb</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\imageformats\qwebpd.pdb</td><td>1</td><td/></row>
 		<row><td>qwhatsthis</td><td>ISX_DEFAULTCOMPONENT26</td><td>QWHATS~1|QWhatsThis</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\include\QtWidgets\QWhatsThis</td><td>1</td><td/></row>
 		<row><td>qwhatsthis.h</td><td>ISX_DEFAULTCOMPONENT26</td><td>QWHATS~1.H|qwhatsthis.h</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\include\QtWidgets\qwhatsthis.h</td><td>1</td><td/></row>
 		<row><td>qwhatsthisclickedevent</td><td>ISX_DEFAULTCOMPONENT21</td><td>QWHATS~1|QWhatsThisClickedEvent</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\jhetherington\Documents\ProjectMidas\PMMain\Midas\MidasGUI\Qt\include\QtGui\QWhatsThisClickedEvent</td><td>1</td><td/></row>
@@ -4022,6 +4109,7 @@
 		<row><td>ISX_DEFAULTCOMPONENT3</td><td/><td/><td>_7750F1E1_C6B5_43ED_B63F_661C1FB3FE19_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>ISX_DEFAULTCOMPONENT30</td><td/><td/><td>_197B278E_6E77_414B_9A75_FC5341639FAE_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>ISX_DEFAULTCOMPONENT31</td><td/><td/><td>_8771D229_B9BD_41E1_A039_5AEA9996AF84_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>ISX_DEFAULTCOMPONENT32</td><td/><td/><td>_4A178E9E_78BF_462F_9561_D10B5793A68C_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>ISX_DEFAULTCOMPONENT4</td><td/><td/><td>_34FF3DFF_6D0E_4C8E_B92C_8FD45B43446F_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>ISX_DEFAULTCOMPONENT5</td><td/><td/><td>_AF577D74_DD71_4400_8CC3_887F2F1338BA_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>ISX_DEFAULTCOMPONENT6</td><td/><td/><td>_707516CD_F61E_4FEF_A951_D505549CEE3F_FILTER</td><td/><td/><td/><td/></row>
@@ -4040,10 +4128,34 @@
 		<row><td>icuin53.dll2</td><td/><td/><td>_76929F1E_B08F_47E9_B173_BDE6B38F8797_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>icuuc53.dll2</td><td/><td/><td>_1B90AB27_3AAB_456A_BB4D_C6D57DF4D5DE_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>myo32.dll</td><td/><td/><td>_6CB0EDB2_E396_4B8D_81B6_11ECE9B549EE_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>qdds.dll</td><td/><td/><td>_C164E3E2_0E4B_41DC_B346_3E225348D532_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>qddsd.dll</td><td/><td/><td>_690D2A17_A064_4BDF_9BE0_F768F506C1E3_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>qgif.dll</td><td/><td/><td>_E0DCB1C0_0AFB_410A_8114_976DC81C0EC1_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>qgifd.dll</td><td/><td/><td>_54E0826B_0EEF_4B28_9EA6_8A83E07DB12B_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>qicns.dll</td><td/><td/><td>_4FD5D1B6_9113_4638_9994_2FFE0A1D0CC4_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>qicnsd.dll</td><td/><td/><td>_A5C2DF25_317D_42FB_851D_B2100F16B976_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>qico.dll</td><td/><td/><td>_4D63A330_588E_45C7_A85C_BF7ACAE60109_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>qicod.dll</td><td/><td/><td>_CA4AB3E6_CE84_4EF6_A8B6_AEF7878C997B_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>qjp2.dll</td><td/><td/><td>_03D4DED9_663C_4EB6_952D_9B731BDA37A8_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>qjp2d.dll</td><td/><td/><td>_16729037_64C6_420F_A1CF_E637213C1B05_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>qjpeg.dll</td><td/><td/><td>_BF6454C0_EA1C_45D8_BD7C_412EFCEAE4A6_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>qjpegd.dll</td><td/><td/><td>_6509FB92_E6CE_4C23_A182_BDB77C5261F5_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>qminimal.dll</td><td/><td/><td>_6A838F19_7B1A_4CB9_B3A3_222F082A7EF7_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>qminimald.dll</td><td/><td/><td>_A0FCBE53_9D27_4FFC_BACB_B5D5218264A7_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>qmng.dll</td><td/><td/><td>_90CFDA04_4271_410E_9C3C_3371293A79C3_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>qmngd.dll</td><td/><td/><td>_348484A9_F35C_497B_AA3E_69D0BCB0AB5F_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>qoffscreen.dll</td><td/><td/><td>_7900C094_B170_4016_9099_34440BB1D714_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>qoffscreend.dll</td><td/><td/><td>_6A90F950_BB64_4CF5_BA02_86617C4B94E9_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>qsvg.dll</td><td/><td/><td>_617AA344_8574_4EBF_8FBD_2CCBF2D45DDB_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>qsvgd.dll</td><td/><td/><td>_236DBEAC_FC75_487F_B4A6_F125B16F4197_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>qtga.dll</td><td/><td/><td>_9B79ABA6_4719_439D_A315_00B471824E0E_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>qtgad.dll</td><td/><td/><td>_09881BAF_5219_4782_BAE0_071C70B85F83_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>qtiff.dll</td><td/><td/><td>_C8432081_5C05_4A2E_BC8B_00063C8707EE_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>qtiffd.dll</td><td/><td/><td>_246A6C67_C6CA_4690_90A7_B6DE733DA42A_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>qwbmp.dll</td><td/><td/><td>_091B6372_B5D4_482F_821F_AB03B67EE619_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>qwbmpd.dll</td><td/><td/><td>_E91DC893_8AD5_435A_A7B2_A67FB88264B1_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>qwebp.dll</td><td/><td/><td>_CDDE7B9E_0A88_49FB_87AF_2633F26EF520_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>qwebpd.dll</td><td/><td/><td>_6C58EDFE_4D1E_46C9_9B56_4C61A31DCD39_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>qwindows.dll</td><td/><td/><td>_EEF202B0_9A4F_430A_A0C9_E5A6FC4A7008_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>qwindowsd.dll</td><td/><td/><td>_18CDF55A_A1AB_4B6A_92DA_74F6A9F234D4_FILTER</td><td/><td/><td/><td/></row>
 	</table>
