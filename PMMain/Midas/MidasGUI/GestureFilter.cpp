@@ -96,6 +96,25 @@ void GestureFilter::process()
             gesture = boost::any_cast<Pose::Type>(input[GESTURE_INPUT]);
         }
     }
+    else if (input.find(GESTURE_FILTER_STATE_CHANGE) != input.end())
+    {
+        boost::any value = input[GESTURE_FILTER_STATE_CHANGE];
+        if (value.type() != typeid(midasMode))
+        {
+            Filter::setFilterError(filterError::INVALID_INPUT);
+            Filter::setFilterStatus(filterStatus::FILTER_ERROR);
+            return;
+        }
+        else
+        {
+            midasMode forceState = boost::any_cast<midasMode>(input[GESTURE_FILTER_STATE_CHANGE]);
+            CommandData forceStateCmd;
+            forceStateCmd.type = commandType::STATE_CHANGE;
+            forceStateCmd.action.mode = forceState;
+            forceStateCmd.name = "Force State Change";
+            handleStateChange(forceStateCmd, this);
+        }
+    }
     else
     {
         return;

@@ -470,6 +470,13 @@ void MyoDevice::updateProfiles(void)
     error |= (int)advancedPosePipeline.updateFiltersBasedOnProfile(*profileManager, state->getProfile());
 	
     error |= (int)advancedOrientationPipeline.updateFiltersBasedOnProfile(*profileManager, state->getProfile());
+
+
+    AdvancedFilterPipeline lockPipe;
+    lockPipe.registerFilterAtDeepestLevel(&gestureFilter);
+    filterDataMap input;
+    input[GESTURE_FILTER_STATE_CHANGE] = midasMode::LOCK_MODE;
+    lockPipe.startPipeline(input);
     	
     if (error != (int)filterError::NO_FILTER_ERROR)
     {

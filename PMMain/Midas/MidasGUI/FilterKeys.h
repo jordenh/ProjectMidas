@@ -51,3 +51,4 @@
 
 // Gesture Recognition Keys
 #define GESTURE_INPUT "gesture"
+#define GESTURE_FILTER_STATE_CHANGE "gfStateChange" // work around to send a signal to the gesture filter to change a state directly, since it is setup to do so.
