@@ -29,18 +29,46 @@ class KeyboardWidget;
 class MainGUI;
 class ProfileManager;
 
+/* 
+ * The main thread of Midas created seperatly so that Qt can create a main
+ * GUI application and a main MidasThread which communicate via signals/slots
+ */
 class MidasThread : public QThread
 {
     Q_OBJECT
 
 public:
+
+    /**
+     * Basic Constructor/Destructor
+     */
+    MidasThread(std::vector<ringData> *kybrdRingData);
     ~MidasThread();
 
-	MidasThread(std::vector<ringData> *kybrdRingData);
+    /**
+     * Accessor
+     *
+     * @return a pointer to the vector of ringData data initially loaded
+     */
 	std::vector<ringData>* getKybrdRingData();
 
+    /**
+     * Initialization function
+     *
+     * @param Handle to the mainGUI
+     */
     void setMainGuiHandle(MainGUI *mainGui);
+
+    /**
+     * Initialization function
+     *
+     * @param Handle to the profile Manager
+     */
     void setProfileManagerHandle(ProfileManager *profileManager);
+
+    /**
+     * Main thread functionality 
+     */
     void run();
 
 private:
@@ -49,14 +77,32 @@ private:
 
 	std::vector<ringData> *kybrdRingData; // not owned
 signals:
-	void emitUpdateKeyboard(int, double, bool, bool);  // kybdGUISel, angle, center, held
-	void emitRssi(float);
+	/**
+     * Emit the Keyboard GUI index (which panel of characters to display that were initially loaded),
+     * The current angle of the user, relative to their initial angle,
+     * Whether or not they are in the center region
+     * And whenter of not the action has been held
+     */
+    void emitUpdateKeyboard(int, double, bool, bool);  // kybdGUISel, angle, center, held
 
-signals:
+    /**
+     * Emit the current signal strength
+     */
+    void emitRssi(float);
+
+    /**
+     * Emit the current cursor velocity as an X,Y vector
+     */
     void emitVeloc(int, int);
 
+    /**
+     * Emit misc debug info
+     */
     void emitDebugInfo(int, int);
 
+    /**
+     * Emit connection info
+     */
     void emitDisconnect(bool);
 };
 

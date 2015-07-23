@@ -54,8 +54,14 @@ protected:
      */
     virtual void mouseMoveEvent(QMouseEvent *event);
     
+    /**
+    * The event handler function that is called when the widget is released by the mouse.
+    */
+    virtual void mouseReleaseEvent(QMouseEvent *event);
+
 private:
     QPoint position;
+    bool mousePressed; // used to verify that position is accurate for mouseMoveEvents
 };
 
 #endif

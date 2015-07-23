@@ -73,7 +73,11 @@ public:
     void connectSignallerToSettingsDisplayer(SettingsSignaller *signaller);
 
 	void connectSignallerToKeyboardToggle(GestureSignaller *signaller);
+
+    void connectSeqDisplayerToSettingsDisplayer();
 	
+    void startShowGuiThread();
+
 private:
     void hideAllNonEssentialWidgets();
 
@@ -81,6 +85,10 @@ private:
 
     void toggleSettingsDisplayer();
     void toggleProfileDisplayer();
+
+    // on a timer, call this->show() to ensure Midas stays on top even if other applications have 
+    // alerts/popups that temporarily steal focus.
+    void showGuiThread();
 
 	KeyboardWidget* keyboard;
 	DistanceWidget* distanceDisplayer;

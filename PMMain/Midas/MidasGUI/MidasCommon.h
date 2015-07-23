@@ -34,7 +34,7 @@
 
 #define MIN_GYRO_SCALE_DOWN 10
 #define MAX_GYRO_SCALE_DOWN 100000
-#define DEFAULT_GYRO_SCALE_DOWN 100
+#define DEFAULT_GYRO_SCALE_DOWN 50
 
 #define GUI_OPACITY 0.70
 
@@ -50,7 +50,7 @@
 #define INFO_INDICATOR_HEIGHT  35
 #define PROF_INDICATOR_WIDTH   250
 #define PROF_INDICATOR_HEIGHT  35
-#define SETTINGS_HEIGHT 170
+#define SETTINGS_HEIGHT 250
 #define SETTINGS_WIDTH 400
 #define WIDGET_BUFFER 5
 #define DISTANCE_DISPLAY_WIDTH 250
@@ -66,6 +66,11 @@
 #define MIDAS_GREY QColor(205, 205, 193)
 #define MYO_BLUE QColor(0, 188, 223)
 #define KEYBOARD_SEL QColor(200, 0, 0)
+#define MIDAS_GREEN QColor(00, 235, 52)
+#define MIDAS_RED QColor(255, 24, 0)
+
+#define LOCKED_TEXT "LOCKED"
+#define UNLOCKED_TEXT "UNLOCKED"
 
 class KeyboardVector;
 
@@ -83,6 +88,10 @@ enum commandType {
     UNKNOWN_COMMAND
 };
 
+/**
+ * Enumerates the ability to dynamically progress a profile to the
+ * next/previous stored profile
+ */
 enum profileCmds {
 	MOVE_PROFILE_FORWARD,
 	MOVE_PROFILE_BACKWARD
@@ -186,25 +195,37 @@ enum midasMode {
     GESTURE_HOLD_FIVE    
 };
 
+/**
+ * Level describing how much of the Sequence Displayer is exposed to 
+ * the user when open.
+ */
+#define ALL_LVL "All"
+#define COMPLEX_LVL "Complex Only"
+#define LOCKS_LVL "Lock/Unlock Only"
+enum class helpLevel {
+    MINIMAL, // only show lock/unlock help
+    COMPLEX, // show anything with >= 2 poses in a sequence
+    ALL // show all registered sequences
+};
+
+/**
+ * Return a string representation of the midasMode
+ */
 static std::string modeToString(midasMode mm)
 {
     switch (mm)
     {
     case LOCK_MODE:   
-#ifdef BUILD_FOR_KARDIUM
-        return "LOCKED";
-#else
-        return "Locked";
-#endif
+        return LOCKED_TEXT;
     case MOUSE_MODE:  
 #ifdef BUILD_FOR_KARDIUM
-        return "UNLOCKED";
+        return UNLOCKED_TEXT;
 #else
         return "Mouse Mouse";
 #endif
     case MOUSE_MODE2:
 #ifdef BUILD_FOR_KARDIUM
-        return "UNLOCKED";
+        return UNLOCKED_TEXT;
 #else
         return "Mouse Mode2";
 #endif
@@ -241,6 +262,9 @@ enum kybdStatus {
     N_PRESSES_MATCH_RELEASES    /**< The number of key presses does not match the number of key releases.*/
 };
 
+/**
+ * A representation of any Midas action.
+ */
 typedef union action{
 	kybdCmds kybd;
 	kybdGUICmds kybdGUI;
@@ -257,16 +281,27 @@ struct point {
     point(int xVal = 0, int yVal = 0) : x(xVal), y(yVal) { }
 };
 
+/**
+ * A simple 2D value stored as x and y.
+ */
 struct vector2D {
 	double x, y;
     vector2D(double xVal = 0, double yVal = 0) : x(xVal), y(yVal) { }
 };
 
+/**
+ * A simple 3D values stored as x, y, and z.
+ */
 struct vector3D {
 	double x, y, z;
 	vector3D(double xVal = 0.0, double yVal = 0.0, double zVal = 0.0) : x(xVal), y(yVal), z(zVal) { }
 };
 
+/**
+ * The angle that a user's arm is producing, used to communicate with the GUI
+ * from the backend. Also storing a flag to indicate if a threshold is reached
+ * to indicate the user's angle is large enough to leave the center circle.
+ */
 struct keyboardAngle {
     int angle;
     bool ringThreshReached = true;
@@ -275,6 +310,9 @@ struct keyboardAngle {
     int x, y;
 };
 
+/**
+ * Enumeration of the possible hold types.
+ */
 enum HoldModeActionType {
     ABS_DELTA_FINITE, // Based on the net delta beyond threshold, ensure the number of +/- actions is at a certain value (repeatable change)
     ABS_DELTA_VELOCITY, // Based on net delta beyond threshold, continue spewing actions

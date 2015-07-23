@@ -44,7 +44,7 @@
 #include "SettingsSignaller.h"
 #include "ProfilesDisplayer.h"
 #include "MidasThread.h"
-
+#include <thread>
 
 #include "KeyboardWidget.h"
 #include "DistanceWidget.h"
@@ -53,8 +53,11 @@
 #define SCREEN_BOTTOM_BUFFER   30
 
 MainGUI::MainGUI(MidasThread *mainThread, ProfileManager *pm, int deadZoneRad)
-    : DraggableWidget(NULL, Qt::FramelessWindowHint | Qt::WindowSystemMenuHint | Qt::WindowStaysOnTopHint)
+    : DraggableWidget(NULL, Qt::FramelessWindowHint | Qt::WindowSystemMenuHint | Qt::WindowStaysOnTopHint | Qt::X11BypassWindowManagerHint)
 {
+    // tried to put X11BypassWindowManagerHint as a windows hint due to reference: http://doc.qt.io/qt-5/qt.html#WindowType-enum which suggested it might help. Has not.
+    settingsDisplayer = new SettingsDisplayer(SETTINGS_WIDTH, SETTINGS_HEIGHT);
+    settingsDisplayer->setVisible(false);
     infoIndicator = new InfoIndicator(INFO_INDICATOR_WIDTH, INFO_INDICATOR_HEIGHT, this);
     sequenceDisplayer = new SequenceDisplayer(this);
 	poseDisplayer = new PoseDisplayer(MOUSE_INDICATOR_SIZE, MOUSE_INDICATOR_SIZE, this);
@@ -97,9 +100,6 @@ MainGUI::MainGUI(MidasThread *mainThread, ProfileManager *pm, int deadZoneRad)
     profileHeights = profilesWidget->height();
     profilesWidget->setVisible(false);
 
-    settingsDisplayer = new SettingsDisplayer(SETTINGS_WIDTH, SETTINGS_HEIGHT);
-    settingsDisplayer->setVisible(false);
-
     QVBoxLayout *leftBoxLayout = new QVBoxLayout;
     leftBoxLayout->addWidget(infoIndicator);
 
@@ -141,6 +141,9 @@ MainGUI::MainGUI(MidasThread *mainThread, ProfileManager *pm, int deadZoneRad)
     setGeometry(screen.right() - totalWidth - SCREEN_RIGHT_BUFFER,
         screen.bottom() - totalHeight - SCREEN_BOTTOM_BUFFER,
         totalWidth, totalHeight);
+
+    connectSeqDisplayerToSettingsDisplayer();
+    startShowGuiThread();
 }
 
 void MainGUI::toggleKeyboard()
@@ -228,6 +231,13 @@ void MainGUI::connectSignallerToSettingsDisplayer(SettingsSignaller *signaller)
         QObject::connect(settingsDisplayer, SIGNAL(emitUseEmgImpulseButton(bool)),
             signaller, SLOT(handleUseEmgImpulse(bool)));
     }
+}
+
+void MainGUI::connectSeqDisplayerToSettingsDisplayer()
+{
+    // bypass the settingsSignaller only because this message is passing across GUI elements only.
+    QObject::connect(settingsDisplayer, SIGNAL(emitHelpLevelChanged(int)),
+        sequenceDisplayer, SLOT(handleHelpLevelChanged(int)));
 }
 
 void MainGUI::connectSignallerToProfileWidgets(ProfileSignaller* signaller)
@@ -377,4 +387,52 @@ void MainGUI::ShowContextMenu(const QPoint& pos)
     {
         // nothing was chosen
     }
+}
+
+
+// TEST CODE to try to get Midas to come back to the top level even if some other application
+// steals focus.. unfortunately none of the code in showGuiThread works yet to solve this problem. 
+QByteArray gGeom;
+
+void MainGUI::startShowGuiThread()
+{
+//    // setup callback thread that uses 'this" as 'this'
+//    std::thread callbackThread(&MainGUI::showGuiThread, this);
+//    callbackThread.detach();
+}
+
+void MainGUI::showGuiThread()
+{
+//    gGeom = this->saveGeometry();
+    std::chrono::milliseconds period(1000);
+    do {
+        std::this_thread::sleep_for(period);
+
+        if (this->isVisible() && !this->isHidden())
+        {
+            int a = 1;
+        }
+        else
+        {
+            int b = 1;
+            this->setVisible(true);
+            this->setFocus();
+            this->activateWindow(); // maybe overkill but trying all routes. <-- this 'works' but also brings up windows basebar... so.. not great.
+        }
+if (this->isActiveWindow())
+{
+    int a = 1;
+}
+else
+{
+    // triggers even if visible, but just not 'active' ie if not selected... So this isnt good.
+    int b = 1;
+    this->setVisible(true);
+    this->setFocus();
+}
+
+        this->show(); // this doesnt work...
+//        this->restoreGeometry(gGeom); // causes error -> cant restore geom on a seperate thread... AND doesnt solve problem :(
+
+    } while (true);
 }

@@ -61,3 +61,8 @@ void SettingsSignaller::handleUseEmgImpulse(bool val)
 {
     this->useEMGImpulse = val;
 }
+
+void SettingsSignaller::handleHelpLevelChanged(int helpLevelEnum)
+{
+    this->midasHelpLevel = (helpLevel)helpLevelEnum;
+}

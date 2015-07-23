@@ -21,6 +21,7 @@
 
 #include "MidasCommon.h"
 #include "DraggableWidget.h"
+#include "MainGUI.h"
 #include <QImage.h>
 #include <qevent.h>
 #include <qapplication.h>
@@ -38,7 +39,7 @@
 #define MAX_NUM_SEQUENCES_DISPLAYED 15
 
 SequenceDisplayer::SequenceDisplayer(QWidget *parent)
-    : QWidget(parent), isRightHand(true)
+    : QWidget(parent), isRightHand(true), midasHelpLevel(helpLevel::ALL)
 {
     gridLayout = new QGridLayout;
     gridLayout->setAlignment(Qt::AlignRight | Qt::AlignBottom);
@@ -190,6 +191,36 @@ void SequenceDisplayer::updateSequences()
     for (it = activeSequencesIdToDataMap.begin(); it != activeSequencesIdToDataMap.end(); it++)
     {
         sequenceData seq = it->second;
+
+        switch (midasHelpLevel)
+        {
+        case helpLevel::MINIMAL:
+            if (seq.seqLabel->text().compare("Lock", Qt::CaseInsensitive) == 0 ||
+                seq.seqLabel->text().compare("Unlock", Qt::CaseInsensitive) == 0)
+            {
+                break;
+            }
+            else
+            {
+                // go to displaying next sequence
+                continue;
+            }
+        case helpLevel::COMPLEX:
+            if (seq.sequenceImages.size() >= 2)
+            {
+                break;
+            }
+            else
+            {
+                // go to displaying next sequence
+                continue;
+            }
+        case helpLevel::ALL:
+            break;
+        default:
+            break;
+        }
+
         int currCol = 0;
         seq.seqLabel->setHidden(false);
         gridLayout->addWidget(seq.seqLabel, currRow, currCol, LABEL_NUM_ROWS, LABEL_NUM_COLS);
@@ -233,5 +264,12 @@ void SequenceDisplayer::updateSequences()
 void SequenceDisplayer::handleIsRightHand(bool isRightHand)
 {
     this->isRightHand = isRightHand;
+    updateSequences();
+}
+
+void SequenceDisplayer::handleHelpLevelChanged(int lvl)
+{
+    midasHelpLevel = helpLevel(lvl);
+    clearWidgets();
     updateSequences();
 }

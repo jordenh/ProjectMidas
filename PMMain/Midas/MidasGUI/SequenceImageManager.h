@@ -52,13 +52,30 @@
 #define POSE_LENGTH_HOLD_PATH "Resources\\icons\\PoseLenHold.png"
 #define POSE_LEN_SCALEDOWN_ICON 3
 
+/* 
+ * Manage the images used to indicate a user's hand
+ */
 class SequenceImageManager
 {
 public:
+    /*
+     * Basic Constructor/Destrcutor
+     */
     SequenceImageManager();
     ~SequenceImageManager();
 
+    /*
+     * Load images from assets
+     */
     void loadImages();
+
+    /*
+     * Given the ids and hold times of certain images, create a vector of sequenceImageSets
+     * 
+     * @param ids The ids of the images
+     * @param lengths The hold lengths of the images
+     * @return std::vector<sequenceImageSet> A vector of the corresponding images
+     */
     std::vector<sequenceImageSet> formSequenceSetFromIds(std::vector<int> ids, std::vector<PoseLength> lengths);
 
 private:

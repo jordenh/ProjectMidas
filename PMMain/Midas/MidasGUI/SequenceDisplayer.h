@@ -23,12 +23,14 @@
 #include <qwidget.h>
 
 #include "MyoCommon.h"
+#include "SettingsSignaller.h"
 
 #include <map>
 #include <vector>
 
 class QGridLayout;
 class QLabel;
+class MainGUI;
 
 #define NUM_COLUMNS 5
 
@@ -80,7 +82,9 @@ public slots:
     void showSequences(std::vector<sequenceProgressData>);
 
     void handleIsRightHand(bool);
- 
+
+    void handleHelpLevelChanged(int);
+     
 private:
     /**
      * Clear the widgets in the grid layout.
@@ -123,6 +127,7 @@ private:
     QGridLayout *gridLayout;
     int maxWidth, maxHeight;
     int maxNumSequences;
+    helpLevel midasHelpLevel;
 };
 
 #endif SEQUENCE_DISPLAYER_H

@@ -79,8 +79,19 @@ public:
      */
     void process();
 
+    /* 
+     * This is used so that extra data can be populated asynchronously by a callback
+     * thread and then the produced data can still be sent syncrhonously to the
+     * shared command data.
+     *
+     * @return filterDataMap A map of filter data intended to be passed directly
+     * to the SCD
+     */
     filterDataMap getExtraDataForSCD();
 
+    /* 
+     * virtual from Filter.h
+     */
     filterError updateBasedOnProfile(ProfileManager& pm, std::string name);
 
     /**
@@ -88,10 +99,23 @@ public:
     */
     GestureSeqRecorder *getGestureSeqRecorder() { return gestSeqRecorder; }
 
+    /* 
+     * Perform all necessary state-change actions based on response
+     */
     static void handleStateChange(CommandData response, GestureFilter *gf);
+    
+    /* 
+     * Perform all necessary profile-change actions based on response
+     */
 	static void handleProfileChangeCommand(CommandData response, GestureFilter *gf);
 
+    /* 
+     * Create and invoke callback thread
+     */
     friend void setupCallbackThread(GestureFilter *gf);
+    /* 
+     * Continually callback on timer to produce time-dependant events
+     */
     friend void callbackThreadWrapper(GestureFilter *gf);
 
 private:

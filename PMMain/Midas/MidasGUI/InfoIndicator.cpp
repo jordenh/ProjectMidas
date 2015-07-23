@@ -22,7 +22,6 @@
 #include <QGridLayout.h>
 #include <qpushbutton.h>
 #include <qlabel.h>
-#include <QTimer.h>
 #include <QEvent.h>
 #include <QPainter.h>
 #include <qstyle.h>
@@ -34,13 +33,9 @@
 InfoIndicator::InfoIndicator(int widgetWidth, int widgetHeight, QWidget *parent)
     : QWidget(parent), indWidth(widgetWidth), indHeight(widgetHeight), showAll(false)
 {
-    QTimer *timer = new QTimer(this);
-    connect(timer, SIGNAL(timeout()), this, SLOT(update()));
-    timer->start(50);
-
     setContextMenuPolicy(Qt::ActionsContextMenu);
     setToolTip(tr("Drag the info indicator with the left mouse button.\n"
-        "Use the right mouse button to open a context menu."));
+        "Use the right mouse button to open the Settings and Profile Widgets."));
     setWindowTitle(tr("Info Indicator"));
 
     setWindowOpacity(GUI_OPACITY);
@@ -48,28 +43,20 @@ InfoIndicator::InfoIndicator(int widgetWidth, int widgetHeight, QWidget *parent)
     pal.setColor(QPalette::Background, MIDAS_GREY);
     setAutoFillBackground(true);
     setPalette(pal);
-    setWindowFlags(Qt::WindowStaysOnTopHint);
+    setWindowFlags(Qt::WindowStaysOnTopHint  | Qt::X11BypassWindowManagerHint);
 
     layout = new QHBoxLayout;
     layout->setSpacing(WIDGET_BUFFER);
     setLayout(layout);
-    
-    // attempt 2
-    //setStyleSheet("border: 1px solid black");
-    //
-    // attempt 1
-    //QFrame *frame = new QFrame;
-    //frame->setFrameShape(QFrame::Shape::Box);
-    //layout->addWidget(frame);
 
     QFont timesFont("Times", 9, QFont::Bold);
     stateLabel = new QLabel();
     stateLabel->setFont(timesFont);
     layout->addWidget(stateLabel, 1, Qt::AlignLeft);
 
-    button = new QPushButton("?", this);
+    button = new QPushButton("+", this);
     button->setText(getShowAllString());
-	button->setFixedWidth(20); // Remove this line if getShowAllString has more than just a "?"
+	button->setFixedWidth(20); // Remove this line if getShowAllString has more than just a single character
     QFont timesSmall("Times", 8, QFont::DemiBold);
     button->setFont(timesSmall);
     connect(button, SIGNAL(released()), this, SLOT(handleButton()));
@@ -108,17 +95,30 @@ QSize InfoIndicator::sizeHint() const
 void InfoIndicator::handleUpdateState(QString stateString)
 {
     stateLabel->setText(stateString);
+
+    // Update colour of Icon
+    QPalette pal;
+    if (stateString.compare(LOCKED_TEXT) == 0)
+    {
+        pal.setColor(QPalette::Background, MIDAS_GREY);
+    }
+    else
+    {
+        pal.setColor(QPalette::Background, MIDAS_GREEN);
+    }
+    setAutoFillBackground(true);
+    setPalette(pal);
 }
 
 QString InfoIndicator::getShowAllString()
 {
     if (showAll)
     {
-        return tr("?");
+        return tr("-");
     }
     else
     {
-        return tr("?");
+        return tr("+");
     }
 
 }

@@ -28,6 +28,7 @@
 #include "MyoCommon.h"
 
 class QLabel;
+class QComboBox;
 class QSlider;
 class QPushButton;
 class QSpinBox;
@@ -49,6 +50,8 @@ protected:
 private:
     QPoint position;
     int indWidth, indHeight;
+
+    QComboBox *helpLevelComboBox;
 
     // Sliders to update settings for how many degrees the arm has to move to 
     // cover an entire monitor.
@@ -75,6 +78,7 @@ signals:
     void emitGyroPowerValue(int);
     void emitGyroScaleDownValue(double);
     void emitUseEmgImpulseButton(bool);
+    void emitHelpLevelChanged(int);
 
 private slots:
     void handleSliders();
@@ -84,6 +88,7 @@ private slots:
     void gyroPowerValueChanged(int);
     void gyroScaledDownValueChanged(double);
     void handleUseEmgImpulseButton();
+    void handleHelpLevelChanged(QString);
 };
 
 #endif SETTINGS_DISPLAYER_H

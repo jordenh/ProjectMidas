@@ -21,7 +21,7 @@
 #include <QEvent.h>
 
 DraggableWidget::DraggableWidget(QWidget* parent, Qt::WindowFlags f)
-    : QWidget(parent, f)
+    : QWidget(parent, f), mousePressed(false)
 {
 }
 
@@ -36,13 +36,19 @@ void DraggableWidget::mousePressEvent(QMouseEvent *event)
         position = event->globalPos() - frameGeometry().topLeft();
         event->accept();
     }
+    this->mousePressed = true;
 }
 
 void DraggableWidget::mouseMoveEvent(QMouseEvent *event)
 {
-    if (event->buttons() & Qt::LeftButton)
+    if (mousePressed && event->buttons() & Qt::LeftButton)
     {
         move(event->globalPos() - position);
         event->accept();
     }
+}
+
+void DraggableWidget::mouseReleaseEvent(QMouseEvent *event)
+{
+    this->mousePressed = false;
 }

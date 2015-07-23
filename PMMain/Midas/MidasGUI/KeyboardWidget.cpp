@@ -96,6 +96,11 @@ void KeyboardWidget::handleDebugInfo(int x, int y)
 // MAKE SURE THIS FUNCTION MATCHES THE SAME FUNCTION IN SCDDigester.
 int KeyboardWidget::getSelectedKeyFromAngle(double angle)
 {
+    if (selectedWheel >= wheels.size())
+    {
+        return -1;
+    }
+
     std::vector<ringData::keyboardValue> *ring;
 
     if (outerSelected)
@@ -147,6 +152,10 @@ void KeyboardWidget::paintEvent(QPaintEvent *event)
     // Draw the key squares.
     if (selectedWheel >= 0)
     {
+        if (selectedWheel >= wheels.size())
+        {
+            return;
+        }
         std::vector<ringData::keyboardValue> *innerRing, *outerRing;
         innerRing = wheels[selectedWheel].getRingInVectorHandle();
         outerRing = wheels[selectedWheel].getRingOutVectorHandle();
@@ -215,6 +224,11 @@ void KeyboardWidget::paintEvent(QPaintEvent *event)
 
 void KeyboardWidget::drawRing(QPainter &painter, std::vector<ringData::keyboardValue> *ring, int ringInnerRad, bool isSelected)
 {
+    if (ring == NULL || ring->size() == 0)
+    {
+        return;
+    }
+
     qreal deltaAngle = 360.0 / ring->size();
     qreal startAngle = 90.0 + deltaAngle / 2;
     std::vector<ringData::keyboardValue>::iterator it;
