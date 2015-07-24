@@ -1040,30 +1040,6 @@
                 </command>
 				</commands>
             </sequence>
-			<sequence state="gestureHoldThree" name="Volume">
-                <gestures>
-                    <gesture type="immediate">rest</gesture>
-                </gestures>
-                <commands>
-				<command type="stateChange">
-                    <actions>
-                        <action>gestureMode</action>
-                    </actions>
-                </command>
-				</commands>
-            </sequence>
-			<sequence state="gestureHoldTwo" name="Arrow Keys">
-                <gestures>
-                    <gesture type="immediate">rest</gesture>
-                </gestures>
-                <commands>
-				<command type="stateChange">
-                    <actions>
-                        <action>gestureMode</action>
-                    </actions>
-                </command>
-				</commands>
-            </sequence>
         </sequences>
         <holds>
 			<hold gesture="fingersSpread">

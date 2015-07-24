@@ -144,6 +144,11 @@ private:
     */
     void defaultStateSequences(void);
 
+    /*
+    * Register returns from hold modes to gesture mode (only intended tranistional states)
+    */
+    int defaultReturnFromHolds(void);
+
     /**
     * Given a completed sequence, returning a CommandData response, this handles the response
     * as a Mouse command, populating a filterDataMap which is passed down the filter chain and

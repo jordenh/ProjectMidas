@@ -385,23 +385,30 @@ void GestureFilter::defaultStateSequences(void)
 
     // Register sequences back to Gesture Mode from Gesture Hold Modes
 
-    sequence fromHoldGestSeq;
-    fromHoldGestSeq.push_back(SeqElement(Pose::Type::rest, PoseLength::IMMEDIATE));
-    CommandData fromHoldGestResponse;
-    fromHoldGestResponse.name = "Gesture from Hold Gesture X";
-    fromHoldGestResponse.type = commandType::STATE_CHANGE;
-    fromHoldGestResponse.action.mode = midasMode::GESTURE_MODE;
-
-    ss |= (int)gestSeqRecorder->registerSequence(midasMode::GESTURE_HOLD_ONE, fromHoldGestSeq, fromHoldGestResponse, "Gesture from Hold Double Tap - Not working.");
-    ss |= (int)gestSeqRecorder->registerSequence(midasMode::GESTURE_HOLD_TWO, fromHoldGestSeq, fromHoldGestResponse, "Gesture from Hold Fingers Spread");
-    ss |= (int)gestSeqRecorder->registerSequence(midasMode::GESTURE_HOLD_THREE, fromHoldGestSeq, fromHoldGestResponse, "Gesture from Hold Fist");
-    ss |= (int)gestSeqRecorder->registerSequence(midasMode::GESTURE_HOLD_FOUR, fromHoldGestSeq, fromHoldGestResponse, "Gesture from Hold Wave In");
-    ss |= (int)gestSeqRecorder->registerSequence(midasMode::GESTURE_HOLD_FIVE, fromHoldGestSeq, fromHoldGestResponse, "Gesture from Hold Wave Out");
+    ss |= defaultReturnFromHolds();
 
     if (ss != (int)SequenceStatus::SUCCESS)
     {
         throw new std::exception("registerSequenceException");
     }
+}
+
+int GestureFilter::defaultReturnFromHolds(void)
+{
+    sequence fromHoldGestSeq;
+    fromHoldGestSeq.push_back(SeqElement(Pose::Type::rest, PoseLength::IMMEDIATE));
+    CommandData fromHoldGestResponse;
+    fromHoldGestResponse.name = "Release Hold";
+    fromHoldGestResponse.type = commandType::STATE_CHANGE;
+    fromHoldGestResponse.action.mode = midasMode::GESTURE_MODE;
+
+    int ss = (int)gestSeqRecorder->registerSequence(midasMode::GESTURE_HOLD_ONE, fromHoldGestSeq, fromHoldGestResponse, "Gesture from Hold Double Tap - Not working.");
+    ss |= (int)gestSeqRecorder->registerSequence(midasMode::GESTURE_HOLD_TWO, fromHoldGestSeq, fromHoldGestResponse, "Release Fingers Spread");
+    ss |= (int)gestSeqRecorder->registerSequence(midasMode::GESTURE_HOLD_THREE, fromHoldGestSeq, fromHoldGestResponse, "Release Hold Fist");
+    ss |= (int)gestSeqRecorder->registerSequence(midasMode::GESTURE_HOLD_FOUR, fromHoldGestSeq, fromHoldGestResponse, "Release Hold Wave In");
+    ss |= (int)gestSeqRecorder->registerSequence(midasMode::GESTURE_HOLD_FIVE, fromHoldGestSeq, fromHoldGestResponse, "Release Hold Wave Out");
+
+    return ss;
 }
 
 void GestureFilter::handleStateChange(CommandData response, GestureFilter *gf)
@@ -607,6 +614,8 @@ void callbackThreadWrapper(GestureFilter *gf)
 filterError GestureFilter::updateBasedOnProfile(ProfileManager& pm, std::string name)
 {
     gestSeqRecorder->unregisterAll();
+    // replace default return sequences from hold modes
+    defaultReturnFromHolds();
 
     std::vector<profile>* profiles = pm.getProfiles();
 
