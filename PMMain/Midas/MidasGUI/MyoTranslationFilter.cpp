@@ -51,7 +51,7 @@ MyoTranslationFilter::MyoTranslationFilter(ControlState* controlState, MyoState*
     roll(0), prevRoll(0), deltaRollDeg(0),
     mainGui(mainGuiHandle)
 {
-    initGestHoldModeActionArr();
+    defaultGestHoldModeActionArr();
 
 	Filter::setFilterError(filterError::NO_FILTER_ERROR);
 	Filter::setFilterStatus(filterStatus::OK);
@@ -553,11 +553,9 @@ void MyoTranslationFilter::performeKybdModeFunc(filterDataMap& outputToSharedCom
 
 
 // ******************************************************** HOLD_MODE CODE BELOW ******************************************************** //
-bool MyoTranslationFilter::initGestHoldModeActionArr(void)
+bool MyoTranslationFilter::defaultGestHoldModeActionArr(void)
 {
-    //TODO - use setting defined values for this part. Temporarily hard coded to test concept.
-
-    // Use ProfileManager here.
+    // default hold mode actions incase profiles file is corrupted
 
     bool initOkay = true;
 
@@ -565,12 +563,18 @@ bool MyoTranslationFilter::initGestHoldModeActionArr(void)
     ad.angleType = angleData::AngleType::ROLL;
     ad.anglePositive = true;
     gestHoldModeAction[GESTURE_FIST].setRollSensitivity(5);
+    gestHoldModeAction[GESTURE_FIST].setActionType(ABS_DELTA_FINITE);
+    gestHoldModeAction[GESTURE_FIST].setIntervalLen(100);
+    gestHoldModeAction[GESTURE_FIST].setVelocityIntervalLen(100);
     initOkay &= gestHoldModeAction[GESTURE_FIST].addToActionMap(ad, kybdCmds::VOLUME_UP);
     ad.anglePositive = false;
     initOkay &= gestHoldModeAction[GESTURE_FIST].addToActionMap(ad, kybdCmds::VOLUME_DOWN);
 
     ad.angleType = angleData::AngleType::PITCH;
     gestHoldModeAction[GESTURE_FINGERS_SPREAD].setPitchSensitivity(2);
+    gestHoldModeAction[GESTURE_FINGERS_SPREAD].setActionType(ABS_DELTA_VELOCITY);
+    gestHoldModeAction[GESTURE_FINGERS_SPREAD].setIntervalLen(100);
+    gestHoldModeAction[GESTURE_FINGERS_SPREAD].setVelocityIntervalLen(100);
     ad.anglePositive = true;
     initOkay &= gestHoldModeAction[GESTURE_FINGERS_SPREAD].addToActionMap(ad, kybdCmds::UP_ARROW);
     ad.anglePositive = false;
@@ -578,6 +582,9 @@ bool MyoTranslationFilter::initGestHoldModeActionArr(void)
 
     ad.angleType = angleData::AngleType::YAW;
     gestHoldModeAction[GESTURE_FINGERS_SPREAD].setYawSensitivity(2);
+    gestHoldModeAction[GESTURE_FINGERS_SPREAD].setActionType(ABS_DELTA_FINITE);
+    gestHoldModeAction[GESTURE_FINGERS_SPREAD].setIntervalLen(100);
+    gestHoldModeAction[GESTURE_FINGERS_SPREAD].setVelocityIntervalLen(100);
     ad.anglePositive = true;
     initOkay &= gestHoldModeAction[GESTURE_FINGERS_SPREAD].addToActionMap(ad, kybdCmds::RIGHT_ARROW);
     ad.anglePositive = false;
@@ -585,10 +592,13 @@ bool MyoTranslationFilter::initGestHoldModeActionArr(void)
 
     ad.angleType = angleData::AngleType::YAW;
     gestHoldModeAction[GESTURE_WAVE_IN].setYawSensitivity(10);
+    gestHoldModeAction[GESTURE_WAVE_IN].setActionType(ABS_DELTA_FINITE);
+    gestHoldModeAction[GESTURE_WAVE_IN].setIntervalLen(100);
+    gestHoldModeAction[GESTURE_WAVE_IN].setVelocityIntervalLen(100);
     ad.anglePositive = false;
     initOkay &= gestHoldModeAction[GESTURE_WAVE_IN].addToActionMap(ad, kybdCmds::UNDO);
     ad.anglePositive = true;
-    initOkay &= gestHoldModeAction[GESTURE_WAVE_OUT].addToActionMap(ad, kybdCmds::REDO);
+    initOkay &= gestHoldModeAction[GESTURE_WAVE_IN].addToActionMap(ad, kybdCmds::REDO);
 
     return initOkay;
 }
@@ -603,8 +613,6 @@ void MyoTranslationFilter::unregisterHoldModeActions(void)
 
 filterError MyoTranslationFilter::updateBasedOnProfile(ProfileManager& pm, std::string name)
 {
-    this->unregisterHoldModeActions();
-
     std::vector<profile>* profiles = pm.getProfiles();
 
     profile prof;
@@ -619,6 +627,8 @@ filterError MyoTranslationFilter::updateBasedOnProfile(ProfileManager& pm, std::
     }
 
     if (!foundProfile) return filterError::PROCESSING_ERROR;
+
+    this->unregisterHoldModeActions();
 
     bool okay = true;
     angleData ad;

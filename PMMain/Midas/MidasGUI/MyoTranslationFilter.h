@@ -184,7 +184,7 @@ private:
     void performMouseModeFunc(filterDataMap& outputToSharedCommandData);
     void performeKybdModeFunc(filterDataMap& outputToSharedCommandData);
 
-    bool initGestHoldModeActionArr(void);
+    bool defaultGestHoldModeActionArr(void);
     void unregisterHoldModeActions(void);
 
     void updateHoldModeObserver(midasMode currMode);

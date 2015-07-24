@@ -613,10 +613,6 @@ void callbackThreadWrapper(GestureFilter *gf)
 
 filterError GestureFilter::updateBasedOnProfile(ProfileManager& pm, std::string name)
 {
-    gestSeqRecorder->unregisterAll();
-    // replace default return sequences from hold modes
-    defaultReturnFromHolds();
-
     std::vector<profile>* profiles = pm.getProfiles();
 
     profile prof;
@@ -631,6 +627,10 @@ filterError GestureFilter::updateBasedOnProfile(ProfileManager& pm, std::string 
     }
 
     if (!foundProfile) return filterError::PROCESSING_ERROR;
+
+    gestSeqRecorder->unregisterAll();
+    // replace default return sequences from hold modes
+    defaultReturnFromHolds();
 
     int ss = (int)SequenceStatus::SUCCESS;
     for (std::vector<profileSequence>::iterator it = prof.profileSequences.begin(); it != prof.profileSequences.end(); ++it)
