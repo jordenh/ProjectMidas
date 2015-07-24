@@ -22,8 +22,6 @@
 
 #include "DraggableWidget.h"
 
-#include <QWidget>
-
 #include "MidasCommon.h"
 #include "MyoCommon.h"
 
