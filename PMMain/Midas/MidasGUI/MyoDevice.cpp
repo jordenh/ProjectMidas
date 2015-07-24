@@ -388,9 +388,14 @@ void MyoDevice::MyoCallbacks::onArmSync(Myo *myo, uint64_t timestamp, Arm arm, X
     input[INPUT_X_DIRECTION] = xDirection;
     parent.advancedOrientationPipeline.startPipeline(input);
 
+    // pass down filter pipeline for consistency, but not really used there currently
     filterDataMap syncInput;
     syncInput[SYNCHED_INPUT] = true;
     parent.advancedSyncPipeline.startPipeline(syncInput);
+
+    // modify myoState directly - should have done this for arm/xDirection as well, but didnt for
+    // legacy reasons
+    parent.myoState->setXRotation(rotation);
 }
 void MyoDevice::MyoCallbacks::onArmSync(Myo* myo, uint64_t timestamp, Arm arm, XDirection xDirection) { 
     parent.setArmAndX(myo, arm, xDirection);

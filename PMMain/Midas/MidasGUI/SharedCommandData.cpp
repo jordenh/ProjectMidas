@@ -246,6 +246,7 @@ void SharedCommandData::setIsSynched(bool synched)
     isSynched = synched;
     isSynchedMutex.unlock();
 }
+
 bool SharedCommandData::isCommandQueueEmpty()
 {
     return commandQueue.empty();

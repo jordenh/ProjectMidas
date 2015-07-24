@@ -189,6 +189,8 @@ private:
 
     void updateHoldModeObserver(midasMode currMode);
 
+    void normalizeGyroData(float &x, float &y, float &z);
+
     float calcBaseHorizontalChange(float gyroZ);
     float calcBaseVerticalChange(float gyroY);
     

@@ -24,11 +24,18 @@
 #include <mutex>
 #include "myo\myo.hpp"
 
+#define ROTATION_MATRIX_SIZE 3
+// NOTE: the desired location on the users arm is at roughly PI. Therefore,
+// the xRotationMatrix will contain a matrix that when multiplied by a 
+// vector, will rotate it TOWARDS the location, PI.
+#define DESIRED_X_ROTATION M_PI
+
 class MyoDevice;
 
 class MyoState {
 public:
 	MyoState();
+    ~MyoState();
 
 	void setSpatialHistLen(int spatialHistLen);
 	void setPoseHistLen(int poseHistLen);
@@ -62,6 +69,31 @@ public:
     void setXDirection(myo::XDirection xDirection);
     myo::XDirection getXDirection();
 
+    /**
+    * Sets the xRotation and xRotationMatrix values
+    *
+    * @param float Estimated xRotation
+    */
+    void setXRotation(float xRotation);
+
+    /**
+    * Returns the estimated xRotation
+    *
+    * @return A rotation around the users arm from [0, 2PI)
+    */
+    float getXRotation();
+
+    /**
+    * Returns the 3D rotation Matrix calculated from the xRotation value
+    * https://en.wikipedia.org/wiki/Rotation_matrix#In_three_dimensions
+    *
+    * @return A 3D matrix which when multiplied from a vector, will rotate
+    * that vector
+    */
+    float** getXRotationMatrix();
+
+    float** create2DArray(unsigned height, unsigned width);
+
     // returns true if the most recent pose is non-rest poses.
     // returns false if size < 1, or last pose is rest.
     bool lastPoseNonRest();
@@ -81,6 +113,11 @@ private:
     myo::Arm currentArm;
     myo::WarmupState currentWarmupState;
     myo::XDirection currentXDirection;
+    // xRotation refers to the estimated rotation about the arm, determined when
+    // a user syncs. If the usb port is facing downwards, this will be 0, upwards 2PI
+    // and range is [0,4PI)
+    float currentXRotation;
+    float** currentXRotationMatrix; // owned
 
     MyoDevice* myoHandle; // not owned
 };

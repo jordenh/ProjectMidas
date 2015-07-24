@@ -233,6 +233,8 @@ void MyoTranslationFilter::handleGyroData(filterDataMap input, filterDataMap out
                 gyroY = boost::any_cast<float>(valueY);
                 gyroZ = boost::any_cast<float>(valueZ);
 
+                normalizeGyroData(gyroX, gyroY, gyroZ);
+
                 midasMode currMode = controlStateHandle->getMode();
 
                 if (currMode == MOUSE_MODE || currMode == MOUSE_MODE2)
@@ -423,6 +425,23 @@ float MyoTranslationFilter::calcRingDelta(float current, float base)
     }
 
     return delta;
+}
+
+void MyoTranslationFilter::normalizeGyroData(float &x, float &y, float &z)
+{
+    float** xRotationMatrix = myoStateHandle->getXRotationMatrix();
+
+    // Perform matrix multiplication to effectively rotate the Gyro data into a normalized position where 
+    // +z is vertical (wrt gravity) and +x is along arm
+    float newX = x*xRotationMatrix[0][0] + y*xRotationMatrix[1][0] + z*xRotationMatrix[2][0];
+    float newY = x*xRotationMatrix[0][1] + y*xRotationMatrix[1][1] + z*xRotationMatrix[2][1];
+    float newZ = x*xRotationMatrix[0][2] + y*xRotationMatrix[1][2] + z*xRotationMatrix[2][2];
+
+    x = newX;
+    y = newY;
+    z = newZ;
+
+    return;
 }
 
 void MyoTranslationFilter::performHoldModeFunc(unsigned int holdNum, filterDataMap& outputToSharedCommandData)

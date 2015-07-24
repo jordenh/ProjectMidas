@@ -19,6 +19,7 @@
 
 #include "MyoState.h"
 #include "MyoDevice.h"
+#include <math.h>
 
 MyoState::MyoState()
 {
@@ -27,6 +28,40 @@ MyoState::MyoState()
     currentArm = myo::Arm::armRight;
     currentWarmupState = myo::WarmupState::warmupStateWarm;
     currentXDirection = myo::XDirection::xDirectionTowardElbow;
+    currentXRotation = 0;
+    currentXRotationMatrix = create2DArray(ROTATION_MATRIX_SIZE, ROTATION_MATRIX_SIZE);
+}
+
+MyoState::~MyoState()
+{
+    if (currentXRotationMatrix != NULL)
+    {
+        for (int h = 0; h < ROTATION_MATRIX_SIZE; h++)
+        {
+            delete[] currentXRotationMatrix[h];
+        }
+        delete[] currentXRotationMatrix;
+        currentXRotationMatrix = NULL;
+    }
+}
+
+// code taken from http://stackoverflow.com/questions/8617683/return-a-2d-array-from-a-function
+float** MyoState::create2DArray(unsigned height, unsigned width)
+{
+    float** array2D = 0;
+    array2D = new float*[height];
+
+    for (int h = 0; h < height; h++)
+    {
+        array2D[h] = new float[width];
+
+        for (int w = 0; w < width; w++)
+        {
+            array2D[h][w] = 0.0f;
+        }
+    }
+
+    return array2D;
 }
 
 void MyoState::setSpatialHistLen(int spatialHistLen)
@@ -244,6 +279,41 @@ myo::XDirection MyoState::getXDirection()
     myo::XDirection retVal = this->currentXDirection;
     myoStateMutex.unlock();
     return retVal;
+}
+
+void MyoState::setXRotation(float xRotation)
+{
+    myoStateMutex.lock();
+    this->currentXRotation = xRotation;
+
+    float rotationAngle = xRotation - DESIRED_X_ROTATION;
+    // first row
+    currentXRotationMatrix[0][0] = 1.0f;
+    currentXRotationMatrix[0][1] = 0.0f;
+    currentXRotationMatrix[0][2] = 0.0f;
+    // second row
+    currentXRotationMatrix[1][0] = 0.0f;
+    currentXRotationMatrix[1][1] = cos(rotationAngle);
+    currentXRotationMatrix[1][2] = -sin(rotationAngle);
+    // third row
+    currentXRotationMatrix[2][0] = 0.0f;
+    currentXRotationMatrix[2][1] = sin(rotationAngle);
+    currentXRotationMatrix[2][2] = cos(rotationAngle);
+
+    myoStateMutex.unlock();
+}
+
+float MyoState::getXRotation()
+{
+    myoStateMutex.lock();
+    float retVal = this->currentXRotation;
+    myoStateMutex.unlock();
+    return retVal;
+}
+
+float** MyoState::getXRotationMatrix()
+{
+    return currentXRotationMatrix;
 }
 
 bool MyoState::lastPoseNonRest()
