@@ -40,7 +40,7 @@ class ControlState;
 class MainGUI;
 class HoldModeObserver;
 
-#define KEYBOARD_THRESH_MAG 30
+#define KEYBOARD_THRESH_MAG 15
 
 #define NUM_GESTURES 5
 #define GESTURE_DOUBLE_TAP 0 // used as indexes into gestHoldModeAction

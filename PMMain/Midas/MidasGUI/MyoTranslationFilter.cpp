@@ -133,10 +133,13 @@ void MyoTranslationFilter::handleQuatData(filterDataMap input, filterDataMap out
 
             if (previousMode != currMode)
             {
-                // update base angles for each new mode
-                BaseMeasurements::getInstance().setBaseAngles(roll, pitch, yaw);
+                // update base angles for each new mode - invalidate 
+                // BaseMeasurements until all updates are executed.
+                BaseMeasurements::getInstance().setInvalid(true);
                 BaseMeasurements::getInstance().updateBaseCursor();
+                BaseMeasurements::getInstance().setBaseAngles(roll, pitch, yaw);
                 BaseMeasurements::getInstance().setCurrentState(currMode);
+                BaseMeasurements::getInstance().setInvalid(false);
 
                 updateHoldModeObserver(currMode);
             }
@@ -207,7 +210,6 @@ void MyoTranslationFilter::handleGyroData(filterDataMap input, filterDataMap out
     float gyroX;
     float gyroY;
     float gyroZ;
-    float quatW;
 
     if (settingsSignaller.getUseGyroForCursorAccel())
     {

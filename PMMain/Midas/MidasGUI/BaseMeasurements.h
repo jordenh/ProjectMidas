@@ -42,6 +42,8 @@ public:
 
 	void setBaseAngles(float roll, float pitch, float yaw);
 
+    void setInvalid(bool invalid);
+
 	void setBaseCursor(unsigned int x, unsigned int y);
 
     void modifyBaseCursor(int xDelta, int yDelta);
@@ -70,6 +72,7 @@ public:
 	float getBaseRoll()    { accessMutex.lock();   float retVal = baseRoll;     accessMutex.unlock(); return retVal; }
 	float getBasePitch()   { accessMutex.lock();   float retVal = basePitch;    accessMutex.unlock(); return retVal; }
 	float getBaseYaw()     { accessMutex.lock();   float retVal = baseYaw;      accessMutex.unlock(); return retVal; }
+    bool  getInvalid()     { accessMutex.lock();   bool retVal = invalid;      accessMutex.unlock(); return retVal; }
 	float getBaseCursorX() { accessMutex.lock();   float retVal = baseCursorX;  accessMutex.unlock(); return retVal; }
 	float getBaseCursorY() { accessMutex.lock();   float retVal = baseCursorY;  accessMutex.unlock(); return retVal; }
 	float getScreenSizeX() { accessMutex.lock();   float retVal = screenSizeX;  accessMutex.unlock(); return retVal; }
@@ -84,6 +87,7 @@ public:
 private:
 	// Force as singleton
 	BaseMeasurements() { 
+        invalid = false;
         baseRoll = 0; basePitch = 0; baseYaw = 0;
         baseCursorX = 0; baseCursorY = 0; 
         updateScreenSize();
@@ -116,6 +120,9 @@ private:
 	float currentRoll;
 	float currentPitch;
 	float currentYaw;
+
+    // value used to overide validation, which can be externally set/unset.
+    bool invalid;
 
 	midasMode currentState;
 	myo::Pose currentPose;

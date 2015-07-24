@@ -21,7 +21,6 @@
 
 GenericAveragingFilter::~GenericAveragingFilter()
 {
-    int a = 1;
 }
 
 void GenericAveragingFilter::process()

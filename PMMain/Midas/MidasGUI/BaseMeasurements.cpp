@@ -30,6 +30,13 @@ void BaseMeasurements::setBaseAngles(float roll, float pitch, float yaw)
 	accessMutex.unlock();
 }
 
+void BaseMeasurements::setInvalid(bool invalid)
+{
+    accessMutex.lock();
+    this->invalid = invalid;
+    accessMutex.unlock();
+}
+
 void BaseMeasurements::setBaseCursor(unsigned int x, unsigned int y)
 {
 	accessMutex.lock();
@@ -167,7 +174,8 @@ bool BaseMeasurements::areCurrentValuesValid()
 {
 	accessMutex.lock();
 	// check if current pose is caught up to myoState. if not, invalid.
-	if (currentPose == (myoStateHandle->getPoseHistory()).back() && currentState == (controlStateHandle->getMode()))
+    if (invalid ||
+        currentPose == (myoStateHandle->getPoseHistory()).back() && currentState == (controlStateHandle->getMode()))
 	{
 		accessMutex.unlock();
 		return true;
