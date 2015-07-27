@@ -121,7 +121,7 @@ private:
     void setupRSSIPipeline();
     void setupEmgImpusePipeline();
 
-    void setArmAndX(Myo* myo, Arm arm, XDirection xDirection);
+    void setMyoExtraData(Myo* myo, Arm arm, XDirection xDirection, float rotation = 0.0f);
 
     /**
      * This class implements all of the callback functions from the Myo DeviceListener
@@ -167,11 +167,12 @@ private:
     };
 
     struct MyoWithData {
-        MyoWithData(Myo* myo) { this->myo = myo; arm = Arm::armUnknown; xDirection = XDirection::xDirectionUnknown; }
+        MyoWithData(Myo* myo) { this->myo = myo; arm = Arm::armUnknown; xDirection = XDirection::xDirectionUnknown; rotation = 0; }
 
         Myo* myo;
         Arm arm;
         XDirection xDirection;
+        float rotation;
     };
 
     std::vector<MyoWithData> connectedMyos; // not owned
@@ -182,13 +183,11 @@ private:
     ControlState* state; // not owned
     MyoState* myoState; // not owned
     AdvancedFilterPipeline advancedPosePipeline, advancedOrientationPipeline,
-        advancedRssiPipeline, advancedConnectPipeline, advancedSyncPipeline, emgImpulsePipeline; // todo upgrade emgImpulsePipeline to use advancedFilterPipeline
+        advancedRssiPipeline, advancedConnectPipeline, advancedSyncPipeline, emgImpulsePipeline;
     MainGUI *mainGui; // not owned
 
     std::string prevProfileName;
 
-//    Arm arm;
-//    XDirection xDirection;
     static ProfileSignaller profileSignaller;
     ProfileManager *profileManager; // not owned
 

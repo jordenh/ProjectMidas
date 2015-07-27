@@ -326,9 +326,6 @@ void MyoDevice::MyoCallbacks::onGyroscopeData(Myo* myo, uint64_t timestamp, cons
     input[GYRO_DATA_Y] = gyro.y();
     input[GYRO_DATA_Z] = gyro.z();
 
-    // For now, advancedOrientationPipeline doesnt use this data, so not going
-    // to bother starting pipeline. Uncomment (and it will work fine) if data
-    // is handled in the future.
     parent.advancedOrientationPipeline.startPipeline(input);
 }
 
@@ -379,7 +376,7 @@ void MyoDevice::MyoCallbacks::onDisconnect(Myo* myo, uint64_t timestamp) {
 
 void MyoDevice::MyoCallbacks::onArmSync(Myo *myo, uint64_t timestamp, Arm arm, XDirection xDirection, float rotation, WarmupState warmupState)
 {
-    parent.setArmAndX(myo, arm, xDirection);
+    parent.setMyoExtraData(myo, arm, xDirection, rotation);
     std::cout << "on arm sync." << std::endl;
 
     // Setup GUI to interact with most recently synched Myo
@@ -398,7 +395,7 @@ void MyoDevice::MyoCallbacks::onArmSync(Myo *myo, uint64_t timestamp, Arm arm, X
     parent.myoState->setXRotation(rotation);
 }
 void MyoDevice::MyoCallbacks::onArmSync(Myo* myo, uint64_t timestamp, Arm arm, XDirection xDirection) { 
-    parent.setArmAndX(myo, arm, xDirection);
+    parent.setMyoExtraData(myo, arm, xDirection);
     std::cout << "on arm sync." << std::endl; 
 
     // Setup GUI to interact with most recently synched Myo
@@ -412,7 +409,7 @@ void MyoDevice::MyoCallbacks::onArmSync(Myo* myo, uint64_t timestamp, Arm arm, X
     parent.advancedSyncPipeline.startPipeline(syncInput);
 }
 void MyoDevice::MyoCallbacks::onArmUnsync(Myo* myo, uint64_t timestamp) { 
-    parent.setArmAndX(myo, Arm::armUnknown, XDirection::xDirectionUnknown);
+    parent.setMyoExtraData(myo, Arm::armUnknown, XDirection::xDirectionUnknown);
     std::cout << "on arm unsync." << std::endl; 
 
     filterDataMap input;
@@ -447,10 +444,10 @@ void MyoDevice::MyoCallbacks::onEmgData(myo::Myo* myo, uint64_t timestamp, const
     // This data is streaming at 200Hz - print data for post mortem analysis
 	std::cout << "onEmgData." << std::endl;
 
-    for (int emgIdx = 0; emgIdx < 8; emgIdx++)
-    {
-        lastEMGData[emgIdx] = emg[emgIdx];
-    }
+    //for (int emgIdx = 0; emgIdx < 8; emgIdx++)
+    //{
+    //    lastEMGData[emgIdx] = emg[emgIdx];
+    //}
     //printToDataFile(); // uncomment to printout data for post mortem analysis
 
     // Actual processing
@@ -510,7 +507,7 @@ void MyoDevice::MyoCallbacks::printToDataFile()
     myoDataFile << ((int)lastPose) << "," << (int)(EMGImpulseFilter::getImpulseStatus()) << std::endl;
 }
 
-void MyoDevice::setArmAndX(Myo* myo, Arm arm, XDirection xDirection)
+void MyoDevice::setMyoExtraData(Myo* myo, Arm arm, XDirection xDirection, float rotation)
 {
     int idx = 0;
     for (std::vector<MyoWithData>::iterator it = connectedMyos.begin(); it != connectedMyos.end(); it++)
@@ -519,6 +516,7 @@ void MyoDevice::setArmAndX(Myo* myo, Arm arm, XDirection xDirection)
         {
             connectedMyos.at(idx).arm = arm;
             connectedMyos.at(idx).xDirection = xDirection;
+            connectedMyos.at(idx).rotation = rotation;
             break;
         }
         idx++;
