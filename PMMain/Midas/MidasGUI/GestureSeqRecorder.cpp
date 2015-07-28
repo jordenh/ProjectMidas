@@ -102,7 +102,7 @@ SequenceStatus GestureSeqRecorder::registerSequence(midasMode mode, sequence seq
 SequenceStatus GestureSeqRecorder::progressSequence(Pose::Type gesture, ControlState state, CommandData& response)
 {
     SequenceStatus status = SequenceStatus::SUCCESS;
-    response.type = commandType::NONE;
+    response.setType(commandType::NONE);
 
     prevPose = gesture;
 
@@ -126,14 +126,14 @@ SequenceStatus GestureSeqRecorder::progressSequence(Pose::Type gesture, ControlS
         prevState = state.getMode();
     }
 
-    if (response.type != commandType::NONE || status != SequenceStatus::SUCCESS)
+    if (response.getType() != commandType::NONE || status != SequenceStatus::SUCCESS)
     { 
         // if the response is not NONE, a sequence has completed. Therefore all
         // active sequences must be cleared so that all valid sequences can potentially
         // be started.
         emptyActiveSequences();
 
-        if (response.type != commandType::NONE)
+        if (response.getType() != commandType::NONE)
         {
             std::cout << "GestureSeqRecorder returning a registered response." << std::endl;
         }
@@ -203,14 +203,14 @@ void GestureSeqRecorder::progressSequenceTime(int delta, CommandData& response)
         }
         activeSequencesMutex.unlock();
 
-        if (response.type != commandType::NONE)
+        if (response.getType() != commandType::NONE)
         {
             // if the response is not NONE, a sequence has completed. Therefore all
             // active sequences must be cleared so that all valid sequences can potentially
             // be started.
             emptyActiveSequences();
 
-            if (response.type != commandType::NONE)
+            if (response.getType() != commandType::NONE)
             {
                 std::cout << "GestureSeqRecorder returning a registered response." << std::endl;
             }
@@ -558,7 +558,7 @@ void GestureSeqRecorder::printStatus(bool verbose)
         std::list<sequenceInfo*>::iterator it = activeSequences.begin();
         while (it != activeSequences.end())
         {
-            std::string activeSeqName = (*it)->sequenceResponse.name;
+            std::string activeSeqName = (*it)->sequenceResponse.getName();
             unsigned int progress = (*it)->progress;
             unsigned int progressGoal = (*it)->seq.size();
 
@@ -584,7 +584,7 @@ void GestureSeqRecorder::printStatus(bool verbose)
         std::list<sequenceInfo*>::iterator it = activeSequences.begin();
         while (it != activeSequences.end())
         {
-            std::string activeSeqName = (*it)->sequenceResponse.name;
+            std::string activeSeqName = (*it)->sequenceResponse.getName();
 
             std::cout << activeSeqName << ";";
 

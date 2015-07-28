@@ -24,6 +24,7 @@
 #include "SharedCommandData.h"
 #include "AdvancedFilterPipeline.h"
 #include "FilterKeys.h"
+#include "CommandData.h"
 #include <thread>
 
 HoldModeObserver::HoldModeObserver()
@@ -195,26 +196,26 @@ void HoldModeObserver::executeCommands(kybdCmds rollCmd, unsigned int rollTicks,
     AdvancedFilterPipeline pipe;
     pipe.registerFilterAtDeepestLevel(sharedCommandDataHandle);
     CommandData cmd;
-    cmd.type = commandType::KYBRD_CMD;
-    cmd.name = "Hold Command";
+    cmd.setType(commandType::KYBRD_CMD);
+    cmd.setName("Hold Command");
     for (int i = 0; i < rollTicks && rollCmd != kybdCmds::NO_CMD; i++)
     {
         filterDataMap input;
-        cmd.action.kybd = rollCmd;
+        cmd.setActionKybd(rollCmd);
         input[COMMAND_INPUT] = cmd;
         pipe.startPipeline(input);
     }
     for (int i = 0; i < pitchTicks && pitchCmd != kybdCmds::NO_CMD; i++)
     {
         filterDataMap input;
-        cmd.action.kybd = pitchCmd;
+        cmd.setActionKybd(pitchCmd);
         input[COMMAND_INPUT] = cmd;
         pipe.startPipeline(input);
     }
     for (int i = 0; i < yawTicks && yawCmd != kybdCmds::NO_CMD; i++)
     {
         filterDataMap input;
-        cmd.action.kybd = yawCmd;
+        cmd.setActionKybd(yawCmd);
         input[COMMAND_INPUT] = cmd;
         pipe.startPipeline(input);
     }

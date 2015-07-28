@@ -24,6 +24,71 @@ CommandData::~CommandData()
 {
 }
 
+void CommandData::setType(commandType type)
+{
+    this->type = type;
+}
+
+commandType CommandData::getType()
+{
+    return type;
+}
+
+void CommandData::setAction(action actn)
+{
+    this->actn = actn;
+}
+
+action CommandData::getAction()
+{
+    return actn;
+}
+
+void CommandData::setActionKybd(kybdCmds kybd)
+{
+    this->actn.kybd = kybd;
+}
+
+void CommandData::setActionKybdGUI(kybdGUICmds kybdGUI)
+{
+    this->actn.kybdGUI = kybdGUI;
+}
+
+void CommandData::setActionMouse(mouseCmds mouse)
+{
+    this->actn.mouse = mouse;
+}
+
+void CommandData::setActionMode(midasMode mode)
+{
+    this->actn.mode = mode;
+}
+
+void CommandData::setActionProfile(profileCmds profile)
+{
+    this->actn.profile = profile;
+}
+
+void CommandData::setName(std::string name)
+{
+    this->name = name;
+}
+
+std::string CommandData::getName()
+{
+    return name;
+}
+
+void CommandData::setKeyboardVector(KeyboardVector keyVec)
+{
+    this->keyboardVector = keyVec;
+}
+
+KeyboardVector CommandData::getKeyboardVector()
+{
+    return keyboardVector;
+}
+
 int CommandData::addChangeStateAction(CommandData cmd)
 {
 	if(( this->type != commandType::STATE_CHANGE) || (cmd.type == commandType::STATE_CHANGE))

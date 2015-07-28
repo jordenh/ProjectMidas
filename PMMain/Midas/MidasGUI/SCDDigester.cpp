@@ -74,7 +74,7 @@ void SCDDigester::digest()
 
     if (consumed)
     {
-        switch (nextCmd.type)
+        switch (nextCmd.getType())
         {
         case KYBRD_CMD:
             digestKybdCmd(nextCmd);
@@ -82,7 +82,7 @@ void SCDDigester::digest()
         case KYBRD_GUI_CMD:
             break;
         case MOUSE_CMD:
-            mouseCtrl->sendCommand(nextCmd.action.mouse);
+            mouseCtrl->sendCommand(nextCmd.getAction().mouse);
             break;
         case STATE_CHANGE:
             break;
@@ -183,13 +183,13 @@ void SCDDigester::digestKeyboardGUIData(CommandData nextCommand)
     keyboardAngle currAngle;
     int ringKeySelIdx;
     char key;
-    if (nextCommand.type == KYBRD_GUI_CMD)
+    if (nextCommand.getType() == KYBRD_GUI_CMD)
     {
         unsigned int kybdGUISel = scdHandle->getKybdGuiSel();
         KeyboardVector kiVec;
 
         // handle special commands for keyboard gui updating.
-        switch (nextCommand.action.kybdGUI)
+        switch (nextCommand.getAction().kybdGUI)
         {
         case kybdGUICmds::SWAP_RING_FOCUS:
             // Swap which ring is focussed on (out/in) 
@@ -276,16 +276,16 @@ void SCDDigester::digestKeyboardGUIData(CommandData nextCommand)
 
 void SCDDigester::digestKybdCmd(CommandData nextCommand)
 {
-	if (nextCommand.action.kybd == kybdCmds::INPUT_VECTOR)
+    if (nextCommand.getAction().kybd == kybdCmds::INPUT_VECTOR)
 	{
         // handle INPUT_VECTOR seperately as KiVector needs to be populated
         // with each character from the vector.
-		keyboardController->setKiVector(nextCommand.keyboardVector);
+		keyboardController->setKiVector(nextCommand.getKeyboardVector());
 		keyboardController->sendData();
 	}
 	else
 	{
-		KeyboardVector vec = KeyboardVector::createFromCommand(nextCommand.action.kybd);
+        KeyboardVector vec = KeyboardVector::createFromCommand(nextCommand.getAction().kybd);
 		keyboardController->setKiVector(vec);
 		keyboardController->sendDataDelayed(5); // TODO - modify to try a lower value to see if lag can be reduced. Or change how 'sending delayed' works.
         //keyboardController->sendData(); // This seems to work for typing, but not for example, sending many arrow keys to human.biodigital.com
@@ -325,11 +325,11 @@ void SCDDigester::digestProfileChange(CommandData nextCmd)
 		}
 	}
 
-	if (nextCmd.action.profile == MOVE_PROFILE_FORWARD)
+    if (nextCmd.getAction().profile == MOVE_PROFILE_FORWARD)
 	{
 		cntrlStateHandle->setProfile(nextProfileName);
 	}
-	else if (nextCmd.action.profile == MOVE_PROFILE_BACKWARD)
+    else if (nextCmd.getAction().profile == MOVE_PROFILE_BACKWARD)
 	{
 		cntrlStateHandle->setProfile(prevProfileName);
 	}

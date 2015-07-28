@@ -44,7 +44,7 @@ public:
 	CommandData(commandType type, action action, std::string name, KeyboardVector vec)
 	{
 		this->type = type;
-		this->action = action;
+		this->actn = action;
 		this->name = name;
 		this->keyboardVector = vec;
 	}
@@ -72,13 +72,38 @@ public:
      */
 	std::vector<CommandData> getChangeStateActions() { return changeStateActions; }
 
-	commandType type;
-	action action;
+	//commandType type;
+	//action actn;
+    
+	//std::string name;
+	//KeyboardVector keyboardVector;
 
-	std::string name;
-	KeyboardVector keyboardVector;
+    void setType(commandType type);
+    commandType getType();
+
+    void setAction(action actn);
+    action getAction();
+
+    void setActionKybd(kybdCmds kybd);
+    void setActionKybdGUI(kybdGUICmds kybdGUI);
+    void setActionMouse(mouseCmds mouse);
+    void setActionMode(midasMode mode);
+    void setActionProfile(profileCmds profile);
+
+    void setName(std::string name);
+    std::string getName();
+
+    void setKeyboardVector(KeyboardVector keyVec);
+    KeyboardVector getKeyboardVector();
 
 private:
+    commandType type;
+    action actn;
+    
+    std::string name;
+    KeyboardVector keyboardVector;
+
+
 	// these actions will be executed as soon as the state is changed,
 	// in the order they are added.
 	std::vector<CommandData> changeStateActions;
