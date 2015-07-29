@@ -47,7 +47,7 @@ struct angleAction {
     std::string type;
     command anglePositive;
     command angleNegative;
-    unsigned int sensitivity;
+    float sensitivity;
 };
 
 struct hold {

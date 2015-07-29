@@ -106,11 +106,11 @@ std::map<std::string, midasMode> profileActionToStateChange =
     { "mouseMode2", MOUSE_MODE2 },
     { "keyboardMode", KEYBOARD_MODE },
     { "gestureMode", GESTURE_MODE },
-    { "gestureHoldOne", GESTURE_HOLD_ONE },
-    { "gestureHoldTwo", GESTURE_HOLD_TWO },
-    { "gestureHoldThree", GESTURE_HOLD_THREE },
-    { "gestureHoldFour", GESTURE_HOLD_FOUR },
-    { "gestureHoldFive", GESTURE_HOLD_FIVE }
+    { "gestureHoldOne", GESTURE_HOLD_ONE }, // DT
+    { "gestureHoldTwo", GESTURE_HOLD_TWO }, // spread
+    { "gestureHoldThree", GESTURE_HOLD_THREE }, // fist
+    { "gestureHoldFour", GESTURE_HOLD_FOUR }, //wavein
+    { "gestureHoldFive", GESTURE_HOLD_FIVE } //waveout
 };
 
 std::map<std::string, profileCmds> profileActionToProfileChange =
@@ -240,7 +240,7 @@ profile ProfileManager::extractProfileInformation(const boost::property_tree::pt
                         }
                     }
 
-                    unsigned int angleSensitivity = angleVt.second.get_child("sensitivity").get_value<unsigned int>();
+                    float angleSensitivity = angleVt.second.get_child("sensitivity").get_value<float>();
                     currAngleAction.sensitivity = angleSensitivity;
                     currAngleAction.type = angleType;
 

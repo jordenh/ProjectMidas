@@ -25,6 +25,7 @@
 #include "GestureSignaller.h"
 #include "SettingsSignaller.h"
 #include "SequenceImageManager.h"
+//#include "ProfileCommon.h" // JORDEN TODO
 #include <ctime>
 
 #ifdef USE_SIMULATOR
