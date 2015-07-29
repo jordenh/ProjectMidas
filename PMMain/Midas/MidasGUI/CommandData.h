@@ -72,12 +72,7 @@ public:
      */
 	std::vector<CommandData> getChangeStateActions() { return changeStateActions; }
 
-	//commandType type;
-	//action actn;
-    
-	//std::string name;
-	//KeyboardVector keyboardVector;
-
+    // Accessor / Mutators
     void setType(commandType type);
     commandType getType();
 

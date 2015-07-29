@@ -21,6 +21,7 @@
 #define GESTURE_HOLD_MODE_ACTION_HPP
 
 #include "MidasCommon.h"
+#include "CommandData.h"
 #include <unordered_map>
 
 #define DEFAULT_SENSITIVITY 1
@@ -74,9 +75,9 @@ public:
 
     void clean();
 
-    bool addToActionMap(angleData ad, kybdCmds command);
+    bool addToActionMap(angleData ad, CommandData command);
 
-    kybdCmds getAction(angleData ad);
+    CommandData getAction(angleData ad);
 
     void setRollSensitivity(float sensitivity) { rollSensitivity = sensitivity; }
     float getRollSensitivity() { return rollSensitivity; }
@@ -111,7 +112,7 @@ private:
     // Vars required for ABS_DELTA_VELOCITY mode
     unsigned int velocityIntervalLen;
 
-    std::unordered_map<int, kybdCmds> actionMap;    
+    std::unordered_map<int, CommandData> actionMap;
 };
 
 #endif /* GESTURE_HOLD_MODE_ACTION_HPP */

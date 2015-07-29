@@ -471,6 +471,9 @@
     <ClInclude Include="WearableDevice.h">
       <Filter>Header Files\Midas\Common</Filter>
     </ClInclude>
+    <ClInclude Include="ProfileCommon.h">
+      <Filter>Header Files\Midas\Profiles</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="keyboardData.txt" />

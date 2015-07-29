@@ -29,7 +29,7 @@
 #include "KeyboardWidget.h"
 #include "KeyboardSettingsReader.h"
 
-#define DEFAULT_PROFILES "profiles.xml"
+#define DEFAULT_PROFILES "profilesOneNewHoldProfile.xml"//"profiles.xml"
 
 #define TASK_BAR_ICON_PATH "Resources\\ProjectMidasLogo.ico"
 

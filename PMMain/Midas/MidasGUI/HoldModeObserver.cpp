@@ -100,9 +100,9 @@ void HoldModeObserver::handleIntervalDelta()
         int yawTicks = deltaYawDeg / actions->getYawSensitivity();
 
         // if 0, will return associated negative cmd, but wont be executed (so its safe).
-        kybdCmds rollCmd = actions->getAction(angleData(angleData::AngleType::ROLL, rollTicks > 0));
-        kybdCmds pitchCmd = actions->getAction(angleData(angleData::AngleType::PITCH, pitchTicks > 0));
-        kybdCmds yawCmd = actions->getAction(angleData(angleData::AngleType::YAW, yawTicks > 0));
+        CommandData rollCmd = actions->getAction(angleData(angleData::AngleType::ROLL, rollTicks > 0));
+        CommandData pitchCmd = actions->getAction(angleData(angleData::AngleType::PITCH, pitchTicks > 0));
+        CommandData yawCmd = actions->getAction(angleData(angleData::AngleType::YAW, yawTicks > 0));
 
         executeCommands(rollCmd, abs(rollTicks), pitchCmd, abs(pitchTicks), yawCmd, abs(yawTicks));
     }
@@ -129,9 +129,9 @@ void HoldModeObserver::handleAbsDeltaFinite()
     int yawTicks    = desiredYawTicks   == 0 ? 0 : (desiredYawTicks / abs(desiredYawTicks));
 
     // if 0, will return associated negative cmd, but wont be executed (so its safe).
-    kybdCmds rollCmd = actions->getAction(angleData(angleData::AngleType::ROLL, rollTicks > 0));
-    kybdCmds pitchCmd = actions->getAction(angleData(angleData::AngleType::PITCH, pitchTicks > 0));
-    kybdCmds yawCmd = actions->getAction(angleData(angleData::AngleType::YAW, yawTicks > 0));
+    CommandData rollCmd = actions->getAction(angleData(angleData::AngleType::ROLL, rollTicks > 0));
+    CommandData pitchCmd = actions->getAction(angleData(angleData::AngleType::PITCH, pitchTicks > 0));
+    CommandData yawCmd = actions->getAction(angleData(angleData::AngleType::YAW, yawTicks > 0));
 
     executeCommands(rollCmd, abs(rollTicks), pitchCmd, abs(pitchTicks), yawCmd, abs(yawTicks));
 
@@ -179,9 +179,9 @@ void HoldModeObserver::handleAbsDeltaVelocity()
         int yawTicks = deltaYawDeg / actions->getYawSensitivity();
 
         // if 0, will return associated negative cmd, but wont be executed (so its safe).
-        kybdCmds rollCmd = actions->getAction(angleData(angleData::AngleType::ROLL, rollTicks > 0));
-        kybdCmds pitchCmd = actions->getAction(angleData(angleData::AngleType::PITCH, pitchTicks > 0));
-        kybdCmds yawCmd = actions->getAction(angleData(angleData::AngleType::YAW, yawTicks > 0));
+        CommandData rollCmd = actions->getAction(angleData(angleData::AngleType::ROLL, rollTicks > 0));
+        CommandData pitchCmd = actions->getAction(angleData(angleData::AngleType::PITCH, pitchTicks > 0));
+        CommandData yawCmd = actions->getAction(angleData(angleData::AngleType::YAW, yawTicks > 0));
 
         executeCommands(rollCmd, abs(rollTicks), pitchCmd, abs(pitchTicks), yawCmd, abs(yawTicks));
     }
@@ -191,6 +191,7 @@ void HoldModeObserver::handleAbsDeltaVelocity()
     }
 }
 
+// LEGACY - only used to handle kybd commands
 void HoldModeObserver::executeCommands(kybdCmds rollCmd, unsigned int rollTicks, kybdCmds pitchCmd, unsigned int pitchTicks, kybdCmds yawCmd, unsigned int yawTicks)
 {
     AdvancedFilterPipeline pipe;
@@ -217,6 +218,30 @@ void HoldModeObserver::executeCommands(kybdCmds rollCmd, unsigned int rollTicks,
         filterDataMap input;
         cmd.setActionKybd(yawCmd);
         input[COMMAND_INPUT] = cmd;
+        pipe.startPipeline(input);
+    }
+}
+
+void HoldModeObserver::executeCommands(CommandData rollCmd, unsigned int rollTicks, CommandData pitchCmd, unsigned int pitchTicks, CommandData yawCmd, unsigned int yawTicks)
+{
+    AdvancedFilterPipeline pipe;
+    pipe.registerFilterAtDeepestLevel(sharedCommandDataHandle);
+    for (int i = 0; i < rollTicks && rollCmd.getType() != commandType::NONE; i++)
+    {
+        filterDataMap input;
+        input[COMMAND_INPUT] = rollCmd;
+        pipe.startPipeline(input);
+    }
+    for (int i = 0; i < pitchTicks && pitchCmd.getType() != commandType::NONE; i++)
+    {
+        filterDataMap input;
+        input[COMMAND_INPUT] = pitchCmd;
+        pipe.startPipeline(input);
+    }
+    for (int i = 0; i < yawTicks && yawCmd.getType() != commandType::NONE; i++)
+    {
+        filterDataMap input;
+        input[COMMAND_INPUT] = yawCmd;
         pipe.startPipeline(input);
     }
 }

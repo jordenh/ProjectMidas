@@ -19,8 +19,9 @@
 
 #include "GestureFilter.h"
 #include "MyoCommon.h"
-#include "CommandData.h"
-#include "ProfileManager.h"
+//#include "CommandData.h"
+#include "ProfileCommon.h"
+//#include "ProfileManager.h"
 #include "BaseMeasurements.h"
 #include "MyoDevice.h"
 #include "SharedCommandData.h"
@@ -650,54 +651,54 @@ filterError GestureFilter::updateBasedOnProfile(ProfileManager& pm, std::string 
 		int cmdItCount = 0;
 		for (std::vector<command>::iterator cmdIt = it->cmds.begin(); cmdIt != it->cmds.end(); ++cmdIt)
 		{
-			CommandData translatedCommand;
-			translatedCommand.setName(it->name);
-            translatedCommand.setType(profileCommandToCommandTypeMap[cmdIt->type]);
-			// Currently only supporting one action, rather than a list.
-			// The XML format supports a list so that it can be extended in Midas easily.
-			std::string action = cmdIt->actions[0];
-			switch (translatedCommand.getType())
-			{
-			case commandType::KYBRD_CMD:
-				if (action.find("inputVector") == 0)
-				{
-					// special case where user could specify 0 or more keys to be pressed
-					// in the format: "inputVector,ABCD..." where A, B, C, D... are all keys
-					// intended to be added to the keyboardVector response.
-					translatedCommand.setActionKybd(profileActionToKybd["inputVector"]);
-					translatedCommand.setKeyboardVector(KeyboardVector::createFromProfileStr(action));
-				}
-				else
-				{
-                    translatedCommand.setActionKybd(profileActionToKybd[action]);
-				}
-				break;
-			case commandType::KYBRD_GUI_CMD:
-				if (profileActionToKybdGui.find(action) != profileActionToKybdGui.end())
-				{
-                    translatedCommand.setActionKybdGUI(profileActionToKybdGui[action]);
-				}
-				else
-				{
-                    translatedCommand.setType(commandType::KYBRD_CMD);
-                    translatedCommand.setActionKybd(profileActionToKybd[action]);
-				}
-				break;
-			case commandType::MOUSE_CMD:
-                translatedCommand.setActionMouse(profileActionToMouseCommands[action]);
-				break;
-			case commandType::STATE_CHANGE:
-				if (cmdItCount > 0)
-				{
-					throw new std::exception("GestureFilter: StateChangeAction set as StateChange");
-				}
-                translatedCommand.setActionMode(profileActionToStateChange[action]);
-				break;
-			case commandType::PROFILE_CHANGE:
-                translatedCommand.setActionProfile(profileActionToProfileChange[action]);
-			default:
-				break;
-			}
+			CommandData translatedCommand = getCDFromCommand(*cmdIt);
+//			translatedCommand.setName(it->name);
+//            translatedCommand.setType(profileCommandToCommandTypeMap[cmdIt->type]);
+//			// Currently only supporting one action, rather than a list.
+//			// The XML format supports a list so that it can be extended in Midas easily.
+//			std::string action = cmdIt->actions[0];
+//			switch (translatedCommand.getType())
+//			{
+//			case commandType::KYBRD_CMD:
+//				if (action.find("inputVector") == 0)
+//				{
+//					// special case where user could specify 0 or more keys to be pressed
+//					// in the format: "inputVector,ABCD..." where A, B, C, D... are all keys
+//					// intended to be added to the keyboardVector response.
+//					translatedCommand.setActionKybd(profileActionToKybd["inputVector"]);
+//					translatedCommand.setKeyboardVector(KeyboardVector::createFromProfileStr(action));
+//				}
+//				else
+//				{
+//                    translatedCommand.setActionKybd(profileActionToKybd[action]);
+//				}
+//				break;
+//			case commandType::KYBRD_GUI_CMD:
+//				if (profileActionToKybdGui.find(action) != profileActionToKybdGui.end())
+//				{
+//                    translatedCommand.setActionKybdGUI(profileActionToKybdGui[action]);
+//				}
+//				else
+//				{
+//                    translatedCommand.setType(commandType::KYBRD_CMD);
+//                    translatedCommand.setActionKybd(profileActionToKybd[action]);
+//				}
+//				break;
+//			case commandType::MOUSE_CMD:
+//                translatedCommand.setActionMouse(profileActionToMouseCommands[action]);
+//				break;
+//			case commandType::STATE_CHANGE:
+//				if (cmdItCount > 0)
+//				{
+//					throw new std::exception("GestureFilter: StateChangeAction set as StateChange");
+//				}
+//                translatedCommand.setActionMode(profileActionToStateChange[action]);
+//				break;
+//			case commandType::PROFILE_CHANGE:
+//                translatedCommand.setActionProfile(profileActionToProfileChange[action]);
+//			default:
+//				break;
+//			}
 			translatedCommands.push_back(translatedCommand);
 			cmdItCount++;
 		}

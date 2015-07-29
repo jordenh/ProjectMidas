@@ -27,6 +27,7 @@
 #include "ProfileManager.h"
 #include "BaseMeasurements.h"
 #include "HoldModeObserver.h"
+#include "ProfileCommon.h"
 #include "myo\myo.hpp"
 #include <iostream>
 
@@ -559,50 +560,52 @@ bool MyoTranslationFilter::defaultGestHoldModeActionArr(void)
 {
     // default hold mode actions incase profiles file is corrupted
 
-    bool initOkay = true;
+//    bool initOkay = true;
+//
+//    angleData ad;
+//    ad.angleType = angleData::AngleType::ROLL;
+//    ad.anglePositive = true;
+//    gestHoldModeAction[GESTURE_FIST].setRollSensitivity(5);
+//    gestHoldModeAction[GESTURE_FIST].setActionType(ABS_DELTA_FINITE);
+//    gestHoldModeAction[GESTURE_FIST].setIntervalLen(100);
+//    gestHoldModeAction[GESTURE_FIST].setVelocityIntervalLen(100);
+//    initOkay &= gestHoldModeAction[GESTURE_FIST].addToActionMap(ad, kybdCmds::VOLUME_UP);
+//    ad.anglePositive = false;
+//    initOkay &= gestHoldModeAction[GESTURE_FIST].addToActionMap(ad, kybdCmds::VOLUME_DOWN);
+//
+//    ad.angleType = angleData::AngleType::PITCH;
+//    gestHoldModeAction[GESTURE_FINGERS_SPREAD].setPitchSensitivity(2);
+//    gestHoldModeAction[GESTURE_FINGERS_SPREAD].setActionType(ABS_DELTA_VELOCITY);
+//    gestHoldModeAction[GESTURE_FINGERS_SPREAD].setIntervalLen(100);
+//    gestHoldModeAction[GESTURE_FINGERS_SPREAD].setVelocityIntervalLen(100);
+//    ad.anglePositive = true;
+//    initOkay &= gestHoldModeAction[GESTURE_FINGERS_SPREAD].addToActionMap(ad, kybdCmds::UP_ARROW);
+//    ad.anglePositive = false;
+//    initOkay &= gestHoldModeAction[GESTURE_FINGERS_SPREAD].addToActionMap(ad, kybdCmds::DOWN_ARROW);
+//
+//    ad.angleType = angleData::AngleType::YAW;
+//    gestHoldModeAction[GESTURE_FINGERS_SPREAD].setYawSensitivity(2);
+//    gestHoldModeAction[GESTURE_FINGERS_SPREAD].setActionType(ABS_DELTA_FINITE);
+//    gestHoldModeAction[GESTURE_FINGERS_SPREAD].setIntervalLen(100);
+//    gestHoldModeAction[GESTURE_FINGERS_SPREAD].setVelocityIntervalLen(100);
+//    ad.anglePositive = true;
+//    initOkay &= gestHoldModeAction[GESTURE_FINGERS_SPREAD].addToActionMap(ad, kybdCmds::RIGHT_ARROW);
+//    ad.anglePositive = false;
+//    initOkay &= gestHoldModeAction[GESTURE_FINGERS_SPREAD].addToActionMap(ad, kybdCmds::LEFT_ARROW);
+//
+//    ad.angleType = angleData::AngleType::YAW;
+//    gestHoldModeAction[GESTURE_WAVE_IN].setYawSensitivity(10);
+//    gestHoldModeAction[GESTURE_WAVE_IN].setActionType(ABS_DELTA_FINITE);
+//    gestHoldModeAction[GESTURE_WAVE_IN].setIntervalLen(100);
+//    gestHoldModeAction[GESTURE_WAVE_IN].setVelocityIntervalLen(100);
+//    ad.anglePositive = false;
+//    initOkay &= gestHoldModeAction[GESTURE_WAVE_IN].addToActionMap(ad, kybdCmds::UNDO);
+//    ad.anglePositive = true;
+//    initOkay &= gestHoldModeAction[GESTURE_WAVE_IN].addToActionMap(ad, kybdCmds::REDO);
+//
+//    return initOkay;
 
-    angleData ad;
-    ad.angleType = angleData::AngleType::ROLL;
-    ad.anglePositive = true;
-    gestHoldModeAction[GESTURE_FIST].setRollSensitivity(5);
-    gestHoldModeAction[GESTURE_FIST].setActionType(ABS_DELTA_FINITE);
-    gestHoldModeAction[GESTURE_FIST].setIntervalLen(100);
-    gestHoldModeAction[GESTURE_FIST].setVelocityIntervalLen(100);
-    initOkay &= gestHoldModeAction[GESTURE_FIST].addToActionMap(ad, kybdCmds::VOLUME_UP);
-    ad.anglePositive = false;
-    initOkay &= gestHoldModeAction[GESTURE_FIST].addToActionMap(ad, kybdCmds::VOLUME_DOWN);
-
-    ad.angleType = angleData::AngleType::PITCH;
-    gestHoldModeAction[GESTURE_FINGERS_SPREAD].setPitchSensitivity(2);
-    gestHoldModeAction[GESTURE_FINGERS_SPREAD].setActionType(ABS_DELTA_VELOCITY);
-    gestHoldModeAction[GESTURE_FINGERS_SPREAD].setIntervalLen(100);
-    gestHoldModeAction[GESTURE_FINGERS_SPREAD].setVelocityIntervalLen(100);
-    ad.anglePositive = true;
-    initOkay &= gestHoldModeAction[GESTURE_FINGERS_SPREAD].addToActionMap(ad, kybdCmds::UP_ARROW);
-    ad.anglePositive = false;
-    initOkay &= gestHoldModeAction[GESTURE_FINGERS_SPREAD].addToActionMap(ad, kybdCmds::DOWN_ARROW);
-
-    ad.angleType = angleData::AngleType::YAW;
-    gestHoldModeAction[GESTURE_FINGERS_SPREAD].setYawSensitivity(2);
-    gestHoldModeAction[GESTURE_FINGERS_SPREAD].setActionType(ABS_DELTA_FINITE);
-    gestHoldModeAction[GESTURE_FINGERS_SPREAD].setIntervalLen(100);
-    gestHoldModeAction[GESTURE_FINGERS_SPREAD].setVelocityIntervalLen(100);
-    ad.anglePositive = true;
-    initOkay &= gestHoldModeAction[GESTURE_FINGERS_SPREAD].addToActionMap(ad, kybdCmds::RIGHT_ARROW);
-    ad.anglePositive = false;
-    initOkay &= gestHoldModeAction[GESTURE_FINGERS_SPREAD].addToActionMap(ad, kybdCmds::LEFT_ARROW);
-
-    ad.angleType = angleData::AngleType::YAW;
-    gestHoldModeAction[GESTURE_WAVE_IN].setYawSensitivity(10);
-    gestHoldModeAction[GESTURE_WAVE_IN].setActionType(ABS_DELTA_FINITE);
-    gestHoldModeAction[GESTURE_WAVE_IN].setIntervalLen(100);
-    gestHoldModeAction[GESTURE_WAVE_IN].setVelocityIntervalLen(100);
-    ad.anglePositive = false;
-    initOkay &= gestHoldModeAction[GESTURE_WAVE_IN].addToActionMap(ad, kybdCmds::UNDO);
-    ad.anglePositive = true;
-    initOkay &= gestHoldModeAction[GESTURE_WAVE_IN].addToActionMap(ad, kybdCmds::REDO);
-
-    return initOkay;
+    return true;
 }
 
 void MyoTranslationFilter::unregisterHoldModeActions(void)
@@ -682,9 +685,25 @@ filterError MyoTranslationFilter::updateBasedOnProfile(ProfileManager& pm, std::
             }
 
             ad.anglePositive = true;
-            okay &= gestHoldModeAction[gestType].addToActionMap(ad, profileActionToKybd[angleIt->anglePositive]);
+            CommandData posCmd = getCDFromCommand(angleIt->anglePositive);
+            okay &= gestHoldModeAction[gestType].addToActionMap(ad, posCmd);
             ad.anglePositive = false;
-            okay &= gestHoldModeAction[gestType].addToActionMap(ad, profileActionToKybd[angleIt->angleNegative]);
+            CommandData negCmd = getCDFromCommand(angleIt->angleNegative);
+            okay &= gestHoldModeAction[gestType].addToActionMap(ad, negCmd);
+            //**************
+  //         if (angleIt->anglePositive.find("inputVector") == 0) // Jorden TODO - need this type of logic here for it to work.
+  //         {
+  //             // special case where user could specify 0 or more keys to be pressed
+  //             // in the format: "inputVector,ABCD..." where A, B, C, D... are all keys
+  //             // intended to be added to the keyboardVector response.
+  //             cmd .setActionKybd(profileActionToKybd["inputVector"]);
+  //             translatedCommand.setKeyboardVector(KeyboardVector::createFromProfileStr(action));
+  //         }
+  //         else
+  //         {
+  //             translatedCommand.setActionKybd(profileActionToKybd[action]);
+  //         }
+            //**************
 
             if (!okay)
             {

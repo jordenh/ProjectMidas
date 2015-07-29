@@ -41,7 +41,7 @@ void GestureHoldModeAction::clean()
     yawSensitivity = DEFAULT_SENSITIVITY;
 }
 
-bool GestureHoldModeAction::addToActionMap(angleData ad, kybdCmds command)
+bool GestureHoldModeAction::addToActionMap(angleData ad, CommandData command)
 {
     actionMap[ad.hash()] = command;
 
@@ -52,11 +52,13 @@ bool GestureHoldModeAction::addToActionMap(angleData ad, kybdCmds command)
     return true;
 }
 
-kybdCmds GestureHoldModeAction::getAction(angleData ad)
+CommandData GestureHoldModeAction::getAction(angleData ad)
 {
     if (actionMap.find(ad.hash()) == actionMap.end())
     {
-        return kybdCmds::NO_CMD;
+        CommandData retVal;
+        retVal.setType(commandType::NONE);
+        return retVal;
     }
 
     return actionMap[ad.hash()];
