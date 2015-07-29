@@ -354,7 +354,7 @@
         </sequences>
         <holds/>
     </profile>
-	<profile name="Advanced Profile - Trial 3 - c">
+	<profile name="Advanced Profile - Trial 3 - holds">
         <sequences>
             <sequence state="lockMode" name="Unlock">
                 <gestures>
@@ -411,19 +411,28 @@
                 </commands>
             </sequence>
 			
-            <sequence state="gestureMode" name="Middle Hold">
+            <sequence state="gestureMode" name="Rotate Atrium">
                 <gestures>
-                    <gesture type="hold">waveIn</gesture>
+                    <gesture type="tap">doubleTap </gesture>
+					<gesture type="immediate">fingersSpread</gesture>
                 </gestures>
                 <commands>
                     <command type="stateChange">
                         <actions>
-                            <action>mouseMode</action>
+                            <action>gestureHoldTwo</action>
                         </actions>
                     </command>
-                    <command type="mouse">
+                </commands>
+            </sequence>
+			<sequence state="gestureMode" name="Rotate Atrium2">
+                <gestures>
+                    <gesture type="tap">doubleTap </gesture>
+					<gesture type="immediate">fist</gesture>
+                </gestures>
+                <commands>
+                    <command type="stateChange">
                         <actions>
-                            <action>middleHold</action>
+                            <action>gestureHoldTwo</action>
                         </actions>
                     </command>
                 </commands>
@@ -483,7 +492,63 @@
                 </commands>
             </sequence>
         </sequences>
-        <holds/>
+        <holds>
+			<hold gesture="fingersSpread">
+                <angle type="pitch">
+                    <anglePositive>
+							<command type="keyboard">
+								<actions>
+									<action>upArrow</action>
+								</actions>
+							</command>
+                    </anglePositive>
+					<angleNegative>
+							<command type="keyboard">
+								<actions>
+									<action>downArrow</action>
+								</actions>
+							</command>
+					</angleNegative>
+					<sensitivity>1</sensitivity>
+                </angle>
+				<angle type="yaw">
+                    <anglePositive>
+							<command type="keyboard">
+								<actions>
+									<action>rightArrow</action>
+								</actions>
+							</command>
+					</anglePositive>
+                    <angleNegative>
+							<command type="keyboard">
+								<actions>
+									<action>leftArrow</action>
+								</actions>
+							</command>
+					</angleNegative>
+					<sensitivity>1</sensitivity>
+                </angle>
+				<angle type="roll">
+                    <anglePositive>
+							<command type="keyboard">
+								<actions>
+									<action>inputVector,p</action>
+								</actions>
+							</command>
+					</anglePositive>
+                    <angleNegative>
+							<command type="keyboard">
+								<actions>
+									<action>inputVector,o</action>
+								</actions>
+							</command>
+					</angleNegative>
+					<sensitivity>1</sensitivity>
+                </angle>
+				<holdModeActionType>absDeltaFinite</holdModeActionType>
+				<intervalLength>20</intervalLength>
+            </hold>
+		</holds>	
     </profile>
 	<profile name="Advanced Profile - Trial 2">
         <sequences>
@@ -1175,22 +1240,75 @@
         <holds>
 			<hold gesture="fingersSpread">
                 <angle type="pitch">
-                    <anglePositive>upArrow</anglePositive>
-                    <angleNegative>downArrow</angleNegative>
+                    <anglePositive>
+							<command type="keyboard">
+								<actions>
+									<action>upArrow</action>
+								</actions>
+							</command>
+                    </anglePositive>
+					<angleNegative>
+							<command type="keyboard">
+								<actions>
+									<action>downArrow</action>
+								</actions>
+							</command>
+					</angleNegative>
 					<sensitivity>1</sensitivity>
                 </angle>
 				<angle type="yaw">
-                    <anglePositive>rightArrow</anglePositive>
-                    <angleNegative>leftArrow</angleNegative>
+                    <anglePositive>
+							<command type="keyboard">
+								<actions>
+									<action>rightArrow</action>
+								</actions>
+							</command>
+					</anglePositive>
+                    <angleNegative>
+							<command type="keyboard">
+								<actions>
+									<action>leftArrow</action>
+								</actions>
+							</command>
+					</angleNegative>
 					<sensitivity>1</sensitivity>
                 </angle>
-				<holdModeActionType>absDeltaVelocity</holdModeActionType>
+				<angle type="roll">
+                    <anglePositive>
+							<command type="keyboard">
+								<actions>
+									<action>inputVector,p</action>
+								</actions>
+							</command>
+					</anglePositive>
+                    <angleNegative>
+							<command type="keyboard">
+								<actions>
+									<action>inputVector,o</action>
+								</actions>
+							</command>
+					</angleNegative>
+					<sensitivity>1</sensitivity>
+                </angle>
+				<holdModeActionType>absDeltaFinite</holdModeActionType>
 				<intervalLength>20</intervalLength>
             </hold>
-            <hold gesture="fist">
+			<hold gesture="fist">
                 <angle type="roll">
-                    <anglePositive>volumeUp</anglePositive>
-                    <angleNegative>volumeDown</angleNegative>
+                    <anglePositive>
+							<command type="keyboard">
+								<actions>
+									<action>volumeUp</action>
+								</actions>
+							</command>
+					</anglePositive>
+                    <angleNegative>
+							<command type="keyboard">
+								<actions>
+									<action>volumeDown</action>
+								</actions>
+							</command>
+					</angleNegative>
 					<sensitivity>1</sensitivity>
                 </angle>
 				<holdModeActionType>absDeltaFinite</holdModeActionType>
@@ -1453,27 +1571,75 @@
         <holds>
 			<hold gesture="fingersSpread">
                 <angle type="pitch">
-                    <anglePositive>upArrow</anglePositive>
-                    <angleNegative>downArrow</angleNegative>
+                    <anglePositive>
+							<command type="keyboard">
+								<actions>
+									<action>upArrow</action>
+								</actions>
+							</command>
+                    </anglePositive>
+					<angleNegative>
+							<command type="keyboard">
+								<actions>
+									<action>downArrow</action>
+								</actions>
+							</command>
+					</angleNegative>
 					<sensitivity>1</sensitivity>
                 </angle>
 				<angle type="yaw">
-                    <anglePositive>rightArrow</anglePositive>
-                    <angleNegative>leftArrow</angleNegative>
+                    <anglePositive>
+							<command type="keyboard">
+								<actions>
+									<action>rightArrow</action>
+								</actions>
+							</command>
+					</anglePositive>
+                    <angleNegative>
+							<command type="keyboard">
+								<actions>
+									<action>leftArrow</action>
+								</actions>
+							</command>
+					</angleNegative>
 					<sensitivity>1</sensitivity>
                 </angle>
 				<angle type="roll">
-                    <anglePositive>inputVector,p</anglePositive>
-                    <angleNegative>inputVector,o</angleNegative>
+                    <anglePositive>
+							<command type="keyboard">
+								<actions>
+									<action>inputVector,p</action>
+								</actions>
+							</command>
+					</anglePositive>
+                    <angleNegative>
+							<command type="keyboard">
+								<actions>
+									<action>inputVector,o</action>
+								</actions>
+							</command>
+					</angleNegative>
 					<sensitivity>1</sensitivity>
                 </angle>
 				<holdModeActionType>absDeltaFinite</holdModeActionType>
 				<intervalLength>20</intervalLength>
             </hold>
-            <hold gesture="fist">
+			<hold gesture="fist">
                 <angle type="roll">
-                    <anglePositive>volumeUp</anglePositive>
-                    <angleNegative>volumeDown</angleNegative>
+                    <anglePositive>
+							<command type="keyboard">
+								<actions>
+									<action>volumeUp</action>
+								</actions>
+							</command>
+					</anglePositive>
+                    <angleNegative>
+							<command type="keyboard">
+								<actions>
+									<action>volumeDown</action>
+								</actions>
+							</command>
+					</angleNegative>
 					<sensitivity>1</sensitivity>
                 </angle>
 				<holdModeActionType>absDeltaFinite</holdModeActionType>
