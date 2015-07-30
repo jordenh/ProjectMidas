@@ -106,7 +106,7 @@
                 <commands>
                     <command type="stateChange">
                         <actions>
-                            <action>gestureHoldTwo</action>
+                            <action>gestureHoldThree</action>
                         </actions>
                     </command>
                 </commands>
@@ -192,6 +192,61 @@
 					<sensitivity>0.35</sensitivity>
                 </angle>
 				<holdModeActionType>absDeltaFinite</holdModeActionType>
+				<intervalLength>20</intervalLength>
+            </hold>
+			<hold gesture="fist">
+                <angle type="pitch">
+                    <anglePositive>
+							<command type="keyboard">
+								<actions>
+									<action>upArrow</action>
+								</actions>
+							</command>
+                    </anglePositive>
+					<angleNegative>
+							<command type="keyboard">
+								<actions>
+									<action>downArrow</action>
+								</actions>
+							</command>
+					</angleNegative>
+					<sensitivity>5</sensitivity>
+                </angle>
+				<angle type="yaw">
+                    <anglePositive>
+							<command type="keyboard">
+								<actions>
+									<action>rightArrow</action>
+								</actions>
+							</command>
+					</anglePositive>
+                    <angleNegative>
+							<command type="keyboard">
+								<actions>
+									<action>leftArrow</action>
+								</actions>
+							</command>
+					</angleNegative>
+					<sensitivity>5</sensitivity>
+                </angle>
+				<angle type="roll">
+                    <anglePositive>
+							<command type="keyboard">
+								<actions>
+									<action>inputVector,p</action>
+								</actions>
+							</command>
+					</anglePositive>
+                    <angleNegative>
+							<command type="keyboard">
+								<actions>
+									<action>inputVector,o</action>
+								</actions>
+							</command>
+					</angleNegative>
+					<sensitivity>5</sensitivity>
+                </angle>
+				<holdModeActionType>absDeltaVelocity</holdModeActionType>
 				<intervalLength>20</intervalLength>
             </hold>
 		</holds>	

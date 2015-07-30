@@ -207,17 +207,17 @@ private:
         switch (mode)
         {
         case GESTURE_HOLD_ONE:
-            return GESTURE_DOUBLE_TAP;
+            return 0;
         case GESTURE_HOLD_TWO:
-            return GESTURE_FINGERS_SPREAD;
+            return 1;
         case GESTURE_HOLD_THREE:
-            return GESTURE_FIST;
+            return 2;
         case GESTURE_HOLD_FOUR:
-            return GESTURE_WAVE_IN;
+            return 3;
         case GESTURE_HOLD_FIVE:
-            return GESTURE_WAVE_OUT;
+            return 4;
         default:
-            return GESTURE_WAVE_OUT;
+            return 4;
         }
     }
     GestureHoldModeAction gestHoldModeAction[5];
