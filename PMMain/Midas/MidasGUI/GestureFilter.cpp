@@ -650,7 +650,7 @@ filterError GestureFilter::updateBasedOnProfile(ProfileManager& pm, std::string 
 		int cmdItCount = 0;
 		for (std::vector<command>::iterator cmdIt = it->cmds.begin(); cmdIt != it->cmds.end(); ++cmdIt)
 		{
-			CommandData translatedCommand;
+            CommandData translatedCommand;// JORDEN TODO = getCDFromCommand(*cmdIt);
 			translatedCommand.setName(it->name);
             translatedCommand.setType(profileCommandToCommandTypeMap[cmdIt->type]);
 			// Currently only supporting one action, rather than a list.

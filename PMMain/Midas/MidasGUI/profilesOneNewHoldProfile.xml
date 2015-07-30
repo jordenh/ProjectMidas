@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<profiles>
+	<profile name="keyboard/holdMode enabled">
+        <sequences>
+            <sequence state="lockMode" name="Unlock">
+                <gestures>
+                    <gesture type="tap">doubleTap</gesture>
+                </gestures>
+                <commands>
+					<command type="stateChange">
+						<actions>
+							<action>gestureMode</action>
+						</actions>
+					</command>
+				</commands>
+            </sequence>
+            <sequence state="gestureMode" name="Gesture to Lock">
+                <gestures>
+                    <gesture type="tap">doubleTap</gesture>		
+                </gestures>
+                <commands>
+					<command type="stateChange">
+						<actions>
+							<action>lockMode</action>
+						</actions>
+					</command>
+				</commands>
+            </sequence>
+			<sequence state="gestureMode" name="Arrow Keys">
+                <gestures>
+                    <gesture type="hold">fingersSpread</gesture>
+                </gestures>
+                <commands>
+					<command type="stateChange">
+						<actions>
+							<action>gestureHoldTwo</action>
+						</actions>
+					</command>
+				</commands>
+            </sequence>
+        </sequences>
+        <holds>
+			<hold gesture="fingersSpread">
+                <angle type="pitch">
+                    <anglePositive>
+						<command type="keyboard">
+							<actions>
+								<action>upArrow</action>
+							</actions>
+						</command>
+                    </anglePositive>
+					<angleNegative>
+						<command type="keyboard">
+							<actions>
+								<action>downArrow</action>
+							</actions>
+						</command>
+					</angleNegative>
+					<sensitivity>1</sensitivity>
+                </angle>
+				<holdModeActionType>absDeltaFinite</holdModeActionType>
+				<intervalLength>20</intervalLength>
+            </hold>
+        </holds>
+    </profile>
+</profiles>

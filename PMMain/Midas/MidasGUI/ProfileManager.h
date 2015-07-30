@@ -45,9 +45,9 @@ struct profileSequence {
 
 struct angleAction {
     std::string type;
-    std::string anglePositive;
-    std::string angleNegative;
-    unsigned int sensitivity;
+    command anglePositive;
+    command angleNegative;
+    float sensitivity;
 };
 
 struct hold {

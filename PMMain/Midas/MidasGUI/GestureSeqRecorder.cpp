@@ -332,12 +332,6 @@ SequenceStatus GestureSeqRecorder::checkLegalRegister(midasMode mode, sequenceIn
 
                 if (gestInQuestion.poseLen == PoseLength::IMMEDIATE || baseGest.poseLen == PoseLength::IMMEDIATE)
                 {
-                    if (gestureIdx > 1)
-                    {
-                        // can ONLY have length one IMMEDIATE types. This allows for very quick actions, such as clicking of a cursor,
-                        // but is not fully supported.
-                        return SequenceStatus::INVALID_SEQUENCE;
-                    }
                     if (gestInQuestion.type == baseGest.type)
                     {
                         conflict = true;

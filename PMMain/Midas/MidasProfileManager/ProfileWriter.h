@@ -43,8 +43,8 @@ struct Sequence {
 
 struct AngleAction {
     std::string type;
-    std::string anglePositive;
-    std::string angleNegative;
+    Command anglePositive;
+    Command angleNegative;
     unsigned int sensitivity;
 };
 

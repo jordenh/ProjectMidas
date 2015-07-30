@@ -83,18 +83,31 @@ void ProfileWriter::writeProfile(boost::property_tree::ptree &profileNode, Profi
         {
             ptree &holdNode = profileNode.add("holds.hold", "");
             holdNode.put("<xmlattr>.gesture", hold.gesture);
-            holdNode.add("holdModeActionType", hold.holdModeActionType);
-            holdNode.add("intervalLength", hold.intervalLen);
-
+            
             BOOST_FOREACH(AngleAction angleAction, hold.angles)
             {
                 ptree &angleNode = holdNode.add("angle", "");
                 angleNode.put("<xmlattr>.type", angleAction.type);
 
-                angleNode.add("anglePositive", angleAction.anglePositive);
-                angleNode.add("angleNegative", angleAction.angleNegative);
+                ptree &anglePosNode = angleNode.add("anglePositive", "");
+                ptree &commandNode = anglePosNode.add("command", "");
+                commandNode.put("<xmlattr>.type", angleAction.anglePositive.type);
+                BOOST_FOREACH(std::string action, angleAction.anglePositive.actions)
+                {
+                    commandNode.add("actions.action", action);
+                }
+                ptree &angleNegNode = angleNode.add("angleNegative", "");
+                ptree &commandNode2 = angleNegNode.add("command", "");
+                commandNode2.put("<xmlattr>.type", angleAction.angleNegative.type);
+                BOOST_FOREACH(std::string action, angleAction.angleNegative.actions)
+                {
+                    commandNode2.add("actions.action", action);
+                }
+
                 angleNode.add("sensitivity", angleAction.sensitivity);
             }
+            holdNode.add("holdModeActionType", hold.holdModeActionType);
+            holdNode.add("intervalLength", hold.intervalLen);
         }
     }
 }
@@ -189,16 +202,41 @@ Profile ProfileWriter::extractProfileInformation(const boost::property_tree::ptr
             {
                 if (angleVt.first == "angle")
                 {
-                    AngleAction currAngle;
+                    AngleAction currAngleAction;
                     std::string angleType = angleVt.second.get<std::string>("<xmlattr>.type");
-                    std::string anglePositive = angleVt.second.get_child("anglePositive").get_value<std::string>();
-                    std::string angleNegative = angleVt.second.get_child("angleNegative").get_value<std::string>();
-                    unsigned int angleSensitivity = angleVt.second.get_child("sensitivity").get_value<unsigned int>();
-                    currAngle.anglePositive = anglePositive;
-                    currAngle.angleNegative = angleNegative;
-                    currAngle.sensitivity = angleSensitivity;
-                    currAngle.type = angleType;
-                    currHold.angles.push_back(currAngle);
+
+                    BOOST_FOREACH(const ptree::value_type & posAngleTree, angleVt.second.get_child("anglePositive")) {
+                        if (posAngleTree.first == "command")
+                        {
+                            currAngleAction.anglePositive.type = posAngleTree.second.get<std::string>("<xmlattr>.type");
+                        }
+
+                        BOOST_FOREACH(const ptree::value_type & vt, posAngleTree.second.get_child("actions")) {
+                            if (vt.first == "action")
+                            {
+                                currAngleAction.anglePositive.actions.push_back(vt.second.get_value<std::string>());
+                            }
+                        }
+                    }
+
+                    BOOST_FOREACH(const ptree::value_type & posAngleTree, angleVt.second.get_child("angleNegative")) {
+                        if (posAngleTree.first == "command")
+                        {
+                            currAngleAction.angleNegative.type = posAngleTree.second.get<std::string>("<xmlattr>.type");
+                        }
+
+                        BOOST_FOREACH(const ptree::value_type & vt, posAngleTree.second.get_child("actions")) {
+                            if (vt.first == "action")
+                            {
+                                currAngleAction.angleNegative.actions.push_back(vt.second.get_value<std::string>());
+                            }
+                        }
+                    }
+
+                    float angleSensitivity = angleVt.second.get_child("sensitivity").get_value<float>();
+                    currAngleAction.sensitivity = angleSensitivity;
+                    currAngleAction.type = angleType;
+                    currHold.angles.push_back(currAngleAction);
                 }
             }
 

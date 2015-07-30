@@ -21,6 +21,7 @@
 #define HOLD_MODE_OBSERVER_H
 
 #include "MidasCommon.h"
+#include "CommandData.h"
 
 #define DEFAULT_CALLBACK_PER 20
 
@@ -51,6 +52,7 @@ private:
     void handleAbsDeltaVelocity();
 
     void executeCommands(kybdCmds rollCmd, unsigned int rollTicks, kybdCmds pitchCmd, unsigned int pitchTicks, kybdCmds yawCmd, unsigned int yawTicks);
+    void executeCommands(CommandData rollCmd, unsigned int rollTicks, CommandData pitchCmd, unsigned int pitchTicks, CommandData yawCmd, unsigned int yawTicks);
 
     float prevRoll;
     float prevPitch;
