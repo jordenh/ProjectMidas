@@ -690,20 +690,6 @@ filterError MyoTranslationFilter::updateBasedOnProfile(ProfileManager& pm, std::
             ad.anglePositive = false;
             CommandData negCmd = getCDFromCommand(angleIt->angleNegative);
             okay &= gestHoldModeAction[gestType].addToActionMap(ad, negCmd);
-            //**************
-  //         if (angleIt->anglePositive.find("inputVector") == 0) // Jorden TODO - need this type of logic here for it to work.
-  //         {
-  //             // special case where user could specify 0 or more keys to be pressed
-  //             // in the format: "inputVector,ABCD..." where A, B, C, D... are all keys
-  //             // intended to be added to the keyboardVector response.
-  //             cmd .setActionKybd(profileActionToKybd["inputVector"]);
-  //             translatedCommand.setKeyboardVector(KeyboardVector::createFromProfileStr(action));
-  //         }
-  //         else
-  //         {
-  //             translatedCommand.setActionKybd(profileActionToKybd[action]);
-  //         }
-            //**************
 
             if (!okay)
             {

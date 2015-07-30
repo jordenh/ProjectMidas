@@ -15,14 +15,14 @@
                     </command>
                 </commands>
             </sequence>
-			<sequence state="gestureMode" name="Left Click">
+			<sequence state="gestureMode" name="Rotate Atrium">
                 <gestures>
                     <gesture type="immediate">waveIn</gesture>
                 </gestures>
                 <commands>
-                    <command type="mouse">
+                    <command type="stateChange">
                         <actions>
-                            <action>leftClick</action>
+                            <action>gestureHoldTwo</action>
                         </actions>
                     </command>
                 </commands>
