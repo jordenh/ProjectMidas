@@ -213,30 +213,45 @@ enum class helpLevel {
  */
 static std::string modeToString(midasMode mm)
 {
+#ifdef BUILD_FOR_KARDIUM
     switch (mm)
     {
     case LOCK_MODE:   
         return LOCKED_TEXT;
-    case MOUSE_MODE:  
-#ifdef BUILD_FOR_KARDIUM
+    case MOUSE_MODE:
         return UNLOCKED_TEXT;
-#else
-        return "Mouse Mouse";
-#endif
     case MOUSE_MODE2:
-#ifdef BUILD_FOR_KARDIUM
         return UNLOCKED_TEXT;
+    case KEYBOARD_MODE:
+        return UNLOCKED_TEXT;
+    case GESTURE_MODE:
+        return UNLOCKED_TEXT;
+    case GESTURE_HOLD_ONE:
+        return UNLOCKED_TEXT;
+    case GESTURE_HOLD_TWO:
+        return UNLOCKED_TEXT;
+    case GESTURE_HOLD_THREE:
+        return UNLOCKED_TEXT;
+    case GESTURE_HOLD_FOUR:
+        return UNLOCKED_TEXT;
+    case GESTURE_HOLD_FIVE:
+        return UNLOCKED_TEXT;
+    default:
+        return "default";
+}
 #else
+    switch (mm)
+    {
+    case LOCK_MODE:
+        return LOCKED_TEXT;
+    case MOUSE_MODE:
+        return "Mouse Mouse";
+    case MOUSE_MODE2:
         return "Mouse Mode2";
-#endif
-    case KEYBOARD_MODE:  
+    case KEYBOARD_MODE:
         return "Keyboard Mode";
-    case GESTURE_MODE:  
-#ifdef BUILD_FOR_KARDIUM
-        return "UNLOCKED";
-#else
+    case GESTURE_MODE:
         return "Gesture Mode";
-#endif
     case GESTURE_HOLD_ONE:
         return "Hold1 Mode";
     case GESTURE_HOLD_TWO:
@@ -250,6 +265,7 @@ static std::string modeToString(midasMode mm)
     default:
         return "default";
     }
+#endif
 }
 
 /**

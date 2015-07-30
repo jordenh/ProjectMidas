@@ -50,16 +50,16 @@ bool SequenceEditor::checkPrefixConstraint(std::string &errorMessage)
         return false;
     }
 
-    // Check for incorrect immediates
-    for (int i = 0; i < returnSequence.gestures.size(); i++)
-    {
-        if (returnSequence.gestures.at(i).type == "immediate" && returnSequence.gestures.size() > 1)
-        {
-            // Can only have length 1 immediates.
-            errorMessage = "Cannot have gestures of type 'immediate' in sequences with more than 1 gesture.";
-            return false;
-        }
-    }
+ //  // Check for incorrect immediates
+ //  for (int i = 0; i < returnSequence.gestures.size(); i++)
+ //  {
+ //      if (returnSequence.gestures.at(i).type == "immediate" && returnSequence.gestures.size() > 1)
+ //      {
+ //          // Can only have length 1 immediates.
+ //          errorMessage = "Cannot have gestures of type 'immediate' in sequences with more than 1 gesture.";
+ //          return false;
+ //      }
+ //  }
 
     std::vector<Sequence>::iterator seqIt;
     std::vector<std::string> conflictingSequences;
