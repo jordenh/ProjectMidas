@@ -83,18 +83,31 @@ void ProfileWriter::writeProfile(boost::property_tree::ptree &profileNode, Profi
         {
             ptree &holdNode = profileNode.add("holds.hold", "");
             holdNode.put("<xmlattr>.gesture", hold.gesture);
-            holdNode.add("holdModeActionType", hold.holdModeActionType);
-            holdNode.add("intervalLength", hold.intervalLen);
-
+            
             BOOST_FOREACH(AngleAction angleAction, hold.angles)
             {
                 ptree &angleNode = holdNode.add("angle", "");
                 angleNode.put("<xmlattr>.type", angleAction.type);
 
-             //   angleNode.add("anglePositive", angleAction.anglePositive); // Jorden TODO July 29 2015
-             //   angleNode.add("angleNegative", angleAction.angleNegative);
+                ptree &anglePosNode = angleNode.add("anglePositive", "");
+                ptree &commandNode = anglePosNode.add("command", "");
+                commandNode.put("<xmlattr>.type", angleAction.anglePositive.type);
+                BOOST_FOREACH(std::string action, angleAction.anglePositive.actions)
+                {
+                    commandNode.add("actions.action", action);
+                }
+                ptree &angleNegNode = angleNode.add("angleNegative", "");
+                ptree &commandNode2 = angleNegNode.add("command", "");
+                commandNode2.put("<xmlattr>.type", angleAction.angleNegative.type);
+                BOOST_FOREACH(std::string action, angleAction.angleNegative.actions)
+                {
+                    commandNode2.add("actions.action", action);
+                }
+
                 angleNode.add("sensitivity", angleAction.sensitivity);
             }
+            holdNode.add("holdModeActionType", hold.holdModeActionType);
+            holdNode.add("intervalLength", hold.intervalLen);
         }
     }
 }

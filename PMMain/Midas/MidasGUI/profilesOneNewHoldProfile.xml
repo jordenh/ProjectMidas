@@ -43,18 +43,18 @@
 			<hold gesture="fingersSpread">
                 <angle type="pitch">
                     <anglePositive>
-							<command type="keyboard">
-								<actions>
-									<action>upArrow</action>
-								</actions>
-							</command>
+						<command type="keyboard">
+							<actions>
+								<action>upArrow</action>
+							</actions>
+						</command>
                     </anglePositive>
 					<angleNegative>
-							<command type="keyboard">
-								<actions>
-									<action>downArrow</action>
-								</actions>
-							</command>
+						<command type="keyboard">
+							<actions>
+								<action>downArrow</action>
+							</actions>
+						</command>
 					</angleNegative>
 					<sensitivity>1</sensitivity>
                 </angle>
