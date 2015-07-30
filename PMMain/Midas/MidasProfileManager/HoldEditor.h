@@ -35,6 +35,9 @@ public:
     Hold getReturnHold();
 
 private:
+    void formMouseActions(QComboBox * comboBox);
+    void formKybdActions(QComboBox * comboBox);
+
     Ui::HoldEditor ui;
 
     Hold returnHold;
@@ -42,6 +45,12 @@ private:
 
 public slots:
     void handleDone();
+    void handleActivatePosRollCommandBox(const QString & text);
+    void handleActivateNegRollCommandBox(const QString & text);
+    void handleActivatePosPitchCommandBox(const QString & text);
+    void handleActivateNegPitchCommandBox(const QString & text);
+    void handleActivatePosYawCommandBox(const QString & text);
+    void handleActivateNegYawCommandBox(const QString & text);
 };
 
 #endif // HOLDEDITOR_H

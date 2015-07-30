@@ -113,8 +113,8 @@ void ProfileWidget::drawHold(Hold hold, int ind, bool insertBefore)
         QLabel* angleLabel = new QLabel(QString(angleTitle.c_str()));
         holdLayout->addWidget(angleLabel);
 
-        std::string positiveText = "    On positive angle, do action '" + angle.anglePositive + "' with Sensitivity: " + std::to_string(angle.sensitivity);
-        std::string negativeText = "    On negative angle, do action '" + angle.angleNegative + "' with Sensitivity: " + std::to_string(angle.sensitivity);
+        std::string positiveText = "    On positive angle, do action type '" + angle.anglePositive.type + "', with action '" + angle.anglePositive.actions[0] + "' with Sensitivity: " + std::to_string(angle.sensitivity);
+        std::string negativeText = "    On negative angle, do action type '" + angle.angleNegative.type + "', with action '" + angle.angleNegative.actions[0] + "' with Sensitivity: " + std::to_string(angle.sensitivity);
         QLabel* positiveLabel = new QLabel(QString(positiveText.c_str()));
         QLabel* negativeLabel = new QLabel(QString(negativeText.c_str()));
 
@@ -187,8 +187,8 @@ void ProfileWidget::modifyHold(int ind, Hold hold)
         QLabel* angleLabel = new QLabel(QString(angleTitle.c_str()));
         holdLayout->addWidget(angleLabel);
 
-        std::string positiveText = "    On positive angle, do action '" + angle.anglePositive + "'";
-        std::string negativeText = "    On negative angle, do action '" + angle.angleNegative + "'";
+        std::string positiveText = "    On positive angle, do action type '" + angle.anglePositive.type + "', with action '" + angle.anglePositive.actions[0] + "' with Sensitivity: " + std::to_string(angle.sensitivity);
+        std::string negativeText = "    On negative angle, do action type '" + angle.angleNegative.type + "', with action '" + angle.angleNegative.actions[0] + "' with Sensitivity: " + std::to_string(angle.sensitivity);
         QLabel* positiveLabel = new QLabel(QString(positiveText.c_str()));
         QLabel* negativeLabel = new QLabel(QString(negativeText.c_str()));
 
