@@ -97,7 +97,7 @@
      <string>Negative Action:</string>
     </property>
    </widget>
-   <widget class="QSpinBox" name="pitchSensitivity">
+   <widget class="QDoubleSpinBox" name="pitchSensitivity">
     <property name="geometry">
      <rect>
       <x>70</x>
@@ -105,12 +105,6 @@
       <width>42</width>
       <height>22</height>
      </rect>
-    </property>
-    <property name="minimum">
-     <number>1</number>
-    </property>
-    <property name="maximum">
-     <number>30</number>
     </property>
    </widget>
    <widget class="QLabel" name="label_11">
@@ -452,7 +446,7 @@
      <string>Negative Action:</string>
     </property>
    </widget>
-   <widget class="QSpinBox" name="rollSensitivity">
+   <widget class="QDoubleSpinBox" name="rollSensitivity">
     <property name="geometry">
      <rect>
       <x>70</x>
@@ -460,12 +454,6 @@
       <width>42</width>
       <height>22</height>
      </rect>
-    </property>
-    <property name="minimum">
-     <number>1</number>
-    </property>
-    <property name="maximum">
-     <number>30</number>
     </property>
    </widget>
    <widget class="QLabel" name="label_34">
@@ -724,7 +712,7 @@
      <string>Negative Action:</string>
     </property>
    </widget>
-   <widget class="QSpinBox" name="yawSensitivity">
+   <widget class="QDoubleSpinBox" name="yawSensitivity">
     <property name="geometry">
      <rect>
       <x>70</x>
@@ -732,12 +720,6 @@
       <width>42</width>
       <height>22</height>
      </rect>
-    </property>
-    <property name="minimum">
-     <number>1</number>
-    </property>
-    <property name="maximum">
-     <number>30</number>
     </property>
    </widget>
    <widget class="QLabel" name="label_41">
