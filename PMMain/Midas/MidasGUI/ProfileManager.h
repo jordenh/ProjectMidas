@@ -51,7 +51,8 @@ struct angleAction {
 };
 
 struct hold {
-    std::string gesture;
+    //std::string gesture;
+    unsigned int id;
     std::vector<angleAction> angles;
     std::string holdModeActionType;
     unsigned int intervalLen;

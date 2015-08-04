@@ -639,32 +639,15 @@ filterError MyoTranslationFilter::updateBasedOnProfile(ProfileManager& pm, std::
     angleData ad;
     for (std::vector<hold>::iterator it = prof.holds.begin(); it != prof.holds.end(); ++it)
     {
-        int gestType; // TODO - change gestType to just be an int and not deal with a string - it is arbitrary how one gets into a holdMode 
-        asdf
-        if (it->gesture == "fist")
+        unsigned int holdModeActionIdx = it->id - 1; // ID's start at 1.
+        if (it->id < 1)
         {
-            gestType = GESTURE_FIST;
-        }
-        else if (it->gesture == "fingersSpread")
-        {
-            gestType = GESTURE_FINGERS_SPREAD;
-        }
-        else if (it->gesture == "doubleTap")
-        {
-            gestType = GESTURE_DOUBLE_TAP;
-        }
-        else if (it->gesture == "waveIn")
-        {
-            gestType = GESTURE_WAVE_IN;
-        }
-        else if (it->gesture == "waveOut")
-        {
-            gestType = GESTURE_WAVE_OUT;
+            holdModeActionIdx = 0; // default incase ID corrupt.
         }
 
-        gestHoldModeAction[gestType].setActionType(holdModeActionTypeMap[it->holdModeActionType]);
-        gestHoldModeAction[gestType].setIntervalLen(it->intervalLen);
-        gestHoldModeAction[gestType].setVelocityIntervalLen(it->intervalLen);
+        gestHoldModeAction[holdModeActionIdx].setActionType(holdModeActionTypeMap[it->holdModeActionType]);
+        gestHoldModeAction[holdModeActionIdx].setIntervalLen(it->intervalLen);
+        gestHoldModeAction[holdModeActionIdx].setVelocityIntervalLen(it->intervalLen);
 
         for (std::vector<angleAction>::iterator angleIt = it->angles.begin(); angleIt != it->angles.end(); ++angleIt)
         {
@@ -672,25 +655,25 @@ filterError MyoTranslationFilter::updateBasedOnProfile(ProfileManager& pm, std::
             if (angleIt->type == "roll")
             {
                 ad.angleType = angleData::AngleType::ROLL;
-                gestHoldModeAction[gestType].setRollSensitivity(angleIt->sensitivity);
+                gestHoldModeAction[holdModeActionIdx].setRollSensitivity(angleIt->sensitivity);
             }
             else if (angleIt->type == "pitch")
             {
                 ad.angleType = angleData::AngleType::PITCH;
-                gestHoldModeAction[gestType].setPitchSensitivity(angleIt->sensitivity);
+                gestHoldModeAction[holdModeActionIdx].setPitchSensitivity(angleIt->sensitivity);
             }
             else
             {
                 ad.angleType = angleData::AngleType::YAW;
-                gestHoldModeAction[gestType].setYawSensitivity(angleIt->sensitivity);
+                gestHoldModeAction[holdModeActionIdx].setYawSensitivity(angleIt->sensitivity);
             }
 
             ad.anglePositive = true;
             CommandData posCmd = getCDFromCommand(angleIt->anglePositive);
-            okay &= gestHoldModeAction[gestType].addToActionMap(ad, posCmd);
+            okay &= gestHoldModeAction[holdModeActionIdx].addToActionMap(ad, posCmd);
             ad.anglePositive = false;
             CommandData negCmd = getCDFromCommand(angleIt->angleNegative);
-            okay &= gestHoldModeAction[gestType].addToActionMap(ad, negCmd);
+            okay &= gestHoldModeAction[holdModeActionIdx].addToActionMap(ad, negCmd);
 
             if (!okay)
             {

@@ -43,11 +43,6 @@ class HoldModeObserver;
 #define KEYBOARD_THRESH_MAG 15
 
 #define NUM_GESTURES 5
-#define GESTURE_DOUBLE_TAP 0 // used as indexes into gestHoldModeAction
-#define GESTURE_FINGERS_SPREAD 1
-#define GESTURE_FIST 2
-#define GESTURE_WAVE_IN 3
-#define GESTURE_WAVE_OUT 4
 
 #define CURSOR_GYRO_ACCEL_RATE 200
 

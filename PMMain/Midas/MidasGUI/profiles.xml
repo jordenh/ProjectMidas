@@ -139,7 +139,7 @@
             </sequence>
         </sequences>
         <holds>
-			<hold gesture="fingersSpread">
+			<hold id="2">
                 <angle type="pitch">
                     <anglePositive>
 							<command type="keyboard">
@@ -194,7 +194,7 @@
 				<holdModeActionType>absDeltaVelocity</holdModeActionType>
 				<intervalLength>20</intervalLength>
             </hold>
-			<hold gesture="fist">
+			<hold id="3">
                 <angle type="pitch">
                     <anglePositive>
 							<command type="keyboard">
@@ -1293,7 +1293,7 @@
             </sequence>
         </sequences>
         <holds>
-			<hold gesture="fingersSpread">
+			<hold id="2">
                 <angle type="pitch">
                     <anglePositive>
 							<command type="keyboard">
@@ -1348,7 +1348,7 @@
 				<holdModeActionType>absDeltaFinite</holdModeActionType>
 				<intervalLength>20</intervalLength>
             </hold>
-			<hold gesture="fist">
+			<hold id="3">
                 <angle type="roll">
                     <anglePositive>
 							<command type="keyboard">
@@ -1624,7 +1624,7 @@
             </sequence>
         </sequences>
         <holds>
-			<hold gesture="fingersSpread">
+			<hold id="2">
                 <angle type="pitch">
                     <anglePositive>
 							<command type="keyboard">
@@ -1679,7 +1679,7 @@
 				<holdModeActionType>absDeltaFinite</holdModeActionType>
 				<intervalLength>20</intervalLength>
             </hold>
-			<hold gesture="fist">
+			<hold id="3">
                 <angle type="roll">
                     <anglePositive>
 							<command type="keyboard">

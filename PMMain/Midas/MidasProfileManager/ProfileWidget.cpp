@@ -96,7 +96,7 @@ void ProfileWidget::drawProfile(Profile profile)
 
 void ProfileWidget::drawHold(Hold hold, int ind, bool insertBefore)
 {
-    std::string title = "Hold for gesture " + hold.gesture;
+    std::string title = "Hold for gesture " + std::to_string(hold.id);
     QGroupBox* grouper = new QGroupBox(tr(title.c_str()));
     grouper->setMaximumSize(400, 310);
 

@@ -202,8 +202,9 @@ profile ProfileManager::extractProfileInformation(const boost::property_tree::pt
         if (vt.first == "hold")
         {
             hold currHold;
-            std::string gesture = vt.second.get<std::string>("<xmlattr>.gesture");
-            currHold.gesture = gesture;
+            //std::string gesture = vt.second.get<std::string>("<xmlattr>.gesture");
+            unsigned int holdID = vt.second.get<int>("<xmlattr>.id");
+            currHold.id = holdID;
 
             BOOST_FOREACH(const ptree::value_type & angleVt, vt.second)
             {

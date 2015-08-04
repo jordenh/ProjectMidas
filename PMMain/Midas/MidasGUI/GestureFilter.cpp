@@ -357,35 +357,7 @@ void GestureFilter::defaultStateSequences(void)
     toLockSeq[1] = (SeqElement(Pose::Type::waveIn));
     ss |= (int)gestSeqRecorder->registerSequence(midasMode::KEYBOARD_MODE, toLockSeq, toLockResponse, "Keyboard to Lock");
 
-    // Register sequence from Gesture Mode to Gesture Hold Modes
-    sequence toHoldGestSeq;
-    toHoldGestSeq.push_back(SeqElement(Pose::Type::doubleTap, PoseLength::HOLD));
-    CommandData toHoldGestResponse;
-    toHoldGestResponse.setName("Gesture to Hold Gesture X");
-    toHoldGestResponse.setType(commandType::STATE_CHANGE);
-    toHoldGestResponse.setActionMode(midasMode::GESTURE_HOLD_ONE);
-
-    ss |= (int)gestSeqRecorder->registerSequence(midasMode::GESTURE_MODE, toHoldGestSeq, toHoldGestResponse, "Gesture to Hold Double Tap - not working");
-
-    toHoldGestSeq[0].type = (Pose::Type::fingersSpread);
-    toHoldGestResponse.setActionMode(midasMode::GESTURE_HOLD_TWO);
-    ss |= (int)gestSeqRecorder->registerSequence(midasMode::GESTURE_MODE, toHoldGestSeq, toHoldGestResponse, "Gesture to Hold Fingers Spread");
-
-    toHoldGestSeq[0].type = (Pose::Type::fist);
-    toHoldGestResponse.setActionMode(midasMode::GESTURE_HOLD_THREE);
-    ss |= (int)gestSeqRecorder->registerSequence(midasMode::GESTURE_MODE, toHoldGestSeq, toHoldGestResponse, "Gesture to Hold Fist");
-
-    toHoldGestSeq[0].type = (Pose::Type::waveIn);
-    toHoldGestResponse.setActionMode(midasMode::GESTURE_HOLD_FOUR);
-    ss |= (int)gestSeqRecorder->registerSequence(midasMode::GESTURE_MODE, toHoldGestSeq, toHoldGestResponse, "Gesture to Hold Wave In");
-
-    toHoldGestSeq[0].type = (Pose::Type::waveOut);
-    toHoldGestResponse.setActionMode(midasMode::GESTURE_HOLD_FIVE);
-    ss |= (int)gestSeqRecorder->registerSequence(midasMode::GESTURE_MODE, toHoldGestSeq, toHoldGestResponse, "Gesture to Hold Wave Out");
-
-    // Register sequences back to Gesture Mode from Gesture Hold Modes
-
-    ss |= defaultReturnFromHolds();
+    // Don't include "Hold Modes" in default Midas config
 
     if (ss != (int)SequenceStatus::SUCCESS)
     {
@@ -402,7 +374,7 @@ int GestureFilter::defaultReturnFromHolds(void)
     fromHoldGestResponse.setType(commandType::STATE_CHANGE);
     fromHoldGestResponse.setActionMode(midasMode::GESTURE_MODE);
 
-    int ss = (int)gestSeqRecorder->registerSequence(midasMode::GESTURE_HOLD_ONE, fromHoldGestSeq, fromHoldGestResponse, "Gesture from Hold Double Tap - Not working.");
+    int ss = (int)gestSeqRecorder->registerSequence(midasMode::GESTURE_HOLD_ONE, fromHoldGestSeq, fromHoldGestResponse, "Release Hold");
     ss |= (int)gestSeqRecorder->registerSequence(midasMode::GESTURE_HOLD_TWO, fromHoldGestSeq, fromHoldGestResponse, "Release Hold");
     ss |= (int)gestSeqRecorder->registerSequence(midasMode::GESTURE_HOLD_THREE, fromHoldGestSeq, fromHoldGestResponse, "Release Hold");
     ss |= (int)gestSeqRecorder->registerSequence(midasMode::GESTURE_HOLD_FOUR, fromHoldGestSeq, fromHoldGestResponse, "Release Hold");
@@ -713,47 +685,6 @@ filterError GestureFilter::updateBasedOnProfile(ProfileManager& pm, std::string 
         midasMode startState = profileActionToStateChange[it->state];
         ss |= (int)gestSeqRecorder->registerSequence(startState, seq, response, it->name);
     }
-
-#ifdef BUILD_WITH_HOLD_MODES
-    // Register sequence from Gesture Mode to Gesture Hold Modes
-    sequence toHoldGestSeq;
-    toHoldGestSeq.push_back(SeqElement(Pose::Type::doubleTap, PoseLength::HOLD));
-    CommandData toHoldGestResponse;
-    toHoldGestResponse.setName("Gesture to Hold Gesture X");
-    toHoldGestResponse.setType(commandType::STATE_CHANGE);
-    toHoldGestResponse.action.mode = midasMode::GESTURE_HOLD_ONE;
-
-    ss |= (int)gestSeqRecorder->registerSequence(midasMode::GESTURE_MODE, toHoldGestSeq, toHoldGestResponse, "Gesture to Hold Double Tap - not working");
-
-    toHoldGestSeq[0].type = (Pose::Type::fingersSpread);
-    toHoldGestResponse.action.mode = midasMode::GESTURE_HOLD_TWO;
-    ss |= (int)gestSeqRecorder->registerSequence(midasMode::GESTURE_MODE, toHoldGestSeq, toHoldGestResponse, "Gesture to Hold Fingers Spread");
-
-    toHoldGestSeq[0].type = (Pose::Type::fist);
-    toHoldGestResponse.action.mode = midasMode::GESTURE_HOLD_THREE;
-    ss |= (int)gestSeqRecorder->registerSequence(midasMode::GESTURE_MODE, toHoldGestSeq, toHoldGestResponse, "Gesture to Hold Fist");
-
-    toHoldGestSeq[0].type = (Pose::Type::waveIn);
-    toHoldGestResponse.action.mode = midasMode::GESTURE_HOLD_FOUR;
-    ss |= (int)gestSeqRecorder->registerSequence(midasMode::GESTURE_MODE, toHoldGestSeq, toHoldGestResponse, "Gesture to Hold Wave In");
-
-    toHoldGestSeq[0].type = (Pose::Type::waveOut);
-    toHoldGestResponse.action.mode = midasMode::GESTURE_HOLD_FIVE;
-    ss |= (int)gestSeqRecorder->registerSequence(midasMode::GESTURE_MODE, toHoldGestSeq, toHoldGestResponse, "Gesture to Hold Wave Out");
-
-    sequence fromHoldGestSeq;
-    fromHoldGestSeq.push_back(SeqElement(Pose::Type::rest, PoseLength::IMMEDIATE));
-    CommandData fromHoldGestResponse;
-    fromHoldGestResponse.setName("Gesture from Hold Gesture X");
-    fromHoldGestResponse.setType(commandType::STATE_CHANGE);
-    fromHoldGestResponse.action.mode = midasMode::GESTURE_MODE;
-
-    ss |= (int)gestSeqRecorder->registerSequence(midasMode::GESTURE_HOLD_ONE, fromHoldGestSeq, fromHoldGestResponse, "Gesture from Hold Double Tap - not working"); // TODO handle these..
-    ss |= (int)gestSeqRecorder->registerSequence(midasMode::GESTURE_HOLD_TWO, fromHoldGestSeq, fromHoldGestResponse, "Gesture from Hold Fingers Spread");
-    ss |= (int)gestSeqRecorder->registerSequence(midasMode::GESTURE_HOLD_THREE, fromHoldGestSeq, fromHoldGestResponse, "Gesture from Hold Fist");
-    ss |= (int)gestSeqRecorder->registerSequence(midasMode::GESTURE_HOLD_FOUR, fromHoldGestSeq, fromHoldGestResponse, "Gesture from Hold Wave In");
-    ss |= (int)gestSeqRecorder->registerSequence(midasMode::GESTURE_HOLD_FIVE, fromHoldGestSeq, fromHoldGestResponse, "Gesture from Hold Wave Out");
-#endif
 
     if (ss != (int)SequenceStatus::SUCCESS)
     {
