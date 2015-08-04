@@ -54,6 +54,8 @@ struct Hold {
     std::vector<AngleAction> angles;
     std::string holdModeActionType;
     unsigned int intervalLen;
+    unsigned int intervalExecMultiplier;
+    unsigned int intervalMaxExecs;
 };
 
 struct Profile {

@@ -106,7 +106,7 @@
                 <commands>
                     <command type="stateChange">
                         <actions>
-                            <action>gestureHoldThree</action>
+                            <action>gestureHoldTwo</action>
                         </actions>
                     </command>
                 </commands>
@@ -193,61 +193,8 @@
                 </angle>
 				<holdModeActionType>absDeltaVelocity</holdModeActionType>
 				<intervalLength>20</intervalLength>
-            </hold>
-			<hold id="3">
-                <angle type="pitch">
-                    <anglePositive>
-							<command type="keyboard">
-								<actions>
-									<action>upArrow</action>
-								</actions>
-							</command>
-                    </anglePositive>
-					<angleNegative>
-							<command type="keyboard">
-								<actions>
-									<action>downArrow</action>
-								</actions>
-							</command>
-					</angleNegative>
-					<sensitivity>5</sensitivity>
-                </angle>
-				<angle type="yaw">
-                    <anglePositive>
-							<command type="keyboard">
-								<actions>
-									<action>rightArrow</action>
-								</actions>
-							</command>
-					</anglePositive>
-                    <angleNegative>
-							<command type="keyboard">
-								<actions>
-									<action>leftArrow</action>
-								</actions>
-							</command>
-					</angleNegative>
-					<sensitivity>5</sensitivity>
-                </angle>
-				<angle type="roll">
-                    <anglePositive>
-							<command type="keyboard">
-								<actions>
-									<action>inputVector,p</action>
-								</actions>
-							</command>
-					</anglePositive>
-                    <angleNegative>
-							<command type="keyboard">
-								<actions>
-									<action>inputVector,o</action>
-								</actions>
-							</command>
-					</angleNegative>
-					<sensitivity>5</sensitivity>
-                </angle>
-				<holdModeActionType>absDeltaVelocity</holdModeActionType>
-				<intervalLength>20</intervalLength>
+				<intervalExecMultiplier>2</intervalExecMultiplier>
+				<intervalMaxExecs>4</intervalMaxExecs>
             </hold>
 		</holds>	
     </profile>
@@ -1347,6 +1294,8 @@
                 </angle>
 				<holdModeActionType>absDeltaFinite</holdModeActionType>
 				<intervalLength>20</intervalLength>
+				<intervalExecMultiplier>1</intervalExecMultiplier>
+				<intervalMaxExecs>4</intervalMaxExecs>
             </hold>
 			<hold id="3">
                 <angle type="roll">
@@ -1368,6 +1317,8 @@
                 </angle>
 				<holdModeActionType>absDeltaFinite</holdModeActionType>
 				<intervalLength>100</intervalLength>
+				<intervalExecMultiplier>1</intervalExecMultiplier>
+				<intervalMaxExecs>4</intervalMaxExecs>
             </hold>
         </holds>
     </profile>
@@ -1678,6 +1629,8 @@
                 </angle>
 				<holdModeActionType>absDeltaFinite</holdModeActionType>
 				<intervalLength>20</intervalLength>
+				<intervalExecMultiplier>1</intervalExecMultiplier>
+				<intervalMaxExecs>4</intervalMaxExecs>
             </hold>
 			<hold id="3">
                 <angle type="roll">
@@ -1699,6 +1652,8 @@
                 </angle>
 				<holdModeActionType>absDeltaFinite</holdModeActionType>
 				<intervalLength>100</intervalLength>
+				<intervalExecMultiplier>1</intervalExecMultiplier>
+				<intervalMaxExecs>4</intervalMaxExecs>
             </hold>
         </holds>
     </profile>

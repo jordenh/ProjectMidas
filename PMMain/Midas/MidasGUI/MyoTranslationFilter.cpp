@@ -648,6 +648,8 @@ filterError MyoTranslationFilter::updateBasedOnProfile(ProfileManager& pm, std::
         gestHoldModeAction[holdModeActionIdx].setActionType(holdModeActionTypeMap[it->holdModeActionType]);
         gestHoldModeAction[holdModeActionIdx].setIntervalLen(it->intervalLen);
         gestHoldModeAction[holdModeActionIdx].setVelocityIntervalLen(it->intervalLen);
+        gestHoldModeAction[holdModeActionIdx].setIntervalExecMultiplier(it->intervalExecMultiplier);
+        gestHoldModeAction[holdModeActionIdx].setIntervalMaxExecs(it->intervalMaxExecs);
 
         for (std::vector<angleAction>::iterator angleIt = it->angles.begin(); angleIt != it->angles.end(); ++angleIt)
         {

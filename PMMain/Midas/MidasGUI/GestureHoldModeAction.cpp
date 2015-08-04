@@ -23,6 +23,8 @@ GestureHoldModeAction::GestureHoldModeAction() {
     rollSensitivity = DEFAULT_SENSITIVITY; pitchSensitivity = DEFAULT_SENSITIVITY; yawSensitivity = DEFAULT_SENSITIVITY;
     actionType = DEFAULT_ACTION_TYPE;
     intervalLen = DEFAULT_INTERVAL_LEN;
+    intervalExecMultiplier = DEFAULT_INTERVAL_EXEC_MULTIPLIER;
+    intervalMaxExecs = DEFAULT_INTERVAL_MAX_EXECS;
     velocityIntervalLen = DEFAULT_INTERVAL_LEN;
 }
 

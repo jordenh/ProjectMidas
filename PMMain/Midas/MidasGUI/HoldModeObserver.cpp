@@ -99,6 +99,8 @@ void HoldModeObserver::handleIntervalDelta()
         int pitchTicks = deltaPitchDeg / actions->getPitchSensitivity();
         int yawTicks = deltaYawDeg / actions->getYawSensitivity();
 
+        scaleIntervalExecs(rollTicks, pitchTicks, yawTicks);
+
         // if 0, will return associated negative cmd, but wont be executed (so its safe).
         CommandData rollCmd = actions->getAction(angleData(angleData::AngleType::ROLL, rollTicks > 0));
         CommandData pitchCmd = actions->getAction(angleData(angleData::AngleType::PITCH, pitchTicks > 0));
@@ -178,6 +180,8 @@ void HoldModeObserver::handleAbsDeltaVelocity()
         int pitchTicks = deltaPitchDeg / actions->getPitchSensitivity();
         int yawTicks = deltaYawDeg / actions->getYawSensitivity();
 
+        scaleIntervalExecs(rollTicks, pitchTicks, yawTicks);
+
         // if 0, will return associated negative cmd, but wont be executed (so its safe).
         CommandData rollCmd = actions->getAction(angleData(angleData::AngleType::ROLL, rollTicks > 0));
         CommandData pitchCmd = actions->getAction(angleData(angleData::AngleType::PITCH, pitchTicks > 0));
@@ -189,6 +193,17 @@ void HoldModeObserver::handleAbsDeltaVelocity()
     {
         velocityCurrIntervalCount += callbackPeriod;
     }
+}
+
+void HoldModeObserver::scaleIntervalExecs(int& rollTicks, int& pitchTicks, int& yawTicks)
+{
+    rollTicks *= actions->getIntervalExecMultiplier();
+    pitchTicks *= actions->getIntervalExecMultiplier();
+    yawTicks *= actions->getIntervalExecMultiplier();
+
+    rollTicks = rollTicks > 0 ? min(rollTicks, actions->getIntervalMaxExecs()) : max(rollTicks, - (int) actions->getIntervalMaxExecs());
+    pitchTicks = pitchTicks > 0 ? min(pitchTicks, actions->getIntervalMaxExecs()) : max(pitchTicks, - (int) actions->getIntervalMaxExecs());
+    yawTicks = yawTicks > 0 ? min(yawTicks, actions->getIntervalMaxExecs()) : max(yawTicks, - (int) actions->getIntervalMaxExecs());
 }
 
 // LEGACY - only used to handle kybd commands

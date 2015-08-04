@@ -51,6 +51,8 @@ private:
     void handleAbsDeltaFinite();
     void handleAbsDeltaVelocity();
 
+    void scaleIntervalExecs(int& rollTicks, int& pitchTicks, int& yawTicks);
+
     void executeCommands(kybdCmds rollCmd, unsigned int rollTicks, kybdCmds pitchCmd, unsigned int pitchTicks, kybdCmds yawCmd, unsigned int yawTicks);
     void executeCommands(CommandData rollCmd, unsigned int rollTicks, CommandData pitchCmd, unsigned int pitchTicks, CommandData yawCmd, unsigned int yawTicks);
 

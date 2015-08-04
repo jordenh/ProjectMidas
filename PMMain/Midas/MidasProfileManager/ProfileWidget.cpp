@@ -102,7 +102,8 @@ void ProfileWidget::drawHold(Hold hold, int ind, bool insertBefore)
 
     QVBoxLayout* holdLayout = new QVBoxLayout();
 
-    std::string description = "holdModeActionType: " + hold.holdModeActionType + "; intervalLen: " + std::to_string(hold.intervalLen);
+    std::string description = "holdModeActionType: " + hold.holdModeActionType + ";\nintervalLen: " + std::to_string(hold.intervalLen)
+        + "; intervalExecMultiplier: " + std::to_string(hold.intervalExecMultiplier) + "; intervalMaxExecs: " + std::to_string(hold.intervalMaxExecs);
     QLabel* descLabel = new QLabel(QString(description.c_str()));
     holdLayout->addWidget(descLabel);
     
@@ -155,7 +156,7 @@ void ProfileWidget::modifyHold(int ind, Hold hold)
 {
     holdWidgets holdWidgets = holdWidgetList[ind];
 
-    std::string title = "Hold for gesture " + hold.gesture;
+    std::string title = "Hold for Mode ID " + std::to_string(hold.id);
     holdWidgets.grouper->setTitle(tr(title.c_str()));
 
     QLayoutItem *item;
@@ -187,8 +188,10 @@ void ProfileWidget::modifyHold(int ind, Hold hold)
         QLabel* angleLabel = new QLabel(QString(angleTitle.c_str()));
         holdLayout->addWidget(angleLabel);
 
-        std::string positiveText = "    On positive angle, do action type '" + angle.anglePositive.type + "'\n\t with action '" + angle.anglePositive.actions[0] + "' with Sensitivity: " + std::to_string(angle.sensitivity);
-        std::string negativeText = "    On negative angle, do action type '" + angle.angleNegative.type + "'\n\t with action '" + angle.angleNegative.actions[0] + "' with Sensitivity: " + std::to_string(angle.sensitivity);
+        std::string positiveText = "    On positive angle, do action type '" + angle.anglePositive.type + 
+            "'\n\t with action '" + angle.anglePositive.actions[0] + "' with Sensitivity: " + std::to_string(angle.sensitivity);
+        std::string negativeText = "    On negative angle, do action type '" + angle.angleNegative.type + 
+            "'\n\t with action '" + angle.angleNegative.actions[0] + "' with Sensitivity: " + std::to_string(angle.sensitivity);
         QLabel* positiveLabel = new QLabel(QString(positiveText.c_str()));
         QLabel* negativeLabel = new QLabel(QString(negativeText.c_str()));
 

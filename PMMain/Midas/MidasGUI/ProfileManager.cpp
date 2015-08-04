@@ -202,7 +202,6 @@ profile ProfileManager::extractProfileInformation(const boost::property_tree::pt
         if (vt.first == "hold")
         {
             hold currHold;
-            //std::string gesture = vt.second.get<std::string>("<xmlattr>.gesture");
             unsigned int holdID = vt.second.get<int>("<xmlattr>.id");
             currHold.id = holdID;
 
@@ -263,8 +262,12 @@ profile ProfileManager::extractProfileInformation(const boost::property_tree::pt
 
             std::string holdModeActionType = vt.second.get_child("holdModeActionType").get_value<std::string>();
             unsigned int intervalLen = vt.second.get_child("intervalLength").get_value<unsigned int>();
+            unsigned int intervalExecMult = vt.second.get_child("intervalExecMultiplier").get_value<unsigned int>();
+            unsigned int intervalMaxExecs = vt.second.get_child("intervalMaxExecs").get_value<unsigned int>();
             currHold.holdModeActionType = holdModeActionType;
             currHold.intervalLen = intervalLen;
+            currHold.intervalExecMultiplier = intervalExecMult;
+            currHold.intervalMaxExecs = intervalMaxExecs;
 
             pr.holds.push_back(currHold);
         }

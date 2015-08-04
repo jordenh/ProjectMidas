@@ -82,7 +82,7 @@ void ProfileWriter::writeProfile(boost::property_tree::ptree &profileNode, Profi
         BOOST_FOREACH(Hold hold, profile.holds)
         {
             ptree &holdNode = profileNode.add("holds.hold", "");
-            holdNode.put("<xmlattr>.gesture", hold.gesture);
+            holdNode.put("<xmlattr>.id", hold.id);
             
             BOOST_FOREACH(AngleAction angleAction, hold.angles)
             {
@@ -108,6 +108,8 @@ void ProfileWriter::writeProfile(boost::property_tree::ptree &profileNode, Profi
             }
             holdNode.add("holdModeActionType", hold.holdModeActionType);
             holdNode.add("intervalLength", hold.intervalLen);
+            holdNode.add("intervalExecMultiplier", hold.intervalExecMultiplier);
+            holdNode.add("intervalMaxExecs", hold.intervalMaxExecs);
         }
     }
 }
@@ -195,8 +197,8 @@ Profile ProfileWriter::extractProfileInformation(const boost::property_tree::ptr
         if (vt.first == "hold")
         {
             Hold currHold;
-            std::string gesture = vt.second.get<std::string>("<xmlattr>.gesture");
-            currHold.gesture = gesture;
+            unsigned int holdID = vt.second.get<int>("<xmlattr>.id");
+            currHold.id = holdID;
 
             BOOST_FOREACH(const ptree::value_type & angleVt, vt.second)
             {
@@ -242,9 +244,12 @@ Profile ProfileWriter::extractProfileInformation(const boost::property_tree::ptr
 
             std::string holdModeActionType = vt.second.get_child("holdModeActionType").get_value<std::string>();
             unsigned int intervalLen = vt.second.get_child("intervalLength").get_value<unsigned int>();
+            unsigned int intervalExecMultiplier = vt.second.get_child("intervalExecMultiplier").get_value<unsigned int>();
+            unsigned int intervalMaxExecs = vt.second.get_child("intervalMaxExecs").get_value<unsigned int>();
             currHold.holdModeActionType = holdModeActionType;
             currHold.intervalLen = intervalLen;
-
+            currHold.intervalExecMultiplier = intervalExecMultiplier;
+            currHold.intervalMaxExecs = intervalMaxExecs;
             pr.holds.push_back(currHold);
         }
     }

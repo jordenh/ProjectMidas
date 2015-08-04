@@ -26,6 +26,8 @@
 
 #define DEFAULT_SENSITIVITY 1
 #define DEFAULT_INTERVAL_LEN 100
+#define DEFAULT_INTERVAL_EXEC_MULTIPLIER 1
+#define DEFAULT_INTERVAL_MAX_EXECS 10
 #define DEFAULT_ACTION_TYPE HoldModeActionType::ABS_DELTA_FINITE
 
 typedef struct angleData {
@@ -97,6 +99,12 @@ public:
     void setVelocityIntervalLen(unsigned int len) { velocityIntervalLen = len; }
     unsigned int getVelocityIntervalLen() { return velocityIntervalLen; }
 
+    void setIntervalExecMultiplier(unsigned int val) { intervalExecMultiplier = val; }
+    unsigned int getIntervalExecMultiplier() { return intervalExecMultiplier; }
+
+    void setIntervalMaxExecs(unsigned int val) { intervalMaxExecs = val; }
+    unsigned int getIntervalMaxExecs() { return intervalMaxExecs; }
+
 private:
     // Sensitivities indicate how many DEGREES are required to trigger ONE action
     // (stored in the actionMap)
@@ -111,6 +119,9 @@ private:
     unsigned int intervalLen;
     // Vars required for ABS_DELTA_VELOCITY mode
     unsigned int velocityIntervalLen;
+
+    unsigned int intervalExecMultiplier;
+    unsigned int intervalMaxExecs;
 
     std::unordered_map<int, CommandData> actionMap;
 };

@@ -51,10 +51,12 @@ bool HoldEditor::isAngleSet(QComboBox* positive, QComboBox* negative)
 
 void HoldEditor::handleDone()
 {
-    returnHold.gesture = ui.gestureComboBox->currentText().toStdString();
+    returnHold.id = ui.gestureComboBox->currentText().toUInt();
     
     returnHold.holdModeActionType = ui.holdModeActionType->currentText().toStdString();
     returnHold.intervalLen = ui.intervalLength->value();
+    returnHold.intervalExecMultiplier = ui.intervalExecMultiplier->value();
+    returnHold.intervalMaxExecs = ui.intervalMaxExecs->value();
 
     if (isAngleSet(ui.RollPositiveTypeComboBox, ui.RollNegativeTypeComboBox))
     {
