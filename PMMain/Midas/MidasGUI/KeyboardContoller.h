@@ -38,6 +38,7 @@ public:
 
 	int sendData();
 	int sendDataDelayed(int milliDelay);
+    int sendDataDelayInMiddle(int milliDelay);
 
 private:
 	

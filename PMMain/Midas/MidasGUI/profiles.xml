@@ -192,7 +192,7 @@
 					<sensitivity>5</sensitivity>
                 </angle>
 				<holdModeActionType>absDeltaVelocity</holdModeActionType>
-				<intervalLength>20</intervalLength>
+				<intervalLength>50</intervalLength>
 				<intervalExecMultiplier>2</intervalExecMultiplier>
 				<intervalMaxExecs>6</intervalMaxExecs>
             </hold>

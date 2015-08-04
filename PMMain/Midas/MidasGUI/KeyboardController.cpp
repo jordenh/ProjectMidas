@@ -59,3 +59,25 @@ int KeyboardController::sendDataDelayed(int milliDelay)
 
 	return numSent;
 }
+
+int KeyboardController::sendDataDelayInMiddle(int milliDelay)
+{
+    INPUT* kiArr = convertKiVecToInputArr(kiVector);
+
+    int numSent = 0;
+    for (int i = 0; i < kiVector.peakVector().size() / 2; i++)
+    {
+        numSent += SendInput(1, kiArr + i, sizeof(INPUT));
+    }
+
+    Sleep(milliDelay);
+
+    for (int i = kiVector.peakVector().size() / 2; i < kiVector.peakVector().size(); i++)
+    {
+        numSent += SendInput(1, kiArr + i, sizeof(INPUT));
+    }
+
+    free(kiArr);
+
+    return numSent;
+}

@@ -287,8 +287,8 @@ void SCDDigester::digestKybdCmd(CommandData nextCommand)
 	{
         KeyboardVector vec = KeyboardVector::createFromCommand(nextCommand.getAction().kybd);
 		keyboardController->setKiVector(vec);
-		keyboardController->sendDataDelayed(5); // TODO - modify to try a lower value to see if lag can be reduced. Or change how 'sending delayed' works.
-        //keyboardController->sendData(); // This seems to work for typing, but not for example, sending many arrow keys to human.biodigital.com
+        keyboardController->sendData(); // This seems to work for typing, but not for example, sending many arrow keys to human.biodigital.com - If keyboard events dont work for a required application, change this to delayed!
+		//keyboardController->sendDataDelayed(5); // TODO - modify to try a lower value to see if lag can be reduced. Or change how 'sending delayed' works.
 	}
 }
 
