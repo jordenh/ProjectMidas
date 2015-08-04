@@ -42,9 +42,6 @@ public:
     ~SettingsDisplayer();
     QSize sizeHint() const;
 
-protected:
-    void resizeEvent(QResizeEvent *event);
-
 private:
     QPoint position;
     int indWidth, indHeight;

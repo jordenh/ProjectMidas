@@ -26,10 +26,10 @@
 #include <QEvent.h>
 
 ProfilesDisplayer::ProfilesDisplayer(int widgetWidth, int widgetHeight, QWidget *parent) : 
-    DraggableWidget(parent, Qt::WindowSystemMenuHint | Qt::WindowStaysOnTopHint), indWidth(widgetWidth), indHeight(widgetHeight), currentlyActiveProfile(0)
+    DraggableWidget(parent, Qt::WindowStaysOnTopHint), indWidth(widgetWidth), indHeight(widgetHeight), currentlyActiveProfile(0)
 {
     setToolTip(tr("Drag the Profiles Displayer with the left mouse button."));
-    setWindowTitle(tr("Profiles Displayer"));
+    setWindowTitle(tr("Profiles"));
 
     setWindowOpacity(1);
     QPalette pal;
@@ -81,12 +81,6 @@ void ProfilesDisplayer::clearProfiles()
         delete profileWidgets.at(i); profileWidgets.at(i) = NULL;
     }
     profileWidgets.clear();
-}
-
-void ProfilesDisplayer::resizeEvent(QResizeEvent *event)
-{
-    QRegion maskedRegion(0, 0, width(), height(), QRegion::Rectangle);
-    setMask(maskedRegion);
 }
 
 void ProfilesDisplayer::updateActiveProfiles()

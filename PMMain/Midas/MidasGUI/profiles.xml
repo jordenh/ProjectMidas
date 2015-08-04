@@ -194,7 +194,7 @@
 				<holdModeActionType>absDeltaVelocity</holdModeActionType>
 				<intervalLength>20</intervalLength>
 				<intervalExecMultiplier>2</intervalExecMultiplier>
-				<intervalMaxExecs>4</intervalMaxExecs>
+				<intervalMaxExecs>6</intervalMaxExecs>
             </hold>
 		</holds>	
     </profile>

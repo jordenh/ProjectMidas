@@ -29,8 +29,8 @@ class SettingsSignaller : public QObject
     Q_OBJECT
 
 public:
-    SettingsSignaller(QObject *parent = 0, unsigned int yawMaxAngle = INIT_YAW_ANGLE, unsigned int pitchMaxAngle = INIT_PITCH_ANGLE, 
-        buzzFeedbackMode buzzFeedback = MINIMAL, double cursorGyroPower = DEFAULT_GYRO_POW, double cursorGyroScaleDown = DEFAULT_GYRO_SCALE_DOWN);
+    SettingsSignaller(QObject *parent = 0, unsigned int yawMaxAngle = INIT_ACCEL_YAW_ANGLE, unsigned int pitchMaxAngle = INIT_ACCEL_PITCH_ANGLE,
+        buzzFeedbackMode buzzFeedback = MINIMAL, bool useGyroForCursorAccel = DEFAULT_USE_ACCEL, double cursorGyroPower = DEFAULT_GYRO_POW, double cursorGyroScaleDown = DEFAULT_GYRO_SCALE_DOWN);
     ~SettingsSignaller();
 
     unsigned int getYawMaxAngle() { return yawMaxAngle; }

@@ -45,9 +45,6 @@ public:
 
     void updateActiveProfiles();
 
-protected:
-    void resizeEvent(QResizeEvent *event);
-
 private:
     void updateButtonsToHighlightActive();
 

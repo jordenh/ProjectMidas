@@ -30,11 +30,11 @@
 #include <qaction.h>
 
 SettingsDisplayer::SettingsDisplayer(int widgetWidth, int widgetHeight, QWidget *parent)
-    : DraggableWidget(parent, Qt::WindowSystemMenuHint | Qt::WindowStaysOnTopHint),
+    : DraggableWidget(parent, Qt::WindowStaysOnTopHint),
     indWidth(widgetWidth), indHeight(widgetHeight), currentBuzzModeCount(buzzFeedbackMode::MINIMAL)
 {
     setToolTip(tr("Drag the Settings Displayer with the left mouse button."));
-    setWindowTitle(tr("Settings Displayer"));
+    setWindowTitle(tr("Settings"));
 
     setWindowOpacity(1);
     QPalette pal;
@@ -55,12 +55,12 @@ SettingsDisplayer::SettingsDisplayer(int widgetWidth, int widgetHeight, QWidget 
     yawSlider->setTracking(true);
     yawSlider->setMinimum(MIN_SLIDER_ANGLE);
     yawSlider->setMaximum(MAX_SLIDER_ANGLE);
-    yawSlider->setValue((int)INIT_YAW_ANGLE);
+    yawSlider->setValue((int)INIT_ACCEL_YAW_ANGLE);
     pitchSlider = new QSlider(Qt::Orientation::Horizontal, this);
     pitchSlider->setTracking(true);
     pitchSlider->setMinimum(MIN_SLIDER_ANGLE);
     pitchSlider->setMaximum(MAX_SLIDER_ANGLE);
-    pitchSlider->setValue((int)INIT_PITCH_ANGLE);
+    pitchSlider->setValue((int)INIT_ACCEL_PITCH_ANGLE);
 
     connect(yawSlider, SIGNAL(sliderReleased()), this, SLOT(handleSliders()));
     connect(pitchSlider, SIGNAL(sliderReleased()), this, SLOT(handleSliders()));
@@ -79,19 +79,34 @@ SettingsDisplayer::SettingsDisplayer(int widgetWidth, int widgetHeight, QWidget 
     connect(helpLevelComboBox, SIGNAL(activated(QString)), this, SLOT(handleHelpLevelChanged(QString)));
 
     useGyroForCursorAccelButton = new QCheckBox("Apply acceleration to cursor?", this);
+    useGyroForCursorAccelButton->setChecked(DEFAULT_USE_ACCEL);
     connect(useGyroForCursorAccelButton, SIGNAL(clicked()), this, SLOT(handleUseGyroForCursorAccelButton()));
     
     gyroPowerSpinBox = new QSpinBox(this);
     gyroPowerSpinBox->setMinimum(MIN_GYRO_POW);
     gyroPowerSpinBox->setMaximum(MAX_GYRO_POW);
     gyroPowerSpinBox->setValue(DEFAULT_GYRO_POW);
-    gyroPowerSpinBox->setEnabled(false);
+    if (DEFAULT_USE_ACCEL)
+    {
+        gyroPowerSpinBox->setEnabled(true);
+    }
+    else
+    {
+        gyroPowerSpinBox->setEnabled(false);
+    }
     gyroScaleDownSpinBox = new QDoubleSpinBox(this);
     gyroScaleDownSpinBox->setMinimum(MIN_GYRO_SCALE_DOWN);
     gyroScaleDownSpinBox->setMaximum(MAX_GYRO_SCALE_DOWN);
     gyroScaleDownSpinBox->setValue(DEFAULT_GYRO_SCALE_DOWN);
     gyroScaleDownSpinBox->setSingleStep(50);
-    gyroScaleDownSpinBox->setEnabled(false);
+    if (DEFAULT_USE_ACCEL)
+    {
+        gyroScaleDownSpinBox->setEnabled(true);
+    }
+    else
+    {
+        gyroScaleDownSpinBox->setEnabled(false);
+    }
 
     connect(gyroPowerSpinBox, SIGNAL(valueChanged(int)), this, SLOT(gyroPowerValueChanged(int)));
     connect(gyroScaleDownSpinBox, SIGNAL(valueChanged(double)), this, SLOT(gyroScaledDownValueChanged(double)));
@@ -146,12 +161,6 @@ QSize SettingsDisplayer::sizeHint() const
     return QSize(indWidth, indHeight);
 }
 
-void SettingsDisplayer::resizeEvent(QResizeEvent *event)
-{
-    QRegion maskedRegion(0, 0, width(), height(), QRegion::Rectangle);
-    setMask(maskedRegion);
-}
-
 void SettingsDisplayer::handleSliders()
 {
     emitSliderValues((unsigned int)yawSlider->sliderPosition(), (unsigned int)pitchSlider->sliderPosition());
@@ -188,16 +197,16 @@ void SettingsDisplayer::handleUseGyroForCursorAccelButton()
         gyroScaleDownSpinBox->setEnabled(true);
 
         // assign defaults for pitch/yaw limitations
-        yawSlider->setValue(MAX_SLIDER_ANGLE);
-        pitchSlider->setValue(MAX_SLIDER_ANGLE);
+        yawSlider->setValue(INIT_ACCEL_YAW_ANGLE);
+        pitchSlider->setValue(INIT_ACCEL_PITCH_ANGLE);
         handleSlidersChange(0);
     }
     else
     {
         gyroPowerSpinBox->setEnabled(false);
         gyroScaleDownSpinBox->setEnabled(false);
-        yawSlider->setValue(INIT_YAW_ANGLE);
-        pitchSlider->setValue(INIT_PITCH_ANGLE);
+        yawSlider->setValue(INIT_NO_ACCEL_YAW_ANGLE);
+        pitchSlider->setValue(INIT_NO_ACCEL_PITCH_ANGLE);
         handleSlidersChange(0);
     }
 }
