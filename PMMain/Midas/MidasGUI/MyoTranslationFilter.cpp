@@ -639,7 +639,8 @@ filterError MyoTranslationFilter::updateBasedOnProfile(ProfileManager& pm, std::
     angleData ad;
     for (std::vector<hold>::iterator it = prof.holds.begin(); it != prof.holds.end(); ++it)
     {
-        int gestType; // TODO - change gestType to just be an int and not deal with a string - it is arbitrary how one gets into a holdMode
+        int gestType; // TODO - change gestType to just be an int and not deal with a string - it is arbitrary how one gets into a holdMode 
+        asdf
         if (it->gesture == "fist")
         {
             gestType = GESTURE_FIST;

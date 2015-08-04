@@ -155,7 +155,7 @@
 								</actions>
 							</command>
 					</angleNegative>
-					<sensitivity>0.35</sensitivity>
+					<sensitivity>5</sensitivity>
                 </angle>
 				<angle type="yaw">
                     <anglePositive>
@@ -172,7 +172,7 @@
 								</actions>
 							</command>
 					</angleNegative>
-					<sensitivity>0.35</sensitivity>
+					<sensitivity>5</sensitivity>
                 </angle>
 				<angle type="roll">
                     <anglePositive>
@@ -189,9 +189,9 @@
 								</actions>
 							</command>
 					</angleNegative>
-					<sensitivity>0.35</sensitivity>
+					<sensitivity>5</sensitivity>
                 </angle>
-				<holdModeActionType>absDeltaFinite</holdModeActionType>
+				<holdModeActionType>absDeltaVelocity</holdModeActionType>
 				<intervalLength>20</intervalLength>
             </hold>
 			<hold gesture="fist">
