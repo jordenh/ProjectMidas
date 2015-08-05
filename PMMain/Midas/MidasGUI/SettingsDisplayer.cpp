@@ -132,7 +132,7 @@ SettingsDisplayer::SettingsDisplayer(int widgetWidth, int widgetHeight, QWidget 
     mainLayout->addWidget(useGyroForCursorAccelButton);
 
     QHBoxLayout* hlayout1 = new QHBoxLayout;
-    hlayout1->addWidget(new QLabel("Accel = Gyro\^exp / scaleDown. "), 1);
+    hlayout1->addWidget(new QLabel("Acc=Gyro\^exp/scale. "), 1);
     hlayout1->addWidget(new QLabel("Exponent: "));
     hlayout1->addWidget(gyroPowerSpinBox);
     hlayout1->addWidget(new QLabel("Scale Down: "));
