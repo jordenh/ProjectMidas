@@ -18,6 +18,7 @@
 */
 
 #include "SettingsDisplayer.h"
+#include "MyoDevice.h"
 #include <QEvent.h>
 #include <qgridlayout.h>
 #include <qslider.h>
@@ -116,8 +117,15 @@ SettingsDisplayer::SettingsDisplayer(int widgetWidth, int widgetHeight, QWidget 
     desiredXRotationSpinBox->setMaximum(2 * M_PI);
     desiredXRotationSpinBox->setMinimum(0);
     desiredXRotationSpinBox->setDecimals(5);
-    desiredXRotationSpinBox->setValue(M_PI);
+    desiredXRotationSpinBox->setValue(DEFAULT_DESIRED_X_ROTATION);
     connect(desiredXRotationSpinBox, SIGNAL(valueChanged(double)), this, SLOT(handleDesiredXRotationChanged(double)));
+
+    holdLengthSpinBox = new QSpinBox(this);
+    holdLengthSpinBox->setMinimum(400);
+    holdLengthSpinBox->setMaximum(DEFAULT_PROG_MAX_DELTA); // dont allow a hold time to be longer than the timeout between actions
+    holdLengthSpinBox->setValue(DEFAULT_REQ_HOLD_TIME);
+    holdLengthSpinBox->setSingleStep(100);
+    connect(holdLengthSpinBox, SIGNAL(valueChanged(int)), this, SLOT(handleHoldLengthChanged(int)));
 
     QHBoxLayout* hlayout0 = new QHBoxLayout;
     hlayout0->addWidget(new QLabel("Myo Vibration Level: "));
@@ -160,6 +168,11 @@ SettingsDisplayer::SettingsDisplayer(int widgetWidth, int widgetHeight, QWidget 
     useEmgImpulseButton = new QCheckBox("Stop Motion on EMG Impulse? (WIP)", this);
     connect(useEmgImpulseButton, SIGNAL(clicked()), this, SLOT(handleUseEmgImpulseButton()));
     mainLayout->addWidget(useEmgImpulseButton);
+
+    QHBoxLayout* hlayout3 = new QHBoxLayout;
+    hlayout3->addWidget(new QLabel("Hold Length (ms): "));
+    hlayout3->addWidget(holdLengthSpinBox);
+    mainLayout->addLayout(hlayout3);
 
     setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
     setMinimumSize(indWidth, indHeight);
@@ -258,4 +271,9 @@ void SettingsDisplayer::handleHelpLevelChanged(QString val)
 void SettingsDisplayer::handleDesiredXRotationChanged(double val)
 {
     emitDesiredXRotationChanged(val);
+}
+
+void SettingsDisplayer::handleHoldLengthChanged(int val)
+{
+    emitHoldLengthChanged(val);
 }

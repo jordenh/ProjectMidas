@@ -69,6 +69,8 @@ private:
 
     QDoubleSpinBox *desiredXRotationSpinBox;
 
+    QSpinBox *holdLengthSpinBox;
+
 signals:
     void emitSliderValues(unsigned int, unsigned int);
     void emitBuzzFeedbackChange(unsigned int);
@@ -78,6 +80,7 @@ signals:
     void emitUseEmgImpulseButton(bool);
     void emitHelpLevelChanged(int);
     void emitDesiredXRotationChanged(double);
+    void emitHoldLengthChanged(int); 
 
 private slots:
     void handleSliders();
@@ -89,6 +92,7 @@ private slots:
     void handleUseEmgImpulseButton();
     void handleHelpLevelChanged(QString);
     void handleDesiredXRotationChanged(double);
+    void handleHoldLengthChanged(int);
 };
 
 #endif SETTINGS_DISPLAYER_H

@@ -40,6 +40,11 @@ using namespace myo;
 #define DEFAULT_MYO_ARM Arm::armUnknown
 #define DEFAULT_MYO_XDIR XDirection::xDirectionUnknown
 
+// NOTE: the desired location on the users arm is at roughly PI. Therefore,
+// the xRotationMatrix will contain a matrix that when multiplied by a 
+// vector, will rotate it TOWARDS the location, PI.
+#define DEFAULT_DESIRED_X_ROTATION M_PI
+
 class ControlState;
 class MyoState;
 class MainGUI;

@@ -24,6 +24,7 @@
 #include "CommandData.h"
 #include "myo\myo.hpp"
 #include "GestureSignaller.h"
+#include "SettingsSignaller.h"
 #include "SequenceImageManager.h"
 #include <ctime>
 #include <map>
@@ -41,9 +42,6 @@ using namespace myo;
 
 class ControlState;
 class MainGUI;
-
-#define DEFAULT_PROG_MAX_DELTA 3000 // ms
-#define REQ_HOLD_TIME 1000 // ms
 
 enum class SequenceStatus {
     SUCCESS,
@@ -245,7 +243,8 @@ private:
 
     SequenceImageManager imageManager;
     MainGUI* mainGui; // not owned
-    GestureSignaller signaller;
+    GestureSignaller gestureSignaller;
+    static SettingsSignaller settingsSignaller;
 };
 
 #endif /* _GESTURE_SEQ_RECORDER_H */

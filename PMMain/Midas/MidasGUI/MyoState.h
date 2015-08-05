@@ -25,10 +25,6 @@
 #include "myo\myo.hpp"
 
 #define ROTATION_MATRIX_SIZE 3
-// NOTE: the desired location on the users arm is at roughly PI. Therefore,
-// the xRotationMatrix will contain a matrix that when multiplied by a 
-// vector, will rotate it TOWARDS the location, PI.
-#define DEFAULT_DESIRED_X_ROTATION M_PI
 
 class MyoDevice;
 

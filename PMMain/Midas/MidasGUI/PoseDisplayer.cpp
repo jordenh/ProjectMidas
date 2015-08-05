@@ -83,7 +83,7 @@ QSize PoseDisplayer::sizeHint() const
 
 void PoseDisplayer::handlePoseImages(std::vector<sequenceImageSet> poseImages)
 {
-    if (poseImages.size() == 1)
+    if (connected && synched && poseImages.size() == 1)
     {
         QPixmap scaledPic;
         if (isRightHand)

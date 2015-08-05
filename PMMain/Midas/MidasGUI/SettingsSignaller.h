@@ -43,6 +43,7 @@ public:
     bool getUseEMGImpulse() { return useEMGImpulse; }
     helpLevel getMidasHelpLevel() { return midasHelpLevel; }
     float getDesiredXRotation() { return desiredXRotation; }
+    int getHoldLength() { return holdLength; }
 private:
     unsigned int yawMaxAngle;
     unsigned int pitchMaxAngle;
@@ -58,6 +59,8 @@ private:
     helpLevel midasHelpLevel;
 
     float desiredXRotation;
+
+    int holdLength;
 public slots:
     void handleSliderValues(unsigned int yawMaxAngle, unsigned int pitchMaxAngle);
 
@@ -74,6 +77,8 @@ public slots:
     void handleHelpLevelChanged(int helpLevelEnum);
 
     void handleDesiredXRotationChanged(double val);
+
+    void handleHoldLengthChanged(int val);
 };
 
 #endif // SETTINGS_SIGNALLER_H

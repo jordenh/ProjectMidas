@@ -23,7 +23,8 @@
 SettingsSignaller::SettingsSignaller(QObject *parent, unsigned int yawMaxAngle, unsigned int pitchMaxAngle, buzzFeedbackMode buzzFeedback,
     bool useGyroForCursorAccel, double cursorGyroPower, double cursorGyroScaleDown)
     : QObject(parent), yawMaxAngle(yawMaxAngle), pitchMaxAngle(pitchMaxAngle), buzzFeedback(buzzFeedback),
-    useGyroForCursorAccel(useGyroForCursorAccel), cursorGyroPower(cursorGyroPower), cursorGyroScaleDown(cursorGyroScaleDown), useEMGImpulse(false), desiredXRotation(M_PI)
+    useGyroForCursorAccel(useGyroForCursorAccel), cursorGyroPower(cursorGyroPower), cursorGyroScaleDown(cursorGyroScaleDown), useEMGImpulse(false), 
+    desiredXRotation(M_PI), holdLength(DEFAULT_REQ_HOLD_TIME)
 {
 }
 
@@ -71,4 +72,9 @@ void SettingsSignaller::handleHelpLevelChanged(int helpLevelEnum)
 void SettingsSignaller::handleDesiredXRotationChanged(double val)
 {
     this->desiredXRotation = (float)val;
+}
+
+void SettingsSignaller::handleHoldLengthChanged(int val)
+{
+    this->holdLength = val;
 }

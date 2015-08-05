@@ -232,6 +232,9 @@ void MainGUI::connectSignallerToSettingsDisplayer(SettingsSignaller *signaller)
 
         QObject::connect(settingsDisplayer, SIGNAL(emitUseEmgImpulseButton(bool)),
             signaller, SLOT(handleUseEmgImpulse(bool)));
+
+        QObject::connect(settingsDisplayer, SIGNAL(emitHoldLengthChanged(int)),
+            signaller, SLOT(handleHoldLengthChanged(int)));
     }
 }
 

@@ -23,10 +23,10 @@
 #include "MainGUI.h"
 
 unsigned int sequenceInfo::counter = 0;
+SettingsSignaller GestureSeqRecorder::settingsSignaller;
 
 GestureSeqRecorder::GestureSeqRecorder(ControlState* controlStateHandle, MainGUI* mainGuiHandle, SequenceImageManager imageManager)
-    : prevState(midasMode::LOCK_MODE), progressMaxDeltaTime(DEFAULT_PROG_MAX_DELTA), progressBaseTime(clock()),
-    holdGestTimer(REQ_HOLD_TIME), mainGui(mainGuiHandle),
+    : prevState(midasMode::LOCK_MODE), progressMaxDeltaTime(DEFAULT_PROG_MAX_DELTA), progressBaseTime(clock()), mainGui(mainGuiHandle),
     controlStateHandle(controlStateHandle), prevPose(Pose::rest), imageManager(imageManager)
 {
     seqMapPerMode = new sequenceMapPerMode();
@@ -39,8 +39,9 @@ GestureSeqRecorder::GestureSeqRecorder(ControlState* controlStateHandle, MainGUI
 
     connectGuiSignals();
 
-    prevShowAll = signaller.getShowAll();
+    prevShowAll = gestureSignaller.getShowAll();
     timeBasedPrevState = controlStateHandle->getMode();
+    holdGestTimer = settingsSignaller.getHoldLength();
     updateGuiSequences();
 }
 
@@ -94,7 +95,7 @@ SequenceStatus GestureSeqRecorder::registerSequence(midasMode mode, sequence seq
 
     std::vector<sequenceImageSet> images = imageManager.formSequenceSetFromIds(ids, lengths);
 
-    signaller.emitRegisterSequence(seqInfo.id, QString(seqInfo.sequenceName.c_str()), images);
+    gestureSignaller.emitRegisterSequence(seqInfo.id, QString(seqInfo.sequenceName.c_str()), images);
 
     return SequenceStatus::SUCCESS;
 }
@@ -145,10 +146,10 @@ SequenceStatus GestureSeqRecorder::progressSequence(Pose::Type gesture, ControlS
 
 void GestureSeqRecorder::progressSequenceTime(int delta, CommandData& response)
 {
-    if (signaller.getShowAll() != prevShowAll)
+    if (gestureSignaller.getShowAll() != prevShowAll)
     {
         updateGuiSequences();
-        prevShowAll = signaller.getShowAll();
+        prevShowAll = gestureSignaller.getShowAll();
     }
     if (controlStateHandle->getMode() != timeBasedPrevState)
     {
@@ -410,7 +411,7 @@ SequenceStatus GestureSeqRecorder::progressActiveSequences(Pose::Type gesture, C
             {
                 // match! Progress forward :)
                 (*it)->progress++;
-                holdGestTimer = REQ_HOLD_TIME; // reset count on any progression
+                holdGestTimer = settingsSignaller.getHoldLength(); // reset count on any progression
                 if ((*it)->progress == (*it)->seq.size())
                 {
                     // found a complete sequence!
@@ -462,7 +463,7 @@ SequenceStatus GestureSeqRecorder::progressActiveSequences(Pose::Type gesture, C
             if ((seqProg < (*it)->seq.size()) &&
                 (gesture == (*it)->seq.at(seqProg).type))
             {
-                holdGestTimer = REQ_HOLD_TIME; // reset count on any progression
+                holdGestTimer = settingsSignaller.getHoldLength(); // reset count on any progression
                 it++;
             }
             else
@@ -514,7 +515,7 @@ SequenceStatus GestureSeqRecorder::findActivation(Pose::Type gesture, ControlSta
                 break;
             }
 
-            holdGestTimer = REQ_HOLD_TIME; // set count on any progression
+            holdGestTimer = settingsSignaller.getHoldLength(); // set count on any progression
         }
     }
 
@@ -525,7 +526,7 @@ SequenceStatus GestureSeqRecorder::findActivation(Pose::Type gesture, ControlSta
 void GestureSeqRecorder::updateGuiSequences()
 {
     std::vector<sequenceProgressData> progressDataVec;
-    if (signaller.getShowAll())
+    if (gestureSignaller.getShowAll())
     {
         // Add ALL sequences registered to the current mode
         sequenceList* sl = (*seqMapPerMode)[controlStateHandle->getMode()];
@@ -540,7 +541,7 @@ void GestureSeqRecorder::updateGuiSequences()
             progressDataVec.push_back(progressData);
         }
     }
-    signaller.emitShowSequences(progressDataVec);
+    gestureSignaller.emitShowSequences(progressDataVec);
 }
 
 void GestureSeqRecorder::printStatus(bool verbose)
@@ -592,6 +593,7 @@ void GestureSeqRecorder::connectGuiSignals()
 {
     if (mainGui)
     {
-        mainGui->connectSignallerToSequenceDisplayer(&signaller);
+        mainGui->connectSignallerToSequenceDisplayer(&gestureSignaller);
+        mainGui->connectSignallerToSettingsDisplayer(&settingsSignaller);
     }
 }
