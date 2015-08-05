@@ -223,6 +223,8 @@ void MainGUI::connectSignallerToSettingsDisplayer(SettingsSignaller *signaller)
 
         QObject::connect(settingsDisplayer, SIGNAL(emitUseGyroForCursorAccelButton(bool)),
             signaller, SLOT(handleUseGyroForCursorAccelChanged(bool)));
+        QObject::connect(settingsDisplayer, SIGNAL(emitDesiredXRotationChanged(double)),
+            signaller, SLOT(handleDesiredXRotationChanged(double)));
         QObject::connect(settingsDisplayer, SIGNAL(emitGyroPowerValue(int)),
             signaller, SLOT(hanldeGyroPowerValueChanged(int)));
         QObject::connect(settingsDisplayer, SIGNAL(emitGyroScaleDownValue(double)),

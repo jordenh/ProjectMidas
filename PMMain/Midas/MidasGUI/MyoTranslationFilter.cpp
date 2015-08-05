@@ -432,6 +432,11 @@ float MyoTranslationFilter::calcRingDelta(float current, float base)
 
 void MyoTranslationFilter::normalizeGyroData(float &x, float &y, float &z)
 {
+    if (myoStateHandle->getDesiredXRotation() != settingsSignaller.getDesiredXRotation())
+    {
+        myoStateHandle->setDesiredXRotation(settingsSignaller.getDesiredXRotation());
+    }
+
     float** xRotationMatrix = myoStateHandle->getXRotationMatrix();
 
     // Perform matrix multiplication to effectively rotate the Gyro data into a normalized position where 

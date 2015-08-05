@@ -28,7 +28,7 @@
 // NOTE: the desired location on the users arm is at roughly PI. Therefore,
 // the xRotationMatrix will contain a matrix that when multiplied by a 
 // vector, will rotate it TOWARDS the location, PI.
-#define DESIRED_X_ROTATION M_PI
+#define DEFAULT_DESIRED_X_ROTATION M_PI
 
 class MyoDevice;
 
@@ -68,6 +68,9 @@ public:
 
     void setXDirection(myo::XDirection xDirection);
     myo::XDirection getXDirection();
+
+    void setDesiredXRotation(float rotation);
+    float getDesiredXRotation();
 
     /**
     * Sets the xRotation and xRotationMatrix values
@@ -118,6 +121,7 @@ private:
     // and range is [0,4PI)
     float currentXRotation;
     float** currentXRotationMatrix; // owned
+    float desiredXRotationValue; // This is the value of an xRotation that would provide a good 'feeling' for cursor acceleration. (ie moving arm up accelerates up, down-down, etc).
 
     MyoDevice* myoHandle; // not owned
 };

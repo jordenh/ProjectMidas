@@ -18,11 +18,12 @@
 */
 
 #include "SettingsSignaller.h"
+#include <math.h>
 
 SettingsSignaller::SettingsSignaller(QObject *parent, unsigned int yawMaxAngle, unsigned int pitchMaxAngle, buzzFeedbackMode buzzFeedback,
     bool useGyroForCursorAccel, double cursorGyroPower, double cursorGyroScaleDown)
     : QObject(parent), yawMaxAngle(yawMaxAngle), pitchMaxAngle(pitchMaxAngle), buzzFeedback(buzzFeedback),
-    useGyroForCursorAccel(useGyroForCursorAccel), cursorGyroPower(cursorGyroPower), cursorGyroScaleDown(cursorGyroScaleDown), useEMGImpulse(false)
+    useGyroForCursorAccel(useGyroForCursorAccel), cursorGyroPower(cursorGyroPower), cursorGyroScaleDown(cursorGyroScaleDown), useEMGImpulse(false), desiredXRotation(M_PI)
 {
 }
 
@@ -65,4 +66,9 @@ void SettingsSignaller::handleUseEmgImpulse(bool val)
 void SettingsSignaller::handleHelpLevelChanged(int helpLevelEnum)
 {
     this->midasHelpLevel = (helpLevel)helpLevelEnum;
+}
+
+void SettingsSignaller::handleDesiredXRotationChanged(double val)
+{
+    this->desiredXRotation = (float)val;
 }

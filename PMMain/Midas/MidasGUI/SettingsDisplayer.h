@@ -24,6 +24,7 @@
 
 #include "MidasCommon.h"
 #include "MyoCommon.h"
+#include <math.h>
 
 class QLabel;
 class QComboBox;
@@ -66,6 +67,8 @@ private:
 
     QCheckBox *useEmgImpulseButton;
 
+    QDoubleSpinBox *desiredXRotationSpinBox;
+
 signals:
     void emitSliderValues(unsigned int, unsigned int);
     void emitBuzzFeedbackChange(unsigned int);
@@ -74,6 +77,7 @@ signals:
     void emitGyroScaleDownValue(double);
     void emitUseEmgImpulseButton(bool);
     void emitHelpLevelChanged(int);
+    void emitDesiredXRotationChanged(double);
 
 private slots:
     void handleSliders();
@@ -84,6 +88,7 @@ private slots:
     void gyroScaledDownValueChanged(double);
     void handleUseEmgImpulseButton();
     void handleHelpLevelChanged(QString);
+    void handleDesiredXRotationChanged(double);
 };
 
 #endif SETTINGS_DISPLAYER_H

@@ -111,6 +111,14 @@ SettingsDisplayer::SettingsDisplayer(int widgetWidth, int widgetHeight, QWidget 
     connect(gyroPowerSpinBox, SIGNAL(valueChanged(int)), this, SLOT(gyroPowerValueChanged(int)));
     connect(gyroScaleDownSpinBox, SIGNAL(valueChanged(double)), this, SLOT(gyroScaledDownValueChanged(double)));
 
+    desiredXRotationSpinBox = new QDoubleSpinBox(this);
+    desiredXRotationSpinBox->setSingleStep(0.1);
+    desiredXRotationSpinBox->setMaximum(2 * M_PI);
+    desiredXRotationSpinBox->setMinimum(0);
+    desiredXRotationSpinBox->setDecimals(5);
+    desiredXRotationSpinBox->setValue(M_PI);
+    connect(desiredXRotationSpinBox, SIGNAL(valueChanged(double)), this, SLOT(handleDesiredXRotationChanged(double)));
+
     QHBoxLayout* hlayout0 = new QHBoxLayout;
     hlayout0->addWidget(new QLabel("Myo Vibration Level: "));
     hlayout0->addWidget(buzzFeedbackButton);
@@ -130,6 +138,11 @@ SettingsDisplayer::SettingsDisplayer(int widgetWidth, int widgetHeight, QWidget 
     hlayout1->addWidget(new QLabel("Scale Down: "));
     hlayout1->addWidget(gyroScaleDownSpinBox);
     mainLayout->addLayout(hlayout1);
+
+    QHBoxLayout* hlayout1b = new QHBoxLayout;
+    hlayout1b->addWidget(new QLabel("X Rotation Offset: "));
+    hlayout1b->addWidget(desiredXRotationSpinBox);
+    mainLayout->addLayout(hlayout1b);
 
     QHBoxLayout* hlayout2 = new QHBoxLayout;
 
@@ -240,4 +253,9 @@ void SettingsDisplayer::handleHelpLevelChanged(QString val)
     {
         emitHelpLevelChanged(int(helpLevel::MINIMAL));
     }
+}
+
+void SettingsDisplayer::handleDesiredXRotationChanged(double val)
+{
+    emitDesiredXRotationChanged(val);
 }
