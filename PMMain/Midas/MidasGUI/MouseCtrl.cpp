@@ -90,7 +90,7 @@ unsigned int MouseCtrl::convertRateToDelta(unsigned int rate)
     return min(max(ceil(NUM_PIXEL_MOVE / currVeloc), MIN_MOVE_TIME_DELTA), MAX_MOVE_TIME_DELTA);
 }
 
-void MouseCtrl::sendCommand(mouseCmds mouseCmd, double mouseRateIfMove, double mouseRateIfMoveY_hack)
+void MouseCtrl::sendCommand(mouseCmds mouseCmd, double mouseXRateIfMove, double mouseYRateIfMove)
 {
     ZeroMemory(&mi, sizeof(MOUSEINPUT));
     DWORD currentTime = clock() * (1000 / CLOCKS_PER_SEC);
@@ -98,7 +98,7 @@ void MouseCtrl::sendCommand(mouseCmds mouseCmd, double mouseRateIfMove, double m
     DWORD deltaTimeYMove = currentTime - lastMouseMoveY;
     DWORD deltaTimeScroll = currentTime - lastMouseScroll;
 
-	setMouseInputVars(mouseCmd, mouseRateIfMove, mouseRateIfMoveY_hack);
+    setMouseInputVars(mouseCmd, mouseXRateIfMove, mouseYRateIfMove);
 
     // Handle Early exit cases if moving mouse
     if (mi.dwFlags == MOUSEEVENTF_MOVE 
@@ -106,7 +106,7 @@ void MouseCtrl::sendCommand(mouseCmds mouseCmd, double mouseRateIfMove, double m
         (((deltaTimeXMove < minMoveXTimeDelta && mi.dx != 0) ||
         (deltaTimeYMove < minMoveYTimeDelta && mi.dy != 0))
         || 
-        (mouseRateIfMove > 0 && mouseRateIfMove < MOVE_RATE_DEADZONE)
+        (mouseXRateIfMove > 0 && mouseXRateIfMove < MOVE_RATE_DEADZONE)
         ||
         (mi.dx != 0 && mi.dy != 0 && mouseCmd != mouseCmds::MOVE_ABSOLUTE))
         )
@@ -122,14 +122,14 @@ void MouseCtrl::sendCommand(mouseCmds mouseCmd, double mouseRateIfMove, double m
         // Update time stamps
         if (mi.dx != 0)
         {
-            if (mouseRateIfMove >= 0)
-                setMinMoveXTimeDelta(mouseRateIfMove); // July 17, 2015: I think  this is wrong, but not using joystick and dont remember purpose of this line so.. leaving in.
+            if (mouseXRateIfMove >= 0)
+                setMinMoveXTimeDelta(mouseXRateIfMove); // July 17, 2015: I think  this is wrong, but not using joystick and dont remember purpose of this line so.. leaving in.
             lastMouseMoveX = currentTime;
         }
         if (mi.dy != 0)
         {
-            if (mouseRateIfMove >= 0)
-                setMinMoveYTimeDelta(mouseRateIfMove);
+            if (mouseXRateIfMove >= 0)
+                setMinMoveYTimeDelta(mouseXRateIfMove);
             lastMouseMoveY = currentTime;
         }
 #else
@@ -197,28 +197,28 @@ void MouseCtrl::sendCommand(mouseCmds mouseCmd, double mouseRateIfMove, double m
     delete in; in = NULL;
 }
 
-void MouseCtrl::setMouseInputVars(mouseCmds mouseCmd, double& mouseRateIfMove, double& mouseRateIfMoveY_hack)
+void MouseCtrl::setMouseInputVars(mouseCmds mouseCmd, double& mouseXRateIfMove, double& mouseYRateIfMove)
 {
-    if (mouseCmd == MOVE_HOR && mouseRateIfMove < 0)
+    if (mouseCmd == MOVE_HOR && mouseXRateIfMove < 0)
     {
         mouseCmd = MOVE_LEFT;
     }
-    else if (mouseCmd == MOVE_HOR && mouseRateIfMove >= 0)
+    else if (mouseCmd == MOVE_HOR && mouseXRateIfMove >= 0)
     {
         mouseCmd = MOVE_RIGHT;
     }
-    else if (mouseCmd == MOVE_VERT && mouseRateIfMove < 0)
+    else if (mouseCmd == MOVE_VERT && mouseXRateIfMove < 0)
     {
         mouseCmd = MOVE_DOWN;
     }
-    else if (mouseCmd == MOVE_VERT && mouseRateIfMove >= 0)
+    else if (mouseCmd == MOVE_VERT && mouseXRateIfMove >= 0)
     {
         mouseCmd = MOVE_UP;
     }
 
 	if (mouseCmd != mouseCmds::MOVE_ABSOLUTE)
 	{
-		mouseRateIfMove = abs(mouseRateIfMove);
+        mouseXRateIfMove = abs(mouseXRateIfMove);
 	}
 
     switch (mouseCmd)
@@ -318,8 +318,8 @@ void MouseCtrl::setMouseInputVars(mouseCmds mouseCmd, double& mouseRateIfMove, d
         float baseWindowsLocX = (baseCursorX / monitorWidth) * monitorSizeWeight;
         float baseWindowsLocY = (baseCursorY / monitorHeight) * monitorSizeWeight;
 
-		mi.dx = baseWindowsLocX + (mouseRateIfMove / 100.0 * monitorSizeWeight / 2);
-		mi.dy = baseWindowsLocY + (mouseRateIfMoveY_hack / 100.0 * monitorSizeWeight / 2);
+        mi.dx = baseWindowsLocX + (mouseXRateIfMove / 100.0 * monitorSizeWeight / 2);
+        mi.dy = baseWindowsLocY + (mouseYRateIfMove / 100.0 * monitorSizeWeight / 2);
 
         int maxDx = monitorSizeWeight * (BaseMeasurements::getInstance().getScreenSizeX() / monitorWidth);
         int maxDy = monitorSizeWeight * (BaseMeasurements::getInstance().getScreenSizeY() / monitorHeight);
