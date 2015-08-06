@@ -303,7 +303,9 @@ SequenceStatus GestureSeqRecorder::checkLegalRegister(midasMode mode, sequenceIn
                 
                 if (gestInQuestion.poseLen == PoseLength::IMMEDIATE || baseGest.poseLen == PoseLength::IMMEDIATE)
                 {
-                    if (gestInQuestion.type == baseGest.type)
+                    // allow overlapping immediates of the same type only
+                    if (gestInQuestion.type == baseGest.type &&
+                        gestInQuestion.poseLen != baseGest.poseLen)
                     {
                         conflict = true;
                         break;
@@ -333,7 +335,9 @@ SequenceStatus GestureSeqRecorder::checkLegalRegister(midasMode mode, sequenceIn
 
                 if (gestInQuestion.poseLen == PoseLength::IMMEDIATE || baseGest.poseLen == PoseLength::IMMEDIATE)
                 {
-                    if (gestInQuestion.type == baseGest.type)
+                    // allow overlapping immediates of the same type only
+                    if (gestInQuestion.type == baseGest.type &&
+                        gestInQuestion.poseLen != baseGest.poseLen)
                     {
                         conflict = true;
                         break;
@@ -438,15 +442,16 @@ SequenceStatus GestureSeqRecorder::progressActiveSequences(Pose::Type gesture, C
                         response = (*it)->sequenceResponse;
                         break;
                     }
-                    it++;
                 }
-                else
+                else if (PoseLength::IMMEDIATE != (*it)->seq.at(seqProg).poseLen)
                 {
+                    // as long as it's not an immediate value (which needs to be left alone following a rest),
+                    // remove this from the active list!
                     (*it)->progress = 0;
-                    std::list<sequenceInfo*>::iterator itCopy = it;
-                    it++;
+                    std::list<sequenceInfo*>::iterator itCopy = it;                   
                     activeSequences.erase(itCopy);
                 }
+                it++;
 
                 updateGuiSequences();
             }
@@ -505,14 +510,17 @@ SequenceStatus GestureSeqRecorder::findActivation(Pose::Type gesture, ControlSta
 
             if (it->seq.at(0).poseLen == PoseLength::IMMEDIATE)
             {
-                // Special case. Immediate isn't 'held'
-                response = it->sequenceResponse;
-//#ifdef BUILD_FOR_KARDIUM
-//                // show the completed sequence, and in mouse_mode, it wont be removed.
-//                (&(*it))->progress++;
-//                updateGuiSequences();
-//#endif
-                break;
+                if (it->seq.size() == 1)
+                {
+                    // Special case. Immediate of size one should return response!
+                    response = it->sequenceResponse;
+                    break;
+                }
+                else
+                {
+                    it->progress++;
+                    updateGuiSequences();
+                }
             }
 
             holdGestTimer = settingsSignaller.getHoldLength(); // set count on any progression

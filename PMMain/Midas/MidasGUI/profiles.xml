@@ -100,7 +100,7 @@
             </sequence>
 			<sequence state="gestureMode" name="Rotate Atrium*">
                 <gestures>
-                    <gesture type="tap">doubleTap</gesture>
+                    <gesture type="immediate">doubleTap</gesture>
 					<gesture type="immediate">fingersSpread</gesture>
                 </gestures>
                 <commands>
@@ -113,7 +113,7 @@
             </sequence>
 			<sequence state="gestureMode" name="Rotate Atrium">
                 <gestures>
-                    <gesture type="tap">doubleTap</gesture>
+                    <gesture type="immediate">doubleTap</gesture>
 					<gesture type="immediate">fist</gesture>
                 </gestures>
                 <commands>
@@ -126,7 +126,7 @@
             </sequence>
             <sequence state="gestureMode" name="Lock">
                 <gestures>
-                    <gesture type="tap">doubleTap</gesture>
+                    <gesture type="immediate">doubleTap</gesture>
                     <gesture type="immediate">doubleTap</gesture>
                 </gestures>
                 <commands>
