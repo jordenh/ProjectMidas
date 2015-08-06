@@ -24,6 +24,7 @@
 #include <qpalette.h>
 #include <qcolor.h> 
 #include <QEvent.h>
+#include <qicon.h>
 
 ProfilesDisplayer::ProfilesDisplayer(int widgetWidth, int widgetHeight, QWidget *parent) : 
     DraggableWidget(parent, Qt::WindowStaysOnTopHint), indWidth(widgetWidth), indHeight(widgetHeight), currentlyActiveProfile(0)
@@ -44,6 +45,9 @@ ProfilesDisplayer::ProfilesDisplayer(int widgetWidth, int widgetHeight, QWidget 
     QLabel *title = new QLabel("Profiles");
     title->setFont(timesFont);
     layout->addWidget(title, 0, Qt::AlignCenter);
+
+    QIcon *icon = new QIcon(TASK_BAR_ICON_PATH);
+    setWindowIcon(*icon);
 }
     
 

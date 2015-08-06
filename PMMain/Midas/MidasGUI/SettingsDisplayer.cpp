@@ -29,6 +29,7 @@
 #include <qspinbox.h>
 #include <QCheckBox.h>
 #include <qaction.h>
+#include <qicon.h>
 
 SettingsDisplayer::SettingsDisplayer(int widgetWidth, int widgetHeight, QWidget *parent)
     : DraggableWidget(parent, Qt::WindowStaysOnTopHint),
@@ -176,6 +177,9 @@ SettingsDisplayer::SettingsDisplayer(int widgetWidth, int widgetHeight, QWidget 
 
     setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
     setMinimumSize(indWidth, indHeight);
+
+    QIcon *icon = new QIcon(TASK_BAR_ICON_PATH);
+    setWindowIcon(*icon);
 }
 
 SettingsDisplayer::~SettingsDisplayer()

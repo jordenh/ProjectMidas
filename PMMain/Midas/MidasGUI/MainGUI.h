@@ -41,6 +41,8 @@ class KeyboardWidget;
 class DistanceWidget;
 class ProfilesDisplayer;
 
+#define TASK_BAR_ICON_PATH "Resources\\ProjectMidasLogo.ico"
+
 /**
  * The MainGUI class is the parent GUI of all the widgets used in Midas. It contains the mouse
  * indicator, sequence displayer, and info indicator. The mouse indicator shows the relative mouse 

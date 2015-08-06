@@ -22,6 +22,7 @@
 
 #include "DraggableWidget.h"
 #include "MidasCommon.h"
+#include"MainGUI.h"
 
 class QVBoxLayout;
 class ProfileDisplayer;

@@ -6497,9 +6497,9 @@ QwBEAF8AUgBPAE0AAQBFAHgAcAByAGUAcwBzAA==
 		<row><td>PROGMSG_IIS_ROLLBACKAPPPOOLS</td><td>##IDS_PROGMSG_IIS_ROLLBACKAPPPOOLS##</td><td/></row>
 		<row><td>PROGMSG_IIS_ROLLBACKVROOTS</td><td>##IDS_PROGMSG_IIS_ROLLBACKVROOTS##</td><td/></row>
 		<row><td>PROGMSG_IIS_ROLLBACKWEBSERVICEEXTENSIONS</td><td>##IDS_PROGMSG_IIS_ROLLBACKWEBSERVICEEXTENSIONS##</td><td/></row>
-		<row><td>ProductCode</td><td>{A246D86D-76E2-47D4-B31E-0B879AC0AFCD}</td><td/></row>
+		<row><td>ProductCode</td><td>{244E6976-7A07-4C6F-A892-7D27D93585C5}</td><td/></row>
 		<row><td>ProductName</td><td>Midas</td><td/></row>
-		<row><td>ProductVersion</td><td>2.10.0000</td><td/></row>
+		<row><td>ProductVersion</td><td>2.20.0000</td><td/></row>
 		<row><td>ProgressType0</td><td>install</td><td/></row>
 		<row><td>ProgressType1</td><td>Installing</td><td/></row>
 		<row><td>ProgressType2</td><td>installed</td><td/></row>

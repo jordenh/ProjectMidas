@@ -24,6 +24,7 @@
 
 #include "MidasCommon.h"
 #include "MyoCommon.h"
+#include "MainGUI.h"
 #include <math.h>
 
 class QLabel;
