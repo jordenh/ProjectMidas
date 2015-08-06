@@ -100,7 +100,7 @@
             </sequence>
 			<sequence state="gestureMode" name="Rotate Atrium*">
                 <gestures>
-                    <gesture type="immediate">doubleTap</gesture>
+                    <gesture type="tap">doubleTap</gesture>
 					<gesture type="immediate">fingersSpread</gesture>
                 </gestures>
                 <commands>
@@ -113,7 +113,7 @@
             </sequence>
 			<sequence state="gestureMode" name="Rotate Atrium">
                 <gestures>
-                    <gesture type="immediate">doubleTap</gesture>
+                    <gesture type="tap">doubleTap</gesture>
 					<gesture type="immediate">fist</gesture>
                 </gestures>
                 <commands>
@@ -126,7 +126,7 @@
             </sequence>
             <sequence state="gestureMode" name="Lock">
                 <gestures>
-                    <gesture type="immediate">doubleTap</gesture>
+                    <gesture type="tap">doubleTap</gesture>
                     <gesture type="immediate">doubleTap</gesture>
                 </gestures>
                 <commands>
@@ -155,7 +155,7 @@
 								</actions>
 							</command>
 					</angleNegative>
-					<sensitivity>5</sensitivity>
+					<sensitivity>2.5</sensitivity>
                 </angle>
 				<angle type="yaw">
                     <anglePositive>
@@ -172,7 +172,7 @@
 								</actions>
 							</command>
 					</angleNegative>
-					<sensitivity>5</sensitivity>
+					<sensitivity>2.5</sensitivity>
                 </angle>
 				<angle type="roll">
                     <anglePositive>
@@ -189,11 +189,11 @@
 								</actions>
 							</command>
 					</angleNegative>
-					<sensitivity>5</sensitivity>
+					<sensitivity>2.5</sensitivity>
                 </angle>
 				<holdModeActionType>absDeltaVelocity</holdModeActionType>
 				<intervalLength>40</intervalLength>
-				<intervalExecMultiplier>2</intervalExecMultiplier>
+				<intervalExecMultiplier>1</intervalExecMultiplier>
 				<intervalMaxExecs>6</intervalMaxExecs>
             </hold>
 			<hold id="3">

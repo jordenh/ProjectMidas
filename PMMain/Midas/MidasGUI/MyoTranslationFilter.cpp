@@ -162,24 +162,6 @@ void MyoTranslationFilter::handleQuatData(filterDataMap input, filterDataMap out
             case MOUSE_MODE2:
                 performMouseModeFunc(output);
                 break;
-            case GESTURE_HOLD_ONE:
-                gestIdx = 0;
-                goto execute;
-            case GESTURE_HOLD_TWO:
-                gestIdx = 1;
-                goto execute;
-            case GESTURE_HOLD_THREE:
-                gestIdx = 2;
-                goto execute;
-            case GESTURE_HOLD_FOUR:
-                gestIdx = 3;
-                goto execute;
-            case GESTURE_HOLD_FIVE:
-                gestIdx = 4;
-
-            execute:
-                //performHoldModeFunc(gestIdx, output); // Legacy. Not handled like this anymore.
-                break;
             case KEYBOARD_MODE:
                 performeKybdModeFunc(output);
                 break;
@@ -436,89 +418,20 @@ void MyoTranslationFilter::normalizeGyroData(float &x, float &y, float &z)
     {
         myoStateHandle->setDesiredXRotation(settingsSignaller.getDesiredXRotation());
     }
-
+    
     float** xRotationMatrix = myoStateHandle->getXRotationMatrix();
-
+    
     // Perform matrix multiplication to effectively rotate the Gyro data into a normalized position where 
     // +z is vertical (wrt gravity) and +x is along arm
     float newX = x*xRotationMatrix[0][0] + y*xRotationMatrix[1][0] + z*xRotationMatrix[2][0];
     float newY = x*xRotationMatrix[0][1] + y*xRotationMatrix[1][1] + z*xRotationMatrix[2][1];
     float newZ = x*xRotationMatrix[0][2] + y*xRotationMatrix[1][2] + z*xRotationMatrix[2][2];
-
+    
     x = newX;
     y = newY;
     z = newZ;
-
+    
     return;
-}
-
-void MyoTranslationFilter::performHoldModeFunc(unsigned int holdNum, filterDataMap& outputToSharedCommandData)
-{
-//    CommandData command;
-//    command.type = commandType::KYBRD_CMD;
-//    command.name = "HoldMode Command";
-//    command.action.kybd = kybdCmds::NO_CMD;
-//
-//    GestureHoldModeAction currentHoldModeAction = gestHoldModeAction[holdNum];
-//    float thresh = .1;
-//    
-//    CommandData cd;
-//    angleData ad;
-//    bool tryAction = false;
-//
-//    ad.angleType = angleData::AngleType::ROLL;
-//    if (deltaRollDeg > thresh)
-//    {
-//        tryAction = true;
-//        ad.anglePositive = true;
-//        
-//    } 
-//    else if (deltaRollDeg < -thresh)
-//    {
-//        tryAction = true;
-//        ad.anglePositive = false;
-//    }
-//    if (tryAction)
-//    {
-//        command.action.kybd = kybdCmds((unsigned int)command.action.kybd | (unsigned int)currentHoldModeAction.getAction(ad));
-//        outputToSharedCommandData[COMMAND_INPUT] = command;
-//    }
-//
-//    tryAction = false;
-//    ad.angleType = angleData::AngleType::PITCH;
-//    if (deltaPitchDeg > thresh)
-//    {
-//        tryAction = true;
-//        ad.anglePositive = true;
-//    }
-//    else if (deltaPitchDeg < -thresh)
-//    {
-//        tryAction = true;
-//        ad.anglePositive = false;
-//    }
-//    if (tryAction)
-//    {
-//        command.action.kybd = kybdCmds((unsigned int)command.action.kybd | (unsigned int)currentHoldModeAction.getAction(ad));
-//        outputToSharedCommandData[COMMAND_INPUT] = command;
-//    }
-//
-//    tryAction = false;
-//    ad.angleType = angleData::AngleType::YAW;
-//    if (deltaYawDeg > thresh)
-//    {
-//        tryAction = true;
-//        ad.anglePositive = true;
-//    }
-//    else if (deltaYawDeg < -thresh)
-//    {
-//        tryAction = true;
-//        ad.anglePositive = false;
-//    }
-//    if (tryAction)
-//    {
-//        command.action.kybd = kybdCmds((unsigned int)command.action.kybd | (unsigned int)currentHoldModeAction.getAction(ad));
-//        outputToSharedCommandData[COMMAND_INPUT] = command;
-//    }
 }
 
 void MyoTranslationFilter::performMouseModeFunc(filterDataMap& outputToSharedCommandData)

@@ -175,7 +175,6 @@ private:
      */
 	vector2D getMouseDelta(float pitch, float yaw);
 
-    void performHoldModeFunc(unsigned int holdNum, filterDataMap& outputToSharedCommandData);
     void performMouseModeFunc(filterDataMap& outputToSharedCommandData);
     void performeKybdModeFunc(filterDataMap& outputToSharedCommandData);
 
