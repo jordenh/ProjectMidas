@@ -110,24 +110,31 @@ void MyoDevice::runDeviceLoop()
 		std::chrono::duration_cast<std::chrono::milliseconds>(
 		std::chrono::steady_clock::now().time_since_epoch()); /* Used to control when to request battery levels */
 
+    Hub* hub;
     try
     {
-        Hub hub(appIdentifier);
-        hub.setLockingPolicy(hub.lockingPolicyNone);
-        Myo* myo = hub.waitForMyo(myoFindTimeout);
+        Myo* myo = NULL;
 
-        if (!myo)
+        while (!myo)
         {
-            std::cout << "Could not find a Myo." << std::endl;
-            WearableDevice::setDeviceStatus(deviceStatus::ERR);
-            return;
+            try {
+                hub = new Hub(appIdentifier);
+                myo = hub->waitForMyo(myoFindTimeout);
+            }
+            catch (const std::exception& e) {
+                // do nothing - keep trying!
+            }
+
+            std::cout << "Still can not find a Myo." << std::endl;
+            Sleep(1000);
         }
+        hub->setLockingPolicy(hub->lockingPolicyNone);
 
         // Enable EMG streaming on the found Myo.
         myo->setStreamEmg(myo::Myo::streamEmgEnabled);
 
         MyoCallbacks myoCallbacks(*this);
-        hub.addListener(&myoCallbacks);
+        hub->addListener(&myoCallbacks);
 
         while (true)
         {
@@ -163,7 +170,7 @@ void MyoDevice::runDeviceLoop()
                 battery_start = current_time;
 			}
 
-            hub.run(durationInMilliseconds);
+            hub->run(durationInMilliseconds);
             
         }
     }
@@ -171,9 +178,11 @@ void MyoDevice::runDeviceLoop()
     {
         std::cout << "Exception: " << e.what() << std::endl;
         WearableDevice::setDeviceStatus(deviceStatus::ERR);
+        if (hub) { delete hub; hub = NULL; }
         return;
     }
-
+    if (hub) { delete hub; hub = NULL; }
+    
     WearableDevice::setDeviceStatus(deviceStatus::DONE);
 }
 
