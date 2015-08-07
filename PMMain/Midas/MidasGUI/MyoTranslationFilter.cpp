@@ -224,11 +224,11 @@ void MyoTranslationFilter::handleGyroData(filterDataMap input, filterDataMap out
 
                 if (currMode == MOUSE_MODE || currMode == MOUSE_MODE2)
                 {
-                    // attempt 1
+                    // attempt 1 <-- not very good, but open for further research
                     // update base angles for each new mode
                     //float gyroThresh = 0.075;
-                    //float cursorBaseVerticalChange = abs(gyroY) > gyroThresh ? gyroY * CURSOR_GYRO_ACCEL_RATE : 0;// TODO - getBaseYChange(float gyroY) // gyroY axis correspon
-                    //float cursorBaseHorizontalChange = abs(gyroZ) > gyroThresh ? -gyroZ * CURSOR_GYRO_ACCEL_RATE : 0;// TODO - getBaseXChange(float gyroZ)
+                    //float cursorBaseVerticalChange = abs(gyroY) > gyroThresh ? gyroY * CURSOR_GYRO_ACCEL_RATE : 0;
+                    //float cursorBaseHorizontalChange = abs(gyroZ) > gyroThresh ? -gyroZ * CURSOR_GYRO_ACCEL_RATE : 0;
                     //cursorBaseVerticalChange = pow(cursorBaseVerticalChange, 2);
                     //cursorBaseHorizontalChange = pow(cursorBaseHorizontalChange, 2);
 
@@ -250,7 +250,6 @@ float MyoTranslationFilter::calcBaseHorizontalChange(float gyroZ)
 {
     int cursorGyroPower = settingsSignaller.getCursorGyroPower();
     float cursorGyroScaleDown = settingsSignaller.getCursorGyroScaleDown();
-
 
     float horChange = abs(pow(gyroZ, cursorGyroPower)) / cursorGyroScaleDown * -sign(gyroZ);
     //horChange = std::min(horChange, 200.0f);
@@ -460,7 +459,7 @@ void MyoTranslationFilter::performeKybdModeFunc(filterDataMap& outputToSharedCom
 	
     // TODO - verify/disprove this function 180 - (180.0 / M_PI) * atan2((double)myoAnglePoint.y, (double)myoAnglePoint.x);
     // using 90 instead of 180 *seems* to make it better, but then the upper left quadrant is unnaccessable.
-    int myoAngleDegree = 90 - (180.0 / M_PI) * atan2((double)myoAnglePoint.y, (double)myoAnglePoint.x); // NEED to add section size/2 TODO
+    int myoAngleDegree = 90 - (180.0 / M_PI) * atan2((double)myoAnglePoint.y, (double)myoAnglePoint.x); // NEED to add section size/2
     while (myoAngleDegree < 0)
     {
         myoAngleDegree += 360;

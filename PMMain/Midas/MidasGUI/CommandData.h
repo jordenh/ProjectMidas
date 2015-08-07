@@ -23,8 +23,6 @@
 #include "MidasCommon.h"
 #include "KeyboardVector.h"
 
-// TODO TEMP - modify member varialbes to be private.
-
 /**
 * This bundles the Midas command data. It represents
 * all Midas command types.

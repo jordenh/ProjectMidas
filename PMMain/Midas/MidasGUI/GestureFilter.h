@@ -25,7 +25,7 @@
 #include "GestureSignaller.h"
 #include "SettingsSignaller.h"
 #include "SequenceImageManager.h"
-//#include "ProfileCommon.h" // JORDEN TODO
+//#include "ProfileCommon.h" // JORDEN TODO - get getCDFromCommand to work... currently breaks build, but reduces code duplication!
 #include <ctime>
 
 #ifdef USE_SIMULATOR
