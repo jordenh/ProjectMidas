@@ -58,6 +58,7 @@ private:
     QLabel *pitchValue;
 
     QCheckBox *useGyroForCursorAccelButton;
+    QCheckBox *removeGyroOnHoldMouseButton; 
     // SpinBoxs to update Gyro cursor control variables
     QSpinBox *gyroPowerSpinBox;
     QDoubleSpinBox *gyroScaleDownSpinBox;
@@ -76,6 +77,7 @@ signals:
     void emitSliderValues(unsigned int, unsigned int);
     void emitBuzzFeedbackChange(unsigned int);
     void emitUseGyroForCursorAccelButton(bool);
+    void emitRemoveGyroOnHoldMouseButton(bool);
     void emitGyroPowerValue(int);
     void emitGyroScaleDownValue(double);
     void emitUseEmgImpulseButton(bool);
@@ -88,6 +90,7 @@ private slots:
     void handleSlidersChange(int);
     void handleClicked(bool);
     void handleUseGyroForCursorAccelButton();
+    void handleRemoveGyroOnHoldMouseButton();
     void gyroPowerValueChanged(int);
     void gyroScaledDownValueChanged(double);
     void handleUseEmgImpulseButton();

@@ -80,9 +80,13 @@ SettingsDisplayer::SettingsDisplayer(int widgetWidth, int widgetHeight, QWidget 
     helpLevelComboBox->addItem(LOCKS_LVL);
     connect(helpLevelComboBox, SIGNAL(activated(QString)), this, SLOT(handleHelpLevelChanged(QString)));
 
-    useGyroForCursorAccelButton = new QCheckBox("Apply acceleration to cursor?", this);
+    useGyroForCursorAccelButton = new QCheckBox("Apply acceleration to cursor", this);
     useGyroForCursorAccelButton->setChecked(DEFAULT_USE_ACCEL);
     connect(useGyroForCursorAccelButton, SIGNAL(clicked()), this, SLOT(handleUseGyroForCursorAccelButton()));
+
+    removeGyroOnHoldMouseButton = new QCheckBox("Remove acceleration when holding cursor", this);
+    removeGyroOnHoldMouseButton->setChecked(DEFUALT_REMOVE_ACCEL_ON_HOLD);
+    connect(removeGyroOnHoldMouseButton, SIGNAL(clicked()), this, SLOT(handleRemoveGyroOnHoldMouseButton()));
     
     gyroPowerSpinBox = new QSpinBox(this);
     gyroPowerSpinBox->setMinimum(MIN_GYRO_POW);
@@ -139,6 +143,7 @@ SettingsDisplayer::SettingsDisplayer(int widgetWidth, int widgetHeight, QWidget 
     mainLayout->addLayout(hlayout0b);
 
     mainLayout->addWidget(useGyroForCursorAccelButton);
+    mainLayout->addWidget(removeGyroOnHoldMouseButton);
 
     QHBoxLayout* hlayout1 = new QHBoxLayout;
     hlayout1->addWidget(new QLabel("Acc=Gyro\^exp/scale. "), 1);
@@ -166,7 +171,7 @@ SettingsDisplayer::SettingsDisplayer(int widgetWidth, int widgetHeight, QWidget 
     hlayout2->addWidget(pitchValue);
     mainLayout->addLayout(hlayout2);
 
-    useEmgImpulseButton = new QCheckBox("Stop Motion on EMG Impulse? (WIP)", this);
+    useEmgImpulseButton = new QCheckBox("Stop Motion on EMG Impulse (WIP)", this);
     connect(useEmgImpulseButton, SIGNAL(clicked()), this, SLOT(handleUseEmgImpulseButton()));
     mainLayout->addWidget(useEmgImpulseButton);
 
@@ -225,6 +230,7 @@ void SettingsDisplayer::handleUseGyroForCursorAccelButton()
     {
         gyroPowerSpinBox->setEnabled(true);
         gyroScaleDownSpinBox->setEnabled(true);
+        removeGyroOnHoldMouseButton->setEnabled(true);
 
         // assign defaults for pitch/yaw limitations
         yawSlider->setValue(INIT_ACCEL_YAW_ANGLE);
@@ -235,10 +241,16 @@ void SettingsDisplayer::handleUseGyroForCursorAccelButton()
     {
         gyroPowerSpinBox->setEnabled(false);
         gyroScaleDownSpinBox->setEnabled(false);
+        removeGyroOnHoldMouseButton->setEnabled(false);
         yawSlider->setValue(INIT_NO_ACCEL_YAW_ANGLE);
         pitchSlider->setValue(INIT_NO_ACCEL_PITCH_ANGLE);
         handleSlidersChange(0);
     }
+}
+
+void SettingsDisplayer::handleRemoveGyroOnHoldMouseButton()
+{
+    emitRemoveGyroOnHoldMouseButton(removeGyroOnHoldMouseButton->isChecked());
 }
 
 void SettingsDisplayer::gyroPowerValueChanged(int val)

@@ -197,6 +197,8 @@ void MyoTranslationFilter::handleGyroData(filterDataMap input, filterDataMap out
     if (settingsSignaller.getUseGyroForCursorAccel())
     {
 
+        if (controlStateHandle->getMode() == MOUSE_MODE &&)
+
         // Require an entire quaternion in one input to process
         if (input.find(GYRO_DATA_X) != input.end() &&
             input.find(GYRO_DATA_Y) != input.end() &&

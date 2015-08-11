@@ -21,10 +21,10 @@
 #include <math.h>
 
 SettingsSignaller::SettingsSignaller(QObject *parent, unsigned int yawMaxAngle, unsigned int pitchMaxAngle, buzzFeedbackMode buzzFeedback,
-    bool useGyroForCursorAccel, double cursorGyroPower, double cursorGyroScaleDown)
+    bool useGyroForCursorAccel, bool removeGyroOnHoldMouse, double cursorGyroPower, double cursorGyroScaleDown)
     : QObject(parent), yawMaxAngle(yawMaxAngle), pitchMaxAngle(pitchMaxAngle), buzzFeedback(buzzFeedback),
     useGyroForCursorAccel(useGyroForCursorAccel), cursorGyroPower(cursorGyroPower), cursorGyroScaleDown(cursorGyroScaleDown), useEMGImpulse(false), 
-    desiredXRotation(M_PI), holdLength(DEFAULT_REQ_HOLD_TIME)
+    desiredXRotation(M_PI), holdLength(DEFAULT_REQ_HOLD_TIME), removeGyroOnHoldMouse(removeGyroOnHoldMouse)
 {
 }
 
@@ -57,6 +57,11 @@ void SettingsSignaller::hanldeGyroScaleDownValueChanged(double val)
 void SettingsSignaller::handleUseGyroForCursorAccelChanged(bool val)
 {
     this->useGyroForCursorAccel = val;
+}
+
+void SettingsSignaller::handleRemoveGyroOnHoldMouseChanged(bool val)
+{
+    this->removeGyroOnHoldMouse = val;
 }
 
 void SettingsSignaller::handleUseEmgImpulse(bool val)
