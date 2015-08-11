@@ -21,10 +21,14 @@
 
 #include "SharedCommandData.h"
 
+std::mutex ControlState::currentlyHeldMutex;
+
 ControlState::ControlState(SharedCommandData* SCDHandle)
 {
     this->SCDHandle = SCDHandle;
     currentMode = LOCK_MODE;
+    mouseCurrentlyHeld = false;
+    keyCurrentlyHeld = false;
 	currentProfile = "default";
 }
 
@@ -59,6 +63,66 @@ bool ControlState::trySetMode(midasMode mode)
 midasMode ControlState::getMode()
 {
     return currentMode;
+}
+
+void ControlState::setMouseCurrentlyHeld(bool held)
+{
+    currentlyHeldMutex.lock();
+    mouseCurrentlyHeld = held;
+    currentlyHeldMutex.unlock();
+}
+
+bool ControlState::trySetMouseCurrentlyHeld(bool held)
+{
+    if (currentlyHeldMutex.try_lock())
+    {
+        mouseCurrentlyHeld = held;
+    }
+    else 
+    {
+        return false;
+    }
+
+    currentlyHeldMutex.unlock();
+    return true;
+}
+
+bool ControlState::getMouseCurrentlyHeld()
+{
+    currentlyHeldMutex.lock();
+    bool retVal = mouseCurrentlyHeld;
+    currentlyHeldMutex.unlock();
+    return retVal;
+}
+
+void ControlState::setKeyCurrentlyHeld(bool held)
+{
+    currentlyHeldMutex.lock();
+    keyCurrentlyHeld = held;
+    currentlyHeldMutex.unlock();
+}
+
+bool ControlState::trySetKeyCurrentlyHeld(bool held)
+{
+    if (currentlyHeldMutex.try_lock())
+    {
+        keyCurrentlyHeld = held;
+    }
+    else
+    {
+        return false;
+    }
+
+    currentlyHeldMutex.unlock();
+    return true;
+}
+
+bool ControlState::getKeyCurrentlyHeld()
+{
+    currentlyHeldMutex.lock();
+    bool retVal = keyCurrentlyHeld;
+    currentlyHeldMutex.unlock();
+    return retVal;
 }
 
 void ControlState::setProfile(std::string profile)

@@ -196,9 +196,6 @@ void MyoTranslationFilter::handleGyroData(filterDataMap input, filterDataMap out
 
     if (settingsSignaller.getUseGyroForCursorAccel())
     {
-
-        if (controlStateHandle->getMode() == MOUSE_MODE &&)
-
         // Require an entire quaternion in one input to process
         if (input.find(GYRO_DATA_X) != input.end() &&
             input.find(GYRO_DATA_Y) != input.end() &&
@@ -224,7 +221,11 @@ void MyoTranslationFilter::handleGyroData(filterDataMap input, filterDataMap out
 
                 midasMode currMode = controlStateHandle->getMode();
 
-                if (currMode == MOUSE_MODE || currMode == MOUSE_MODE2)
+                bool removeGyroOnHoldMouse = settingsSignaller.getRemoveGyroOnHoldMouse();
+                bool mouseHeld = controlStateHandle->getMouseCurrentlyHeld();
+                bool dontApplyAccel = (removeGyroOnHoldMouse && mouseHeld);
+
+                if ((currMode == MOUSE_MODE || currMode == MOUSE_MODE2) && !dontApplyAccel)
                 {
                     // attempt 1 <-- not very good, but open for further research
                     // update base angles for each new mode

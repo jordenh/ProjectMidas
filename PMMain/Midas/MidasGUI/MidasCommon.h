@@ -25,8 +25,8 @@
 
 #define INIT_NO_ACCEL_PITCH_ANGLE 20.0f /* Maximum delta angle in degrees */
 #define INIT_NO_ACCEL_YAW_ANGLE 25.0f /* Maximum delta angle in degrees */
-#define INIT_ACCEL_PITCH_ANGLE 100.0f
-#define INIT_ACCEL_YAW_ANGLE 100.0f
+#define INIT_ACCEL_PITCH_ANGLE 20.0f//100.0f
+#define INIT_ACCEL_YAW_ANGLE 25.0f//100.0f
 #define MIN_SLIDER_ANGLE 15
 #define MAX_SLIDER_ANGLE 100
 
@@ -41,7 +41,7 @@
 #define DEFAULT_GYRO_SCALE_DOWN 50
 
 #define DEFAULT_PROG_MAX_DELTA 3000 // ms
-#define DEFAULT_REQ_HOLD_TIME 1000 // ms
+#define DEFAULT_REQ_HOLD_TIME 500 // ms
 
 #define GUI_OPACITY 0.70
 

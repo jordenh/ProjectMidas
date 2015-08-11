@@ -83,6 +83,14 @@ void SCDDigester::digest()
             break;
         case MOUSE_CMD:
             mouseCtrl->sendCommand(nextCmd.getAction().mouse);
+            if (mouseCtrl->getCurrentlyHeldButton() != 0)
+            {
+                cntrlStateHandle->setMouseCurrentlyHeld(true);
+            }
+            else
+            {
+                cntrlStateHandle->setMouseCurrentlyHeld(false);
+            }
             break;
         case STATE_CHANGE:
             break;

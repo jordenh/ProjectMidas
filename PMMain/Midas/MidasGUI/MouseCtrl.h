@@ -86,6 +86,8 @@ public:
      */
     void sendCommand(mouseCmds mouseCmd, double mouseRateIfMove = 0.0, double mouseYRateIfMove = 0.0);
 
+    unsigned int getCurrentlyHeldButton() { return currHeld; }
+
 private:
 
     /**
@@ -114,7 +116,7 @@ private:
     // will happen when the "scrollwheel is moved"
     int scrollRate;
 
-    // range from 0 to 3:
+    // range from 0 to 4:
     // 0 = none held.
     // 1 = left held.
     // 2 = right held.

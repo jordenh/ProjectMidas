@@ -231,20 +231,20 @@ void SettingsDisplayer::handleUseGyroForCursorAccelButton()
         gyroPowerSpinBox->setEnabled(true);
         gyroScaleDownSpinBox->setEnabled(true);
         removeGyroOnHoldMouseButton->setEnabled(true);
-
-        // assign defaults for pitch/yaw limitations
-        yawSlider->setValue(INIT_ACCEL_YAW_ANGLE);
-        pitchSlider->setValue(INIT_ACCEL_PITCH_ANGLE);
-        handleSlidersChange(0);
+//
+//        // assign defaults for pitch/yaw limitations
+//        yawSlider->setValue(INIT_ACCEL_YAW_ANGLE);
+//        pitchSlider->setValue(INIT_ACCEL_PITCH_ANGLE);
+//        handleSlidersChange(0);
     }
     else
     {
         gyroPowerSpinBox->setEnabled(false);
         gyroScaleDownSpinBox->setEnabled(false);
         removeGyroOnHoldMouseButton->setEnabled(false);
-        yawSlider->setValue(INIT_NO_ACCEL_YAW_ANGLE);
-        pitchSlider->setValue(INIT_NO_ACCEL_PITCH_ANGLE);
-        handleSlidersChange(0);
+//        yawSlider->setValue(INIT_NO_ACCEL_YAW_ANGLE);
+//        pitchSlider->setValue(INIT_NO_ACCEL_PITCH_ANGLE);
+//        handleSlidersChange(0);
     }
 }
 
