@@ -59,6 +59,7 @@ private:
 
     QCheckBox *useGyroForCursorAccelButton;
     QCheckBox *removeGyroOnHoldMouseButton; 
+    QCheckBox *overrideAngularSensitivityButton;
     // SpinBoxs to update Gyro cursor control variables
     QSpinBox *gyroPowerSpinBox;
     QDoubleSpinBox *gyroScaleDownSpinBox;
@@ -78,6 +79,7 @@ signals:
     void emitBuzzFeedbackChange(unsigned int);
     void emitUseGyroForCursorAccelButton(bool);
     void emitRemoveGyroOnHoldMouseButton(bool);
+    void emitOverrideAngularSensitivityButton(bool);
     void emitGyroPowerValue(int);
     void emitGyroScaleDownValue(double);
     void emitUseEmgImpulseButton(bool);
@@ -91,6 +93,7 @@ private slots:
     void handleClicked(bool);
     void handleUseGyroForCursorAccelButton();
     void handleRemoveGyroOnHoldMouseButton();
+    void handleOverrideAngularSensitivityButton();
     void gyroPowerValueChanged(int);
     void gyroScaledDownValueChanged(double);
     void handleUseEmgImpulseButton();

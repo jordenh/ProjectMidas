@@ -31,7 +31,7 @@ class SettingsSignaller : public QObject
 public:
     SettingsSignaller(QObject *parent = 0, unsigned int yawMaxAngle = INIT_ACCEL_YAW_ANGLE, unsigned int pitchMaxAngle = INIT_ACCEL_PITCH_ANGLE,
         buzzFeedbackMode buzzFeedback = MINIMAL, bool useGyroForCursorAccel = DEFAULT_USE_ACCEL, bool removeGyroOnHoldMouse = DEFUALT_REMOVE_ACCEL_ON_HOLD,
-        double cursorGyroPower = DEFAULT_GYRO_POW, double cursorGyroScaleDown = DEFAULT_GYRO_SCALE_DOWN);
+        bool overrideAngularSensitivity = DEFAULT_OVERRIDE_ANG_SENSE, double cursorGyroPower = DEFAULT_GYRO_POW, double cursorGyroScaleDown = DEFAULT_GYRO_SCALE_DOWN);
     ~SettingsSignaller();
 
     unsigned int getYawMaxAngle() { return yawMaxAngle; }
@@ -41,6 +41,7 @@ public:
     float getCursorGyroScaleDown() { return cursorGyroScaleDown; }
     bool getUseGyroForCursorAccel() { return useGyroForCursorAccel; }
     bool getRemoveGyroOnHoldMouse() { return removeGyroOnHoldMouse; }
+    bool getOverrideAngularSensitivity() { return overrideAngularSensitivity; }
     bool getUseEMGImpulse() { return useEMGImpulse; }
     helpLevel getMidasHelpLevel() { return midasHelpLevel; }
     float getDesiredXRotation() { return desiredXRotation; }
@@ -53,6 +54,7 @@ private:
 
     bool useGyroForCursorAccel;
     bool removeGyroOnHoldMouse;
+    bool overrideAngularSensitivity;
     int cursorGyroPower;
     float cursorGyroScaleDown;
 
@@ -75,6 +77,8 @@ public slots:
     void handleUseGyroForCursorAccelChanged(bool val);
 
     void handleRemoveGyroOnHoldMouseChanged(bool val);
+
+    void handleOverrideAngularSensitivityChanged(bool val);
 
     void handleUseEmgImpulse(bool val);
 

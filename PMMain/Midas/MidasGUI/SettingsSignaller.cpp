@@ -21,10 +21,10 @@
 #include <math.h>
 
 SettingsSignaller::SettingsSignaller(QObject *parent, unsigned int yawMaxAngle, unsigned int pitchMaxAngle, buzzFeedbackMode buzzFeedback,
-    bool useGyroForCursorAccel, bool removeGyroOnHoldMouse, double cursorGyroPower, double cursorGyroScaleDown)
+    bool useGyroForCursorAccel, bool removeGyroOnHoldMouse, bool overrideAngularSensitivity, double cursorGyroPower, double cursorGyroScaleDown)
     : QObject(parent), yawMaxAngle(yawMaxAngle), pitchMaxAngle(pitchMaxAngle), buzzFeedback(buzzFeedback),
-    useGyroForCursorAccel(useGyroForCursorAccel), cursorGyroPower(cursorGyroPower), cursorGyroScaleDown(cursorGyroScaleDown), useEMGImpulse(false), 
-    desiredXRotation(M_PI), holdLength(DEFAULT_REQ_HOLD_TIME), removeGyroOnHoldMouse(removeGyroOnHoldMouse)
+    useGyroForCursorAccel(useGyroForCursorAccel), cursorGyroPower(cursorGyroPower), cursorGyroScaleDown(cursorGyroScaleDown), useEMGImpulse(false),
+    desiredXRotation(M_PI), holdLength(DEFAULT_REQ_HOLD_TIME), removeGyroOnHoldMouse(removeGyroOnHoldMouse), overrideAngularSensitivity(overrideAngularSensitivity)
 {
 }
 
@@ -62,6 +62,11 @@ void SettingsSignaller::handleUseGyroForCursorAccelChanged(bool val)
 void SettingsSignaller::handleRemoveGyroOnHoldMouseChanged(bool val)
 {
     this->removeGyroOnHoldMouse = val;
+}
+
+void SettingsSignaller::handleOverrideAngularSensitivityChanged(bool val)
+{
+    this->overrideAngularSensitivity = val;
 }
 
 void SettingsSignaller::handleUseEmgImpulse(bool val)

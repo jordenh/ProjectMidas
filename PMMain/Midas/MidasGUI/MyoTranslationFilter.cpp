@@ -318,6 +318,21 @@ point MyoTranslationFilter::getMouseUnitVelocity(float pitch, float yaw)
 
     int maxYawAngle = settingsSignaller.getYawMaxAngle();
     int maxPitchAngle = settingsSignaller.getPitchMaxAngle();
+
+    if (settingsSignaller.getOverrideAngularSensitivity())
+    {
+        if (controlStateHandle->getMouseCurrentlyHeld())
+        {
+            maxYawAngle = INIT_NO_ACCEL_YAW_ANGLE;
+            maxPitchAngle = INIT_NO_ACCEL_PITCH_ANGLE;
+        }
+        else
+        {
+            maxYawAngle = INIT_ACCEL_YAW_ANGLE;
+            maxPitchAngle = INIT_ACCEL_PITCH_ANGLE;
+        }
+    }
+
     float unitPitch = (deltaPitch >= 0) ? std::min(1.0f, deltaPitch / degToRad(maxPitchAngle)) : std::max(-1.0f, deltaPitch / degToRad(maxPitchAngle));
     float unitYaw = (deltaYaw >= 0) ? std::min(1.0f, deltaYaw / degToRad(maxYawAngle)) : std::max(-1.0f, deltaYaw / degToRad(maxYawAngle));
 
@@ -331,6 +346,21 @@ vector2D MyoTranslationFilter::getMouseDelta(float pitch, float yaw)
 
     int maxYawAngle = settingsSignaller.getYawMaxAngle();
     int maxPitchAngle = settingsSignaller.getPitchMaxAngle();
+
+    if (settingsSignaller.getOverrideAngularSensitivity())
+    {
+        if (controlStateHandle->getMouseCurrentlyHeld())
+        {
+            maxYawAngle = INIT_NO_ACCEL_YAW_ANGLE;
+            maxPitchAngle = INIT_NO_ACCEL_PITCH_ANGLE;
+        }
+        else
+        {
+            maxYawAngle = INIT_ACCEL_YAW_ANGLE;
+            maxPitchAngle = INIT_ACCEL_PITCH_ANGLE;
+        }
+    }
+
     float relativePitch = (deltaPitch / degToRad(maxPitchAngle)) * 100;
     float relativeYaw = (deltaYaw / degToRad(maxYawAngle)) * 100;
 

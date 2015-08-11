@@ -58,11 +58,13 @@ SettingsDisplayer::SettingsDisplayer(int widgetWidth, int widgetHeight, QWidget 
     yawSlider->setMinimum(MIN_SLIDER_ANGLE);
     yawSlider->setMaximum(MAX_SLIDER_ANGLE);
     yawSlider->setValue((int)INIT_ACCEL_YAW_ANGLE);
+    yawSlider->setEnabled((DEFAULT_OVERRIDE_ANG_SENSE == false));
     pitchSlider = new QSlider(Qt::Orientation::Horizontal, this);
     pitchSlider->setTracking(true);
     pitchSlider->setMinimum(MIN_SLIDER_ANGLE);
     pitchSlider->setMaximum(MAX_SLIDER_ANGLE);
     pitchSlider->setValue((int)INIT_ACCEL_PITCH_ANGLE);
+    pitchSlider->setEnabled((DEFAULT_OVERRIDE_ANG_SENSE == false));
 
     connect(yawSlider, SIGNAL(sliderReleased()), this, SLOT(handleSliders()));
     connect(pitchSlider, SIGNAL(sliderReleased()), this, SLOT(handleSliders()));
@@ -87,6 +89,10 @@ SettingsDisplayer::SettingsDisplayer(int widgetWidth, int widgetHeight, QWidget 
     removeGyroOnHoldMouseButton = new QCheckBox("Remove acceleration when holding cursor", this);
     removeGyroOnHoldMouseButton->setChecked(DEFUALT_REMOVE_ACCEL_ON_HOLD);
     connect(removeGyroOnHoldMouseButton, SIGNAL(clicked()), this, SLOT(handleRemoveGyroOnHoldMouseButton()));
+
+    overrideAngularSensitivityButton = new QCheckBox("Override angular sensitivity with dynamic defaults");
+    overrideAngularSensitivityButton->setChecked(DEFAULT_OVERRIDE_ANG_SENSE);
+    connect(overrideAngularSensitivityButton, SIGNAL(clicked()), this, SLOT(handleOverrideAngularSensitivityButton()));
     
     gyroPowerSpinBox = new QSpinBox(this);
     gyroPowerSpinBox->setMinimum(MIN_GYRO_POW);
@@ -144,6 +150,7 @@ SettingsDisplayer::SettingsDisplayer(int widgetWidth, int widgetHeight, QWidget 
 
     mainLayout->addWidget(useGyroForCursorAccelButton);
     mainLayout->addWidget(removeGyroOnHoldMouseButton);
+    mainLayout->addWidget(overrideAngularSensitivityButton);
 
     QHBoxLayout* hlayout1 = new QHBoxLayout;
     hlayout1->addWidget(new QLabel("Acc=Gyro\^exp/scale. "), 1);
@@ -231,6 +238,9 @@ void SettingsDisplayer::handleUseGyroForCursorAccelButton()
         gyroPowerSpinBox->setEnabled(true);
         gyroScaleDownSpinBox->setEnabled(true);
         removeGyroOnHoldMouseButton->setEnabled(true);
+        overrideAngularSensitivityButton->setEnabled(true);
+
+        handleOverrideAngularSensitivityButton(); // ensure the values set in this func are last to stick.
 //
 //        // assign defaults for pitch/yaw limitations
 //        yawSlider->setValue(INIT_ACCEL_YAW_ANGLE);
@@ -242,6 +252,7 @@ void SettingsDisplayer::handleUseGyroForCursorAccelButton()
         gyroPowerSpinBox->setEnabled(false);
         gyroScaleDownSpinBox->setEnabled(false);
         removeGyroOnHoldMouseButton->setEnabled(false);
+        overrideAngularSensitivityButton->setEnabled(false);
 //        yawSlider->setValue(INIT_NO_ACCEL_YAW_ANGLE);
 //        pitchSlider->setValue(INIT_NO_ACCEL_PITCH_ANGLE);
 //        handleSlidersChange(0);
@@ -251,6 +262,22 @@ void SettingsDisplayer::handleUseGyroForCursorAccelButton()
 void SettingsDisplayer::handleRemoveGyroOnHoldMouseButton()
 {
     emitRemoveGyroOnHoldMouseButton(removeGyroOnHoldMouseButton->isChecked());
+}
+
+void SettingsDisplayer::handleOverrideAngularSensitivityButton()
+{
+    emitOverrideAngularSensitivityButton(overrideAngularSensitivityButton->isChecked());
+
+    if (overrideAngularSensitivityButton->isChecked())
+    {
+        yawSlider->setEnabled(false);
+        pitchSlider->setEnabled(false);
+    }
+    else
+    {
+        yawSlider->setEnabled(true);
+        pitchSlider->setEnabled(true);
+    }
 }
 
 void SettingsDisplayer::gyroPowerValueChanged(int val)

@@ -225,6 +225,8 @@ void MainGUI::connectSignallerToSettingsDisplayer(SettingsSignaller *signaller)
             signaller, SLOT(handleUseGyroForCursorAccelChanged(bool)));
         QObject::connect(settingsDisplayer, SIGNAL(emitRemoveGyroOnHoldMouseButton(bool)),
             signaller, SLOT(handleRemoveGyroOnHoldMouseChanged(bool)));
+        QObject::connect(settingsDisplayer, SIGNAL(emitOverrideAngularSensitivityButton(bool)),
+            signaller, SLOT(handleOverrideAngularSensitivityChanged(bool)));
         QObject::connect(settingsDisplayer, SIGNAL(emitDesiredXRotationChanged(double)),
             signaller, SLOT(handleDesiredXRotationChanged(double)));
         QObject::connect(settingsDisplayer, SIGNAL(emitGyroPowerValue(int)),
