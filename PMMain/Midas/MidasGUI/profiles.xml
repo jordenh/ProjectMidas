@@ -86,14 +86,14 @@
                     </command>
                 </commands>
             </sequence>
-			<sequence state="gestureMode" name="Rotate Atrium">
+			<sequence state="gestureMode" name="Rotate Atrium*">
                 <gestures>
                     <gesture type="immediate">waveIn</gesture>
                 </gestures>
                 <commands>
                     <command type="stateChange">
                         <actions>
-                            <action>gestureHoldTwo</action>
+                            <action>gestureHoldThree</action>
                         </actions>
                     </command>
                 </commands>
@@ -155,7 +155,7 @@
 								</actions>
 							</command>
 					</angleNegative>
-					<sensitivity>2.5</sensitivity>
+					<sensitivity>7.5</sensitivity>
                 </angle>
 				<angle type="yaw">
                     <anglePositive>
@@ -172,7 +172,7 @@
 								</actions>
 							</command>
 					</angleNegative>
-					<sensitivity>2.5</sensitivity>
+					<sensitivity>7.5</sensitivity>
                 </angle>
 				<angle type="roll">
                     <anglePositive>
@@ -189,7 +189,7 @@
 								</actions>
 							</command>
 					</angleNegative>
-					<sensitivity>2.5</sensitivity>
+					<sensitivity>7.5</sensitivity>
                 </angle>
 				<holdModeActionType>absDeltaVelocity</holdModeActionType>
 				<intervalLength>40</intervalLength>
@@ -212,7 +212,7 @@
 								</actions>
 							</command>
 					</angleNegative>
-					<sensitivity>0.1</sensitivity>
+					<sensitivity>0.75</sensitivity>
                 </angle>
 				<angle type="yaw">
                     <anglePositive>
@@ -229,7 +229,7 @@
 								</actions>
 							</command>
 					</angleNegative>
-					<sensitivity>0.1</sensitivity>
+					<sensitivity>0.75</sensitivity>
                 </angle>
 				<angle type="roll">
                     <anglePositive>
@@ -246,12 +246,12 @@
 								</actions>
 							</command>
 					</angleNegative>
-					<sensitivity>0.1</sensitivity>
+					<sensitivity>.75</sensitivity>
                 </angle>
 				<holdModeActionType>absDeltaFinite</holdModeActionType>
-				<intervalLength>20</intervalLength>
-				<intervalExecMultiplier>2</intervalExecMultiplier>
-				<intervalMaxExecs>6</intervalMaxExecs>
+				<intervalLength>100</intervalLength>
+				<intervalExecMultiplier>1</intervalExecMultiplier>
+				<intervalMaxExecs>1</intervalMaxExecs>
             </hold>
 		</holds>	
     </profile>

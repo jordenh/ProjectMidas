@@ -77,10 +77,6 @@ public:
     bool trySetMouseCurrentlyHeld(bool held);
     bool getMouseCurrentlyHeld();
 
-    void setKeyCurrentlyHeld(bool held);
-    bool trySetKeyCurrentlyHeld(bool held);
-    bool getKeyCurrentlyHeld();
-
 	void setProfile(std::string profile);
 	std::string getProfile();
 
@@ -90,7 +86,6 @@ private:
     midasMode currentMode;
     static std::mutex currentlyHeldMutex;
     bool mouseCurrentlyHeld;
-    bool keyCurrentlyHeld; // TODO ---- Need to handle this with they keyboardController. Currently, this value only holds false. It is never set.
 	std::string currentProfile;
     SharedCommandData *SCDHandle; // not owned
 };
