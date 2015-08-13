@@ -19,6 +19,8 @@
 
 #include "MouseCtrl.h"
 #include "BaseMeasurements.h"
+#include "KeyboardVector.h"
+#include "KeyboardContoller.h"
 #include <iostream>
 #include <time.h>
 
@@ -33,6 +35,7 @@ MouseCtrl::MouseCtrl()
     scrollRate = WHEEL_DELTA;
     currHeld = 0;
     prevAbsMouseX = 0; prevAbsMouseY = 0;
+    keyCodeModifier = -1;
 }
 
 MouseCtrl::~MouseCtrl()
@@ -164,7 +167,15 @@ void MouseCtrl::sendCommand(mouseCmds mouseCmd, double mouseXRateIfMove, double 
     in->type = INPUT_MOUSE;
     in->mi = mi;
 
+    if (keyCodeModifier > 0)
+    {
+        sendModifierPressDown();
+    }
     SendInput(1, in, sizeof(INPUT));
+    if (keyCodeModifier > 0)
+    {
+        sendModifierRelease();
+    }
 
     // Build and send opposite command if clicking!
     if (mouseCmd == mouseCmds::LEFT_CLICK ||
@@ -190,8 +201,19 @@ void MouseCtrl::sendCommand(mouseCmds mouseCmd, double mouseXRateIfMove, double 
         Sleep(2);
         in->type = INPUT_MOUSE;
         in->mi = mi;
+
+        if (keyCodeModifier > 0)
+        {
+            sendModifierPressDown();
+        }
         SendInput(1, in, sizeof(INPUT));
+        if (keyCodeModifier > 0)
+        {
+            sendModifierRelease();
+        }
     }
+
+    keyCodeModifier = -1;
 
     done:
     delete in; in = NULL;
@@ -199,6 +221,8 @@ void MouseCtrl::sendCommand(mouseCmds mouseCmd, double mouseXRateIfMove, double 
 
 void MouseCtrl::setMouseInputVars(mouseCmds mouseCmd, double& mouseXRateIfMove, double& mouseYRateIfMove)
 {
+    keyCodeModifier = -1;
+
     if (mouseCmd == MOVE_HOR && mouseXRateIfMove < 0)
     {
         mouseCmd = MOVE_LEFT;
@@ -302,6 +326,16 @@ void MouseCtrl::setMouseInputVars(mouseCmds mouseCmd, double& mouseXRateIfMove, 
         mi.dwFlags = MOUSEEVENTF_WHEEL;
         mi.mouseData = -abs(scrollRate); // RANGE IS FROM -120 to +120 : WHEEL_DELTA = 120, which is one "wheel click"
         break;
+    case mouseCmds::SHIFT_SCROLL_UP:
+        keyCodeModifier = VK_LSHIFT;
+        mi.dwFlags = MOUSEEVENTF_WHEEL;
+        mi.mouseData = abs(scrollRate); // RANGE IS FROM -120 to +120 : WHEEL_DELTA = 120, which is one "wheel click"
+        break;
+    case mouseCmds::SHIFT_SCROLL_DOWN:
+        keyCodeModifier = VK_LSHIFT;
+        mi.dwFlags = MOUSEEVENTF_WHEEL;
+        mi.mouseData = -abs(scrollRate); // RANGE IS FROM -120 to +120 : WHEEL_DELTA = 120, which is one "wheel click"
+        break;
 	case mouseCmds::MOVE_ABSOLUTE:
 		if (!BaseMeasurements::getInstance().areCurrentValuesValid())
 		{
@@ -341,4 +375,22 @@ void MouseCtrl::setMouseInputVars(mouseCmds mouseCmd, double& mouseXRateIfMove, 
 
 		break;
     }
+}
+
+void MouseCtrl::sendModifierPressDown()
+{
+    KeyboardVector kv;
+    kv.inputVKDown(keyCodeModifier);
+    KeyboardController kc;
+    kc.setKiVector(kv);
+    kc.sendData();
+}
+
+void MouseCtrl::sendModifierRelease()
+{
+    KeyboardVector kv;
+    kv.inputVKUp(keyCodeModifier);
+    KeyboardController kc;
+    kc.setKiVector(kv);
+    kc.sendData();
 }

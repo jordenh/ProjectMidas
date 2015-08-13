@@ -124,6 +124,21 @@
                     </command>
                 </commands>
             </sequence>
+			
+			<sequence state="gestureMode" name="Rotate 2D Atrium">
+                <gestures>
+                    <gesture type="tap">doubleTap</gesture>
+					<gesture type="immediate">waveIn</gesture>
+                </gestures>
+                <commands>
+                    <command type="stateChange">
+                        <actions>
+                            <action>gestureHoldFour</action>
+                        </actions>
+                    </command>
+                </commands>
+            </sequence>
+
             <sequence state="gestureMode" name="Lock">
                 <gestures>
                     <gesture type="tap">doubleTap</gesture>
@@ -247,6 +262,29 @@
 							</command>
 					</angleNegative>
 					<sensitivity>.75</sensitivity>
+                </angle>
+				<holdModeActionType>absDeltaFinite</holdModeActionType>
+				<intervalLength>100</intervalLength>
+				<intervalExecMultiplier>1</intervalExecMultiplier>
+				<intervalMaxExecs>1</intervalMaxExecs>
+            </hold>
+			<hold id="4">
+                <angle type="pitch">
+                    <anglePositive>
+						<command type="mouse">
+							<actions>
+								<action>shiftScrollUp</action>
+							</actions>
+						</command>
+                    </anglePositive>
+					<angleNegative>
+						<command type="mouse">
+							<actions>
+								<action>shiftScrollDown</action>
+							</actions>
+						</command>
+					</angleNegative>
+					<sensitivity>10</sensitivity>
                 </angle>
 				<holdModeActionType>absDeltaFinite</holdModeActionType>
 				<intervalLength>100</intervalLength>

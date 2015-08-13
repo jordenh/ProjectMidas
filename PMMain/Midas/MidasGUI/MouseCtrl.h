@@ -82,7 +82,8 @@ public:
      * sets the rate of the mouse movement if it is nonnegative. 
      *
      * @param mouseCmd The mouse command to send.
-     * @param mouseRateIfMove The new rate of the mouse movement.
+     * @param mouseRateIfMove The new X positional fraction of the cursor
+     * @param mouseYRateIfMove The new Y positional fraction of the cursor
      */
     void sendCommand(mouseCmds mouseCmd, double mouseRateIfMove = 0.0, double mouseYRateIfMove = 0.0);
 
@@ -93,10 +94,15 @@ private:
     /**
      * Sets the fields of the MOUSEINPUT that will be sent to Windows.
      * @param mouseCmd The mouse command to be executed
-     * @param mouseRateIfMove The rate from -100 to 100 a mouse should move.
+     * @param mouseRateIfMove The rate from -100 to 100 a mouse should move. The new X positional fraction of the cursor
+     * @param mouseYRateIfMove The rate from -100 to 100 a mouse should move. The new Y positional fraction of the cursor
      * This determines velocity. This value gets normalized to absolute value.
      */
     void setMouseInputVars(mouseCmds mouseCmd, double& mouseRateIfMove, double& mouseYRateIfMove);
+
+    void sendModifierPressDown();
+
+    void sendModifierRelease();
 
     // Mouse Input 
     MOUSEINPUT mi;
@@ -125,6 +131,9 @@ private:
 
     unsigned int prevAbsMouseX;
     unsigned int prevAbsMouseY;
+
+    // A keycode to hold down when the mouse action is performed(some applications change affect if shift is held on scroll, etc).
+    int keyCodeModifier;
 };
 
 #endif /* _MOUSE_CONTROLLER_H */

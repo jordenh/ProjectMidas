@@ -241,6 +241,8 @@ void HoldEditor::formMouseActions(QComboBox *comboBox)
     comboBox->addItem(QString("scrollRight"));
     comboBox->addItem(QString("scrollUp"));
     comboBox->addItem(QString("scrollDown"));
+    comboBox->addItem(QString("shiftScrollUp"));
+    comboBox->addItem(QString("shiftScrollDown"));
     comboBox->addItem(QString("leftRelease"));
     comboBox->addItem(QString("rightRelease"));
     comboBox->addItem(QString("middleRelease"));

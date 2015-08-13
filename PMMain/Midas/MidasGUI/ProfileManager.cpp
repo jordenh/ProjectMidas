@@ -93,6 +93,8 @@ std::map<std::string, mouseCmds> profileActionToMouseCommands =
     { "scrollRight", SCROLL_RIGHT },
     { "scrollUp", SCROLL_UP },
     { "scrollDown", SCROLL_DOWN },
+    { "shiftScrollUp", SHIFT_SCROLL_UP },
+    { "shiftScrollDown", SHIFT_SCROLL_DOWN },
     { "leftRelease", LEFT_RELEASE },
     { "rightRelease", RIGHT_RELEASE },
     { "middleRelease", MIDDLE_RELEASE },
