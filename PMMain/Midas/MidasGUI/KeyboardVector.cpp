@@ -246,6 +246,18 @@ KeyboardVector KeyboardVector::createFromProfileStr(std::string str)
 {
 	KeyboardVector keyboardVector;
 
+    if (str.find("0x") != std::string::npos)
+    {
+        std::string intStr = str.substr(str.find("0x") + 2);
+        unsigned int hexVal = stoi(intStr);
+
+        if (hexVal <= 255)
+        {
+            keyboardVector.inputCharDownUp((char)hexVal);
+        }
+        return keyboardVector;
+    }
+
 	char * cstr = new char[str.length() + 1];
 	std::strcpy(cstr, str.c_str());
 	char* inputVector = strtok(cstr, ",");
