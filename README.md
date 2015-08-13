@@ -8,6 +8,8 @@ Two quick start options are available:
 
 - [Download the latest release](https://github.com/jordenh/ProjectMidas/releases/download/v2.1/MidasInstall.zip).
 - Clone the repo: `git clone https://github.com/jordenh/ProjectMidas`.
+ 
+Also ensure that you have a <a href="https://www.thalmic.com/myo/">Myo Armband</a>, and have <a href="https://www.thalmic.com/start/">Myo Connect</a> installed
 
 ### What's included
 
