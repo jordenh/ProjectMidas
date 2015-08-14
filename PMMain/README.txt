@@ -1,1 +1,1 @@
-This project is intended to incorperate the code related to the mouse/keyboard drivers, for Windows OS, as well as the interaction with the Myo Armband.
+This project is intended to incorporate the code related to the mouse/keyboard drivers, for Windows OS, as well as the interaction with the Myo Armband.
