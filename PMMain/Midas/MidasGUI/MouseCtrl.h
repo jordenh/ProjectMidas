@@ -155,7 +155,7 @@ private:
     int prevAbsMouseY;
 
     // Add these modifiers to any absolute cursor placement actions to 
-    // account for other micein the system.
+    // account for other mice in the system.
     int otherMiceXModifier;
     int otherMiceYModifier;
 
