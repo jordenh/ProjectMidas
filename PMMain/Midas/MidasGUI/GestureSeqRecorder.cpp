@@ -189,9 +189,7 @@ void GestureSeqRecorder::progressSequenceTime(int delta, CommandData& response)
                         // Erase if they're still holding a non-rest pose, since
                         // that means they 'actually' hit a hold-state.
                         (*it)->progress = 0;
-                        std::list<sequenceInfo*>::iterator itCopy = it;
-                        it++;
-                        activeSequences.erase(itCopy);
+                        it = activeSequences.erase(it);
                     }
                     else
                     {
@@ -449,9 +447,7 @@ SequenceStatus GestureSeqRecorder::progressActiveSequences(Pose::Type gesture, C
                     // as long as it's not an immediate value (which needs to be left alone following a rest),
                     // remove this from the active list!
                     (*it)->progress = 0;
-                    std::list<sequenceInfo*>::iterator itCopy = it;      
-                    it++;
-                    activeSequences.erase(itCopy);
+                    it = activeSequences.erase(it);
                 }
                 
                 updateGuiSequences();
@@ -475,9 +471,7 @@ SequenceStatus GestureSeqRecorder::progressActiveSequences(Pose::Type gesture, C
             else
             {
                 (*it)->progress = 0;
-                std::list<sequenceInfo*>::iterator itCopy = it;
-                it++;
-                activeSequences.erase(itCopy);
+                it = activeSequences.erase(it);
                 updateGuiSequences();
             }
         }

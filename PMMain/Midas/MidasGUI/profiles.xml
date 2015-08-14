@@ -906,6 +906,62 @@
         <holds>
         </holds>
     </profile>
+	<profile name="Pointer">
+        <sequences>
+			<sequence state="lockMode" name="Unlock">
+                <gestures>
+					<gesture type="tap">doubleTap</gesture>
+					<gesture type="immediate">doubleTap</gesture>
+                </gestures>
+                <commands>
+				<command type="stateChange">
+                    <actions>
+                        <action>mouseMode</action>
+                    </actions>
+                </command>
+				</commands>
+            </sequence>
+			<sequence state="mouseMode" name="Calibrate">
+                <gestures>
+					<gesture type="immediate">waveIn</gesture>
+                </gestures>
+                <commands>
+					<command type="stateChange">
+						<actions>
+							<action>gestureMode</action>
+						</actions>
+					</command>
+				</commands>
+            </sequence>
+			<sequence state="gestureMode" name="Finish Calibrate">
+                <gestures>
+					<gesture type="immediate">rest</gesture>
+                </gestures>
+                <commands>
+					<command type="stateChange">
+						<actions>
+							<action>mouseMode</action>
+						</actions>
+					</command>
+				</commands>
+            </sequence>
+			<sequence state="mouseMode" name="Lock">
+                <gestures>
+					<gesture type="tap">doubleTap</gesture>
+					<gesture type="immediate">doubleTap</gesture>
+                </gestures>
+                <commands>
+					<command type="stateChange">
+						<actions>
+							<action>lockMode</action>
+						</actions>
+					</command>
+				</commands>
+            </sequence>
+		</sequences>
+        <holds>
+        </holds>
+    </profile>
 	<profile name="Keyboard">
         <sequences>
 			<sequence state="lockMode" name="Unlock">
@@ -914,25 +970,70 @@
                     <gesture type="immediate">doubleTap</gesture>
                 </gestures>
                 <commands>
-				<command type="stateChange">
-                    <actions>
-                        <action>keyboardMode</action>
-                    </actions>
-                </command>
+					<command type="stateChange">
+						<actions>
+							<action>gestureMode</action>
+						</actions>
+					</command>
 				</commands>
             </sequence>
-			<sequence state="keyboardMode" name="Swap Ring Focus">
+			
+			<sequence state="gestureMode" name="Open Keyboard">
                 <gestures>
-                    <gesture type="tap">waveOut</gesture>
+                    <gesture type="tap">doubleTap</gesture>
+                    <gesture type="immediate">waveOut</gesture>
                 </gestures>
                 <commands>
-				<command type="keyboardGui">
-                    <actions>
-                        <action>swapRingFocus</action>
-                    </actions>
-                </command>
+					<command type="stateChange">
+						<actions>
+							<action>keyboardMode</action>
+						</actions>
+					</command>
 				</commands>
             </sequence>
+			
+			<sequence state="gestureMode" name="Left Click">
+                <gestures>
+                    <gesture type="tap">fist</gesture>
+                </gestures>
+                <commands>
+                    <command type="mouse">
+                        <actions>
+                            <action>leftClick</action>
+                        </actions>
+                    </command>
+                </commands>
+            </sequence>
+			<sequence state="gestureMode" name="Move Cursor">
+                <gestures>
+                    <gesture type="immediate">fingersSpread</gesture>
+                </gestures>
+                <commands>
+                    <command type="stateChange">
+                        <actions>
+                            <action>mouseMode</action>
+                        </actions>
+                    </command>
+                </commands>
+            </sequence>
+            <sequence state="mouseMode" name="Release Cursor">
+                <gestures>
+                    <gesture type="immediate">rest</gesture>
+                </gestures>
+                <commands>
+                    <command type="stateChange">
+                        <actions>
+                            <action>gestureMode</action>
+                        </actions>
+                    </command>
+                    <command type="mouse">
+                        <actions>
+                            <action>releaseLrmButs</action>
+                        </actions>
+                    </command>
+                </commands>
+            </sequence>
+
             <sequence state="keyboardMode" name="Select">
                 <gestures>
                     <gesture type="tap">fist</gesture>
@@ -945,7 +1046,7 @@
                 </command>
 				</commands>
             </sequence>
-            <sequence state="keyboardMode" name="Hold Select">
+            <sequence state="keyboardMode" name="Select Alternate">
                 <gestures>
                     <gesture type="hold">fist</gesture>
                 </gestures>
@@ -957,9 +1058,21 @@
                 </command>
 				</commands>
             </sequence>
+			<sequence state="keyboardMode" name="Swap Ring Focus">
+                <gestures>
+                    <gesture type="immediate">waveOut</gesture>
+                </gestures>
+                <commands>
+				<command type="keyboardGui">
+                    <actions>
+                        <action>swapRingFocus</action>
+                    </actions>
+                </command>
+				</commands>
+            </sequence>
             <sequence state="keyboardMode" name="Change Wheels">
                 <gestures>
-                    <gesture type="tap">fingersSpread</gesture>
+                    <gesture type="immediate">fingersSpread</gesture>
                 </gestures>
                 <commands>
 				<command type="keyboardGui">
@@ -971,7 +1084,7 @@
             </sequence>
 			<sequence state="keyboardMode" name="Backspace">
                 <gestures>
-                    <gesture type="tap">waveIn</gesture>
+                    <gesture type="immediate">waveIn</gesture>
                 </gestures>
                 <commands>
 				<command type="keyboardGui">
@@ -981,7 +1094,33 @@
                 </command>
 				</commands>
             </sequence>
+			<sequence state="keyboardMode" name="Close Keyboard">
+                <gestures>
+                    <gesture type="tap">doubleTap</gesture>
+                    <gesture type="immediate">waveOut</gesture>
+                </gestures>
+                <commands>
+                    <command type="stateChange">
+                        <actions>
+                            <action>gestureMode</action>
+                        </actions>
+                    </command>
+                </commands>
+            </sequence>
             <sequence state="keyboardMode" name="Lock">
+                <gestures>
+                    <gesture type="tap">doubleTap</gesture>
+                    <gesture type="immediate">doubleTap</gesture>
+                </gestures>
+                <commands>
+				<command type="stateChange">
+                    <actions>
+                        <action>lockMode</action>
+                    </actions>
+                </command>
+				</commands>
+            </sequence>
+			<sequence state="gestureMode" name="Lock">
                 <gestures>
                     <gesture type="tap">doubleTap</gesture>
                     <gesture type="immediate">doubleTap</gesture>
