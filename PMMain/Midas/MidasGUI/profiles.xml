@@ -46,7 +46,7 @@
             </sequence>
 			<sequence state="gestureMode" name="Middle Hold">
                 <gestures>
-                    <gesture type="hold">waveIn</gesture>
+                    <gesture type="immediate">waveIn</gesture>
                 </gestures>
                 <commands>
                     <command type="stateChange">
@@ -201,7 +201,7 @@
             </sequence>
 			<sequence state="gestureMode" name="Middle Hold">
                 <gestures>
-                    <gesture type="hold">waveIn</gesture>
+                    <gesture type="immediate">waveIn</gesture>
                 </gestures>
                 <commands>
                     <command type="stateChange">
