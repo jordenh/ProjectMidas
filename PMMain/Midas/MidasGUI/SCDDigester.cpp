@@ -122,6 +122,16 @@ void SCDDigester::digest()
         }
 	}
 
+    if (cntrlStateHandle->checkIfEnterredMouseMode())
+    {
+        mouseCtrl->notifyControllerOfEnteringMouseMode();
+    }
+    if (cntrlStateHandle->checkIfLeftMouseMode())
+    {
+        mouseCtrl->notifyControllerOfLeavingMouseMode();
+    }
+
+
     handleConnectionData();
 
 #ifdef JOYSTICK_CURSOR

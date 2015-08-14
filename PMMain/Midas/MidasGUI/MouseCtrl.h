@@ -25,6 +25,8 @@
 #include <vector>
 #include "MidasCommon.h"
 
+#define MONITOR_SIZE_WEIGHT 65535.0 // size of a single monitor as represented by windows API
+
 #define DEFAULT_MIN_MOVE_TIME 10
 #define SCROLL_MIN_TIME 5
 #define MAX_MOVE_TIME_DELTA 40 //large enough ms delay between moving a pixel is pretty slow.
@@ -89,6 +91,9 @@ public:
 
     unsigned int getCurrentlyHeldButton() { return currHeld; }
 
+    void notifyControllerOfEnteringMouseMode();
+    void notifyControllerOfLeavingMouseMode();
+
 private:
 
     /**
@@ -111,6 +116,13 @@ private:
      * done right after the mouse command is sent, if the keyCodeModifier is positive.
      */
     void sendModifierRelease();
+
+    float pixelXLocToWindowsXLoc(float pixelLoc);
+    float pixelYLocToWindowsYLoc(float pixelLoc);
+    float windowsXLocToPixelXLoc(float windowsLoc);
+    float windowsYLocToPixelYLoc(float windowsLoc);
+    float monitorWidth;
+    float monitorHeight;
 
     // Mouse Input 
     MOUSEINPUT mi;
@@ -137,8 +149,15 @@ private:
     // 4 = middle held.
     unsigned char currHeld;
 
-    unsigned int prevAbsMouseX;
-    unsigned int prevAbsMouseY;
+    bool inMouseMode;
+
+    int prevAbsMouseX;
+    int prevAbsMouseY;
+
+    // Add these modifiers to any absolute cursor placement actions to 
+    // account for other micein the system.
+    int otherMiceXModifier;
+    int otherMiceYModifier;
 
     // A keycode to hold down when the mouse action is performed(some applications change affect if shift is held on scroll, etc).
     int keyCodeModifier;

@@ -23,6 +23,7 @@
 #include "myo\myo.hpp"
 #include "MyoState.h"
 #include "ControlState.h"
+#include <Windows.h>
 
 #define ROLL_ID 1
 #define PITCH_ID 2
@@ -75,6 +76,7 @@ public:
     bool  getInvalid()     { accessMutex.lock();   bool retVal = invalid;      accessMutex.unlock(); return retVal; }
 	float getBaseCursorX() { accessMutex.lock();   float retVal = baseCursorX;  accessMutex.unlock(); return retVal; }
 	float getBaseCursorY() { accessMutex.lock();   float retVal = baseCursorY;  accessMutex.unlock(); return retVal; }
+    static POINT getCurrentCursor();
 	float getScreenSizeX() { accessMutex.lock();   float retVal = screenSizeX;  accessMutex.unlock(); return retVal; }
 	float getScreenSizeY() { accessMutex.lock();   float retVal = screenSizeY;  accessMutex.unlock(); return retVal; }
     float getSingleMonitorSizeX() { accessMutex.lock();   float retVal = singleMonitorSizeX;  accessMutex.unlock(); return retVal; }

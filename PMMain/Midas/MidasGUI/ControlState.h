@@ -82,10 +82,15 @@ public:
 
 	SharedCommandData* getSCD() { return SCDHandle; }
 
+    bool checkIfEnterredMouseMode();
+    bool checkIfLeftMouseMode();
+
 private:
     midasMode currentMode;
+    midasMode previousMode;
     static std::mutex currentlyHeldMutex;
     bool mouseCurrentlyHeld;
+    bool enterLeaveMouseModeChecked; // TODO - probs delete this.
 	std::string currentProfile;
     SharedCommandData *SCDHandle; // not owned
 };

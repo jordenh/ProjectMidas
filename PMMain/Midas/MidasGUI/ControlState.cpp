@@ -27,8 +27,10 @@ ControlState::ControlState(SharedCommandData* SCDHandle)
 {
     this->SCDHandle = SCDHandle;
     currentMode = LOCK_MODE;
+    previousMode = LOCK_MODE;
     mouseCurrentlyHeld = false;
 	currentProfile = "default";
+    enterLeaveMouseModeChecked = false;
 }
 
 
@@ -41,6 +43,7 @@ void ControlState::setMode(midasMode mode)
 {
     // Note that empty() uses a command Queue Mutex to protect
     // the SharedCommandData integrity.
+    previousMode = currentMode;
     currentMode = mode;
     SCDHandle->empty();
 }
@@ -51,6 +54,7 @@ bool ControlState::trySetMode(midasMode mode)
     // the SharedCommandData integrity.
     
 	if (SCDHandle->tryEmpty()) {
+        previousMode = currentMode;
 		currentMode = mode;
 	}
 	else {
@@ -102,4 +106,24 @@ void ControlState::setProfile(std::string profile)
 std::string ControlState::getProfile()
 {
 	return currentProfile;
+}
+
+bool ControlState::checkIfEnterredMouseMode()
+{
+    if ((currentMode == MOUSE_MODE || currentMode == MOUSE_MODE2) &&
+        (previousMode != MOUSE_MODE && MOUSE_MODE != MOUSE_MODE2))
+    {
+        return true;
+    }
+    return false;
+}
+
+bool ControlState::checkIfLeftMouseMode()
+{
+    if ((currentMode != MOUSE_MODE && currentMode != MOUSE_MODE2) &&
+        (previousMode == MOUSE_MODE || MOUSE_MODE == MOUSE_MODE2))
+    {
+        return true;
+    }
+    return false;
 }

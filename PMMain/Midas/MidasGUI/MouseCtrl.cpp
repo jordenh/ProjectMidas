@@ -27,6 +27,8 @@
 MouseCtrl::MouseCtrl()
 {
     ZeroMemory(&mi, sizeof(MOUSEINPUT));
+    monitorWidth = BaseMeasurements::getInstance().getSingleMonitorSizeX();
+    monitorHeight = BaseMeasurements::getInstance().getSingleMonitorSizeY();
     lastMouseMoveX = clock() * (1000 / CLOCKS_PER_SEC);
     lastMouseMoveY = lastMouseMoveX;
     lastMouseScroll = lastMouseMoveX;
@@ -34,8 +36,14 @@ MouseCtrl::MouseCtrl()
     minMoveYTimeDelta = DEFAULT_MIN_MOVE_TIME;
     scrollRate = WHEEL_DELTA;
     currHeld = 0;
-    prevAbsMouseX = 0; prevAbsMouseY = 0;
+    otherMiceXModifier = 0;
+    otherMiceYModifier = 0;
+    prevAbsMouseX = BaseMeasurements::getCurrentCursor().x;
+    prevAbsMouseY = BaseMeasurements::getCurrentCursor().y;
+    mi.dx = pixelXLocToWindowsXLoc(BaseMeasurements::getCurrentCursor().x);
+    mi.dy = pixelYLocToWindowsYLoc(BaseMeasurements::getCurrentCursor().y);
     keyCodeModifier = -1;
+    inMouseMode = false;
 }
 
 MouseCtrl::~MouseCtrl()
@@ -101,6 +109,18 @@ void MouseCtrl::sendCommand(mouseCmds mouseCmd, double mouseXRateIfMove, double 
     DWORD deltaTimeYMove = currentTime - lastMouseMoveY;
     DWORD deltaTimeScroll = currentTime - lastMouseScroll;
 
+    // updating x/y modifier, based on mouse position each iteration, with some wiggle room for 
+    // float rounding.
+    POINT currentCursorPos = BaseMeasurements::getCurrentCursor();
+    if (abs(currentCursorPos.x - prevAbsMouseX) > 1)
+    {
+        otherMiceXModifier += (currentCursorPos.x - prevAbsMouseX);
+    }
+    if (abs(currentCursorPos.y - prevAbsMouseY) > 1)
+    {
+        otherMiceYModifier += (currentCursorPos.y - prevAbsMouseY);
+    }
+
     setMouseInputVars(mouseCmd, mouseXRateIfMove, mouseYRateIfMove);
 
     // Handle Early exit cases if moving mouse
@@ -136,18 +156,21 @@ void MouseCtrl::sendCommand(mouseCmds mouseCmd, double mouseXRateIfMove, double 
             lastMouseMoveY = currentTime;
         }
 #else
-        if (mi.dx != prevAbsMouseX)
+        // update values if cursor definitely being changed by Midas.
+        if (windowsXLocToPixelXLoc(mi.dx) != prevAbsMouseX &&
+            mi.dwFlags == (MOUSEEVENTF_MOVE | MOUSEEVENTF_ABSOLUTE))
         {
             lastMouseMoveX = currentTime;
-            prevAbsMouseX = mi.dx;
+            prevAbsMouseX = windowsXLocToPixelXLoc(mi.dx);
         }
-        if (mi.dy != prevAbsMouseY)
+        if (windowsYLocToPixelYLoc(mi.dy) != prevAbsMouseY &&
+            mi.dwFlags == (MOUSEEVENTF_MOVE | MOUSEEVENTF_ABSOLUTE))
         {
             lastMouseMoveY = currentTime;
-            prevAbsMouseY = mi.dy;
+            prevAbsMouseY = windowsYLocToPixelYLoc(mi.dy);
         }
 #endif
-    }
+    }  
 
     // Handle early exit cases if scrolling mouse
     if (deltaTimeScroll < SCROLL_MIN_TIME &&
@@ -343,20 +366,17 @@ void MouseCtrl::setMouseInputVars(mouseCmds mouseCmd, double& mouseXRateIfMove, 
 		}
 
 		mi.dwFlags = MOUSEEVENTF_MOVE | MOUSEEVENTF_ABSOLUTE;
-		int monitorSizeWeight = 65535; // size of a single monitor as represented by windows API
-        float monitorWidth = BaseMeasurements::getInstance().getSingleMonitorSizeX();
-        float monitorHeight = BaseMeasurements::getInstance().getSingleMonitorSizeY();
 
 		float baseCursorX = BaseMeasurements::getInstance().getBaseCursorX();
         float baseCursorY = BaseMeasurements::getInstance().getBaseCursorY();
-        float baseWindowsLocX = (baseCursorX / monitorWidth) * monitorSizeWeight;
-        float baseWindowsLocY = (baseCursorY / monitorHeight) * monitorSizeWeight;
+        float baseWindowsLocX = pixelXLocToWindowsXLoc(baseCursorX);
+        float baseWindowsLocY = pixelYLocToWindowsYLoc(baseCursorY);
 
-        mi.dx = baseWindowsLocX + (mouseXRateIfMove / 100.0 * monitorSizeWeight / 2);
-        mi.dy = baseWindowsLocY + (mouseYRateIfMove / 100.0 * monitorSizeWeight / 2);
+        mi.dx = baseWindowsLocX + (mouseXRateIfMove / 100.0 * MONITOR_SIZE_WEIGHT / 2) + pixelXLocToWindowsXLoc(otherMiceXModifier);
+        mi.dy = baseWindowsLocY + (mouseYRateIfMove / 100.0 * MONITOR_SIZE_WEIGHT / 2) + pixelYLocToWindowsYLoc(otherMiceYModifier);
 
-        int maxDx = monitorSizeWeight * (BaseMeasurements::getInstance().getScreenSizeX() / monitorWidth);
-        int maxDy = monitorSizeWeight * (BaseMeasurements::getInstance().getScreenSizeY() / monitorHeight);
+        int maxDx = pixelXLocToWindowsXLoc(BaseMeasurements::getInstance().getScreenSizeX());
+        int maxDy = pixelYLocToWindowsYLoc(BaseMeasurements::getInstance().getScreenSizeY());
         mi.dx = max(min(mi.dx, maxDx), 0);
         mi.dy = max(min(mi.dy, maxDy), 0);
 
@@ -393,4 +413,47 @@ void MouseCtrl::sendModifierRelease()
     KeyboardController kc;
     kc.setKiVector(kv);
     kc.sendData();
+}
+
+float MouseCtrl::pixelXLocToWindowsXLoc(float pixelLoc)
+{
+    float retVal = (pixelLoc / monitorWidth) * MONITOR_SIZE_WEIGHT;
+    return (pixelLoc / monitorWidth) * MONITOR_SIZE_WEIGHT;
+}
+
+float MouseCtrl::pixelYLocToWindowsYLoc(float pixelLoc)
+{
+    return (pixelLoc / monitorHeight) * MONITOR_SIZE_WEIGHT;
+}
+
+float MouseCtrl::windowsXLocToPixelXLoc(float windowsLoc)
+{
+    return (windowsLoc / MONITOR_SIZE_WEIGHT) * monitorWidth;
+}
+
+float MouseCtrl::windowsYLocToPixelYLoc(float windowsLoc)
+{
+    return (windowsLoc / MONITOR_SIZE_WEIGHT) * monitorHeight;
+}
+
+void MouseCtrl::notifyControllerOfEnteringMouseMode()
+{
+    if (!inMouseMode)
+    {
+        prevAbsMouseX = BaseMeasurements::getCurrentCursor().x;
+        prevAbsMouseY = BaseMeasurements::getCurrentCursor().y;
+        mi.dx = pixelXLocToWindowsXLoc(BaseMeasurements::getCurrentCursor().x);
+        mi.dy = pixelYLocToWindowsYLoc(BaseMeasurements::getCurrentCursor().y);
+        otherMiceXModifier = 0;
+        otherMiceYModifier = 0;
+        inMouseMode = true;
+    }
+}
+
+void MouseCtrl::notifyControllerOfLeavingMouseMode()
+{
+    if (inMouseMode)
+    {
+        inMouseMode = false;
+    }
 }

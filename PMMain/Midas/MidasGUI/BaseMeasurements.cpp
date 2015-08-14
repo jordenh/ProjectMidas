@@ -19,8 +19,6 @@
 
 #include "BaseMeasurements.h"
 
-#include <Windows.h>
-
 void BaseMeasurements::setBaseAngles(float roll, float pitch, float yaw)
 {
 	accessMutex.lock();
@@ -100,6 +98,18 @@ void BaseMeasurements::updateBaseCursor(int xyID)
 	}
 
 	accessMutex.unlock();
+}
+
+POINT BaseMeasurements::getCurrentCursor()
+{
+    POINT cursorPoint;
+    if (!GetCursorPos(&cursorPoint))
+    {
+        // Default on failure.
+        cursorPoint.x = 0;
+        cursorPoint.y = 0;
+    }
+    return cursorPoint;
 }
 
 void BaseMeasurements::updateScreenSize()
