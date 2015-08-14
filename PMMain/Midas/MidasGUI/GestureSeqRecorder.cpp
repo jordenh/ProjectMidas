@@ -449,6 +449,10 @@ SequenceStatus GestureSeqRecorder::progressActiveSequences(Pose::Type gesture, C
                     (*it)->progress = 0;
                     it = activeSequences.erase(it);
                 }
+                else 
+                {
+                    it++;
+                }
                 
                 updateGuiSequences();
             }

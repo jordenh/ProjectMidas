@@ -25,8 +25,8 @@
 
 #define INIT_NO_ACCEL_PITCH_ANGLE 20.0f /* Maximum delta angle in degrees */
 #define INIT_NO_ACCEL_YAW_ANGLE 25.0f /* Maximum delta angle in degrees */
-#define INIT_ACCEL_PITCH_ANGLE 100.0f
-#define INIT_ACCEL_YAW_ANGLE 100.0f
+#define INIT_ACCEL_PITCH_ANGLE 50.0f
+#define INIT_ACCEL_YAW_ANGLE 50.0f
 #define MIN_SLIDER_ANGLE 15
 #define MAX_SLIDER_ANGLE 100
 
