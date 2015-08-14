@@ -442,17 +442,18 @@ SequenceStatus GestureSeqRecorder::progressActiveSequences(Pose::Type gesture, C
                         response = (*it)->sequenceResponse;
                         break;
                     }
+                    it++;
                 }
                 else if (PoseLength::IMMEDIATE != (*it)->seq.at(seqProg).poseLen)
                 {
                     // as long as it's not an immediate value (which needs to be left alone following a rest),
                     // remove this from the active list!
                     (*it)->progress = 0;
-                    std::list<sequenceInfo*>::iterator itCopy = it;                   
+                    std::list<sequenceInfo*>::iterator itCopy = it;      
+                    it++;
                     activeSequences.erase(itCopy);
                 }
-                it++;
-
+                
                 updateGuiSequences();
             }
             else

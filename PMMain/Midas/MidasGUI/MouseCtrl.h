@@ -100,8 +100,16 @@ private:
      */
     void setMouseInputVars(mouseCmds mouseCmd, double& mouseRateIfMove, double& mouseYRateIfMove);
 
+    /**
+     * Presses Down the VK_ key associated with keyCodeModifier. This is intended to be
+     * done right before the mouse command is sent, if the keyCodeModifier is positive.
+     */
     void sendModifierPressDown();
 
+    /**
+     * Release the VK_ key associated with keyCodeModifier. This is intended to be
+     * done right after the mouse command is sent, if the keyCodeModifier is positive.
+     */
     void sendModifierRelease();
 
     // Mouse Input 
