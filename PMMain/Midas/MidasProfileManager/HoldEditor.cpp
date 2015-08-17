@@ -44,6 +44,11 @@ Hold HoldEditor::getReturnHold()
     return returnHold;
 }
 
+void HoldEditor::populateGUIWithHold(Hold hold)
+{
+    updateGUIWithHold(hold);
+}
+
 bool HoldEditor::isAngleSet(QComboBox* positive, QComboBox* negative)
 {
     return !(positive->currentText() == "none" && negative->currentText() == "none");
@@ -286,5 +291,146 @@ void HoldEditor::formKybdActions(QComboBox *comboBox)
     comboBox->addItem(QString("none"));
 }
 
+void HoldEditor::updateGUIWithHold(Hold hold)
+{
+    // TODO - inverse the following:
+    ui.gestureComboBox->setCurrentIndex(hold.id - 1); // id's start at 1.
+
+    // Work in progress
+    //ui.holdModeActionType->setCurrentText(QString::fromStdString(hold.holdModeActionType));
+    //ui.intervalLength->setValue(hold.intervalLen);
+    //ui.intervalExecMultiplier->setValue(hold.intervalExecMultiplier);
+    //ui.intervalMaxExecs->setValue(hold.intervalMaxExecs);
+    //
+    //for (int i = 0; i < hold.angles.size(); i++)
+    //{
+    //    std::string type = hold.angles.at(i).type;
+    //    Command anglePositive = hold.angles.at(i).anglePositive;
+    //    Command angleNegative = hold.angles.at(i).angleNegative;
+    //    float sensitivity = hold.angles.at(i).sensitivity;
+    //
+    //    if (type == "roll")
+    //    {
+    //        ui.RollPositiveTypeComboBox->setCurrentText();
+    //        ui.RollPositiveActionComboBox->;
+    //        ui.RollPositiveKeyInput->;
+    //
+    //        ui.RollNegaitiveTypeComboBox->setCurrentText();
+    //        ui.RollNegaitiveActionComboBox->;
+    //        ui.RollNegaitiveKeyInput->;
+    //
+    //        ui.rollSensitivity->setValue(sensitivity);
+    //    }
+    //    else if (type == "pitch")
+    //    {
+    //        ui.PitchPositiveTypeComboBox->setCurrentText();
+    //
+    //        ui.pitchSensitivity->setValue(sensitivity);
+    //    }
+    //    else if (type == "yaw")
+    //    {
+    //        ui.YawPositiveActionComboBox->setCurrentText();
+    //
+    //        ui.yawSensitivity->setValue(sensitivity);
+    //    }
+    //}
 
 
+    /*
+    returnHold.id = ui.gestureComboBox->currentText().toUInt();
+    
+    returnHold.holdModeActionType = ui.holdModeActionType->currentText().toStdString();
+    returnHold.intervalLen = ui.intervalLength->value();
+    returnHold.intervalExecMultiplier = ui.intervalExecMultiplier->value();
+    returnHold.intervalMaxExecs = ui.intervalMaxExecs->value();
+
+    if (isAngleSet(ui.RollPositiveTypeComboBox, ui.RollNegativeTypeComboBox))
+    {
+        AngleAction roll;
+        roll.type = "roll";
+        roll.anglePositive.type = ui.RollPositiveTypeComboBox->currentText().toStdString();
+        if (ui.RollPositiveActionComboBox->currentText() == "inputVector")
+        {
+              roll.anglePositive.actions.push_back(ui.RollPositiveActionComboBox->currentText().toStdString() + "," +
+                  ui.RollPositiveKeyInput->text().toStdString());
+        }
+        else
+        {
+            roll.anglePositive.actions.push_back(ui.RollPositiveActionComboBox->currentText().toStdString());
+        }
+        roll.angleNegative.type = ui.RollNegativeTypeComboBox->currentText().toStdString();
+        if (ui.RollNegativeActionComboBox->currentText() == "inputVector")
+        {
+            roll.angleNegative.actions.push_back(ui.RollNegativeActionComboBox->currentText().toStdString() + "," +
+                ui.RollNegativeKeyInput->text().toStdString());
+        }
+        else
+        {
+            roll.angleNegative.actions.push_back(ui.RollNegativeActionComboBox->currentText().toStdString());
+        }
+        roll.sensitivity = ui.rollSensitivity->value();
+
+        returnHold.angles.push_back(roll);
+    }
+
+    if (isAngleSet(ui.PitchPositiveTypeComboBox, ui.PitchNegativeTypeComboBox))
+    {
+        AngleAction pitch;
+        pitch.type = "pitch";
+        pitch.anglePositive.type = ui.PitchPositiveTypeComboBox->currentText().toStdString();
+        if (ui.PitchPositiveActionComboBox->currentText() == "inputVector")
+        {
+              pitch.anglePositive.actions.push_back(ui.PitchPositiveActionComboBox->currentText().toStdString() + "," +
+                  ui.PitchPositiveKeyInput->text().toStdString());
+        }
+        else
+        {
+            pitch.anglePositive.actions.push_back(ui.PitchPositiveActionComboBox->currentText().toStdString());
+        }
+        pitch.angleNegative.type = ui.PitchNegativeTypeComboBox->currentText().toStdString();
+        if (ui.PitchNegativeActionComboBox->currentText() == "inputVector")
+        {
+              pitch.angleNegative.actions.push_back(ui.PitchNegativeActionComboBox->currentText().toStdString() + "," +
+                  ui.PitchNegativeKeyInput->text().toStdString());
+        }
+        else
+        {
+            pitch.angleNegative.actions.push_back(ui.PitchNegativeActionComboBox->currentText().toStdString());
+        }
+        pitch.sensitivity = ui.pitchSensitivity->value();
+
+        returnHold.angles.push_back(pitch);
+    }
+
+    if (isAngleSet(ui.YawPositiveTypeComboBox, ui.YawNegativeTypeComboBox))
+    {
+        AngleAction yaw;
+        yaw.type = "yaw";
+        yaw.anglePositive.type = ui.YawPositiveTypeComboBox->currentText().toStdString();
+        if (ui.YawPositiveActionComboBox->currentText() == "inputVector")
+        {
+              yaw.anglePositive.actions.push_back(ui.YawPositiveActionComboBox->currentText().toStdString() + "," +
+                  ui.YawPositiveKeyInput->text().toStdString());
+        }
+        else
+        {
+            yaw.anglePositive.actions.push_back(ui.YawPositiveActionComboBox->currentText().toStdString());
+        }
+        yaw.angleNegative.type = ui.YawNegativeTypeComboBox->currentText().toStdString();
+        if (ui.YawNegativeActionComboBox->currentText() == "inputVector")
+        {
+              yaw.angleNegative.actions.push_back(ui.YawNegativeActionComboBox->currentText().toStdString() + "," +
+                  ui.YawNegativeKeyInput->text().toStdString());
+        }
+        else
+        {
+            yaw.angleNegative.actions.push_back(ui.YawNegativeActionComboBox->currentText().toStdString());
+        }
+        yaw.sensitivity = ui.yawSensitivity->value();
+
+        returnHold.angles.push_back(yaw);
+    }
+
+    this->accept();
+    */
+}

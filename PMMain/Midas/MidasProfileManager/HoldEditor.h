@@ -33,10 +33,12 @@ public:
     ~HoldEditor();
 
     Hold getReturnHold();
+    void populateGUIWithHold(Hold hold);
 
 private:
     void formMouseActions(QComboBox * comboBox);
     void formKybdActions(QComboBox * comboBox);
+    void updateGUIWithHold(Hold hold);
 
     Ui::HoldEditor ui;
 

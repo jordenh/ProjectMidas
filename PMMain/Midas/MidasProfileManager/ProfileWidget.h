@@ -68,12 +68,16 @@ private:
     QVBoxLayout* vlayout;
     QSignalMapper* mapper;
     QSignalMapper* holdMapper;
+    QSignalMapper* deleteMapper;
+    QSignalMapper* holdDeleteMapper;
     std::vector<sequenceWidgets> seqWidgetList;
     std::vector<holdWidgets> holdWidgetList;
 
 public slots:
     void editButtonClicked(int id);
     void holdEditButtonClicked(int id);
+    void deleteButtonClicked(int id);
+    void holdDeleteButtonClicked(int id);
     void addSequenceButtonClicked();
     void addHoldButtonClicked();
 
