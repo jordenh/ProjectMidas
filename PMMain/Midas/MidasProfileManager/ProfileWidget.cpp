@@ -317,7 +317,7 @@ void ProfileWidget::modifySequence(int ind, Sequence seq)
         seqWidgets.sequences->addItem(item);
     }
 
-   // //****************************************** attempt 3 -- doesnt work either, but is close- ish.
+   // //****************************************** attempt 3 -- doesnt work either, but is close- ish. TODO properly
    //
    // for (int i = 0; i < seqWidgets.commands.size(); i++)
    // {
@@ -350,10 +350,9 @@ void ProfileWidget::modifySequence(int ind, Sequence seq)
    //     seqWidgets.commands.push_back(seqCmd);
    // }
 
-
     
     // Attempt 2 - this only works for same 'sized' sequences. so should change.
-    for (int i = 0; i < seq.cmds.size(); i++)
+    for (int i = 0; i < 1; i++) // HACK - TODO - SHOULD handle up to cmd size, but not as to avoid error with GUI. seq.cmds.size(); i++)
     {
         std::string cmdLabel = "Command type " + seq.cmds[i].type;
     
@@ -368,54 +367,6 @@ void ProfileWidget::modifySequence(int ind, Sequence seq)
             seqWidgets.commands.at(i).actions->addItem(action);
         }
     }
-
-
-    // Attempt 1 - this doesnt work.
-//    // clear old commands
-//    for (int i = 0; i < seqWidgets.commands.size(); i++)
-//    {
-//        seqWidgets.commands.at(i).commandTitle->clear();
-//        seqWidgets.commands.at(i).actions->clear();
-//    }
-//    seqWidgets.commands.clear();
-//    
-//    for (int i = 0; i < seq.cmds.size(); i++)
-//    {
-//     //   sequenceCommand seqCmd;
-//     //
-//     //   std::string cmdLabel = "Command type " + seq.cmds[i].type;
-//     //   seqCmd.commandTitle = new  QLabel(QString(cmdLabel.c_str()));
-//     //   seqCmd.actions = new QListWidget();
-//     //
-//     //   std::vector<std::string> actionList = seq.cmds[i].actions;
-//     //   std::vector<std::string>::iterator actionIt;
-//     //
-//     //   //seq.cmds[i].actions.clear(); // removing aug 17. why clear?
-//     //   for (actionIt = actionList.begin(); actionIt != actionList.end(); actionIt++)
-//     //   {
-//     //       QListWidgetItem* action = new QListWidgetItem(QString(actionIt->c_str()));
-//     //       seqCmd.actions->addItem(action);
-//     //   }
-//     //
-//     //   seqWidgets.commands.push_back(seqCmd);
-//        sequenceCommand seqCmd;
-//        seqWidgets.commands.push_back(seqCmd);
-//
-//        std::string cmdLabel = "Command type " + seq.cmds[i].type;
-//        QString title = QString(cmdLabel.c_str());
-//        seqWidgets.commands.at(i).commandTitle = new  QLabel(title);
-//        seqWidgets.commands.at(i).actions = new QListWidget();
-//
-//        std::vector<std::string> actionList = seq.cmds[i].actions;
-//        std::vector<std::string>::iterator actionIt;
-//
-//        //seq.cmds[i].actions.clear(); // removing aug 17. why clear?
-//        for (actionIt = actionList.begin(); actionIt != actionList.end(); actionIt++)
-//        {
-//            QListWidgetItem* action = new QListWidgetItem(QString(actionIt->c_str()));
-//            seqWidgets.commands.at(i).actions->addItem(action);
-//        }
-//    }
 }
 
 void ProfileWidget::editButtonClicked(int id)
