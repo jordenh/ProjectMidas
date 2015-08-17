@@ -79,6 +79,7 @@ SettingsDisplayer::SettingsDisplayer(int widgetWidth, int widgetHeight, QWidget 
     helpLevelComboBox = new QComboBox(this);
     helpLevelComboBox->addItem(ALL_LVL);
     helpLevelComboBox->addItem(COMPLEX_LVL);
+    helpLevelComboBox->addItem(SIMPLE_LVL);
     helpLevelComboBox->addItem(LOCKS_LVL);
     connect(helpLevelComboBox, SIGNAL(activated(QString)), this, SLOT(handleHelpLevelChanged(QString)));
 
@@ -161,7 +162,7 @@ SettingsDisplayer::SettingsDisplayer(int widgetWidth, int widgetHeight, QWidget 
     mainLayout->addLayout(hlayout1);
 
     QHBoxLayout* hlayout1b = new QHBoxLayout;
-    hlayout1b->addWidget(new QLabel("X Rotation Offset: "));
+    hlayout1b->addWidget(new QLabel("X Rotation Offset (Advanced Setting): "));
     hlayout1b->addWidget(desiredXRotationSpinBox);
     mainLayout->addLayout(hlayout1b);
 
@@ -304,6 +305,10 @@ void SettingsDisplayer::handleHelpLevelChanged(QString val)
     else if (val.compare(COMPLEX_LVL) == 0)
     {
         emitHelpLevelChanged(int(helpLevel::COMPLEX));
+    }
+    else if (val.compare(SIMPLE_LVL) == 0)
+    {
+        emitHelpLevelChanged(int(helpLevel::SIMPLE));
     }
     else if (val.compare(LOCKS_LVL) == 0)
     {

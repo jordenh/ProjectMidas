@@ -205,6 +205,18 @@ void SequenceDisplayer::updateSequences()
                 // go to displaying next sequence
                 continue;
             }
+        case helpLevel::SIMPLE:
+            if (seq.seqLabel->text().compare("Lock", Qt::CaseInsensitive) == 0 ||
+                seq.seqLabel->text().compare("Unlock", Qt::CaseInsensitive) == 0 ||
+                seq.sequenceImages.size() == 1)
+            {
+                break;
+            }
+            else
+            {
+                // go to displaying next sequence
+                continue;
+            }
         case helpLevel::COMPLEX:
             if (seq.sequenceImages.size() >= 2)
             {

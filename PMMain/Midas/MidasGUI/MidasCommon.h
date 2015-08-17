@@ -211,10 +211,12 @@ enum midasMode {
  */
 #define ALL_LVL "All"
 #define COMPLEX_LVL "Complex Only"
+#define SIMPLE_LVL "Simple Only"
 #define LOCKS_LVL "Lock/Unlock Only"
 enum class helpLevel {
     MINIMAL, // only show lock/unlock help
     COMPLEX, // show anything with >= 2 poses in a sequence
+    SIMPLE, // show only length 1 and lock/unlock help
     ALL // show all registered sequences
 };
 
