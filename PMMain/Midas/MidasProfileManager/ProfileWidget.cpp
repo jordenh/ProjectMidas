@@ -425,33 +425,14 @@ void ProfileWidget::holdEditButtonClicked(int id)
 void ProfileWidget::deleteButtonClicked(int id)
 {
     prof.sequences.erase(prof.sequences.begin() + id);
-    vlayout-> removeWidget(seqWidgetList[id].grouper);
-    vlayout->removeWidget(seqWidgetList[id].stateTitle);
-    vlayout->removeWidget(seqWidgetList[id].sequences);
-    for (int i = 0; i < seqWidgetList.size(); i++)
-    {
-        vlayout->removeWidget(seqWidgetList[id].commands.at(i).actions);
-        vlayout->removeWidget(seqWidgetList[id].commands.at(i).commandTitle);
-    }
-    
-    //delete seqWidgetList[id].grouper;
-    //delete seqWidgetList[id].stateTitle;
-    //delete seqWidgetList[id].sequences;
-    //
-    //for (int i = 0; i < seqWidgetList.size(); i++)
-    //{
-    //    delete (seqWidgetList[id].commands.at(i).actions);
-    //    delete (seqWidgetList[id].commands.at(i).commandTitle);
-    //}
-
+    delete seqWidgetList[id].grouper;
     seqWidgetList.erase(seqWidgetList.begin() + id);
 }
 
 void ProfileWidget::holdDeleteButtonClicked(int id)
 {
     prof.holds.erase(prof.holds.begin() + id);
-    vlayout->removeWidget(holdWidgetList[id].grouper);
-    vlayout->update();
+    delete holdWidgetList[id].grouper;
     holdWidgetList.erase(holdWidgetList.begin() + id);
 }
 
