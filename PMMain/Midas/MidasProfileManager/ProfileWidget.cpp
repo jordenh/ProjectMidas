@@ -1,20 +1,20 @@
 /*
-Copyright (C) 2015 Midas
+    Copyright (C) 2015 Midas
 
-This library is free software; you can redistribute it and/or
-modify it under the terms of the GNU Lesser General Public
-License as published by the Free Software Foundation; either
-version 2.1 of the License, or (at your option) any later version.
+    This library is free software; you can redistribute it and/or
+    modify it under the terms of the GNU Lesser General Public
+    License as published by the Free Software Foundation; either
+    version 2.1 of the License, or (at your option) any later version.
 
-This library is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-Lesser General Public License for more details.
+    This library is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+    Lesser General Public License for more details.
 
-You should have received a copy of the GNU Lesser General Public
-License along with this library; if not, write to the Free Software
-Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
-USA
+    You should have received a copy of the GNU Lesser General Public
+    License along with this library; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
+    USA
 */
 
 #include "ProfileWidget.h"
@@ -317,36 +317,64 @@ void ProfileWidget::modifySequence(int ind, Sequence seq)
         seqWidgets.sequences->addItem(item);
     }
 
+    // clear old commands
+    for (int i = 0; i < seqWidgets.commands.size(); i++)
+    {
+        seqWidgets.commands.at(i).commandTitle->clear();
+        seqWidgets.commands.at(i).actions->clear();
+    }
     seqWidgets.commands.clear();
+    
     for (int i = 0; i < seq.cmds.size(); i++)
     {
+     //   sequenceCommand seqCmd;
+     //
+     //   std::string cmdLabel = "Command type " + seq.cmds[i].type;
+     //   seqCmd.commandTitle = new  QLabel(QString(cmdLabel.c_str()));
+     //   seqCmd.actions = new QListWidget();
+     //
+     //   std::vector<std::string> actionList = seq.cmds[i].actions;
+     //   std::vector<std::string>::iterator actionIt;
+     //
+     //   //seq.cmds[i].actions.clear(); // removing aug 17. why clear?
+     //   for (actionIt = actionList.begin(); actionIt != actionList.end(); actionIt++)
+     //   {
+     //       QListWidgetItem* action = new QListWidgetItem(QString(actionIt->c_str()));
+     //       seqCmd.actions->addItem(action);
+     //   }
+     //
+     //   seqWidgets.commands.push_back(seqCmd);
         sequenceCommand seqCmd;
+        seqWidgets.commands.push_back(seqCmd);
 
         std::string cmdLabel = "Command type " + seq.cmds[i].type;
-        seqCmd.commandTitle = new  QLabel(QString(cmdLabel.c_str()));
-        seqCmd.actions = new QListWidget();
+        QString title = QString(cmdLabel.c_str());
+        seqWidgets.commands.at(i).commandTitle = new  QLabel(title);
+        seqWidgets.commands.at(i).actions = new QListWidget();
 
         std::vector<std::string> actionList = seq.cmds[i].actions;
         std::vector<std::string>::iterator actionIt;
 
-        seq.cmds[i].actions.clear();
+        //seq.cmds[i].actions.clear(); // removing aug 17. why clear?
         for (actionIt = actionList.begin(); actionIt != actionList.end(); actionIt++)
         {
             QListWidgetItem* action = new QListWidgetItem(QString(actionIt->c_str()));
-            seqCmd.actions->addItem(action);
+            seqWidgets.commands.at(i).actions->addItem(action);
         }
-
-        seqWidgets.commands.push_back(seqCmd);
     }
+    seqWidgetList[ind] = seqWidgets;
+
 }
 
 void ProfileWidget::editButtonClicked(int id)
 {
     SequenceEditor editor;
     std::vector<Sequence> otherSequences = prof.sequences;
+    editor.populateGUIWithSeq(*(otherSequences.begin() + id));
     otherSequences.erase(otherSequences.begin() + id);
     editor.setOtherSequences(&otherSequences);
-    if (editor.exec())
+    int accepted = editor.exec();
+    if (accepted)
     {
         Sequence seq = editor.getSequence();
         prof.sequences[id] = seq;
