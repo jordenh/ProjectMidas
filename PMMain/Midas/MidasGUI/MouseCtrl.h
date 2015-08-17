@@ -117,6 +117,9 @@ private:
      */
     void sendModifierRelease();
 
+    // helper functions to translate between the location in pixels on a screen, to/from the location
+    // in windows frame coordinates (represented as MONITOR_SIZE_WEIGHT per screen width/height).
+    // For example, on a 1920x1080 monitor, location 960,540 would correspond to MONITOR_SIZE_WEIGHT/2, MONITOR_SIZE_WEIGHT/2
     float pixelXLocToWindowsXLoc(float pixelLoc);
     float pixelYLocToWindowsYLoc(float pixelLoc);
     float windowsXLocToPixelXLoc(float windowsLoc);
