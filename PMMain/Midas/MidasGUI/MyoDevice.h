@@ -40,10 +40,13 @@ using namespace myo;
 #define DEFAULT_MYO_ARM Arm::armUnknown
 #define DEFAULT_MYO_XDIR XDirection::xDirectionUnknown
 
-// NOTE: the desired location on the users arm is at roughly PI. Therefore,
-// the xRotationMatrix will contain a matrix that when multiplied by a 
-// vector, will rotate it TOWARDS the location, PI.
-#define DEFAULT_DESIRED_X_ROTATION M_PI
+// The xRotationMatrix will contain a matrix that when multiplied by a 
+// vector, will rotate it TOWARDS the desired location. This will allow
+// for accelerated cursor movement to occur in the proper direction.
+#define DEFAULT_DESIRED_X_ROTATION_FW_1_4_1670 M_PI
+#define DEFAULT_DESIRED_X_ROTATION_FW_1_5_1931 2.120
+
+
 
 class ControlState;
 class MyoState;
@@ -120,6 +123,8 @@ public:
      */
     void vibrateMyos(myo::Myo::VibrationType vibType, int numReps = 1) const;
 
+    static FirmwareVersion getHighestFirmwareVersionConnected() { return highestFirmwareVersionConnected; }
+
 private:
     void setupPosePipeline();
     void setupOrientationPipeline();
@@ -172,12 +177,17 @@ private:
     };
 
     struct MyoWithData {
-        MyoWithData(Myo* myo) { this->myo = myo; arm = Arm::armUnknown; xDirection = XDirection::xDirectionUnknown; rotation = 0; }
+        MyoWithData(Myo* myo) 
+        {   
+            this->myo = myo; arm = Arm::armUnknown; xDirection = XDirection::xDirectionUnknown; rotation = 0; 
+            fwVersion.firmwareVersionMajor = 0; fwVersion.firmwareVersionMinor = 0; fwVersion.firmwareVersionPatch = 0; fwVersion.firmwareVersionHardwareRev = 0;
+        }
 
         Myo* myo;
         Arm arm;
         XDirection xDirection;
         float rotation;
+        FirmwareVersion fwVersion;
     };
 
     std::vector<MyoWithData> connectedMyos; // not owned
@@ -218,5 +228,7 @@ private:
     GenericBypassFilter *genBypassFilterXDir;
 
     MyoTranslationFilter *translationFilter;
+
+    static FirmwareVersion highestFirmwareVersionConnected;
 };
 

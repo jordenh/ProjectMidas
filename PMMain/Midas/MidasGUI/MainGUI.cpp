@@ -410,6 +410,11 @@ void MainGUI::startShowGuiThread()
 //    callbackThread.detach();
 }
 
+void MainGUI::checkFWAndUpdate()
+{
+    settingsDisplayer->checkFWAndUpdate();
+}
+
 void MainGUI::showGuiThread()
 {
 //    gGeom = this->saveGeometry();

@@ -97,6 +97,8 @@ public:
     // returns false if size < 1, or last pose is rest.
     bool lastPoseNonRest();
 
+    void checkFWAndUpdate();
+
 private:
 	std::mutex myoStateMutex;
 

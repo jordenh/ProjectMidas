@@ -30,6 +30,7 @@
 #include <QCheckBox.h>
 #include <qaction.h>
 #include <qicon.h>
+#include <Windows.h>
 
 SettingsDisplayer::SettingsDisplayer(int widgetWidth, int widgetHeight, QWidget *parent)
     : DraggableWidget(parent, Qt::WindowStaysOnTopHint),
@@ -124,12 +125,14 @@ SettingsDisplayer::SettingsDisplayer(int widgetWidth, int widgetHeight, QWidget 
     connect(gyroPowerSpinBox, SIGNAL(valueChanged(int)), this, SLOT(gyroPowerValueChanged(int)));
     connect(gyroScaleDownSpinBox, SIGNAL(valueChanged(double)), this, SLOT(gyroScaledDownValueChanged(double)));
 
+    Sleep(100);
     desiredXRotationSpinBox = new QDoubleSpinBox(this);
     desiredXRotationSpinBox->setSingleStep(0.1);
     desiredXRotationSpinBox->setMaximum(2 * M_PI);
     desiredXRotationSpinBox->setMinimum(0);
     desiredXRotationSpinBox->setDecimals(5);
-    desiredXRotationSpinBox->setValue(DEFAULT_DESIRED_X_ROTATION);
+    desiredXRotationSpinBox->setValue(DEFAULT_DESIRED_X_ROTATION_FW_1_4_1670);
+
     connect(desiredXRotationSpinBox, SIGNAL(valueChanged(double)), this, SLOT(handleDesiredXRotationChanged(double)));
 
     holdLengthSpinBox = new QSpinBox(this);
@@ -202,6 +205,20 @@ SettingsDisplayer::~SettingsDisplayer()
 QSize SettingsDisplayer::sizeHint() const
 {
     return QSize(indWidth, indHeight);
+}
+
+void SettingsDisplayer::checkFWAndUpdate()
+{
+    if (MyoDevice::getHighestFirmwareVersionConnected().firmwareVersionMajor == 1 &&
+        MyoDevice::getHighestFirmwareVersionConnected().firmwareVersionMinor == 4 &&
+        MyoDevice::getHighestFirmwareVersionConnected().firmwareVersionPatch == 1670)
+    {
+        desiredXRotationSpinBox->setValue(DEFAULT_DESIRED_X_ROTATION_FW_1_4_1670);
+    }
+    else
+    {
+        desiredXRotationSpinBox->setValue(DEFAULT_DESIRED_X_ROTATION_FW_1_5_1931);
+    }
 }
 
 void SettingsDisplayer::handleSliders()

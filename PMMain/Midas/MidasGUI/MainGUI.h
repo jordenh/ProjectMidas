@@ -80,6 +80,8 @@ public:
 	
     void startShowGuiThread();
 
+    void checkFWAndUpdate();
+
 private:
     void hideAllNonEssentialWidgets();
 

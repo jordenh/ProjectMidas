@@ -20,6 +20,7 @@
 #include "MyoState.h"
 #include "MyoDevice.h"
 #include <math.h>
+#include <Windows.h>
 
 MyoState::MyoState()
 {
@@ -30,7 +31,9 @@ MyoState::MyoState()
     currentXDirection = myo::XDirection::xDirectionTowardElbow;
     currentXRotation = 0;
     currentXRotationMatrix = create2DArray(ROTATION_MATRIX_SIZE, ROTATION_MATRIX_SIZE);
-    desiredXRotationValue = DEFAULT_DESIRED_X_ROTATION;
+    Sleep(100);
+    desiredXRotationValue = DEFAULT_DESIRED_X_ROTATION_FW_1_4_1670;
+
 }
 
 MyoState::~MyoState()
@@ -43,6 +46,20 @@ MyoState::~MyoState()
         }
         delete[] currentXRotationMatrix;
         currentXRotationMatrix = NULL;
+    }
+}
+
+void MyoState::checkFWAndUpdate()
+{
+    if (MyoDevice::getHighestFirmwareVersionConnected().firmwareVersionMajor == 1 &&
+        MyoDevice::getHighestFirmwareVersionConnected().firmwareVersionMinor == 4 &&
+        MyoDevice::getHighestFirmwareVersionConnected().firmwareVersionPatch == 1670)
+    {
+        desiredXRotationValue = DEFAULT_DESIRED_X_ROTATION_FW_1_4_1670;
+    }
+    else
+    {
+        desiredXRotationValue = DEFAULT_DESIRED_X_ROTATION_FW_1_5_1931;
     }
 }
 

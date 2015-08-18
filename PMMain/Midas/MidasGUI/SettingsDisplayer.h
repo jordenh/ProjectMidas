@@ -44,6 +44,8 @@ public:
     ~SettingsDisplayer();
     QSize sizeHint() const;
 
+    void checkFWAndUpdate();
+
 private:
     QPoint position;
     int indWidth, indHeight;

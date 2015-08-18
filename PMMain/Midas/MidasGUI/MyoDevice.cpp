@@ -39,6 +39,37 @@
 
 ProfileSignaller MyoDevice::profileSignaller;
 
+FirmwareVersion MyoDevice::highestFirmwareVersionConnected;
+bool isFWVersionHigher(FirmwareVersion a, FirmwareVersion b)
+{
+    if (a.firmwareVersionMajor > b.firmwareVersionMajor)
+    {
+        return true;
+    }
+    else if (a.firmwareVersionMajor == b.firmwareVersionMajor)
+    {
+        // Majors the same
+        if (a.firmwareVersionMinor > b.firmwareVersionMinor)
+        {
+            return true;
+        }
+        else if (a.firmwareVersionMinor == b.firmwareVersionMinor)
+        {
+            // Minors the same
+            if (a.firmwareVersionPatch > b.firmwareVersionPatch)
+            {
+                return true;
+            }
+            else if (a.firmwareVersionPatch == b.firmwareVersionPatch)
+            {
+                // Patch the same - so the FW version is the same.
+            }
+        }
+    }
+
+    return false;
+}
+
 MyoDevice::MyoDevice(SharedCommandData* sharedCommandData, ControlState* controlState, MyoState* myoState,
     std::string applicationIdentifier, MainGUI *mainGuiHandle, ProfileManager *profileManagerHandle)
     : WearableDevice(sharedCommandData), appIdentifier(applicationIdentifier), myoFindTimeout(DEFAULT_FIND_MYO_TIMEOUT),
@@ -353,7 +384,17 @@ void MyoDevice::MyoCallbacks::onConnect(Myo* myo, uint64_t timestamp, FirmwareVe
 
     parent.advancedConnectPipeline.startPipeline(input);
 
-    parent.connectedMyos.push_back(MyoWithData(myo));
+    MyoWithData mwd(myo);
+    mwd.fwVersion = firmwareVersion;
+
+    if (isFWVersionHigher(firmwareVersion, highestFirmwareVersionConnected))
+    {
+        highestFirmwareVersionConnected = firmwareVersion;
+        parent.mainGui->checkFWAndUpdate();
+        parent.myoState->checkFWAndUpdate();
+    }
+
+    parent.connectedMyos.push_back(mwd);
 }
 void MyoDevice::MyoCallbacks::onDisconnect(Myo* myo, uint64_t timestamp) { 
     std::cout << "on disconnect." << std::endl; 
