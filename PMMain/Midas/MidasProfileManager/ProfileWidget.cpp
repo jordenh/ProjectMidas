@@ -1,20 +1,20 @@
 /*
-Copyright (C) 2015 Midas
+    Copyright (C) 2015 Midas
 
-This library is free software; you can redistribute it and/or
-modify it under the terms of the GNU Lesser General Public
-License as published by the Free Software Foundation; either
-version 2.1 of the License, or (at your option) any later version.
+    This library is free software; you can redistribute it and/or
+    modify it under the terms of the GNU Lesser General Public
+    License as published by the Free Software Foundation; either
+    version 2.1 of the License, or (at your option) any later version.
 
-This library is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-Lesser General Public License for more details.
+    This library is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+    Lesser General Public License for more details.
 
-You should have received a copy of the GNU Lesser General Public
-License along with this library; if not, write to the Free Software
-Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
-USA
+    You should have received a copy of the GNU Lesser General Public
+    License along with this library; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
+    USA
 */
 
 #include "ProfileWidget.h"
@@ -54,20 +54,24 @@ void ProfileWidget::drawProfile(Profile profile)
 
    // For each sequence.. drawSequence
     mapper = new QSignalMapper(this);
+    deleteMapper = new QSignalMapper(this);
     std::vector<Sequence> sequences = profile.sequences;
     for (int i = 0; i < sequences.size(); i++)
     {
         drawSequence(sequences[i], i);
     }
     connect(mapper, SIGNAL(mapped(int)), this, SLOT(editButtonClicked(int)));
+    connect(deleteMapper, SIGNAL(mapped(int)), this, SLOT(deleteButtonClicked(int)));
 
     holdMapper = new QSignalMapper(this);
+    holdDeleteMapper = new QSignalMapper(this);
     std::vector<Hold> holds = profile.holds;
     for (int i = 0; i < holds.size(); i++)
     {
         drawHold(holds[i], i);
     }
     connect(holdMapper, SIGNAL(mapped(int)), this, SLOT(holdEditButtonClicked(int)));
+    connect(holdDeleteMapper, SIGNAL(mapped(int)), this, SLOT(holdDeleteButtonClicked(int)));
 
     QHBoxLayout* horLayout = new QHBoxLayout();
     horLayout->setAlignment(Qt::AlignLeft);
@@ -130,6 +134,14 @@ void ProfileWidget::drawHold(Hold hold, int ind, bool insertBefore)
     connect(editHoldButton, SIGNAL(released()), holdMapper, SLOT(map()));
     holdMapper->setMapping(editHoldButton, ind);
     holdLayout->addWidget(editHoldButton);
+
+    QPushButton* holdDeleteButton = new QPushButton();
+    holdDeleteButton->setMaximumSize(51, 23);
+    holdDeleteButton->setText("Delete");
+
+    connect(holdDeleteButton, SIGNAL(released()), holdDeleteMapper, SLOT(map()));
+    holdDeleteMapper->setMapping(holdDeleteButton, ind);
+    holdLayout->addWidget(holdDeleteButton);
 
     grouper->setLayout(holdLayout);
 
@@ -208,6 +220,14 @@ void ProfileWidget::modifyHold(int ind, Hold hold)
     holdMapper->setMapping(editHoldButton, ind);
     holdLayout->addWidget(editHoldButton);
 
+    QPushButton* holdDeleteButton = new QPushButton();
+    holdDeleteButton->setMaximumSize(51, 23);
+    holdDeleteButton->setText("Delete");
+
+    connect(holdDeleteButton, SIGNAL(released()), holdDeleteMapper, SLOT(map()));
+    holdDeleteMapper->setMapping(holdDeleteButton, ind);
+    holdLayout->addWidget(holdDeleteButton);
+
     holdWidgets.grouper->setLayout(holdLayout);
 }
 
@@ -277,10 +297,16 @@ void ProfileWidget::drawSequence(Sequence sequence, int ind, bool insertBefore)
     QPushButton* editSequenceButton = new QPushButton();
     editSequenceButton->setMaximumSize(51, 23);
     editSequenceButton->setText("Edit");
-
     connect(editSequenceButton, SIGNAL(released()), mapper, SLOT(map()));
     mapper->setMapping(editSequenceButton, ind);
     sequenceLayout->addWidget(editSequenceButton);
+
+    QPushButton *deleteSequenceButton = new QPushButton();
+    deleteSequenceButton->setMaximumSize(51, 23);
+    deleteSequenceButton->setText("Delete");
+    connect(deleteSequenceButton, SIGNAL(released()), deleteMapper, SLOT(map()));
+    deleteMapper->setMapping(deleteSequenceButton, ind);
+    sequenceLayout->addWidget(deleteSequenceButton);
 
     grouper->setLayout(sequenceLayout);
 
@@ -317,26 +343,55 @@ void ProfileWidget::modifySequence(int ind, Sequence seq)
         seqWidgets.sequences->addItem(item);
     }
 
-    seqWidgets.commands.clear();
-    for (int i = 0; i < seq.cmds.size(); i++)
+   // //****************************************** attempt 3 -- doesnt work either, but is close- ish. TODO properly
+   //
+   // for (int i = 0; i < seqWidgets.commands.size(); i++)
+   // {
+   //     seqWidgets.commands.at(i).commandTitle->clear();
+   //     seqWidgets.commands.at(i).actions->clear();
+   // }
+   // seqWidgets.commands.clear();
+   //
+   // for (int i = 0; i < seq.cmds.size(); i++)
+   // {
+   //     sequenceCommand seqCmd;
+   //
+   //     std::string cmdLabel = "Command type " + seq.cmds[i].type;
+   //     QString title = QString(cmdLabel.c_str());
+   //     seqCmd.commandTitle = new QLabel(title);
+   //     seqWidgets.grouper->layout()->addWidget(seqCmd.commandTitle);
+   //     seqCmd.actions = new QListWidget();
+   //
+   //     std::vector<std::string> actionList = seq.cmds[i].actions;
+   //     std::vector<std::string>::iterator actionIt;
+   //
+   //     for (actionIt = actionList.begin(); actionIt != actionList.end(); actionIt++)
+   //     {
+   //         QListWidgetItem* action = new QListWidgetItem(QString(actionIt->c_str()));
+   //         seqCmd.actions->addItem(action);
+   //     }
+   //
+   //     seqWidgets.grouper->layout()->addWidget(seqCmd.actions);
+   //
+   //     seqWidgets.commands.push_back(seqCmd);
+   // }
+
+    
+    // Attempt 2 - this only works for same 'sized' sequences. so should change.
+    for (int i = 0; i < 1; i++) // HACK - TODO - SHOULD handle up to cmd size, but not as to avoid error with GUI. seq.cmds.size(); i++)
     {
-        sequenceCommand seqCmd;
-
         std::string cmdLabel = "Command type " + seq.cmds[i].type;
-        seqCmd.commandTitle = new  QLabel(QString(cmdLabel.c_str()));
-        seqCmd.actions = new QListWidget();
-
+    
+        seqWidgets.commands.at(i).commandTitle->setText(QString(cmdLabel.c_str()));
+    
         std::vector<std::string> actionList = seq.cmds[i].actions;
         std::vector<std::string>::iterator actionIt;
-
-        seq.cmds[i].actions.clear();
+        seqWidgets.commands.at(i).actions->clear();
         for (actionIt = actionList.begin(); actionIt != actionList.end(); actionIt++)
         {
             QListWidgetItem* action = new QListWidgetItem(QString(actionIt->c_str()));
-            seqCmd.actions->addItem(action);
+            seqWidgets.commands.at(i).actions->addItem(action);
         }
-
-        seqWidgets.commands.push_back(seqCmd);
     }
 }
 
@@ -344,9 +399,11 @@ void ProfileWidget::editButtonClicked(int id)
 {
     SequenceEditor editor;
     std::vector<Sequence> otherSequences = prof.sequences;
+    editor.populateGUIWithSeq(*(otherSequences.begin() + id));
     otherSequences.erase(otherSequences.begin() + id);
     editor.setOtherSequences(&otherSequences);
-    if (editor.exec())
+    int accepted = editor.exec();
+    if (accepted)
     {
         Sequence seq = editor.getSequence();
         prof.sequences[id] = seq;
@@ -363,6 +420,20 @@ void ProfileWidget::holdEditButtonClicked(int id)
         prof.holds[id] = hold;
         modifyHold(id, hold);
     }
+}
+
+void ProfileWidget::deleteButtonClicked(int id)
+{
+    prof.sequences.erase(prof.sequences.begin() + id);
+    delete seqWidgetList[id].grouper;
+    seqWidgetList.erase(seqWidgetList.begin() + id);
+}
+
+void ProfileWidget::holdDeleteButtonClicked(int id)
+{
+    prof.holds.erase(prof.holds.begin() + id);
+    delete holdWidgetList[id].grouper;
+    holdWidgetList.erase(holdWidgetList.begin() + id);
 }
 
 void ProfileWidget::addSequenceButtonClicked()

@@ -35,6 +35,8 @@ public:
     Sequence getSequence();
     void setOtherSequences(std::vector<Sequence>* otherSequences);
 
+    void populateGUIWithSeq(Sequence seq);
+
 private:
     void formCommandComboBox();
 	void formKeyLineInput();
@@ -44,9 +46,12 @@ private:
     void formKybdGUIActions();
 	void formProfileChangeActions();
     bool checkPrefixConstraint(std::string &errorMessage);
+    void updateGUIWithSeq(Sequence seq);
 
     Ui::SequenceEditor ui;
+    // returnSeuqnece is the sequence that this editor is creating.
     Sequence returnSequence;
+    // otherSequences used to compare against when adding sequences to verify sanity.
     std::vector<Sequence>* otherSequences;
 
 public slots:
@@ -54,6 +59,8 @@ public slots:
     void handleAddAction();
     void handleDone();
     void handleActivateCommandBox(const QString & text);
+    void handleClearGestures();
+    void handleClearActions();
 };
 
 #endif // SEQUENCEEDITOR_H
