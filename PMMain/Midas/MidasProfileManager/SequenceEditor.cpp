@@ -1,20 +1,20 @@
 /*
-Copyright (C) 2015 Midas
+    Copyright (C) 2015 Midas
 
-This library is free software; you can redistribute it and/or
-modify it under the terms of the GNU Lesser General Public
-License as published by the Free Software Foundation; either
-version 2.1 of the License, or (at your option) any later version.
+    This library is free software; you can redistribute it and/or
+    modify it under the terms of the GNU Lesser General Public
+    License as published by the Free Software Foundation; either
+    version 2.1 of the License, or (at your option) any later version.
 
-This library is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-Lesser General Public License for more details.
+    This library is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+    Lesser General Public License for more details.
 
-You should have received a copy of the GNU Lesser General Public
-License along with this library; if not, write to the Free Software
-Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
-USA
+    You should have received a copy of the GNU Lesser General Public
+    License along with this library; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
+    USA
 */
 
 #include "SequenceEditor.h"
@@ -35,6 +35,8 @@ SequenceEditor::SequenceEditor(QWidget *parent)
     connect(ui.addActionButton, SIGNAL(released()), this, SLOT(handleAddAction()));
     connect(ui.doneButton, SIGNAL(released()), this, SLOT(handleDone()));
     connect(ui.commandComboBox, SIGNAL(activated(const QString &)), this, SLOT(handleActivateCommandBox(const QString &)));		
+    connect(ui.clearGesturesButton, SIGNAL(released()), this, SLOT(handleClearGestures()));
+    connect(ui.clearActionsButton, SIGNAL(released()), this, SLOT(handleClearActions()));
 }
 
 SequenceEditor::~SequenceEditor()
@@ -49,17 +51,6 @@ bool SequenceEditor::checkPrefixConstraint(std::string &errorMessage)
         errorMessage = "Did not receive other sequences to check against.";
         return false;
     }
-
- //  // Check for incorrect immediates
- //  for (int i = 0; i < returnSequence.gestures.size(); i++)
- //  {
- //      if (returnSequence.gestures.at(i).type == "immediate" && returnSequence.gestures.size() > 1)
- //      {
- //          // Can only have length 1 immediates.
- //          errorMessage = "Cannot have gestures of type 'immediate' in sequences with more than 1 gesture.";
- //          return false;
- //      }
- //  }
 
     std::vector<Sequence>::iterator seqIt;
     std::vector<std::string> conflictingSequences;
@@ -123,6 +114,11 @@ bool SequenceEditor::checkPrefixConstraint(std::string &errorMessage)
 void SequenceEditor::setOtherSequences(std::vector<Sequence>* otherSequences)
 {
     this->otherSequences = otherSequences;
+}
+
+void SequenceEditor::populateGUIWithSeq(Sequence seq) 
+{ 
+    updateGUIWithSeq(seq);
 }
 
 Sequence SequenceEditor::getSequence()
@@ -216,6 +212,17 @@ void SequenceEditor::handleDone()
     {
         QMessageBox::warning(this, tr("Invalid Sequence"), tr(errorMsg.c_str()));
     }
+}
+
+void SequenceEditor::handleClearGestures()
+{
+    ui.gestureList->clear();
+}
+
+void SequenceEditor::handleClearActions()
+{
+    ui.commandList->clear();
+    ui.actionList->clear();
 }
 
 void SequenceEditor::handleActivateCommandBox(const QString & text)
@@ -384,4 +391,29 @@ void SequenceEditor::formProfileChangeActions()
 
 	ui.actionComboBox->addItem(QString("moveProfileForward"));
 	ui.actionComboBox->addItem(QString("moveProfileBackward"));
+}
+
+void SequenceEditor::updateGUIWithSeq(Sequence seq)
+{
+    ui.lineEdit->setText(QString::fromStdString(seq.name));
+    ui.stateComboBox->setCurrentText(QString::fromStdString(seq.state));
+
+    for (int row = 0; row < seq.gestures.size(); row++)
+    {
+        Gesture gest = seq.gestures.at(row);
+        QListWidgetItem* newItem = new QListWidgetItem();
+        newItem->setText(QString::fromStdString(gest.type + " " + gest.name));
+        ui.gestureList->addItem(newItem);
+    }
+
+    for (int row = 0; row < seq.cmds.size(); row++)
+    {
+        Command cmd = seq.cmds.at(row);
+        QListWidgetItem* newCmd = new QListWidgetItem();
+        QListWidgetItem* newAction = new QListWidgetItem();
+        newCmd->setText(QString::fromStdString(cmd.type));
+        newAction->setText(QString::fromStdString(cmd.actions.at(0)));
+        ui.commandList->addItem(newCmd);
+        ui.actionList->addItem(newAction);
+    }
 }

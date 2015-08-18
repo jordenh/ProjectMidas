@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>387</width>
+    <width>478</width>
     <height>432</height>
    </rect>
   </property>
@@ -355,6 +355,32 @@
    </property>
    <property name="dragDropMode">
     <enum>QAbstractItemView::InternalMove</enum>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="clearGesturesButton">
+   <property name="geometry">
+    <rect>
+     <x>300</x>
+     <y>160</y>
+     <width>75</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Clear</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="clearActionsButton">
+   <property name="geometry">
+    <rect>
+     <x>390</x>
+     <y>360</y>
+     <width>75</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Clear</string>
    </property>
   </widget>
  </widget>
