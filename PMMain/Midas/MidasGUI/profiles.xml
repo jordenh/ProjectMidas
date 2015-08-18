@@ -994,12 +994,24 @@
 			
 			<sequence state="gestureMode" name="Left Click">
                 <gestures>
-                    <gesture type="tap">fist</gesture>
+                    <gesture type="immediate">fist</gesture>
                 </gestures>
                 <commands>
                     <command type="mouse">
                         <actions>
                             <action>leftClick</action>
+                        </actions>
+                    </command>
+                </commands>
+            </sequence>
+			<sequence state="gestureMode" name="Right Click">
+                <gestures>
+                    <gesture type="immediate">waveOut</gesture>
+                </gestures>
+                <commands>
+                    <command type="mouse">
+                        <actions>
+                            <action>rightClick</action>
                         </actions>
                     </command>
                 </commands>
