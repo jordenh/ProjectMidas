@@ -28,6 +28,7 @@
 #include <qdesktopwidget.h>
 #include <QGridLayout.h>
 #include <qlabel.h>
+#include <qpropertyanimation.h>
 
 #define LABEL_NUM_COLS      2
 #define LABEL_NUM_ROWS      1
@@ -265,7 +266,42 @@ void SequenceDisplayer::updateSequences()
             sequenceIt->currentImgLabel->setPixmap(pixmap);
             sequenceIt->currentImgLabel->setEnabled(!pixmap.isNull());
             sequenceIt->currentImgLabel->setHidden(false);
-            gridLayout->addWidget(sequenceIt->currentImgLabel, currRow, currCol);
+
+            QVBoxLayout *imageWithTimerLayout = new QVBoxLayout();
+            imageWithTimerLayout->addWidget(sequenceIt->currentImgLabel);
+            // TODO - modularize into function ************
+
+      //      QLabel *timerAnimationLabel = new QLabel();
+      //      timerAnimationLabel->setBaseSize(QSize(10, 10));
+      //      timerAnimationLabel->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Maximum);
+      //
+      //      QImage timerAnimationImage(QString("Resources\\red.png"));
+      //      timerAnimationLabel->setPixmap(QPixmap::fromImage(timerAnimationImage));
+      //      timerAnimationLabel->setScaledContents(true);
+      //      imageWithTimerLayout->addWidget(timerAnimationLabel);
+
+            if (sequenceIt->poseLen == PoseLength::HOLD)
+            {
+                // Add HOLD Animation
+                //sequenceIt->currentImgLabel->
+            }
+            else if (sequenceIt->poseLen == PoseLength::TAP)
+            {
+                // Add TAP Animation
+            }
+
+            //random attempt to animate - not working
+            QPropertyAnimation *animation = new QPropertyAnimation(seq.seqLabel, "color");
+            animation->setDuration(5000);
+            QColor c = QColor(255, 0, 0, 255);
+            animation->setStartValue(c);
+            c.setAlpha(0);
+            animation->setEndValue(c);
+            animation->setEasingCurve(QEasingCurve::OutQuad);
+            animation->start(QAbstractAnimation::DeleteWhenStopped);
+            //**********************************
+
+            gridLayout->addLayout(imageWithTimerLayout, currRow, currCol);
             currCol++;
         }
 
