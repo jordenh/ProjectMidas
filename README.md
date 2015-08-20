@@ -19,8 +19,8 @@ A version of Midas primarily intended to replace the Mouse (MidasGUI.exe). Also 
 
 Currently setup to work with Myo Armband:
 - SDK Win 0.9.0
-- Firmware 1.4.1670
-- Myo Connect V 0.14.0
+- Firmware 1.5.1931
+- Myo Connect V 1.0.0
 
 #### To build MidasGUI:
 
