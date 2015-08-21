@@ -27,6 +27,7 @@
 #define IMPULSE_STATUS "impStatus"
 #define ANGLE_INPUT "angle"
 #define RSSI_INPUT "rssi"
+#define BATTERY_LEVEL_INPUT "batteryLevel"
 
 // Myo Translation Keys
 #define INPUT_QUATERNION_X "quatDataX"

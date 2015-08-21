@@ -43,6 +43,7 @@
 #include "SettingsDisplayer.h"
 #include "SettingsSignaller.h"
 #include "ProfilesDisplayer.h"
+#include "MyoStatusWidget.h"
 #include "MidasThread.h"
 #include <thread>
 
@@ -61,7 +62,8 @@ MainGUI::MainGUI(MidasThread *mainThread, ProfileManager *pm, int deadZoneRad)
     infoIndicator = new InfoIndicator(INFO_INDICATOR_WIDTH, INFO_INDICATOR_HEIGHT, this);
     sequenceDisplayer = new SequenceDisplayer(this);
 	poseDisplayer = new PoseDisplayer(MOUSE_INDICATOR_SIZE, MOUSE_INDICATOR_SIZE, this);
-	distanceDisplayer = new DistanceWidget(mainThread, INFO_INDICATOR_WIDTH,
+    myoStatusWidget = new MyoStatusWidget();
+    distanceDisplayer = new DistanceWidget(mainThread, INFO_INDICATOR_WIDTH,
 		DISTANCE_DISPLAY_HEIGHT, this);
     distanceDisplayer->setVisible(false);
 
@@ -182,6 +184,18 @@ void MainGUI::toggleProfileDisplayer()
     }
 }
 
+void MainGUI::toggleMyoStatusWidget()
+{
+    if (myoStatusWidget->isVisible())
+    {
+        myoStatusWidget->setVisible(false);
+    }
+    else
+    {
+        myoStatusWidget->setVisible(true);
+    }
+}
+
 MainGUI::~MainGUI()
 {
     delete infoIndicator;
@@ -201,7 +215,7 @@ MainGUI::~MainGUI()
 #endif
 
     delete profilesWidget; profilesWidget = NULL;
-
+    delete myoStatusWidget; myoStatusWidget = NULL;
     delete keyboard; keyboard = NULL;
     delete distanceDisplayer; distanceDisplayer = NULL;
 }
@@ -309,6 +323,15 @@ void MainGUI::connectSignallerToProfileIcons(GestureSignaller *signaller)
         this, SLOT(handleChangeProfile(bool)));
 }
 
+void MainGUI::connectSignallerToMyoStatusWidget(ConnectionSignaller *signaller)
+{
+    QObject::connect(signaller, SIGNAL(emitBatteryLevel(int)),
+        myoStatusWidget, SLOT(handleBatteryLevelChange(int)));
+
+    QObject::connect(signaller, SIGNAL(emitSignalStrength(int)),
+        myoStatusWidget, SLOT(handleSignalStrengthChange(int)));
+}
+
 void MainGUI::setupProfileIcons()
 {
 #ifdef SHOW_PROFILE_ICONS
@@ -377,6 +400,8 @@ void MainGUI::ShowContextMenu(const QPoint& pos)
     myMenu.addAction(settingsStr);
     QString profileStr = "Toggle Profile Selection";
     myMenu.addAction(profileStr);
+    QString batteryStr = "Toggle Battery Indicator";
+    myMenu.addAction(batteryStr);
 
     QAction* selectedItem = myMenu.exec(globalPos);
     if (selectedItem)
@@ -390,6 +415,10 @@ void MainGUI::ShowContextMenu(const QPoint& pos)
         else if (selStr.compare(profileStr) == 0)
         {
             toggleProfileDisplayer();
+        }
+        else if (selStr.compare(batteryStr) == 0)
+        {
+            toggleMyoStatusWidget();
         }
     }
     else

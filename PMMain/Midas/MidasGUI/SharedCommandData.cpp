@@ -217,6 +217,21 @@ void SharedCommandData::setRssi(float rssi)
 	rssiMutex.unlock();
 }
 
+unsigned int SharedCommandData::getBatteryLevel()
+{
+    batteryLevelMutex.lock();
+    unsigned int retVal = this->batteryLevel;
+    batteryLevelMutex.unlock();
+    return retVal;
+}
+
+void SharedCommandData::setBatteryLevel(unsigned int batteryLevel)
+{
+    batteryLevelMutex.lock();
+    this->batteryLevel = batteryLevel;
+    batteryLevelMutex.unlock();
+}
+
 bool SharedCommandData::getIsConnected()
 {
     isConnectedMutex.lock();
@@ -305,6 +320,12 @@ void SharedCommandData::process()
 	    boost::any value = input[RSSI_INPUT];
 	    extractRssi(value);
     }
+
+    if (input.find(BATTERY_LEVEL_INPUT) != input.end())
+    {
+        boost::any value = input[BATTERY_LEVEL_INPUT];
+        extractBattery(value);
+    }
 }
 
 void SharedCommandData::empty()
@@ -381,6 +402,20 @@ void SharedCommandData::extractRssi(boost::any value)
 		float rssi = boost::any_cast<float> (value);
 		setRssi(rssi);
 	}
+}
+
+void SharedCommandData::extractBattery(boost::any value)
+{
+    if (value.type() != typeid(unsigned int))
+    {
+        Filter::setFilterError(filterError::INVALID_INPUT);
+        Filter::setFilterStatus(filterStatus::FILTER_ERROR);
+    }
+    else
+    {
+        unsigned int batteryLevel = boost::any_cast<unsigned int> (value);
+        setBatteryLevel(batteryLevel);
+    }
 }
 
 void SharedCommandData::extractIsConnected(boost::any value)

@@ -113,6 +113,9 @@ private:
     ConnectionSignaller *connSignaller; // owned
     static SettingsSignaller settingsSignaller;
 
+    int prevMyoBatLevel;
+    int prevMyoRssi;
+
     ProfileManager *pm; // not owned
 };
 

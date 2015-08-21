@@ -257,7 +257,162 @@
                     </command>
                 </commands>
             </sequence>
-			<sequence state="gestureMode" name="Rotate 2D Atrium">
+			<sequence state="gestureMode" name="Shift+Scroll">
+                <gestures>
+                    <gesture type="tap">doubleTap</gesture>
+					<gesture type="immediate">waveIn</gesture>
+                </gestures>
+                <commands>
+                    <command type="stateChange">
+                        <actions>
+                            <action>gestureHoldFour</action>
+                        </actions>
+                    </command>
+                </commands>
+            </sequence>
+            <sequence state="gestureMode" name="Lock">
+                <gestures>
+                    <gesture type="tap">doubleTap</gesture>
+                    <gesture type="immediate">doubleTap</gesture>
+                </gestures>
+                <commands>
+                    <command type="stateChange">
+                        <actions>
+                            <action>lockMode</action>
+                        </actions>
+                    </command>
+                </commands>
+            </sequence>
+        </sequences>
+        <holds>
+			<hold id="4">
+                <angle type="pitch">
+                    <anglePositive>
+						<command type="mouse">
+							<actions>
+								<action>shiftScrollUp</action>
+							</actions>
+						</command>
+                    </anglePositive>
+					<angleNegative>
+						<command type="mouse">
+							<actions>
+								<action>shiftScrollDown</action>
+							</actions>
+						</command>
+					</angleNegative>
+					<sensitivity>2.5</sensitivity>
+                </angle>
+				<holdModeActionType>absDeltaFinite</holdModeActionType>
+				<intervalLength>100</intervalLength>
+				<intervalExecMultiplier>1</intervalExecMultiplier>
+				<intervalMaxExecs>1</intervalMaxExecs>
+            </hold>
+		</holds>	
+    </profile>
+	<profile name="Ashkan2">
+        <sequences>
+            <sequence state="lockMode" name="Unlock">
+                <gestures>
+                    <gesture type="tap">doubleTap</gesture>
+                    <gesture type="immediate">doubleTap</gesture>
+                </gestures>
+                <commands>
+                    <command type="stateChange">
+                        <actions>
+                            <action>gestureMode</action>
+                        </actions>
+                    </command>
+                </commands>
+            </sequence>
+			<sequence state="gestureMode" name="Left Click">
+                <gestures>
+                    <gesture type="tap">waveIn</gesture>
+                </gestures>
+                <commands>
+                    <command type="mouse">
+                        <actions>
+                            <action>leftClick</action>
+                        </actions>
+                    </command>
+                </commands>
+            </sequence>
+            <sequence state="gestureMode" name="Left Hold">
+                <gestures>
+                    <gesture type="hold">waveIn</gesture>
+                </gestures>
+                <commands>
+                    <command type="stateChange">
+                        <actions>
+                            <action>mouseMode</action>
+                        </actions>
+                    </command>
+                    <command type="mouse">
+                        <actions>
+                            <action>leftHold</action>
+                        </actions>
+                    </command>
+                </commands>
+            </sequence>
+			<sequence state="gestureMode" name="Middle Hold">
+                <gestures>
+                    <gesture type="immediate">fist</gesture>
+                </gestures>
+                <commands>
+                    <command type="stateChange">
+                        <actions>
+                            <action>mouseMode</action>
+                        </actions>
+                    </command>
+                    <command type="mouse">
+                        <actions>
+                            <action>middleHold</action>
+                        </actions>
+                    </command>
+                </commands>
+            </sequence>
+            <sequence state="gestureMode" name="Right Click">
+                <gestures>
+                    <gesture type="immediate">waveOut</gesture>
+                </gestures>
+                <commands>
+                    <command type="mouse">
+                        <actions>
+                            <action>rightClick</action>
+                        </actions>
+                    </command>
+                </commands>
+            </sequence>
+			<sequence state="gestureMode" name="Move Cursor">
+                <gestures>
+                    <gesture type="immediate">fingersSpread</gesture>
+                </gestures>
+                <commands>
+                    <command type="stateChange">
+                        <actions>
+                            <action>mouseMode</action>
+                        </actions>
+                    </command>
+                </commands>
+            </sequence>
+            <sequence state="mouseMode" name="Release Cursor">
+                <gestures>
+                    <gesture type="immediate">rest</gesture>
+                </gestures>
+                <commands>
+                    <command type="stateChange">
+                        <actions>
+                            <action>gestureMode</action>
+                        </actions>
+                    </command>
+                    <command type="mouse">
+                        <actions>
+                            <action>releaseLrmButs</action>
+                        </actions>
+                    </command>
+                </commands>
+            </sequence>
+			<sequence state="gestureMode" name="Shift+Scroll">
                 <gestures>
                     <gesture type="tap">doubleTap</gesture>
 					<gesture type="immediate">waveIn</gesture>
@@ -396,22 +551,9 @@
                     </command>
                 </commands>
             </sequence>
-			<sequence state="gestureMode" name="Rotate Atrium*">
+			<sequence state="gestureMode" name="Rotate Atrium">
                 <gestures>
                     <gesture type="immediate">waveIn</gesture>
-                </gestures>
-                <commands>
-                    <command type="stateChange">
-                        <actions>
-                            <action>gestureHoldThree</action>
-                        </actions>
-                    </command>
-                </commands>
-            </sequence>
-			<sequence state="gestureMode" name="Rotate Atrium*">
-                <gestures>
-                    <gesture type="tap">doubleTap</gesture>
-					<gesture type="immediate">fingersSpread</gesture>
                 </gestures>
                 <commands>
                     <command type="stateChange">
@@ -424,12 +566,12 @@
 			<sequence state="gestureMode" name="Rotate Atrium">
                 <gestures>
                     <gesture type="tap">doubleTap</gesture>
-					<gesture type="immediate">fist</gesture>
+					<gesture type="immediate">fingersSpread</gesture>
                 </gestures>
                 <commands>
                     <command type="stateChange">
                         <actions>
-                            <action>gestureHoldTwo</action>
+                            <action>gestureHoldThree</action>
                         </actions>
                     </command>
                 </commands>

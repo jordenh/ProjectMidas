@@ -41,6 +41,9 @@ public:
     void setIsRightHand(bool isRightHand) { this->isRightHand = isRightHand; }
     bool getIsRightHand() { return isRightHand; }
 
+    void setBatteryLevel(unsigned int batLevel) { this->batteryLevel = batLevel; }
+    unsigned int getBatteryLevel() { return batteryLevel; }
+
 signals:
     void emitDisconnect();
     void emitConnect();
@@ -49,10 +52,15 @@ signals:
 
     void emitIsRightHand(bool);
 
+    void emitBatteryLevel(int);
+
+    void emitSignalStrength(int);
+
 private:
     bool currentlyConnected;
     bool currentlySynched;
     bool isRightHand;
+    unsigned int batteryLevel;
 };
 
 #endif // SETTINGS_SIGNALLER_H

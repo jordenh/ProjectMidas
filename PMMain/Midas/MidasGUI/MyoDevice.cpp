@@ -34,8 +34,7 @@
 #include <fstream>
 #include <time.h>
 
-#define MIN_RSSI_DELAY 3000
-#define MIN_BATTERY_LEVEL_DELAY 30000
+#define MIN_RSSI_DELAY 100
 
 ProfileSignaller MyoDevice::profileSignaller;
 
@@ -125,6 +124,8 @@ void MyoDevice::runDeviceLoop()
 
     advancedSyncPipeline.registerFilterAtDeepestLevel(WearableDevice::sharedData);
 
+    advancedBatteryPipeline.registerFilterAtDeepestLevel(WearableDevice::sharedData);
+
 	profileSignaller.setControlStateHandle(state);
     if (profileManager->getProfiles()->size() > 0)
     {
@@ -134,12 +135,9 @@ void MyoDevice::runDeviceLoop()
 
     std::chrono::milliseconds rssi_start =
         std::chrono::duration_cast<std::chrono::milliseconds>(
-            std::chrono::steady_clock::now().time_since_epoch()); /* Used to control when to request rssi */
+        std::chrono::steady_clock::now().time_since_epoch()); /* Used to control when to request rssi */
+    rssi_start -= std::chrono::milliseconds(MIN_RSSI_DELAY);
     std::chrono::milliseconds current_time;
-
-	std::chrono::milliseconds battery_start =
-		std::chrono::duration_cast<std::chrono::milliseconds>(
-		std::chrono::steady_clock::now().time_since_epoch()); /* Used to control when to request battery levels */
 
     Hub* hub;
     try
@@ -166,6 +164,9 @@ void MyoDevice::runDeviceLoop()
 
         MyoCallbacks myoCallbacks(*this);
         hub->addListener(&myoCallbacks);
+
+        // update battery level before main loop. Then it gets called asynchronously when the level of the Myo changes.
+        myo->requestBatteryLevel();
 
         while (true)
         {
@@ -194,12 +195,6 @@ void MyoDevice::runDeviceLoop()
                 myo->requestRssi();
                 rssi_start = current_time;
             }
-
-			if ((current_time - battery_start).count() > MIN_BATTERY_LEVEL_DELAY)
-			{
-				myo->requestBatteryLevel();
-                battery_start = current_time;
-			}
 
             hub->run(durationInMilliseconds);
             
@@ -267,11 +262,13 @@ void MyoDevice::setupOrientationPipeline()
 
 void MyoDevice::setupRSSIPipeline()
 {
-    genAvgFilterRSSI = new GenericAveragingFilter(5, RSSI);
+   //genAvgFilterRSSI = new GenericAveragingFilter(5, RSSI);
+   //
+   //advancedRssiPipeline.registerFilterAtDeepestLevel(genAvgFilterRSSI);
+   //
+   //advancedRssiPipeline.registerFilterAtNewLevel(WearableDevice::sharedData);
 
-    advancedRssiPipeline.registerFilterAtDeepestLevel(genAvgFilterRSSI);
-
-    advancedRssiPipeline.registerFilterAtNewLevel(WearableDevice::sharedData);
+    advancedRssiPipeline.registerFilterAtDeepestLevel(WearableDevice::sharedData);
 }
 
 void MyoDevice::setupEmgImpusePipeline()
@@ -421,11 +418,22 @@ void MyoDevice::MyoCallbacks::onDisconnect(Myo* myo, uint64_t timestamp) {
         filterDataMap input2;
         input2[GESTURE_FILTER_STATE_CHANGE] = midasMode::LOCK_MODE;
         lockPipe.startPipeline(input2);
+
+        // set battery and signal values to off
+        filterDataMap input3;
+        input3[BATTERY_LEVEL_INPUT] = 0;
+        parent.advancedBatteryPipeline.startPipeline(input3);
+
+        filterDataMap input4;
+        input4[RSSI] = -999; // extremely low.
+        parent.advancedRssiPipeline.startPipeline(input4);
     }
 }
 
 void MyoDevice::MyoCallbacks::onArmSync(Myo *myo, uint64_t timestamp, Arm arm, XDirection xDirection, float rotation, WarmupState warmupState)
 {
+    myo->requestBatteryLevel();
+
     parent.setMyoExtraData(myo, arm, xDirection, rotation);
     std::cout << "on arm sync." << std::endl;
 
@@ -487,6 +495,10 @@ void MyoDevice::MyoCallbacks::onLock(Myo* myo, uint64_t timestamp)
 void MyoDevice::MyoCallbacks::onBatteryLevelReceived(myo::Myo* myo, uint64_t timestamp, uint8_t level)
 {
 	std::cout << "onBatteryLevelReceived." << std::endl;
+
+    filterDataMap input;
+    input[BATTERY_LEVEL_INPUT] = (unsigned int)level;
+    parent.advancedBatteryPipeline.startPipeline(input);
 }
 
 void MyoDevice::MyoCallbacks::onEmgData(myo::Myo* myo, uint64_t timestamp, const int8_t* emg)
@@ -519,7 +531,8 @@ void MyoDevice::MyoCallbacks::onWarmupCompleted(myo::Myo* myo, uint64_t timestam
 
 void MyoDevice::MyoCallbacks::onRssi(Myo* myo, uint64_t timestamp, int8_t rssi) {
 	std::cout << "on rssi." << std::endl;
-	filterDataMap input;
+
+    filterDataMap input;
 	input[RSSI] = static_cast<float>(rssi);
 
     parent.advancedRssiPipeline.startPipeline(input);

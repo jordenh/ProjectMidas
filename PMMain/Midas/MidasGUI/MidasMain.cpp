@@ -116,7 +116,7 @@ int midasMain(MidasThread *threadHandle, MainGUI *mainGui, ProfileManager *pm, s
     {
         // Improve performance by a tremendous amount by sleeping in this loop for a short
         // period of time (ie 15% CPU down to 2% on an i7).
-       Sleep(2);
+       Sleep(3);
 
        if (myoDevice->getDeviceStatus() != deviceStatus::RUNNING) 
            break;
