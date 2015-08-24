@@ -172,69 +172,40 @@ void MyoDevice::runDeviceLoop()
 
         while (true)
         {
-            try{
-            if (WearableDevice::stopDeviceRequested())
+            if (WearableDevice::stopDeviceRequested()) 
             {
                 break;
             }
-            }
-            catch (const std::exception& e)
-            {
-                int a = 1;
-            }
 
-            try{
             filterDataMap extraData = gestureFilter.getExtraDataForSCD();
             if (extraData.size() > 0)
             {
                 WearableDevice::sharedData->setInput(extraData);
                 WearableDevice::sharedData->process();
             }
-            }
-            catch (const std::exception& e)
+
+			if (state->getProfile() != prevProfileName)
             {
-                int a = 1;
-            }
-            try {
-            if (state->getProfile() != prevProfileName)
-            {
-                prevProfileName = state->getProfile();
+				prevProfileName = state->getProfile();
                 updateProfiles();
             }
-            }
-            catch (const std::exception& e)
+
+			current_time = std::chrono::duration_cast<std::chrono::milliseconds>(
+                std::chrono::steady_clock::now().time_since_epoch());
+			if ((current_time - rssi_start).count() > MIN_RSSI_DELAY)
             {
-                int a = 1;
+                //if (myo)
+                //{
+                //    myo->requestRssi();
+                //}
+                //else
+                //{
+                //    myo = hub->waitForMyo(myoFindTimeout);
+                //}
+                rssi_start = current_time;
             }
 
-            try {
-                current_time = std::chrono::duration_cast<std::chrono::milliseconds>(
-                    std::chrono::steady_clock::now().time_since_epoch());
-                if ((current_time - rssi_start).count() > MIN_RSSI_DELAY)
-                {
-                    //if (myo)
-                    //{
-                    //    myo->requestRssi();
-                    //}
-                    //else
-                    //{
-                    //    myo = hub->waitForMyo(myoFindTimeout);
-                    //}
-                    rssi_start = current_time;
-                }
-            }
-            catch (const std::exception& e)
-            {
-                int a = 1;
-            }
-
-            try {
-            hub->run(durationInMilliseconds);
-            }
-            catch (const std::exception& e)
-            {
-                int a = 1;
-            }
+            hub->run(durationInMilliseconds); // this line is causing th exception on a disconnect of the only Myo
             
         }
     }
