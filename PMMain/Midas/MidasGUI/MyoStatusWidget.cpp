@@ -23,8 +23,8 @@
 #include "qprogressbar.h"
 #include "qlabel.h"
 
-#define BATTERY_ICON_WIDTH 220
-
+#define BATTERY_ICON_WIDTH 240
+#define SIGNAL_ICON_WIDTH 240
 
 
 MyoStatusWidget::MyoStatusWidget(int widgetWidth, int widgetHeight, QWidget *parent)
@@ -49,11 +49,40 @@ MyoStatusWidget::MyoStatusWidget(int widgetWidth, int widgetHeight, QWidget *par
     QFont timesFont("Times", 11, QFont::Bold, true);
     QLabel *title1 = new QLabel("Battery Level");
     title1->setFont(timesFont);
-    layout->addWidget(title1, 0, Qt::AlignCenter);
+    layout->addWidget(title1, 0, Qt::AlignCenter); 
     batteryLevelBar = new QProgressBar(this);
     batteryLevelBar->setStyleSheet("color: blue");
-    lowValueStyle = "QProgressBar::chunk {background: QLinearGradient( x1: 0, y1: 0, x2: 1, y2: 0,stop: 0 #FF0350,stop: 0.4999 #FF0020,stop: 0.5 #FF0019,stop: 1 #FF0000 );border-bottom-right-radius: 5px;border-bottom-left-radius: 5px;border: .px solid black;}";
-    highValueStyle = "QProgressBar::chunk {background: QLinearGradient( x1: 0, y1: 0, x2: 1, y2: 0,stop: 0 #78d,stop: 0.4999 #46a,stop: 0.5 #45a,stop: 1 #238 );border-bottom-right-radius: 7px;border-bottom-left-radius: 7px;border: 1px solid black;}";
+    lowBatteryValueStyle = "QProgressBar::chunk {background: QLinearGradient( x1: 0, y1: 0, x2: 1, y2: 0,stop: 0 #FF0350,stop: 0.4999 #FF0020,stop: 0.5 #FF0019,stop: 1 #FF0000 ); border-radius: 3px;}"
+        "QProgressBar{"
+        "border: 2px solid grey;"
+        "border-radius: 5px;"
+        "text-align: center;"
+        "}";
+    highBatteryValueStyle = "QProgressBar::chunk {background: QLinearGradient( x1: 0, y1: 0, x2: 1, y2: 0,stop: 0 #78d,stop: 0.4999 #46a,stop: 0.5 #45a,stop: 1 #238 ); border-radius: 3px;}"
+        "QProgressBar{"
+        "border: 2px solid grey;"
+        "border-radius: 5px;"
+        "text-align: center;"
+        "}";
+
+    lowSignalStyle = "QProgressBar::chunk {background-color: #FF0350;"
+        "width: 57px;"
+        "margin: 1px;"
+        "border-radius: 2px;"
+        "}"
+        "QProgressBar{"
+        "border: 2px solid grey;"
+        "border-radius: 5px;"
+        "}";
+    highSignalStyle = "QProgressBar::chunk {background-color: #05B8CC;"
+        "width: 57px;"
+        "margin: 1px;"
+        "border-radius: 2px;"
+        "}"
+        "QProgressBar{"
+        "border: 2px solid grey;"
+        "border-radius: 5px;"
+        "}";
 
     layout->addWidget(batteryLevelBar);
 
@@ -63,6 +92,7 @@ MyoStatusWidget::MyoStatusWidget(int widgetWidth, int widgetHeight, QWidget *par
     signalStrengthBar = new QProgressBar(this);
     signalStrengthBar->setMinimum(0);
     signalStrengthBar->setMaximum(100);
+    signalStrengthBar->setTextVisible(false);
     layout->addWidget(signalStrengthBar);
 
     setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
@@ -103,21 +133,21 @@ void MyoStatusWidget::updateGUI()
     batteryLevelBar->setValue(batteryLevel);
     if (batteryLevel < LOW_BATTERY_THRESHOLD)
     {
-        batteryLevelBar->setStyleSheet(lowValueStyle);
+        batteryLevelBar->setStyleSheet(lowBatteryValueStyle);
     }
     else
     {
-        batteryLevelBar->setStyleSheet(highValueStyle);
+        batteryLevelBar->setStyleSheet(highBatteryValueStyle);
     }
 
-    signalStrengthBar->setMinimumWidth(BATTERY_ICON_WIDTH);
+    signalStrengthBar->setMinimumWidth(SIGNAL_ICON_WIDTH);
     signalStrengthBar->setValue(signalStrength);
     if (signalStrength < LOW_SIGNAL_THRESHOLD)
     {
-        signalStrengthBar->setStyleSheet(lowValueStyle);
+        signalStrengthBar->setStyleSheet(lowSignalStyle);
     }
     else
     {
-        signalStrengthBar->setStyleSheet(highValueStyle);
+        signalStrengthBar->setStyleSheet(highSignalStyle);
     }
 }

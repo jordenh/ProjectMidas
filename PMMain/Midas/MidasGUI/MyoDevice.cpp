@@ -390,6 +390,8 @@ void MyoDevice::MyoCallbacks::onUnpair(Myo* myo, uint64_t timestamp) {
     std::cout << "on unpair." << std::endl;
 }
 void MyoDevice::MyoCallbacks::onConnect(Myo* myo, uint64_t timestamp, FirmwareVersion firmwareVersion) {
+    myo->requestBatteryLevel();
+    
     std::cout << "on connect." << std::endl;
     filterDataMap input;
     input[ISCONNECTED_INPUT] = true;
