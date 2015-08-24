@@ -53,6 +53,7 @@ class MyoState;
 class MainGUI;
 class ProfileManager;
 class GenericAveragingFilter;
+class GenericWindowMaxFilter;
 class GenericBypassFilter;
 class MyoTranslationFilter;
 
@@ -211,6 +212,7 @@ private:
     EMGImpulseFilter emgImpulseFilter;
     // owned filters
     GenericAveragingFilter *genAvgFilterRSSI;
+    GenericWindowMaxFilter *genWinMaxFilterRSSI;
 
     GenericAveragingFilter *genAvgFilterQX;
     GenericAveragingFilter *genAvgFilterQY;

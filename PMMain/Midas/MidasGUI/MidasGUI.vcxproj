@@ -283,10 +283,12 @@ COPY "$(ProjectDir)Qt\Qt5Widgetsd.dll" "$(OutDir)"</Command>
     <ClCompile Include="SettingsSignaller.cpp" />
     <ClCompile Include="SharedCommandData.cpp" />
     <ClCompile Include="WearableDevice.cpp" />
+    <ClCompile Include="GenericWindowMaxFilter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AdvancedFilterPipeline.h" />
     <ClInclude Include="BaseMeasurements.h" />
+    <ClInclude Include="GenericWindowMaxFilter.h" />
     <CustomBuild Include="MyoStatusWidget.h">
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath);$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing MyoStatusWidget.h...</Message>

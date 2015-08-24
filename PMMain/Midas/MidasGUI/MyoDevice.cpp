@@ -23,6 +23,7 @@
 #include "MyoTranslationFilter.h"
 #include "GenericAveragingFilter.h"
 #include "GenericBypassFilter.h"
+#include "GenericWindowMaxFilter.h"
 #include "SharedCommandData.h"
 #include "EMGImpulseFilter.h"
 #include "ControlState.h"
@@ -34,7 +35,7 @@
 #include <fstream>
 #include <time.h>
 
-#define MIN_RSSI_DELAY 100
+#define MIN_RSSI_DELAY 2000
 
 ProfileSignaller MyoDevice::profileSignaller;
 
@@ -86,6 +87,7 @@ MyoDevice::MyoDevice(SharedCommandData* sharedCommandData, ControlState* control
 MyoDevice::~MyoDevice()
 {
     delete genAvgFilterRSSI; genAvgFilterRSSI = NULL;
+    delete genWinMaxFilterRSSI; genWinMaxFilterRSSI = NULL;
 
     delete genAvgFilterQX; genAvgFilterQX = NULL;
     delete genAvgFilterQY; genAvgFilterQY = NULL;
@@ -192,11 +194,18 @@ void MyoDevice::runDeviceLoop()
                 std::chrono::steady_clock::now().time_since_epoch());
 			if ((current_time - rssi_start).count() > MIN_RSSI_DELAY)
             {
-                myo->requestRssi();
+                //if (myo)
+                //{
+                //    myo->requestRssi();
+                //}
+                //else
+                //{
+                //    myo = hub->waitForMyo(myoFindTimeout);
+                //}
                 rssi_start = current_time;
             }
 
-            hub->run(durationInMilliseconds);
+            hub->run(durationInMilliseconds); // this line is causing th exception on a disconnect of the only Myo
             
         }
     }
@@ -262,11 +271,13 @@ void MyoDevice::setupOrientationPipeline()
 
 void MyoDevice::setupRSSIPipeline()
 {
-   //genAvgFilterRSSI = new GenericAveragingFilter(5, RSSI);
+   genAvgFilterRSSI = new GenericAveragingFilter(5, RSSI); // unused
    //
    //advancedRssiPipeline.registerFilterAtDeepestLevel(genAvgFilterRSSI);
    //
    //advancedRssiPipeline.registerFilterAtNewLevel(WearableDevice::sharedData);
+
+    genWinMaxFilterRSSI = new GenericWindowMaxFilter(5, RSSI); // unused
 
     advancedRssiPipeline.registerFilterAtDeepestLevel(WearableDevice::sharedData);
 }
@@ -425,7 +436,7 @@ void MyoDevice::MyoCallbacks::onDisconnect(Myo* myo, uint64_t timestamp) {
         parent.advancedBatteryPipeline.startPipeline(input3);
 
         filterDataMap input4;
-        input4[RSSI] = -999; // extremely low.
+        input4[RSSI] = -999; // extremely low db level.
         parent.advancedRssiPipeline.startPipeline(input4);
     }
 }
@@ -533,7 +544,7 @@ void MyoDevice::MyoCallbacks::onRssi(Myo* myo, uint64_t timestamp, int8_t rssi) 
 	std::cout << "on rssi." << std::endl;
 
     filterDataMap input;
-	input[RSSI] = static_cast<float>(rssi);
+	input[RSSI] = static_cast<int>(rssi);
 
     parent.advancedRssiPipeline.startPipeline(input);
 }

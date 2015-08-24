@@ -338,6 +338,9 @@
     <ClCompile Include="GeneratedFiles\Release\moc_MyoStatusWidget.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
+    <ClCompile Include="GenericWindowMaxFilter.cpp">
+      <Filter>Source Files\Midas\Filters</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="MouseIndicator.h">
@@ -488,6 +491,9 @@
     </ClInclude>
     <ClInclude Include="ProfileCommon.h">
       <Filter>Header Files\Midas\Profiles</Filter>
+    </ClInclude>
+    <ClInclude Include="GenericWindowMaxFilter.h">
+      <Filter>Header Files\Midas\Filters</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
