@@ -50,7 +50,7 @@ private:
     unsigned int batteryLevel;
     int signalStrength;
 
-    QString lowBatteryValueStyle, highBatteryValueStyle, lowSignalStyle, highSignalStyle;
+    QString lowBatteryValueStyle, highBatteryValueStyle, lowSignalStyle, medSignalStyle, highSignalStyle;
 
     QVBoxLayout *layout;
     QProgressBar *batteryLevelBar;

@@ -74,7 +74,16 @@ MyoStatusWidget::MyoStatusWidget(int widgetWidth, int widgetHeight, QWidget *par
         "border: 2px solid grey;"
         "border-radius: 5px;"
         "}";
-    highSignalStyle = "QProgressBar::chunk {background-color: #00BCDF;"
+    medSignalStyle = "QProgressBar::chunk {background-color: #00BCDF;"
+        "width: 57px;"
+        "margin: 1px;"
+        "border-radius: 2px;"
+        "}"
+        "QProgressBar{"
+        "border: 2px solid grey;"
+        "border-radius: 5px;"
+        "}";
+    highSignalStyle = "QProgressBar::chunk {background-color: #00EB34;"
         "width: 57px;"
         "margin: 1px;"
         "border-radius: 2px;"
@@ -145,6 +154,10 @@ void MyoStatusWidget::updateGUI()
     if (signalStrength < LOW_SIGNAL_THRESHOLD)
     {
         signalStrengthBar->setStyleSheet(lowSignalStyle);
+    }
+    if (signalStrength < HIGH_SIGNAL_THRESHOLD)
+    {
+        signalStrengthBar->setStyleSheet(medSignalStyle);
     }
     else
     {
