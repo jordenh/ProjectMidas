@@ -53,6 +53,7 @@ class MyoState;
 class MainGUI;
 class ProfileManager;
 class GenericAveragingFilter;
+class GenericWindowMaxFilter;
 class GenericBypassFilter;
 class MyoTranslationFilter;
 
@@ -198,7 +199,8 @@ private:
     ControlState* state; // not owned
     MyoState* myoState; // not owned
     AdvancedFilterPipeline advancedPosePipeline, advancedOrientationPipeline,
-        advancedRssiPipeline, advancedConnectPipeline, advancedSyncPipeline, emgImpulsePipeline;
+        advancedRssiPipeline, advancedConnectPipeline, advancedSyncPipeline, emgImpulsePipeline,
+        advancedBatteryPipeline;
     MainGUI *mainGui; // not owned
 
     std::string prevProfileName;
@@ -210,6 +212,7 @@ private:
     EMGImpulseFilter emgImpulseFilter;
     // owned filters
     GenericAveragingFilter *genAvgFilterRSSI;
+    GenericWindowMaxFilter *genWinMaxFilterRSSI;
 
     GenericAveragingFilter *genAvgFilterQX;
     GenericAveragingFilter *genAvgFilterQY;

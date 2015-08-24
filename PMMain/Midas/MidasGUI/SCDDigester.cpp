@@ -48,12 +48,16 @@ SCDDigester::SCDDigester(SharedCommandData* scd, MidasThread *thread, ControlSta
 	this->pm = profileManagerHandle;
     this->count = 0;
 
+    prevMyoBatLevel = 0;
+    prevMyoRssi = 0;
+
 	this->kybrdRingData = kybrdRingData;
     connSignaller = new ConnectionSignaller();
     connSignaller->setCurrentlyConnected(false);
     connSignaller->setCurrentlySynched(false);
     mainGUI->connectSignallerToPoseDisplayer(connSignaller);
     mainGUI->connectSignallerToSequenceDisplayer(connSignaller);
+    mainGUI->connectSignallerToMyoStatusWidget(connSignaller);
 
     mainGUI->connectSignallerToSettingsDisplayer(&settingsSignaller);
 }
@@ -355,6 +359,28 @@ void SCDDigester::digestProfileChange(CommandData nextCmd)
 
 void SCDDigester::handleConnectionData()
 {
+    // battery levels
+    int currentBatteryLevel = scdHandle->getBatteryLevel();
+    if (currentBatteryLevel != prevMyoBatLevel)
+    {
+        connSignaller->emitBatteryLevel(currentBatteryLevel);
+        prevMyoBatLevel = currentBatteryLevel;
+    }
+    
+    // signal strength levels
+    float currentRssiAvg = scdHandle->getRssi();
+    if (currentRssiAvg != prevMyoRssi)
+    {
+        int signalStrength = (1.91*currentRssiAvg) + 170; // reverse engineered http://diagnostics.myo.com/ by plotting RSSI vs the site's signal percentage values and linearly interpolating.
+        //signalStrength = (signalStrength / 10) * 10; // Bin into every 10 percent (truncate data)
+        signalStrength = max(min(signalStrength, 100), 0);
+
+        //int signalStrength = rssiAvg;
+        connSignaller->emitSignalStrength(signalStrength);
+
+        prevMyoRssi = currentRssiAvg;
+    }
+
     // signall connection/sync
     if (scdHandle->getIsConnected() != connSignaller->getCurrentlyConnected())
     {

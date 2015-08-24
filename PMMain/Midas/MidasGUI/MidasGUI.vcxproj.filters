@@ -326,6 +326,21 @@
     <ClCompile Include="GeneratedFiles\Release\moc_ProfilesDisplayer.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_BatteryWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MyoStatusWidget.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_MyoStatusWidget.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_MyoStatusWidget.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GenericWindowMaxFilter.cpp">
+      <Filter>Source Files\Midas\Filters</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="MouseIndicator.h">
@@ -380,6 +395,9 @@
       <Filter>Header Files\Midas\Signallers</Filter>
     </CustomBuild>
     <CustomBuild Include="ProfilesDisplayer.h">
+      <Filter>Header Files\GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="MyoStatusWidget.h">
       <Filter>Header Files\GUI</Filter>
     </CustomBuild>
   </ItemGroup>
@@ -473,6 +491,9 @@
     </ClInclude>
     <ClInclude Include="ProfileCommon.h">
       <Filter>Header Files\Midas\Profiles</Filter>
+    </ClInclude>
+    <ClInclude Include="GenericWindowMaxFilter.h">
+      <Filter>Header Files\Midas\Filters</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

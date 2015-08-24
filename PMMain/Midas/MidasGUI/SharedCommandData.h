@@ -36,7 +36,7 @@
 class SharedCommandData : public Filter
 {
 public:
-    SharedCommandData(unsigned int maxKybdGuiSel) : Filter(), mouseVelocity(), impulseStatus(false), kybdGuiSel(0), isSynched(false), isConnected(false) { this->maxKybdGuiSel = maxKybdGuiSel; }
+    SharedCommandData(unsigned int maxKybdGuiSel) : Filter(), mouseVelocity(), impulseStatus(false), kybdGuiSel(0), isSynched(false), isConnected(false), batteryLevel(0) { this->maxKybdGuiSel = maxKybdGuiSel; }
 
     /**
      * Adds a command to the queue of commands. If another thread is modifying the command queue, 
@@ -131,16 +131,20 @@ public:
 	* Returns a float value corresponding to the rssi. This will block
 	* if another thread is using it.
 	*
-	* @return The rssi value as a float.
+	* @return The rssi value as a int.
 	*/
-	float getRssi();
+	int getRssi();
 
 	/**
 	* Sets the rssi. This will block if another thread is using it.
 	*
-	* @param float rssi
+	* @param int rssi
 	*/
-	void setRssi(float rssi);
+	void setRssi(int rssi);
+
+    unsigned int getBatteryLevel();
+
+    void setBatteryLevel(unsigned int batteryLevel);
 
 	void setDelta(vector2D delta);
 
@@ -217,7 +221,8 @@ public:
 
 private:
     point mouseVelocity;
-    float rssiAVG;
+    int rssiAVG;
+    unsigned int batteryLevel;
     bool isConnected;
     bool isSynched;
 
@@ -235,6 +240,7 @@ private:
     std::mutex myoOrientationMutex;
     std::mutex keySelectAngleMutex;
     std::mutex rssiMutex;
+    std::mutex batteryLevelMutex;
     std::mutex isConnectedMutex;
     std::mutex impulseStatusMutex;
     std::mutex isSynchedMutex;
@@ -250,6 +256,7 @@ private:
 	unsigned int kybdGuiSel;
 	void extractKeySelectAngle(boost::any value);
 	void extractRssi(boost::any value);
+    void extractBattery(boost::any value);
 };
 
 #endif /* _SHARED_COMMAND_DATA_H */
