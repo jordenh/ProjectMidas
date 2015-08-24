@@ -23,6 +23,7 @@
 #include "MyoTranslationFilter.h"
 #include "GenericAveragingFilter.h"
 #include "GenericBypassFilter.h"
+#include "GenericWindowMaxFilter.h"
 #include "SharedCommandData.h"
 #include "EMGImpulseFilter.h"
 #include "ControlState.h"
@@ -34,7 +35,7 @@
 #include <fstream>
 #include <time.h>
 
-#define MIN_RSSI_DELAY 100
+#define MIN_RSSI_DELAY 2000
 
 ProfileSignaller MyoDevice::profileSignaller;
 
@@ -86,6 +87,7 @@ MyoDevice::MyoDevice(SharedCommandData* sharedCommandData, ControlState* control
 MyoDevice::~MyoDevice()
 {
     delete genAvgFilterRSSI; genAvgFilterRSSI = NULL;
+    delete genWinMaxFilterRSSI; genWinMaxFilterRSSI = NULL;
 
     delete genAvgFilterQX; genAvgFilterQX = NULL;
     delete genAvgFilterQY; genAvgFilterQY = NULL;
@@ -170,33 +172,69 @@ void MyoDevice::runDeviceLoop()
 
         while (true)
         {
-            if (WearableDevice::stopDeviceRequested()) 
+            try{
+            if (WearableDevice::stopDeviceRequested())
             {
                 break;
             }
+            }
+            catch (const std::exception& e)
+            {
+                int a = 1;
+            }
 
+            try{
             filterDataMap extraData = gestureFilter.getExtraDataForSCD();
             if (extraData.size() > 0)
             {
                 WearableDevice::sharedData->setInput(extraData);
                 WearableDevice::sharedData->process();
             }
-
-			if (state->getProfile() != prevProfileName)
+            }
+            catch (const std::exception& e)
             {
-				prevProfileName = state->getProfile();
+                int a = 1;
+            }
+            try {
+            if (state->getProfile() != prevProfileName)
+            {
+                prevProfileName = state->getProfile();
                 updateProfiles();
             }
-
-			current_time = std::chrono::duration_cast<std::chrono::milliseconds>(
-                std::chrono::steady_clock::now().time_since_epoch());
-			if ((current_time - rssi_start).count() > MIN_RSSI_DELAY)
+            }
+            catch (const std::exception& e)
             {
-                myo->requestRssi();
-                rssi_start = current_time;
+                int a = 1;
             }
 
+            try {
+                current_time = std::chrono::duration_cast<std::chrono::milliseconds>(
+                    std::chrono::steady_clock::now().time_since_epoch());
+                if ((current_time - rssi_start).count() > MIN_RSSI_DELAY)
+                {
+                    //if (myo)
+                    //{
+                    //    myo->requestRssi();
+                    //}
+                    //else
+                    //{
+                    //    myo = hub->waitForMyo(myoFindTimeout);
+                    //}
+                    rssi_start = current_time;
+                }
+            }
+            catch (const std::exception& e)
+            {
+                int a = 1;
+            }
+
+            try {
             hub->run(durationInMilliseconds);
+            }
+            catch (const std::exception& e)
+            {
+                int a = 1;
+            }
             
         }
     }
@@ -262,11 +300,13 @@ void MyoDevice::setupOrientationPipeline()
 
 void MyoDevice::setupRSSIPipeline()
 {
-   //genAvgFilterRSSI = new GenericAveragingFilter(5, RSSI);
+   genAvgFilterRSSI = new GenericAveragingFilter(5, RSSI); // unused
    //
    //advancedRssiPipeline.registerFilterAtDeepestLevel(genAvgFilterRSSI);
    //
    //advancedRssiPipeline.registerFilterAtNewLevel(WearableDevice::sharedData);
+
+    genWinMaxFilterRSSI = new GenericWindowMaxFilter(5, RSSI); // unused
 
     advancedRssiPipeline.registerFilterAtDeepestLevel(WearableDevice::sharedData);
 }
@@ -425,7 +465,7 @@ void MyoDevice::MyoCallbacks::onDisconnect(Myo* myo, uint64_t timestamp) {
         parent.advancedBatteryPipeline.startPipeline(input3);
 
         filterDataMap input4;
-        input4[RSSI] = -999; // extremely low.
+        input4[RSSI] = -999; // extremely low db level.
         parent.advancedRssiPipeline.startPipeline(input4);
     }
 }
@@ -533,7 +573,7 @@ void MyoDevice::MyoCallbacks::onRssi(Myo* myo, uint64_t timestamp, int8_t rssi) 
 	std::cout << "on rssi." << std::endl;
 
     filterDataMap input;
-	input[RSSI] = static_cast<float>(rssi);
+	input[RSSI] = static_cast<int>(rssi);
 
     parent.advancedRssiPipeline.startPipeline(input);
 }

@@ -131,16 +131,16 @@ public:
 	* Returns a float value corresponding to the rssi. This will block
 	* if another thread is using it.
 	*
-	* @return The rssi value as a float.
+	* @return The rssi value as a int.
 	*/
-	float getRssi();
+	int getRssi();
 
 	/**
 	* Sets the rssi. This will block if another thread is using it.
 	*
-	* @param float rssi
+	* @param int rssi
 	*/
-	void setRssi(float rssi);
+	void setRssi(int rssi);
 
     unsigned int getBatteryLevel();
 
@@ -221,7 +221,7 @@ public:
 
 private:
     point mouseVelocity;
-    float rssiAVG;
+    int rssiAVG;
     unsigned int batteryLevel;
     bool isConnected;
     bool isSynched;
