@@ -65,7 +65,7 @@ MyoStatusWidget::MyoStatusWidget(int widgetWidth, int widgetHeight, QWidget *par
         "text-align: center;"
         "}";
 
-    lowSignalStyle = "QProgressBar::chunk {background-color: #FF0350;"
+    lowSignalStyle = "QProgressBar::chunk {background-color: #FF1800;"
         "width: 57px;"
         "margin: 1px;"
         "border-radius: 2px;"
@@ -74,7 +74,7 @@ MyoStatusWidget::MyoStatusWidget(int widgetWidth, int widgetHeight, QWidget *par
         "border: 2px solid grey;"
         "border-radius: 5px;"
         "}";
-    highSignalStyle = "QProgressBar::chunk {background-color: #05B8CC;"
+    highSignalStyle = "QProgressBar::chunk {background-color: #00BCDF;"
         "width: 57px;"
         "margin: 1px;"
         "border-radius: 2px;"
