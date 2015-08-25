@@ -47,7 +47,6 @@ public:
     void checkFWAndUpdate();
 
 private:
-    QPoint position;
     int indWidth, indHeight;
 
     QComboBox *helpLevelComboBox;

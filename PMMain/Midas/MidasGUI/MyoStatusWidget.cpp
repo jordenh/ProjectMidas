@@ -29,7 +29,7 @@
 
 MyoStatusWidget::MyoStatusWidget(int widgetWidth, int widgetHeight, QWidget *parent)
 {
-    indHeight = widgetWidth; indHeight = widgetHeight;
+    indWidth = widgetWidth; indHeight = widgetHeight;
 
     setToolTip(tr("Drag the Status Widget with the left mouse button."));
     setWindowTitle(tr("Myo Status Indicator"));
