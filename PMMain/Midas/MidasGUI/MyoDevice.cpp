@@ -93,11 +93,11 @@ MyoDevice::~MyoDevice()
     delete genAvgFilterQY; genAvgFilterQY = NULL;
     delete genAvgFilterQZ; genAvgFilterQZ = NULL;
     delete genAvgFilterQW; genAvgFilterQW = NULL;
-    
+
     delete genAvgFilterAY; genAvgFilterAY = NULL;
     delete genAvgFilterAZ; genAvgFilterAZ = NULL;
     delete genAvgFilterAW; genAvgFilterAW = NULL;
-    
+
     delete genAvgFilterGY; genAvgFilterGY = NULL;
     delete genAvgFilterGZ; genAvgFilterGZ = NULL;
     delete genAvgFilterGW; genAvgFilterGW = NULL;
@@ -128,12 +128,12 @@ void MyoDevice::runDeviceLoop()
 
     advancedBatteryPipeline.registerFilterAtDeepestLevel(WearableDevice::sharedData);
 
-	profileSignaller.setControlStateHandle(state);
+    profileSignaller.setControlStateHandle(state);
     if (profileManager->getProfiles()->size() > 0)
     {
         state->setProfile(profileManager->getProfiles()->at(0).profileName);
     }
-	mainGui->connectSignallerToProfileWidgets(&profileSignaller); 
+    mainGui->connectSignallerToProfileWidgets(&profileSignaller);
 
     std::chrono::milliseconds rssi_start =
         std::chrono::duration_cast<std::chrono::milliseconds>(
@@ -172,7 +172,7 @@ void MyoDevice::runDeviceLoop()
 
         while (true)
         {
-            if (WearableDevice::stopDeviceRequested()) 
+            if (WearableDevice::stopDeviceRequested())
             {
                 break;
             }
@@ -184,15 +184,15 @@ void MyoDevice::runDeviceLoop()
                 WearableDevice::sharedData->process();
             }
 
-			if (state->getProfile() != prevProfileName)
+            if (state->getProfile() != prevProfileName)
             {
-				prevProfileName = state->getProfile();
+                prevProfileName = state->getProfile();
                 updateProfiles();
             }
 
-			current_time = std::chrono::duration_cast<std::chrono::milliseconds>(
+            current_time = std::chrono::duration_cast<std::chrono::milliseconds>(
                 std::chrono::steady_clock::now().time_since_epoch());
-			if ((current_time - rssi_start).count() > MIN_RSSI_DELAY)
+            if ((current_time - rssi_start).count() > MIN_RSSI_DELAY)
             {
                 //if (myo)
                 //{
@@ -203,10 +203,14 @@ void MyoDevice::runDeviceLoop()
                 //    myo = hub->waitForMyo(myoFindTimeout);
                 //}
                 rssi_start = current_time;
+                if (connectedMyos.size() >= 1)
+                {
+                    connectedMyos[0].myo->requestRssi(); // only get signal of first connected Myo for now.
+                }
             }
 
             hub->run(durationInMilliseconds); // this line is causing th exception on a disconnect of the only Myo
-            
+
         }
     }
     catch (const std::exception& e)
@@ -217,7 +221,7 @@ void MyoDevice::runDeviceLoop()
         return;
     }
     if (hub) { delete hub; hub = NULL; }
-    
+
     WearableDevice::setDeviceStatus(deviceStatus::DONE);
 }
 
@@ -271,11 +275,11 @@ void MyoDevice::setupOrientationPipeline()
 
 void MyoDevice::setupRSSIPipeline()
 {
-   genAvgFilterRSSI = new GenericAveragingFilter(5, RSSI); // unused
-   //
-   //advancedRssiPipeline.registerFilterAtDeepestLevel(genAvgFilterRSSI);
-   //
-   //advancedRssiPipeline.registerFilterAtNewLevel(WearableDevice::sharedData);
+    genAvgFilterRSSI = new GenericAveragingFilter(5, RSSI); // unused
+    //
+    //advancedRssiPipeline.registerFilterAtDeepestLevel(genAvgFilterRSSI);
+    //
+    //advancedRssiPipeline.registerFilterAtNewLevel(WearableDevice::sharedData);
 
     genWinMaxFilterRSSI = new GenericWindowMaxFilter(5, RSSI); // unused
 
@@ -309,7 +313,7 @@ void MyoDevice::vibrateMyos(myo::Myo::VibrationType vibType, int numReps) const
 }
 
 // Device Listener
-MyoDevice::MyoCallbacks::MyoCallbacks(MyoDevice& parentDevice) 
+MyoDevice::MyoCallbacks::MyoCallbacks(MyoDevice& parentDevice)
     : parent(parentDevice)
 {
     myoDataFile.open("myoDataFile.csv");
@@ -320,7 +324,7 @@ MyoDevice::MyoCallbacks::MyoCallbacks(MyoDevice& parentDevice)
 MyoDevice::MyoCallbacks::~MyoCallbacks() { myoDataFile.close(); myoGyroDataFile.close(); }
 
 // Overridden functions from DeviceListener
-void MyoDevice::MyoCallbacks::onPose(Myo* myo, uint64_t timestamp, Pose pose) 
+void MyoDevice::MyoCallbacks::onPose(Myo* myo, uint64_t timestamp, Pose pose)
 {
     filterDataMap input;
 
@@ -337,18 +341,18 @@ void MyoDevice::MyoCallbacks::onPose(Myo* myo, uint64_t timestamp, Pose pose)
     parent.advancedPosePipeline.startPipeline(input);
 
     lastPose = pose.type();
-//    printToDataFile();
+    //    printToDataFile();
 }
 
-void MyoDevice::MyoCallbacks::onOrientationData(Myo* myo, uint64_t timestamp, const Quaternion<float>& rotation) 
-{ 
+void MyoDevice::MyoCallbacks::onOrientationData(Myo* myo, uint64_t timestamp, const Quaternion<float>& rotation)
+{
     filterDataMap input;
 
     input[QUAT_DATA_X] = rotation.x();
     input[QUAT_DATA_Y] = rotation.y();
     input[QUAT_DATA_Z] = rotation.z();
     input[QUAT_DATA_W] = rotation.w();
-	    
+
     parent.advancedOrientationPipeline.startPipeline(input);
 }
 
@@ -365,7 +369,7 @@ void MyoDevice::MyoCallbacks::onAccelerometerData(Myo* myo, uint64_t timestamp, 
     //parent.advancedOrientationPipeline.startPipeline(input);
 }
 
-void MyoDevice::MyoCallbacks::onGyroscopeData(Myo* myo, uint64_t timestamp, const Vector3<float>& gyro) 
+void MyoDevice::MyoCallbacks::onGyroscopeData(Myo* myo, uint64_t timestamp, const Vector3<float>& gyro)
 {
     myoGyroDataFile << gyro.x() << "," << gyro.y() << "," << gyro.z() << std::endl;
 
@@ -377,16 +381,18 @@ void MyoDevice::MyoCallbacks::onGyroscopeData(Myo* myo, uint64_t timestamp, cons
     parent.advancedOrientationPipeline.startPipeline(input);
 }
 
-void MyoDevice::MyoCallbacks::onPair(Myo* myo, uint64_t timestamp, FirmwareVersion firmwareVersion) { 
-    std::cout << "on pair." << std::endl; 
+void MyoDevice::MyoCallbacks::onPair(Myo* myo, uint64_t timestamp, FirmwareVersion firmwareVersion) {
+    std::cout << "on pair." << std::endl;
     // don't set myo from this callback - onPair executes even when no Myo's are connected
     // to Myo-connect for some reason
 }
-void MyoDevice::MyoCallbacks::onUnpair(Myo* myo, uint64_t timestamp) { 
-    std::cout << "on unpair." << std::endl; 
+void MyoDevice::MyoCallbacks::onUnpair(Myo* myo, uint64_t timestamp) {
+    std::cout << "on unpair." << std::endl;
 }
-void MyoDevice::MyoCallbacks::onConnect(Myo* myo, uint64_t timestamp, FirmwareVersion firmwareVersion) { 
-    std::cout << "on connect." << std::endl; 
+void MyoDevice::MyoCallbacks::onConnect(Myo* myo, uint64_t timestamp, FirmwareVersion firmwareVersion) {
+    myo->requestBatteryLevel();
+    
+    std::cout << "on connect." << std::endl;
     filterDataMap input;
     input[ISCONNECTED_INPUT] = true;
 
@@ -404,8 +410,8 @@ void MyoDevice::MyoCallbacks::onConnect(Myo* myo, uint64_t timestamp, FirmwareVe
 
     parent.connectedMyos.push_back(mwd);
 }
-void MyoDevice::MyoCallbacks::onDisconnect(Myo* myo, uint64_t timestamp) { 
-    std::cout << "on disconnect." << std::endl; 
+void MyoDevice::MyoCallbacks::onDisconnect(Myo* myo, uint64_t timestamp) {
+    std::cout << "on disconnect." << std::endl;
 
     for (std::vector<MyoWithData>::iterator it = parent.connectedMyos.begin(); it != parent.connectedMyos.end(); it++)
     {
@@ -432,7 +438,7 @@ void MyoDevice::MyoCallbacks::onDisconnect(Myo* myo, uint64_t timestamp) {
 
         // set battery and signal values to off
         filterDataMap input3;
-        input3[BATTERY_LEVEL_INPUT] = 0;
+        input3[BATTERY_LEVEL_INPUT] = (unsigned int) 0;
         parent.advancedBatteryPipeline.startPipeline(input3);
 
         filterDataMap input4;
@@ -463,9 +469,9 @@ void MyoDevice::MyoCallbacks::onArmSync(Myo *myo, uint64_t timestamp, Arm arm, X
     // legacy reasons
     parent.myoState->setXRotation(rotation);
 }
-void MyoDevice::MyoCallbacks::onArmSync(Myo* myo, uint64_t timestamp, Arm arm, XDirection xDirection) { 
+void MyoDevice::MyoCallbacks::onArmSync(Myo* myo, uint64_t timestamp, Arm arm, XDirection xDirection) {
     parent.setMyoExtraData(myo, arm, xDirection);
-    std::cout << "on arm sync." << std::endl; 
+    std::cout << "on arm sync." << std::endl;
 
     // Setup GUI to interact with most recently synched Myo
     filterDataMap input;
@@ -477,9 +483,9 @@ void MyoDevice::MyoCallbacks::onArmSync(Myo* myo, uint64_t timestamp, Arm arm, X
     syncInput[SYNCHED_INPUT] = true;
     parent.advancedSyncPipeline.startPipeline(syncInput);
 }
-void MyoDevice::MyoCallbacks::onArmUnsync(Myo* myo, uint64_t timestamp) { 
+void MyoDevice::MyoCallbacks::onArmUnsync(Myo* myo, uint64_t timestamp) {
     parent.setMyoExtraData(myo, Arm::armUnknown, XDirection::xDirectionUnknown);
-    std::cout << "on arm unsync." << std::endl; 
+    std::cout << "on arm unsync." << std::endl;
 
     filterDataMap input;
     input[SYNCHED_INPUT] = false;
@@ -495,17 +501,17 @@ void MyoDevice::MyoCallbacks::onArmUnsync(Myo* myo, uint64_t timestamp) {
 
 void MyoDevice::MyoCallbacks::onUnlock(Myo* myo, uint64_t timestamp)
 {
-	std::cout << "on unlock." << std::endl;
+    std::cout << "on unlock." << std::endl;
 }
 
 void MyoDevice::MyoCallbacks::onLock(Myo* myo, uint64_t timestamp)
 {
-	std::cout << "on lock." << std::endl;
+    std::cout << "on lock." << std::endl;
 }
 
 void MyoDevice::MyoCallbacks::onBatteryLevelReceived(myo::Myo* myo, uint64_t timestamp, uint8_t level)
 {
-	std::cout << "onBatteryLevelReceived." << std::endl;
+    std::cout << "onBatteryLevelReceived." << std::endl;
 
     filterDataMap input;
     input[BATTERY_LEVEL_INPUT] = (unsigned int)level;
@@ -515,7 +521,7 @@ void MyoDevice::MyoCallbacks::onBatteryLevelReceived(myo::Myo* myo, uint64_t tim
 void MyoDevice::MyoCallbacks::onEmgData(myo::Myo* myo, uint64_t timestamp, const int8_t* emg)
 {
     // This data is streaming at 200Hz - print data for post mortem analysis
-	std::cout << "onEmgData." << std::endl;
+    std::cout << "onEmgData." << std::endl;
 
     //for (int emgIdx = 0; emgIdx < 8; emgIdx++)
     //{
@@ -537,14 +543,14 @@ void MyoDevice::MyoCallbacks::onEmgData(myo::Myo* myo, uint64_t timestamp, const
 
 void MyoDevice::MyoCallbacks::onWarmupCompleted(myo::Myo* myo, uint64_t timestamp, WarmupResult warmupResult)
 {
-	std::cout << "onWarmupCompleted." << std::endl;
+    std::cout << "onWarmupCompleted." << std::endl;
 }
 
 void MyoDevice::MyoCallbacks::onRssi(Myo* myo, uint64_t timestamp, int8_t rssi) {
-	std::cout << "on rssi." << std::endl;
+    std::cout << "on rssi." << std::endl;
 
     filterDataMap input;
-	input[RSSI] = static_cast<int>(rssi);
+    input[RSSI] = static_cast<int>(rssi);
 
     parent.advancedRssiPipeline.startPipeline(input);
 }
@@ -556,7 +562,7 @@ void MyoDevice::updateProfiles(void)
     if (profileManager->getProfiles()->size() == 0) { return; }
 
     error |= (int)advancedPosePipeline.updateFiltersBasedOnProfile(*profileManager, state->getProfile());
-	
+
     error |= (int)advancedOrientationPipeline.updateFiltersBasedOnProfile(*profileManager, state->getProfile());
 
     // Start each profile in a locked state
@@ -565,7 +571,7 @@ void MyoDevice::updateProfiles(void)
     filterDataMap input;
     input[GESTURE_FILTER_STATE_CHANGE] = midasMode::LOCK_MODE;
     lockPipe.startPipeline(input);
-    	
+
     if (error != (int)filterError::NO_FILTER_ERROR)
     {
         throw new std::exception("updateProfileException");

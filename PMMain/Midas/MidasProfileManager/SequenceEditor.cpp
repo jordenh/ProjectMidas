@@ -29,6 +29,7 @@ SequenceEditor::SequenceEditor(QWidget *parent)
 
     otherSequences = NULL;
     formCommandComboBox();
+    formMouseActions();
 	formKeyLineInput();
 
     connect(ui.addGestureButton, SIGNAL(released()), this, SLOT(handleAddGesture()));

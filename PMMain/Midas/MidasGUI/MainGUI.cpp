@@ -400,7 +400,7 @@ void MainGUI::ShowContextMenu(const QPoint& pos)
     myMenu.addAction(settingsStr);
     QString profileStr = "Toggle Profile Selection";
     myMenu.addAction(profileStr);
-    QString batteryStr = "Toggle Battery Indicator";
+    QString batteryStr = "Toggle Battery/Signal Indicator";
     myMenu.addAction(batteryStr);
 
     QAction* selectedItem = myMenu.exec(globalPos);
