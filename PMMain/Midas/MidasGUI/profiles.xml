@@ -1048,7 +1048,63 @@
         <holds>
         </holds>
     </profile>
-	<profile name="Pointer">
+	<profile name="Passive Pointer">
+        <sequences>
+			<sequence state="lockMode" name="Unlock">
+                <gestures>
+					<gesture type="tap">doubleTap</gesture>
+					<gesture type="immediate">doubleTap</gesture>
+                </gestures>
+                <commands>
+				<command type="stateChange">
+                    <actions>
+                        <action>gestureMode</action>
+                    </actions>
+                </command>
+				</commands>
+            </sequence>
+			<sequence state="gestureMode" name="Move Cursor">
+                <gestures>
+					<gesture type="immediate">fingersSpread</gesture>
+                </gestures>
+                <commands>
+					<command type="stateChange">
+						<actions>
+							<action>mouseMode</action>
+						</actions>
+					</command>
+				</commands>
+            </sequence>
+			<sequence state="mouseMode" name="Release">
+                <gestures>
+					<gesture type="immediate">rest</gesture>
+                </gestures>
+                <commands>
+					<command type="stateChange">
+						<actions>
+							<action>gestureMode</action>
+						</actions>
+					</command>
+				</commands>
+            </sequence>
+			<sequence state="gestureMode" name="Lock">
+                <gestures>
+					<gesture type="tap">doubleTap</gesture>
+					<gesture type="immediate">doubleTap</gesture>
+                </gestures>
+                <commands>
+					<command type="stateChange">
+						<actions>
+							<action>lockMode</action>
+						</actions>
+					</command>
+				</commands>
+            </sequence>
+		</sequences>
+        <holds>
+        </holds>
+    </profile>
+	<profile name="Passive Pointer - Cursor Follow Arm">
         <sequences>
 			<sequence state="lockMode" name="Unlock">
                 <gestures>

@@ -27,10 +27,9 @@
 #define SIGNAL_ICON_WIDTH 240
 
 
-MyoStatusWidget::MyoStatusWidget(int widgetWidth, int widgetHeight, QWidget *parent)
+MyoStatusWidget::MyoStatusWidget(int widgetWidth, int widgetHeight, QWidget *parent) :
+    DraggableWidget(parent, Qt::WindowStaysOnTopHint), indWidth(widgetWidth), indHeight(widgetHeight)
 {
-    indWidth = widgetWidth; indHeight = widgetHeight;
-
     setToolTip(tr("Drag the Status Widget with the left mouse button."));
     setWindowTitle(tr("Myo Status Indicator"));
 
@@ -151,11 +150,11 @@ void MyoStatusWidget::updateGUI()
 
     signalStrengthBar->setMinimumWidth(SIGNAL_ICON_WIDTH);
     signalStrengthBar->setValue(signalStrength);
-    if (signalStrength < LOW_SIGNAL_THRESHOLD)
+    if (signalStrength <= LOW_SIGNAL_THRESHOLD)
     {
         signalStrengthBar->setStyleSheet(lowSignalStyle);
     }
-    if (signalStrength < HIGH_SIGNAL_THRESHOLD)
+    else if (signalStrength <= HIGH_SIGNAL_THRESHOLD)
     {
         signalStrengthBar->setStyleSheet(medSignalStyle);
     }

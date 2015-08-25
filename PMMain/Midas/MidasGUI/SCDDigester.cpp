@@ -371,7 +371,7 @@ void SCDDigester::handleConnectionData()
     float currentRssiAvg = scdHandle->getRssi();
     if (currentRssiAvg != prevMyoRssi)
     {
-        int signalStrength = (1.91*currentRssiAvg) + 170; // reverse engineered http://diagnostics.myo.com/ by plotting RSSI vs the site's signal percentage values and linearly interpolating.
+        int signalStrength = (1.91*currentRssiAvg) + 173; // reverse engineered http://diagnostics.myo.com/ by plotting RSSI vs the site's signal percentage values and linearly interpolating.
         //signalStrength = (signalStrength / 10) * 10; // Bin into every 10 percent (truncate data)
         signalStrength = max(min(signalStrength, 100), 0);
 

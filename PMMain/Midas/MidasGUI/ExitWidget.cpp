@@ -24,12 +24,10 @@
 #include "qpushbutton.h"
 #include "qapplication.h"
 
-ExitWidget::ExitWidget(int widgetWidth, int widgetHeight, QWidget *parent)
+ExitWidget::ExitWidget(int widgetWidth, int widgetHeight, QWidget *parent) : 
+    DraggableWidget(parent, Qt::WindowStaysOnTopHint), indWidth(widgetWidth), indHeight(widgetHeight)
 {
-    indWidth = widgetWidth; indHeight = widgetHeight;
-
-    setToolTip(tr("Drag the Exit Widget with the left mouse button."));
-    setWindowTitle(tr("Exit Widget"));
+    setWindowTitle(tr("Exit Midas?"));
 
     setWindowOpacity(1);
     QPalette pal;

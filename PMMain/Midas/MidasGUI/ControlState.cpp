@@ -30,7 +30,6 @@ ControlState::ControlState(SharedCommandData* SCDHandle)
     previousMode = LOCK_MODE;
     mouseCurrentlyHeld = false;
 	currentProfile = "default";
-    enterLeaveMouseModeChecked = false;
 }
 
 

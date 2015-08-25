@@ -56,15 +56,14 @@ InfoIndicator::InfoIndicator(int widgetWidth, int widgetHeight, QWidget *parent)
     stateLabel->setFont(timesFont);
 
     button = new QPushButton("+", this);
-    button->setStyleSheet("QButton { margin: -10px }");
     button->setText(getShowAllString());
-    button->setFixedWidth(widgetHeight - 4);// 20); // Remove this line if getShowAllString has more than just a single character
+    button->setFixedWidth(widgetHeight - 4); // Modify this line if getShowAllString has more than just a single character
     button->setFixedHeight(widgetHeight - 4);
     QFont timesSmall("Times", 8, QFont::DemiBold);
     button->setFont(timesSmall);
     connect(button, SIGNAL(released()), this, SLOT(handleButton()));
 
-    layout->addSpacerItem(new QSpacerItem(5, 5));
+    layout->addSpacerItem(new QSpacerItem(6, 6));
     layout->addWidget(stateLabel, 1, Qt::AlignLeft);
     layout->addWidget(button, 0, Qt::AlignRight);
     layout->addSpacerItem(new QSpacerItem(2, 2));
