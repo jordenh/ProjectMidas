@@ -125,8 +125,15 @@ COPY "$(ProjectDir)Qt\Qt5Widgetsd.dll" "$(OutDir)"</Command>
   <ItemGroup>
     <ClCompile Include="AdvancedFilterPipeline.cpp" />
     <ClCompile Include="BaseMeasurements.cpp" />
+    <ClCompile Include="ExitWidget.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_ExitWidget.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="GeneratedFiles\Debug\moc_MyoStatusWidget.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ExitWidget.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Release\moc_MyoStatusWidget.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
@@ -288,6 +295,16 @@ COPY "$(ProjectDir)Qt\Qt5Widgetsd.dll" "$(OutDir)"</Command>
   <ItemGroup>
     <ClInclude Include="AdvancedFilterPipeline.h" />
     <ClInclude Include="BaseMeasurements.h" />
+    <CustomBuild Include="ExitWidget.h">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing ExitWidget.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DDONT_SHOW_PROFILE_ICONS -DBUILD_FOR_KARDIUM -DDONT_USE_SIMULATOR -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -D_MBCS "-I.\GeneratedFiles" "-I." "-I$(ProjectDir)\Qt\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(ProjectDir)\Qt\include\QtCore" "-I$(ProjectDir)\Qt\include\QtGui" "-I$(ProjectDir)\Qt\include\QtWidgets" "-I$(ProjectDir)\myoSim\include" "-I$(ProjectDir)\myo\include" "-IC:\Program Files\boost\boost_1_57_0"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing ExitWidget.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DDONT_SHOW_PROFILE_ICONS -DBUILD_FOR_KARDIUM -DDONT_USE_SIMULATOR -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -DQT_NO_DEBUG -DNDEBUG -D_MBCS "-I.\GeneratedFiles" "-I." "-I$(ProjectDir)\Qt\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(ProjectDir)\Qt\include\QtCore" "-I$(ProjectDir)\Qt\include\QtGui" "-I$(ProjectDir)\Qt\include\QtWidgets" "-I$(ProjectDir)\myoSim\include" "-I$(ProjectDir)\myo\include" "-IC:\Program Files\boost\boost_1_57_0"</Command>
+    </CustomBuild>
     <ClInclude Include="GenericWindowMaxFilter.h" />
     <CustomBuild Include="MyoStatusWidget.h">
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath);$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>

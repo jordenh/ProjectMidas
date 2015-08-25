@@ -44,6 +44,7 @@
 #include "SettingsSignaller.h"
 #include "ProfilesDisplayer.h"
 #include "MyoStatusWidget.h"
+#include "ExitWidget.h"
 #include "MidasThread.h"
 #include <thread>
 
@@ -63,6 +64,7 @@ MainGUI::MainGUI(MidasThread *mainThread, ProfileManager *pm, int deadZoneRad)
     sequenceDisplayer = new SequenceDisplayer(this);
 	poseDisplayer = new PoseDisplayer(MOUSE_INDICATOR_SIZE, MOUSE_INDICATOR_SIZE, this);
     myoStatusWidget = new MyoStatusWidget();
+    exitWidget = new ExitWidget();
     distanceDisplayer = new DistanceWidget(mainThread, INFO_INDICATOR_WIDTH,
 		DISTANCE_DISPLAY_HEIGHT, this);
     distanceDisplayer->setVisible(false);
@@ -196,6 +198,11 @@ void MainGUI::toggleMyoStatusWidget()
     }
 }
 
+void MainGUI::toggleExitWidget()
+{
+    exitWidget->setVisible(true);
+}
+
 MainGUI::~MainGUI()
 {
     delete infoIndicator;
@@ -216,6 +223,7 @@ MainGUI::~MainGUI()
 
     delete profilesWidget; profilesWidget = NULL;
     delete myoStatusWidget; myoStatusWidget = NULL;
+    delete exitWidget; exitWidget = NULL;
     delete keyboard; keyboard = NULL;
     delete distanceDisplayer; distanceDisplayer = NULL;
 }
@@ -402,6 +410,16 @@ void MainGUI::ShowContextMenu(const QPoint& pos)
     myMenu.addAction(profileStr);
     QString batteryStr = "Toggle Battery/Signal Indicator";
     myMenu.addAction(batteryStr);
+    QString quitStr = "Exit";
+    myMenu.addAction(quitStr);
+
+    /*
+     // Temporarily allow a Quit
+    QAction *quitAction = new QAction(tr("E&xit"), this);
+    quitAction->setShortcut(tr("Ctrl-Q"));
+    connect(quitAction, SIGNAL(triggered()), qApp, SLOT(quit()));
+    addAction(quitAction);
+    */
 
     QAction* selectedItem = myMenu.exec(globalPos);
     if (selectedItem)
@@ -419,6 +437,10 @@ void MainGUI::ShowContextMenu(const QPoint& pos)
         else if (selStr.compare(batteryStr) == 0)
         {
             toggleMyoStatusWidget();
+        }
+        else if (selStr.compare(quitStr) == 0)
+        {
+            toggleExitWidget();
         }
     }
     else

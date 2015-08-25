@@ -46,21 +46,28 @@ InfoIndicator::InfoIndicator(int widgetWidth, int widgetHeight, QWidget *parent)
     setWindowFlags(Qt::WindowStaysOnTopHint  | Qt::X11BypassWindowManagerHint);
 
     layout = new QHBoxLayout;
-    layout->setSpacing(WIDGET_BUFFER);
+    //layout->setSpacing(WIDGET_BUFFER);
+    layout->setMargin(0);
+    
     setLayout(layout);
 
     QFont timesFont("Times", 9, QFont::Bold);
     stateLabel = new QLabel();
     stateLabel->setFont(timesFont);
-    layout->addWidget(stateLabel, 1, Qt::AlignLeft);
 
     button = new QPushButton("+", this);
+    button->setStyleSheet("QButton { margin: -10px }");
     button->setText(getShowAllString());
-	button->setFixedWidth(20); // Remove this line if getShowAllString has more than just a single character
+    button->setFixedWidth(widgetHeight - 4);// 20); // Remove this line if getShowAllString has more than just a single character
+    button->setFixedHeight(widgetHeight - 4);
     QFont timesSmall("Times", 8, QFont::DemiBold);
     button->setFont(timesSmall);
     connect(button, SIGNAL(released()), this, SLOT(handleButton()));
+
+    layout->addSpacerItem(new QSpacerItem(5, 5));
+    layout->addWidget(stateLabel, 1, Qt::AlignLeft);
     layout->addWidget(button, 0, Qt::AlignRight);
+    layout->addSpacerItem(new QSpacerItem(2, 2));
 
 	setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     setMinimumSize(indWidth, indHeight);

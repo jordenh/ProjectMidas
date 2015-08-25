@@ -41,6 +41,7 @@ class KeyboardWidget;
 class DistanceWidget;
 class ProfilesDisplayer;
 class MyoStatusWidget;
+class ExitWidget;
 
 #define TASK_BAR_ICON_PATH "Resources\\ProjectMidasLogo.ico"
 
@@ -93,6 +94,7 @@ private:
     void toggleSettingsDisplayer();
     void toggleProfileDisplayer();
     void toggleMyoStatusWidget();
+    void toggleExitWidget();
 
     // on a timer, call this->show() to ensure Midas stays on top even if other applications have 
     // alerts/popups that temporarily steal focus.
@@ -111,6 +113,7 @@ private:
 	bool icon0IsActive;
     ProfilesDisplayer *profilesWidget;
     MyoStatusWidget *myoStatusWidget;
+    ExitWidget *exitWidget;
     int totalWidth, totalHeight;
     unsigned int numProfiles;
     unsigned int activeProfile;

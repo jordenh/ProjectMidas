@@ -326,9 +326,6 @@
     <ClCompile Include="GeneratedFiles\Release\moc_ProfilesDisplayer.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_BatteryWidget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="MyoStatusWidget.cpp">
       <Filter>Source Files\GUI</Filter>
     </ClCompile>
@@ -340,6 +337,15 @@
     </ClCompile>
     <ClCompile Include="GenericWindowMaxFilter.cpp">
       <Filter>Source Files\Midas\Filters</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ExitWidget.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ExitWidget.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="ExitWidget.cpp">
+      <Filter>Source Files\GUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -398,6 +404,9 @@
       <Filter>Header Files\GUI</Filter>
     </CustomBuild>
     <CustomBuild Include="MyoStatusWidget.h">
+      <Filter>Header Files\GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ExitWidget.h">
       <Filter>Header Files\GUI</Filter>
     </CustomBuild>
   </ItemGroup>
