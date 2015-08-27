@@ -906,7 +906,7 @@
                 <commands>
                     <command type="keyboard">
                         <actions>
-                            <action>inputVector,Z</action>
+                            <action>inputVector,N</action>
                         </actions>
                     </command>
                 </commands>

@@ -102,7 +102,7 @@ int midasMain(MidasThread *threadHandle, MainGUI *mainGui, ProfileManager *pm, s
 	myoState.setSpatialHistLen(5);
 	BaseMeasurements::getInstance().setMyoStateHandle(&myoState);
 	BaseMeasurements::getInstance().setControlStateHandle(&controlState);
-	MyoDevice* myoDevice = new MyoDevice(&sharedData, &controlState, &myoState, "com.midas.midas-test", mainGui, pm);
+	MyoDevice* myoDevice = new MyoDevice(&sharedData, &controlState, &myoState, "com.jordenh.midas", mainGui, pm);
     myoState.setMyo(myoDevice);
     MouseCtrl* mouseCtrl = new MouseCtrl();
 	KeyboardController* keyboardController = new KeyboardController();
