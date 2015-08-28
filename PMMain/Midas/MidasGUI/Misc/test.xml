@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<profiles>
+    <profile name="default">
+        <sequences/>
+        <holds>
+            <hold id="2">
+                <angle type="roll">
+                    <anglePositive>
+                        <command type="keyboard">
+                            <actions>
+                                <action>inputVector,a</action>
+                            </actions>
+                        </command>
+                    </anglePositive>
+                    <angleNegative>
+                        <command type="keyboard">
+                            <actions>
+                                <action>inputVector,d</action>
+                            </actions>
+                        </command>
+                    </angleNegative>
+                    <sensitivity>1</sensitivity>
+                </angle>
+                <holdModeActionType>absDeltaFinite</holdModeActionType>
+                <intervalLength>100</intervalLength>
+                <intervalExecMultiplier>2</intervalExecMultiplier>
+                <intervalMaxExecs>9</intervalMaxExecs>
+            </hold>
+        </holds>
+    </profile>
+</profiles>
